@@ -1,0 +1,651 @@
+[{
+  "_id": {
+    "$oid": "6835826003d7a3a01f83ea25"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQ4MzM3MjQ4LCJleHAiOjE3NDg5NDIwNDh9.VTl9UfF_Odn0KDN6qMHiwQwMrdov3BJb11f9x5sVKAA",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T09:14:08.203Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T09:14:08.204Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:29:26.376Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:29:26.372Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a221da4aa64b10f7904b"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NTM3NywiZXhwIjoxNzQ4OTUwMTc3fQ.b2dxgaJ1FL0Co76HN6OFwZV-v6804ntCNegav9y1Kwg",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:29:37.402Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:29:37.403Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:33:50.387Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:33:50.385Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a3236563b70bcfe2cc49"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NTYzNSwiZXhwIjoxNzQ4OTUwNDM1fQ.dDXZhJhXPMBeOvmDKzrZ5jTMrmo4g3piP2xNpr8tq28",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:33:55.889Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:33:55.889Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:39:44.120Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:39:44.115Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a488b4d66a13498cc814"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NTk5MiwiZXhwIjoxNzQ4OTUwNzkyfQ.r0v0mLzUnu1rZZEzHCCDIm_8Jsn1zdAFtS1uVdSwc4A",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:39:52.162Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:39:52.164Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:40:55.122Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:40:55.121Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a4cd1fdea6f08e3e6f66"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NjA2MSwiZXhwIjoxNzQ4OTUwODYxfQ.DFAef2K6pOGUl1z31ZStRRO1qwo_61bPGDsTsYATrxo",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:41:01.831Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:41:01.832Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:45:23.346Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:45:23.344Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a5d82b27a15ba03161d0"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NjMyOCwiZXhwIjoxNzQ4OTUxMTI4fQ.d5ORHGlUmi4UxbK4MeS3gjnYlC-c8Mq-f3ZQ3fDLgV4",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:45:28.998Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:45:28.999Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:46:12.950Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:46:12.948Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a60af2de4b586ed489f3"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NjM3OCwiZXhwIjoxNzQ4OTUxMTc4fQ.FKa8EcwcQ9VfoyyyVy-XbdLedJBuxyLhPHNQfobp8iQ",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:46:18.537Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:46:18.537Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:46:53.604Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:46:53.600Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a632e5f52e8676827406"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NjQxOCwiZXhwIjoxNzQ4OTUxMjE4fQ.jzkcDVuTLiofPD1cxow9dh_GLFCfcCZdE_KygOAMGNg",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:46:58.789Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:46:58.790Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:48:22.179Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:48:22.177Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a68c3620ac84d377226f"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NjUwOCwiZXhwIjoxNzQ4OTUxMzA4fQ.XVhk9V-x5cRz82VTKuPmVxmkLFOKa1NJkurA2mF-RqE",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:48:28.388Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:48:28.389Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:49:30.489Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:49:30.488Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a6cf88acc150ff117f25"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NjU3NSwiZXhwIjoxNzQ4OTUxMzc1fQ.gRoJWiK58BHKo3d_NK_d2aIYgP6YnE_fD0ZaAZ2JVEs",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:49:35.652Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:49:35.652Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:50:15.927Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:50:15.926Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a6fcf167487ab826e36c"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": true,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NjYyMCwiZXhwIjoxNzQ4OTUxNDIwfQ.38hdoZxw7RiWrxTk-S0uF9PJGU6fflHcfOUtU3qRH0k",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:50:20.817Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:50:20.818Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:50:20.818Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6835a733b7dc1446c37f7c4d"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0NjY3NSwiZXhwIjoxNzQ4OTUxNDc1fQ.UOG9S5lgRgfP98cl2a88HbfwjSbafKbvQJmOQX1zywM",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:51:15.432Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:51:15.432Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:54:19.609Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:54:19.607Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835a7f1b7dc1446c37f7c59"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0Njg2NSwiZXhwIjoxNzQ4OTUxNjY1fQ.HHnuAvGQz1aC3TMbKd_15keDGEfcDjszvql8zPQ7sT4",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T11:54:25.157Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T11:54:25.158Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T11:58:12.975Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T11:58:12.974Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835ac5db7dc1446c37f7c6d"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0Nzk5NywiZXhwIjoxNzQ4OTUyNzk3fQ.49BqnfmHWZrv7u4Sslf4PYEx8D_BABBx5aGJWt3_C6A",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T12:13:17.823Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T12:13:17.823Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T12:29:37.626Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T12:29:37.626Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835b03fb7dc1446c37f7cbf"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM0ODk5MSwiZXhwIjoxNzQ4OTUzNzkxfQ.1iUbH0dgaZBC6B-CJu1bnH84vxyfFX765dWb0TMOa4w",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T12:29:51.105Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T12:29:51.106Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T12:48:24.834Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T12:48:24.834Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835b4edb7dc1446c37f7d1f"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM1MDE4OSwiZXhwIjoxNzQ4OTU0OTg5fQ.4x0JVdzIRVo0wdLaGif5HyC7MRxkIgTgu3lkK1sVmX0",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T12:49:49.344Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T12:49:49.346Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-27T12:55:44.664Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-27T12:55:44.664Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6835b656b7dc1446c37f7d2f"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODM1MDU1MCwiZXhwIjoxNzQ4OTU1MzUwfQ.aLFDh6LaoI-UIL_J7Q46Jup62ioElvR--EitoyWxbEY",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-27T12:55:50.631Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-27T12:55:50.632Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T05:56:23.981Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-29T05:56:23.977Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6837f7107552747b187065aa"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODQ5ODE5MiwiZXhwIjoxNzQ5MTAyOTkyfQ.b2FGdLwc-xICdMrqIe9JGFdqkTYT-uJHn14B8JcMp7w",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-29T05:56:32.738Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-29T05:56:32.741Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T07:58:54.660Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-29T07:58:54.660Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "683813c70214394db446fd7b"
+  },
+  "userId": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM1ODI2MDAzZDdhM2EwMWY4M2VhMjIiLCJlbWFpbCI6ImFsaXlhbnNpZGRpcXVpNTU1QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0ODUwNTU0MywiZXhwIjoxNzQ5MTEwMzQzfQ.MX2YNpWTsiZ2w9lb_t6SkZezhZ2O5eDVW9dmSwmVcqk",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-29T07:59:03.672Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-29T07:59:03.673Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T08:06:07.267Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-29T08:06:07.267Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "683815f30214394db446fdbb"
+  },
+  "userId": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": false,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM4MTViMTAyMTQzOTRkYjQ0NmZkYjMiLCJlbWFpbCI6ImFkbWluQHJlbWx5by5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc0ODUwNjA5OSwiZXhwIjoxNzQ5MTEwODk5fQ.laPN4yxtUbtsJkJlDRN499pT8yROMRoXDkHyBNrmSnQ",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-29T08:08:19.151Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-29T08:08:19.151Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T08:14:37.480Z"
+  },
+  "__v": 0,
+  "logoutTime": {
+    "$date": "2025-05-29T08:14:37.479Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "683817862626711e969b7df1"
+  },
+  "userId": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "ipAddress": "::1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+  "deviceType": "Desktop",
+  "isActive": true,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM4MTViMTAyMTQzOTRkYjQ0NmZkYjMiLCJlbWFpbCI6ImFkbWluQHJlbWx5by5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDg1MDY1MDIsImV4cCI6MTc0OTExMTMwMn0.1d9VZ8s_N84MzdoNOpFbvY6eT8H5DS-TKw1K2cirKsw",
+  "metadata": {
+    "browser": "Chrome",
+    "os": "Windows"
+  },
+  "loginTime": {
+    "$date": "2025-05-29T08:15:02.727Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-29T08:15:02.728Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T08:15:02.728Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "683822ecc22fd4af94fa4d06"
+  },
+  "userId": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "ipAddress": "::1",
+  "userAgent": "PostmanRuntime/7.44.0",
+  "deviceType": "Desktop",
+  "isActive": true,
+  "sessionToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODM4MTViMTAyMTQzOTRkYjQ0NmZkYjMiLCJlbWFpbCI6ImFkbWluQHJlbWx5by5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NDg1MDk0MjAsImV4cCI6MTc0OTExNDIyMH0.4MujVHgc458DSNb85BYUXTvrxV-St80RiegwG-aOvjU",
+  "metadata": {
+    "browser": "Unknown",
+    "os": "Unknown"
+  },
+  "loginTime": {
+    "$date": "2025-05-29T09:03:40.076Z"
+  },
+  "createdAt": {
+    "$date": "2025-05-29T09:03:40.077Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T09:03:40.077Z"
+  },
+  "__v": 0
+}]

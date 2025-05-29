@@ -1,0 +1,81 @@
+[{
+  "_id": {
+    "$oid": "6838115f0214394db446fd42"
+  },
+  "contentId": {
+    "$oid": "6837fe2c24de2bc5c53f7e30"
+  },
+  "contentType": "Remedy",
+  "status": "rejected",
+  "moderatorNotes": "",
+  "reviewedBy": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "reviewDate": {
+    "$date": "2025-05-29T07:48:47.187Z"
+  },
+  "moderationHistory": [],
+  "flagCount": 0,
+  "rejectionReason": "rejectisds dsf",
+  "createdAt": {
+    "$date": "2025-05-29T07:48:47.212Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T07:48:47.212Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838116b0214394db446fd48"
+  },
+  "contentId": {
+    "$oid": "6837fe2c24de2bc5c53f7e31"
+  },
+  "contentType": "Remedy",
+  "status": "approved",
+  "moderatorNotes": "",
+  "reviewedBy": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "reviewDate": {
+    "$date": "2025-05-29T07:53:46.183Z"
+  },
+  "moderationHistory": [],
+  "flagCount": 0,
+  "rejectionReason": "",
+  "createdAt": {
+    "$date": "2025-05-29T07:48:59.207Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T07:53:46.185Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6838128c0214394db446fd66"
+  },
+  "contentId": {
+    "$oid": "6837fe2c24de2bc5c53f7e32"
+  },
+  "contentType": "Remedy",
+  "status": "rejected",
+  "moderatorNotes": "",
+  "reviewedBy": {
+    "$oid": "6835826003d7a3a01f83ea22"
+  },
+  "reviewDate": {
+    "$date": "2025-05-29T07:53:56.248Z"
+  },
+  "moderationHistory": [],
+  "flagCount": 0,
+  "rejectionReason": "retected ",
+  "createdAt": {
+    "$date": "2025-05-29T07:53:48.415Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T07:53:56.249Z"
+  },
+  "__v": 0
+}]

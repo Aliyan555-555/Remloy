@@ -1,116 +1,292 @@
 [{
   "_id": {
-    "$oid": "6827608b1ae179e896c82cfc"
+    "$oid": "6837fe2c24de2bc5c53f7e30"
   },
-  "name": "Ginger Tea for Nausea",
-  "description": "Ginger tea is a natural remedy commonly used to relieve nausea and indigestion.",
-  "category": "herbal",
+  "name": "Turmeric Golden Milk",
+  "description": "A warm beverage made with turmeric, known for its anti-inflammatory properties.",
+  "category": "Pain Relief",
   "ingredients": [
-    "1 teaspoon grated fresh ginger",
-    "1 cup hot water",
-    "1 teaspoon honey (optional)"
+    "Turmeric",
+    "Milk",
+    "Black Pepper",
+    "Honey"
   ],
-  "preparationMethod": "Add grated ginger to hot water. Let it steep for 5–10 minutes. Strain and add honey if desired.",
-  "usageInstructions": "Drink 1 cup up to 3 times a day, especially after meals or when experiencing nausea.",
+  "preparationMethod": "Warm the milk and mix in turmeric, black pepper, and honey.",
+  "usageInstructions": "Drink once daily before bedtime.",
   "sideEffects": [
-    "Heartburn",
-    "Mild stomach discomfort"
+    "Stomach upset if taken in excess"
   ],
   "aiConfidenceScore": 85,
-  "isAIGenerated": false,
-  "moderationStatus": "approved",
+  "isAIGenerated": true,
   "scientificReferences": [
-    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3665023/"
+    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5664031/"
   ],
   "geographicRestrictions": [],
-  "createdBy": {
-    "$oid": "682746efca3acc607cabd39c"
-  },
-  "viewCount": 12,
-  "averageRating": 0,
-  "createdAt": {
-    "$date": "2025-05-16T15:58:03.024Z"
-  },
+  "createdBy": "6835826003d7a3a01f83ea22",
+  "isActive": false,
+  "createdAt": "2025-05-29T12:00:00.000Z",
   "updatedAt": {
-    "$date": "2025-05-16T15:58:03.024Z"
+    "$date": "2025-05-29T07:48:47.212Z"
   },
-  "__v": 0
+  "moderationStatus": "rejected",
+  "averageRating": 0,
+  "viewCount": 0
 },
 {
   "_id": {
-    "$oid": "682779c1a1955aa79a7d2411"
+    "$oid": "6837fe2c24de2bc5c53f7e32"
   },
-  "name": "Ginger Tea for Nausea demo 121",
-  "description": "Ginger tea is a natural remedy commonly used to relieve nausea and indigestion.",
-  "category": "herbal",
+  "name": "Chamomile Infusion",
+  "description": "Chamomile tea is commonly used as a sleep aid.",
+  "category": "Sleep Aid",
   "ingredients": [
-    "1 teaspoon grated fresh ginger",
-    "1 cup hot water",
-    "1 teaspoon honey (optional)"
+    "Chamomile Flowers",
+    "Water"
   ],
-  "preparationMethod": "Add grated ginger to hot water. Let it steep for 5–10 minutes. Strain and add honey if desired.",
-  "usageInstructions": "Drink 1 cup up to 3 times a day, especially after meals or when experiencing nausea.",
+  "preparationMethod": "Steep chamomile flowers in hot water for 10 minutes.",
+  "usageInstructions": "Drink 30 minutes before sleeping.",
   "sideEffects": [
-    "Heartburn",
-    "Mild stomach discomfort"
+    "May cause allergic reaction in people allergic to ragweed"
   ],
-  "aiConfidenceScore": 85,
+  "aiConfidenceScore": 80,
   "isAIGenerated": false,
-  "moderationStatus": "pending",
   "scientificReferences": [
-    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3665023/"
+    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2995283/"
   ],
   "geographicRestrictions": [],
-  "createdBy": {
-    "$oid": "682746efca3acc607cabd39c"
-  },
-  "viewCount": 12,
-  "averageRating": 0,
-  "createdAt": {
-    "$date": "2025-05-16T17:45:37.675Z"
-  },
+  "createdBy": "6835826003d7a3a01f83ea22",
+  "isActive": false,
+  "createdAt": "2025-05-29T12:00:00.000Z",
   "updatedAt": {
-    "$date": "2025-05-20T19:38:46.474Z"
+    "$date": "2025-05-29T07:53:56.249Z"
   },
-  "__v": 0,
-  "isActive": true
+  "moderationStatus": "rejected",
+  "averageRating": 0,
+  "viewCount": 0
 },
 {
   "_id": {
-    "$oid": "682b8ce014067f363d91b546"
+    "$oid": "6837fe2c24de2bc5c53f7e33"
   },
-  "name": "Ginger Tea for Nausea with new name",
-  "description": "Ginger tea is a natural remedy commonly used to relieve nausea and indigestion.",
-  "category": "herbal",
+  "name": "Honey and Cinnamon",
+  "description": "A mixture believed to relieve cold and boost immunity.",
+  "category": "Immune Support",
   "ingredients": [
-    "1 teaspoon grated fresh ginger",
-    "1 cup hot water",
-    "1 teaspoon honey (optional)"
+    "Honey",
+    "Cinnamon Powder"
   ],
-  "preparationMethod": "Add grated ginger to hot water. Let it steep for 5–10 minutes. Strain and add honey if desired.",
-  "usageInstructions": "Drink 1 cup up to 3 times a day, especially after meals or when experiencing nausea.",
+  "preparationMethod": "Mix honey with cinnamon to form a paste.",
+  "usageInstructions": "Take one teaspoon in the morning.",
   "sideEffects": [
-    "Heartburn",
-    "Mild stomach discomfort"
+    "Can raise blood sugar levels in diabetics"
+  ],
+  "aiConfidenceScore": 75,
+  "isAIGenerated": true,
+  "scientificReferences": [],
+  "geographicRestrictions": [],
+  "createdBy": "6835826003d7a3a01f83ea22",
+  "isActive": true,
+  "createdAt": "2025-05-29T12:00:00.000Z",
+  "updatedAt": "2025-05-29T12:00:00.000Z",
+  "moderationStatus": "approved"
+},
+{
+  "_id": {
+    "$oid": "6837fe2c24de2bc5c53f7e34"
+  },
+  "name": "Steam Inhalation with Eucalyptus",
+  "description": "Relieves respiratory congestion through steam and essential oils.",
+  "category": "Respiratory",
+  "ingredients": [
+    "Eucalyptus Oil",
+    "Hot Water"
+  ],
+  "preparationMethod": "Add a few drops of eucalyptus oil to hot water and inhale the steam.",
+  "usageInstructions": "Use for 5–10 minutes once or twice a day.",
+  "sideEffects": [
+    "May irritate eyes or throat"
+  ],
+  "aiConfidenceScore": 88,
+  "isAIGenerated": false,
+  "scientificReferences": [
+    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2377254/"
+  ],
+  "geographicRestrictions": [],
+  "createdBy": "6835826003d7a3a01f83ea22",
+  "isActive": true,
+  "createdAt": "2025-05-29T12:00:00.000Z",
+  "updatedAt": "2025-05-29T12:00:00.000Z",
+  "moderationStatus": "approved"
+},
+{
+  "_id": {
+    "$oid": "6837fe2c24de2bc5c53f7e35"
+  },
+  "name": "Aloe Vera Gel",
+  "description": "Used topically to soothe sunburn and promote skin healing.",
+  "category": "Skin Care",
+  "ingredients": [
+    "Aloe Vera Leaf"
+  ],
+  "preparationMethod": "Extract gel from aloe vera leaf and store in refrigerator.",
+  "usageInstructions": "Apply directly to the skin as needed.",
+  "sideEffects": [
+    "Mild itching or burning for some people"
+  ],
+  "aiConfidenceScore": 82,
+  "isAIGenerated": false,
+  "scientificReferences": [
+    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2763764/"
+  ],
+  "geographicRestrictions": [],
+  "createdBy": "6835826003d7a3a01f83ea22",
+  "isActive": true,
+  "createdAt": "2025-05-29T12:00:00.000Z",
+  "updatedAt": "2025-05-29T12:00:00.000Z",
+  "moderationStatus": "approved"
+},
+{
+  "_id": {
+    "$oid": "6837fe2c24de2bc5c53f7e36"
+  },
+  "name": "Clove Oil for Toothache",
+  "description": "Clove oil is a traditional remedy for dental pain.",
+  "category": "Pain Relief",
+  "ingredients": [
+    "Clove Oil",
+    "Cotton Ball"
+  ],
+  "preparationMethod": "Soak a cotton ball in clove oil.",
+  "usageInstructions": "Place on the affected tooth for temporary relief.",
+  "sideEffects": [
+    "Burning sensation in the mouth"
+  ],
+  "aiConfidenceScore": 78,
+  "isAIGenerated": true,
+  "scientificReferences": [],
+  "geographicRestrictions": [],
+  "createdBy": "6835826003d7a3a01f83ea22",
+  "isActive": true,
+  "createdAt": "2025-05-29T12:00:00.000Z",
+  "updatedAt": "2025-05-29T12:00:00.000Z",
+  "moderationStatus": "approved"
+},
+{
+  "_id": {
+    "$oid": "6837fe2c24de2bc5c53f7e37"
+  },
+  "name": "Peppermint Tea",
+  "description": "Soothes stomach cramps and aids digestion.",
+  "category": "Digestive",
+  "ingredients": [
+    "Peppermint Leaves",
+    "Water"
+  ],
+  "preparationMethod": "Steep peppermint leaves in hot water for 5–10 minutes.",
+  "usageInstructions": "Drink after meals.",
+  "sideEffects": [
+    "May worsen acid reflux"
+  ],
+  "aiConfidenceScore": 87,
+  "isAIGenerated": false,
+  "scientificReferences": [],
+  "geographicRestrictions": [],
+  "createdBy": "6835826003d7a3a01f83ea22",
+  "isActive": true,
+  "createdAt": "2025-05-29T12:00:00.000Z",
+  "updatedAt": {
+    "$date": "2025-05-29T07:07:17.937Z"
+  },
+  "moderationStatus": "approved",
+  "averageRating": 0,
+  "viewCount": 0
+},
+{
+  "_id": {
+    "$oid": "6837fe2c24de2bc5c53f7e38"
+  },
+  "name": "Neem Paste",
+  "description": "Used for treating acne and other skin infections.",
+  "category": "Skin Care",
+  "ingredients": [
+    "Neem Leaves",
+    "Water"
+  ],
+  "preparationMethod": "Grind neem leaves with water to make a paste.",
+  "usageInstructions": "Apply to the affected area and leave for 15 minutes.",
+  "sideEffects": [],
+  "aiConfidenceScore": 76,
+  "isAIGenerated": true,
+  "scientificReferences": [],
+  "geographicRestrictions": [],
+  "createdBy": "6835826003d7a3a01f83ea22",
+  "isActive": true,
+  "createdAt": "2025-05-29T12:00:00.000Z",
+  "updatedAt": "2025-05-29T12:00:00.000Z",
+  "moderationStatus": "approved"
+},
+{
+  "_id": {
+    "$oid": "6837fe2c24de2bc5c53f7e39"
+  },
+  "name": "Salt Water Gargle",
+  "description": "Simple remedy to ease sore throat symptoms.",
+  "category": "Respiratory",
+  "ingredients": [
+    "Salt",
+    "Warm Water"
+  ],
+  "preparationMethod": "Dissolve salt in warm water.",
+  "usageInstructions": "Gargle for 30 seconds, then spit out. Repeat 2–3 times daily.",
+  "sideEffects": [
+    "None if done properly"
+  ],
+  "aiConfidenceScore": 92,
+  "isAIGenerated": false,
+  "scientificReferences": [],
+  "geographicRestrictions": [],
+  "createdBy": "6835826003d7a3a01f83ea22",
+  "isActive": true,
+  "createdAt": "2025-05-29T12:00:00.000Z",
+  "updatedAt": "2025-05-29T12:00:00.000Z",
+  "moderationStatus": "approved"
+},
+{
+  "_id": {
+    "$oid": "68382321c22fd4af94fa4d0c"
+  },
+  "name": "Turmeric Golden Milk",
+  "description": "A warm beverage made with turmeric, known for its anti-inflammatory properties.",
+  "category": "Pain Relief",
+  "ingredients": [
+    "Turmeric",
+    "Milk",
+    "Black Pepper",
+    "Honey"
+  ],
+  "preparationMethod": "Warm the milk and mix in turmeric, black pepper, and honey.",
+  "usageInstructions": "Drink once daily before bedtime.",
+  "sideEffects": [
+    "Stomach upset if taken in excess"
   ],
   "aiConfidenceScore": 85,
-  "isAIGenerated": false,
+  "isAIGenerated": true,
   "moderationStatus": "approved",
   "scientificReferences": [
-    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3665023/"
+    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5664031/"
   ],
   "geographicRestrictions": [],
   "createdBy": {
-    "$oid": "682746efca3acc607cabd39c"
+    "$oid": "683815b10214394db446fdb3"
   },
-  "viewCount": 12,
+  "viewCount": 0,
   "averageRating": 0,
   "isActive": true,
   "createdAt": {
-    "$date": "2025-05-19T19:56:16.602Z"
+    "$date": "2025-05-29T09:04:33.156Z"
   },
   "updatedAt": {
-    "$date": "2025-05-19T19:56:16.602Z"
+    "$date": "2025-05-29T09:04:33.156Z"
   },
   "__v": 0
 }]
