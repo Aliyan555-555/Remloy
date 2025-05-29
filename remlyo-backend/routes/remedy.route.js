@@ -8,6 +8,7 @@ import {
   updateRemedy,
 } from "../controllers/remedy.controller.js";
 import auth from "../middleware/auth.middleware.js";
+import { adminMiddleware } from './../middleware/admin.middleware.js';
 
 const RemedyRouter = express.Router();
 // create remedy route
@@ -21,6 +22,6 @@ RemedyRouter.post("/flag/:id",auth, flagRemedy);
 // update remedy by id
 RemedyRouter.put("/:id",auth, updateRemedy);
 // delete remedy by id
-RemedyRouter.delete("/:id",auth, deleteRemedy);
+RemedyRouter.delete("/:id",auth,adminMiddleware, deleteRemedy);
 
 export default RemedyRouter;

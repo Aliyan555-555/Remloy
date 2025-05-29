@@ -76,4 +76,59 @@ const userAccountStatus = async (token, userData) => {
   }
 };
 
-export { getAllUsers, deleteUser, userAccountStatus };
+const getAllRemedies = async (token, page, limit) => {
+  try {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const { data } = await API.get("/api/v1/remedy", { headers, params: { page, limit } });
+    return data;
+  }
+  catch (error) {
+    return (
+      error.response?.data || {
+        success: false,
+        message: "Failed to fetch remedies",
+        error: "Network error",
+      }
+    );
+  }
+}
+
+
+const deleteRemedy = async (token, id) => {
+  try {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const { data } = await API.delete(`/api/v1/remedy/${id}`, { headers });
+    return data;
+  } catch (error) {
+    return (
+      error.response?.data || {
+        success: false,
+        message: "Failed to delete remedy",
+        error: "Network error",
+      }
+    );
+  }
+};
+
+const moderateRemedy = async (token, id, moderateRemedyData) => {
+  try {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const { data } = await API.patch(`/api/v1/admin/moderate/remedy/${id}`, moderateRemedyData, { headers });
+    return data;
+  } catch (error) {
+    return (
+      error.response?.data || {
+        success: false,
+        message: "Failed to moderate remedy",
+        error: "Network error",
+      }
+    );
+  }
+}
+export { getAllUsers, deleteUser, userAccountStatus, getAllRemedies, deleteRemedy, moderateRemedy };

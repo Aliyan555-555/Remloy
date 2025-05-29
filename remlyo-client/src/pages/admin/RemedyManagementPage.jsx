@@ -9,9 +9,15 @@ import StatusBadge from "../../components/common/StatusBadge";
 import Modal, { ConfirmModal } from "../../components/common/Modal";
 import Pagination from "../../components/common/Pagination";
 import { useAuth } from "../../contexts/AuthContext";
+import {
+  deleteRemedy,
+  getAllRemedies,
+  moderateRemedy,
+} from "../../api/adminApi";
+import { formatDate } from "../../utils";
 
 const RemedyManagementPage = () => {
-  const { user } = useAuth();
+  const { user, authToken } = useAuth();
 
   // State for remedies and filters
   const [remedies, setRemedies] = useState([]);
@@ -43,23 +49,15 @@ const RemedyManagementPage = () => {
   useEffect(() => {
     const fetchRemedies = async () => {
       setLoading(true);
-      // In a real app, you would fetch data from an API with filters
-      // For now, we'll simulate with a timeout
-      setTimeout(() => {
-        const mockRemedies = Array(10).fill().map((_, idx) => ({
-          id: `remedy-${idx + 1}`,
-          title: `Turmeric Tea Recipe`,
-          category: "Community Remedy",
-          createdBy: "Daniel Abraham",
-          createdById: "danielshaw07",
-          createdAt: "Mar 23, 2024",
-          status: idx % 3 === 0 ? "Approved" : idx % 3 === 1 ? "Rejected" : "Pending",
-          views: Math.floor(Math.random() * 1000),
-          likes: Math.floor(Math.random() * 100),
-        }));
-        setRemedies(mockRemedies);
+      const res = await getAllRemedies(authToken, currentPage, 10);
+      const { success, totalPages, remedies, message } = res;
+      if (success) {
+        setRemedies(remedies);
+        setTotalPages(totalPages); // Assuming 10 remedies per page
         setLoading(false);
-      }, 500);
+      } else {
+        console.error("Failed to fetch remedies:", message);
+      }
     };
 
     fetchRemedies();
@@ -68,11 +66,11 @@ const RemedyManagementPage = () => {
   // Table columns definition
   const columns = [
     {
-      field: "title",
+      field: "name",
       header: "Title",
       sortable: true,
       render: (row) => (
-        <div className="font-medium text-gray-900">{row.title}</div>
+        <div className="font-medium text-gray-900">{row.name}</div>
       ),
     },
     {
@@ -85,18 +83,22 @@ const RemedyManagementPage = () => {
       header: "Created by",
       sortable: true,
       render: (row) => (
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <img
-            src={`/images/avatars/user1.jpg`}
-            alt={row.createdBy}
+            src={row.createdBy?.profileImage || `/images/avatars/user1.jpg`}
+            alt={row.createdBy?.name || "User Avatar"}
             className="w-6 h-6 rounded-full mr-2"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "https://via.placeholder.com/24?text=👤";
             }}
           />
-          <span>{row.createdBy}</span>
-          <span className="text-gray-500 text-xs ml-1">@{row.createdById}</span>
+          <div className="flex flex-col">
+            <span>{row.createdBy.email}</span>
+            <span className="text-gray-500 text-xs ml-1">
+              @{row.createdBy.username}
+            </span>
+          </div>
         </div>
       ),
     },
@@ -104,14 +106,13 @@ const RemedyManagementPage = () => {
       field: "createdAt",
       header: "Created at",
       sortable: true,
+      render: (row) => formatDate(row.createdAt),
     },
     {
-      field: "status",
+      field: "moderationStatus",
       header: "Status",
       sortable: true,
-      render: (row) => (
-        <StatusBadge status={row.status} />
-      ),
+      render: (row) => <StatusBadge status={row.moderationStatus} />,
     },
     {
       field: "actions",
@@ -119,16 +120,27 @@ const RemedyManagementPage = () => {
       sortable: false,
       render: (row) => (
         <ActionButtonGroup
-          viewUrl={`/admin/remedies/${row.id}`}
-          editUrl={`/admin/remedies/${row.id}/edit`}
+          viewUrl={`/admin/remedies/${row._id}`}
+          editUrl={`/admin/remedies/${row._id}/edit`}
           onDelete={() => handleDeleteClick(row)}
           extraActions={[
             {
               title: "Approve Remedy",
               onClick: () => handleApproveRemedy(row),
               icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-green-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               ),
               className: "text-green-500 hover:text-green-700",
@@ -137,8 +149,19 @@ const RemedyManagementPage = () => {
               title: "Reject Remedy",
               onClick: () => handleRejectClick(row),
               icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-red-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ),
               className: "text-red-500 hover:text-red-700",
@@ -179,17 +202,17 @@ const RemedyManagementPage = () => {
 
   // Handle status filter change
   const handleStatusFilterChange = (status) => {
-    setFilterByStatus(prev => ({
+    setFilterByStatus((prev) => ({
       ...prev,
-      [status]: !prev[status]
+      [status]: !prev[status],
     }));
   };
 
   // Handle type filter change
   const handleTypeFilterChange = (type) => {
-    setFilterByType(prev => ({
+    setFilterByType((prev) => ({
       ...prev,
-      [type]: !prev[type]
+      [type]: !prev[type],
     }));
   };
 
@@ -206,43 +229,55 @@ const RemedyManagementPage = () => {
   };
 
   // Handle delete confirm
-  const handleDeleteConfirm = () => {
-    // In a real app, you would call an API to delete the remedy
-    console.log(`Deleting remedy: ${selectedRemedy.id}`);
-    
-    // Mock deletion by removing from state
-    setRemedies(remedies.filter(r => r.id !== selectedRemedy.id));
-    
-    // Close modal
-    setShowDeleteModal(false);
-    setSelectedRemedy(null);
+  const handleDeleteConfirm = async () => {
+    const res = await deleteRemedy(authToken, selectedRemedy._id);
+    if (res.success) {
+      // Remove the deleted remedy from the state
+      setRemedies(remedies.filter((r) => r._id !== selectedRemedy._id));
+      setShowDeleteModal(false);
+      setSelectedRemedy(null);
+    }
   };
 
   // Handle reject confirm
-  const handleRejectConfirm = () => {
-    // In a real app, you would call an API to reject the remedy
-    console.log(`Rejecting remedy: ${selectedRemedy.id}, Reason: ${rejectionReason}`);
-    
-    // Mock rejection by updating status
-    setRemedies(remedies.map(r => 
-      r.id === selectedRemedy.id ? { ...r, status: 'Rejected' } : r
-    ));
-    
-    // Close modal and reset values
-    setShowRejectModal(false);
-    setSelectedRemedy(null);
-    setRejectionReason("");
+  const handleRejectConfirm = async () => {
+    const res = await moderateRemedy(authToken, selectedRemedy._id, {
+      status: "rejected",
+      rejectionReason,
+    });
+
+    if (res.success) {
+      setRemedies(
+        remedies.map((r) =>
+          r._id === selectedRemedy._id
+            ? { ...r, moderationStatus: "rejected" }
+            : r
+        )
+      );
+
+      // Close modal and reset values
+      setShowRejectModal(false);
+      setSelectedRemedy(null);
+      setRejectionReason("");
+    }
   };
 
   // Handle approve remedy
-  const handleApproveRemedy = (remedy) => {
-    // In a real app, you would call an API to approve the remedy
-    console.log(`Approving remedy: ${remedy.id}`);
-    
-    // Mock approval by updating status
-    setRemedies(remedies.map(r => 
-      r.id === remedy.id ? { ...r, status: 'Approved' } : r
-    ));
+  const handleApproveRemedy = async (remedy) => {
+    const res = await moderateRemedy(authToken, remedy._id, {
+      status: "approved",
+      rejectionReason: "", // No rejection reason for approval
+    });
+
+    if (res.success) {
+      setRemedies(
+        remedies.map((r) =>
+          r._id === remedy._id
+            ? { ...r, moderationStatus: "approved" }
+            : r
+        )
+      );
+    }
   };
 
   return (
@@ -319,14 +354,16 @@ const RemedyManagementPage = () => {
               <div className="p-4">
                 {/* By Remedy Status */}
                 <div className="mb-4">
-                  <h3 className="font-semibold text-gray-700 mb-2">By Remedy Status</h3>
+                  <h3 className="font-semibold text-gray-700 mb-2">
+                    By Remedy Status
+                  </h3>
                   <div className="space-y-2">
                     <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="status-approved"
                         checked={filterByStatus.approved}
-                        onChange={() => handleStatusFilterChange('approved')}
+                        onChange={() => handleStatusFilterChange("approved")}
                         className="mr-2"
                       />
                       <label htmlFor="status-approved">Approved Remedies</label>
@@ -336,7 +373,7 @@ const RemedyManagementPage = () => {
                         type="checkbox"
                         id="status-pending"
                         checked={filterByStatus.pending}
-                        onChange={() => handleStatusFilterChange('pending')}
+                        onChange={() => handleStatusFilterChange("pending")}
                         className="mr-2"
                       />
                       <label htmlFor="status-pending">Pending review</label>
@@ -346,7 +383,7 @@ const RemedyManagementPage = () => {
                         type="checkbox"
                         id="status-rejected"
                         checked={filterByStatus.rejected}
-                        onChange={() => handleStatusFilterChange('rejected')}
+                        onChange={() => handleStatusFilterChange("rejected")}
                         className="mr-2"
                       />
                       <label htmlFor="status-rejected">Rejected</label>
@@ -356,14 +393,16 @@ const RemedyManagementPage = () => {
 
                 {/* By Remedy Type */}
                 <div className="mb-4">
-                  <h3 className="font-semibold text-gray-700 mb-2">by Remedy Type</h3>
+                  <h3 className="font-semibold text-gray-700 mb-2">
+                    by Remedy Type
+                  </h3>
                   <div className="space-y-2">
                     <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="type-community"
                         checked={filterByType.community}
-                        onChange={() => handleTypeFilterChange('community')}
+                        onChange={() => handleTypeFilterChange("community")}
                         className="mr-2"
                       />
                       <label htmlFor="type-community">Community Remedies</label>
@@ -373,27 +412,33 @@ const RemedyManagementPage = () => {
                         type="checkbox"
                         id="type-alternative"
                         checked={filterByType.alternative}
-                        onChange={() => handleTypeFilterChange('alternative')}
+                        onChange={() => handleTypeFilterChange("alternative")}
                         className="mr-2"
                       />
-                      <label htmlFor="type-alternative">Alternative Remedies</label>
+                      <label htmlFor="type-alternative">
+                        Alternative Remedies
+                      </label>
                     </div>
                     <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="type-pharmaceutical"
                         checked={filterByType.pharmaceutical}
-                        onChange={() => handleTypeFilterChange('pharmaceutical')}
+                        onChange={() =>
+                          handleTypeFilterChange("pharmaceutical")
+                        }
                         className="mr-2"
                       />
-                      <label htmlFor="type-pharmaceutical">Pharmaceuticals Remedies</label>
+                      <label htmlFor="type-pharmaceutical">
+                        Pharmaceuticals Remedies
+                      </label>
                     </div>
                     <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="type-ai"
                         checked={filterByType.ai}
-                        onChange={() => handleTypeFilterChange('ai')}
+                        onChange={() => handleTypeFilterChange("ai")}
                         className="mr-2"
                       />
                       <label htmlFor="type-ai">AI Remedies</label>
@@ -444,13 +489,13 @@ const RemedyManagementPage = () => {
                 d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
               />
             </svg>
-            {sortOption === "newest" 
-              ? "Most recent" 
-              : sortOption === "mostReported" 
-                ? "Most reported" 
-                : sortOption === "mostViewed" 
-                  ? "Most viewed" 
-                  : "Sort By"}
+            {sortOption === "newest"
+              ? "Most recent"
+              : sortOption === "mostReported"
+              ? "Most reported"
+              : sortOption === "mostViewed"
+              ? "Most viewed"
+              : "Sort By"}
           </Button>
 
           {sortMenuOpen && (
@@ -548,7 +593,8 @@ const RemedyManagementPage = () => {
       >
         <div className="mb-6">
           <p className="text-gray-600 mb-4">
-            Please provide a reason for rejecting this remedy. This will be sent to the user.
+            Please provide a reason for rejecting this remedy. This will be sent
+            to the user.
           </p>
           <textarea
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"

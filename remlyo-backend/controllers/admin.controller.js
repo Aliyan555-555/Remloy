@@ -10,58 +10,62 @@ import User from "../models/user.model.js";
  */
 const adminModerateRemedy = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id;
     const adminId = req.user?.id;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res
-        .status(400)
-        .json({ message: "Invalid remedy ID.", success: false });
-    }
     const { error } = adminModerateRemedyValidation.validate(req.body);
     if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+      return res.status(400).json({ message: error.details[0].message, success: false });
     }
     const { status, moderatorNote = "", rejectionReason = "" } = req.body;
 
-    const remedy = await Remedy.findById(id);
-    if (!remedy) {
-      return res
-        .status(404)
-        .json({ message: "Remedy not found.", success: false });
+    // Validate remedy ID
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid remedy ID format.", success: false });
     }
 
-    const moderationStatus = await ModerationStatus.findOne({
+    // Find remedy
+    const remedy = await Remedy.findById(id);
+    if (!remedy) {
+      return res.status(404).json({ message: "Remedy not found.", success: false });
+    }
+
+    // Find or create moderation status
+    let moderationStatus = await ModerationStatus.findOne({
       contentId: remedy._id,
       contentType: "Remedy",
     });
 
     if (!moderationStatus) {
-      return res
-        .status(404)
-        .json({ message: "Moderation record not found.", success: false });
+      moderationStatus = new ModerationStatus({
+        contentId: remedy._id,
+        contentType: "Remedy",
+        status,
+        reviewedBy: adminId,
+        reviewDate: new Date(),
+        moderatorNotes: moderatorNote,
+        rejectionReason: status === "rejected" ? rejectionReason : "",
+        flagCount: 0,
+        moderationHistory: [],
+      });
+    } else {
+      moderationStatus.status = status;
+      moderationStatus.reviewedBy = adminId;
+      moderationStatus.reviewDate = new Date();
+      moderationStatus.moderatorNotes = moderatorNote;
+      if (status === "approved") {
+        moderationStatus.flagCount = 0;
+        moderationStatus.moderationHistory = [];
+        moderationStatus.rejectionReason = "";
+      } else if (status === "rejected") {
+        moderationStatus.rejectionReason = rejectionReason;
+      }
     }
 
-    //  Update moderation details
-    moderationStatus.status = status;
-    moderationStatus.reviewedBy = adminId;
-    moderationStatus.reviewDate = new Date();
-    moderationStatus.moderatorNotes = moderatorNote;
-
-    //  Apply status-specific changes
-    if (status === "approved") {
-      moderationStatus.flagCount = 0;
-      moderationStatus.moderationHistory = [];
-      moderationStatus.rejectionReason = "";
-      remedy.isActive = true;
-    } else if (status === "rejected") {
-      moderationStatus.rejectionReason = rejectionReason;
-      remedy.isActive = false;
-    }
-
-    //  Update remedy's public moderation status
+    // Update remedy's moderation status and isActive
     remedy.moderationStatus = status;
+    remedy.isActive = status === "approved";
 
-    //  Save both models
+    // Save both models
     await Promise.all([moderationStatus.save(), remedy.save()]);
 
     return res.status(200).json({
@@ -215,7 +219,7 @@ const deleteUser = async (req, res) => {
 
 const userAccountStatus = async (req, res) => {
   try {
-    const { id,message, status } = req.body;
+    const { id, message, status } = req.body;
     const adminId = req.user.id;
 
     // Validate user ID

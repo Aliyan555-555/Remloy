@@ -10,7 +10,7 @@ import Modal, { ConfirmModal } from "../../components/common/Modal";
 import Pagination from "../../components/common/Pagination";
 import { useAuth } from "../../contexts/AuthContext";
 import { deleteUser, getAllUsers, userAccountStatus } from "../../api/adminApi";
-import { formatDate } from "../../util";
+import { formatDate } from "../../utils";
 const UsersManagementPage = () => {
   const { user, authToken } = useAuth();
 

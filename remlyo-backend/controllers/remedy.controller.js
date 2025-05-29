@@ -37,12 +37,12 @@ const createRemedy = async (req, res) => {
 
 const getAllRemedies = async (req, res) => {
   try {
-    const limit = Math.min(Math.max(parseInt(req.query.l) || 10, 1), 100);
-    const page = Math.max(parseInt(req.query.p) || 1, 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 10, 1), 100);
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
     const skip = (page - 1) * limit;
 
     const [remedies, totalRemedies] = await Promise.all([
-      Remedy.find({ isActive: true }).skip(skip).limit(limit),
+      Remedy.find().populate("createdBy").skip(skip).limit(limit),
       Remedy.countDocuments(),
     ]);
 
@@ -153,12 +153,6 @@ const updateRemedy = async (req, res) => {
 const deleteRemedy = async (req, res) => {
   try {
     const { id } = req.params;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res
-        .status(400)
-        .json({ message: "Invalid remedy ID", success: false });
-    }
     const remedy = await Remedy.findById(id);
     if (!remedy || !remedy.isActive) {
       return res.status(404).json({
@@ -166,23 +160,13 @@ const deleteRemedy = async (req, res) => {
         success: false,
       });
     }
-    const user = req.user;
-    if (
-      user.id.toString() !== remedy.createdBy.toString() ||
-      user.role == "admin"
-    ) {
-      return res
-        .status(403)
-        .json({ message: "Permission denied", success: false });
-    }
 
-    remedy.isActive = false; // Mark as inactive
-    await remedy.save();
+    const deletedRemedy = await Remedy.findByIdAndDelete(id)
 
     res.status(200).json({
-      message: "Remedy successfully soft deleted",
+      message: "Remedy successfully deleted",
       success: true,
-      id: remedy._id,
+      id: deletedRemedy._id,
     });
   } catch (error) {
     console.error("Error soft deleting remedy:", error);

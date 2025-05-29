@@ -1,5 +1,16 @@
 import mongoose from 'mongoose';
 
+// Define category enum as a constant for maintainability and clarity
+export const REMEDY_CATEGORIES = [
+  "Community Remedies",
+  "Pain Relief",
+  "Digestive",
+  "Respiratory",
+  "Immune Support",
+  "Sleep Aid",
+  "Skin Care"
+];
+
 const RemedySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -12,7 +23,7 @@ const RemedySchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['herbal', 'homeopathic', 'traditional', 'other'], // maybe update this in future
+    enum: REMEDY_CATEGORIES, // reference the constant here
     required: true,
   },
   ingredients: {
@@ -69,13 +80,15 @@ const RemedySchema = new mongoose.Schema({
     min: 0,
     max: 5,
   },
-  isActive:{
-    type:Boolean,
-    default:true
+  isActive: {
+    type: Boolean,
+    default: true
   }
 }, { timestamps: true });
 
-RemedySchema.index({ name: 'text', description: 'text', category: 'text' });
+
+
 
 const Remedy = mongoose.model('Remedy', RemedySchema);
 export default Remedy;
+

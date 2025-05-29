@@ -7,18 +7,19 @@ import LoadingSpinner from "../common/LoadingSpinner";
 
 const FlowGuard = ({ children }) => {
   const { flowStatus, loading } = useUserFlow();
-  const { isAuthenticated, user,authToken } = useAuth();
+  const { isAuthenticated, user, authToken } = useAuth();
   const location = useLocation();
 
   const currentPath = location.pathname;
   const isAdmin = user?.accessLevel === "admin";
 
-
-  if (loading) return <LoadingSpinner />;
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   // Redirect unauthenticated or unknown flow users to sign-in
   if (!isAuthenticated && !flowStatus) {
-    return <Navigate to="/signin"  replace />;
+    return <Navigate to="/signin" replace />;
   }
 
   if (!flowStatus) {
@@ -31,17 +32,24 @@ const FlowGuard = ({ children }) => {
   }
 
   // Define allowed routes based on user flow status
-  const allowedRoutes = useMemo(() => ({
-    [UserFlowStatus.LOGGED_OUT]: ["/signin", "/signup", "/forgot-password"],
-    [UserFlowStatus.EMAIL_UNVERIFIED]: ["/verify-email", "/logout"],
-    [UserFlowStatus.PROFILE_INCOMPLETE]: ["/health-profile", "/logout"],
-    [UserFlowStatus.SUBSCRIPTION_REQUIRED]: ["/subscription", "/health-profile", "/logout"],
-    [UserFlowStatus.COMPLETE]: ["*"],
-  }), []);
+  const allowedRoutes = useMemo(
+    () => ({
+      [UserFlowStatus.LOGGED_OUT]: ["/signin", "/signup", "/forgot-password"],
+      [UserFlowStatus.EMAIL_UNVERIFIED]: ["/verify-email", "/logout"],
+      [UserFlowStatus.PROFILE_INCOMPLETE]: ["/health-profile", "/logout"],
+      [UserFlowStatus.SUBSCRIPTION_REQUIRED]: [
+        "/subscription",
+        "/health-profile",
+        "/logout",
+      ],
+      [UserFlowStatus.COMPLETE]: ["*"],
+    }),
+    []
+  );
 
   // Determine if current route is allowed
-  const isRouteAllowed = allowedRoutes[flowStatus]?.some(route =>
-    route === "*" || currentPath.startsWith(route)
+  const isRouteAllowed = allowedRoutes[flowStatus]?.some(
+    (route) => route === "*" || currentPath.startsWith(route)
   );
 
   if (isRouteAllowed) {

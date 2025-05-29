@@ -56,6 +56,7 @@ const Table = ({
       
       // Handle different data types (string, number, date)
       if (typeof aValue === "string") {
+        console.log(aValue, bValue);
         return sortDirection === "asc" 
           ? aValue.localeCompare(bValue) 
           : bValue.localeCompare(aValue);

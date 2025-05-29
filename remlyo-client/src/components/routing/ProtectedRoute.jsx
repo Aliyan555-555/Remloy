@@ -1,16 +1,25 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import LoadingSpinner from '../common/LoadingSpinner';
 
 const ProtectedRoute = ({ children, requiredSubscription = 'free' }) => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated,loading, user } = useAuth();
 
-  if (!isAuthenticated) {
+
+
+  if (loading) {
+    return (
+      <LoadingSpinner/>
+    )
+  }
+
+  if (!loading && !isAuthenticated) {
     // Redirect to login if not authenticated
     return <Navigate to="/signin" />;
   }
 
   // Check subscription level if required
-  if (requiredSubscription === 'premium' && user.subscriptionType !== 'premium') {
+  if ( requiredSubscription === 'premium' && user.subscriptionType !== 'premium') {
     // Redirect to upgrade page or regular dashboard
     return <Navigate to="/dashboard" />;
   }
