@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "6834ec243c808fa531fd8893"
+  },
+  "userId": {
+    "$oid": "6832216b2ed7d8a2ffea24b9"
+  },
+  "age": 12,
+  "sex": "nonbinary",
+  "weight": 34,
+  "height": 434,
+  "bloodType": "AB-",
+  "allergies": [],
+  "chronicConditions": [
+    "autoimmune",
+    "other"
+  ],
+  "medications": [],
+  "familyHistory": [],
+  "dataShareConsent": false,
+  "preferredLanguage": "en",
+  "located": "karachi",
+  "ethnicity": "hispanic",
+  "birthplace": "krachi",
+  "diet": "vegan",
+  "lastUpdated": {
+    "$date": "2025-05-26T22:33:08.990Z"
+  },
+  "__v": 0
+}]

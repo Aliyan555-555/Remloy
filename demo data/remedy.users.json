@@ -1,0 +1,28 @@
+[{
+  "_id": {
+    "$oid": "6832216b2ed7d8a2ffea24b9"
+  },
+  "username": "Aliyan siddiqui",
+  "email": "aliyansiddiqui555@gmail.com",
+  "password": "$2b$10$mELB5e240oA5s7NeoMamSO515Sv0GN87rGAqwUSwIx/qgPEaWTiiy",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": true,
+  "emailVerified": true,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "emailVerificationRequestCount": 0,
+  "emailVerificationTimestamp": null,
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-05-24T19:43:39.604Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-26T21:44:44.065Z"
+  },
+  "__v": 0,
+  "lastLogin": {
+    "$date": "2025-05-26T21:44:44.064Z"
+  }
+}]

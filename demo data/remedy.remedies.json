@@ -1,0 +1,116 @@
+[{
+  "_id": {
+    "$oid": "6827608b1ae179e896c82cfc"
+  },
+  "name": "Ginger Tea for Nausea",
+  "description": "Ginger tea is a natural remedy commonly used to relieve nausea and indigestion.",
+  "category": "herbal",
+  "ingredients": [
+    "1 teaspoon grated fresh ginger",
+    "1 cup hot water",
+    "1 teaspoon honey (optional)"
+  ],
+  "preparationMethod": "Add grated ginger to hot water. Let it steep for 5–10 minutes. Strain and add honey if desired.",
+  "usageInstructions": "Drink 1 cup up to 3 times a day, especially after meals or when experiencing nausea.",
+  "sideEffects": [
+    "Heartburn",
+    "Mild stomach discomfort"
+  ],
+  "aiConfidenceScore": 85,
+  "isAIGenerated": false,
+  "moderationStatus": "approved",
+  "scientificReferences": [
+    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3665023/"
+  ],
+  "geographicRestrictions": [],
+  "createdBy": {
+    "$oid": "682746efca3acc607cabd39c"
+  },
+  "viewCount": 12,
+  "averageRating": 0,
+  "createdAt": {
+    "$date": "2025-05-16T15:58:03.024Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-16T15:58:03.024Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "682779c1a1955aa79a7d2411"
+  },
+  "name": "Ginger Tea for Nausea demo 121",
+  "description": "Ginger tea is a natural remedy commonly used to relieve nausea and indigestion.",
+  "category": "herbal",
+  "ingredients": [
+    "1 teaspoon grated fresh ginger",
+    "1 cup hot water",
+    "1 teaspoon honey (optional)"
+  ],
+  "preparationMethod": "Add grated ginger to hot water. Let it steep for 5–10 minutes. Strain and add honey if desired.",
+  "usageInstructions": "Drink 1 cup up to 3 times a day, especially after meals or when experiencing nausea.",
+  "sideEffects": [
+    "Heartburn",
+    "Mild stomach discomfort"
+  ],
+  "aiConfidenceScore": 85,
+  "isAIGenerated": false,
+  "moderationStatus": "pending",
+  "scientificReferences": [
+    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3665023/"
+  ],
+  "geographicRestrictions": [],
+  "createdBy": {
+    "$oid": "682746efca3acc607cabd39c"
+  },
+  "viewCount": 12,
+  "averageRating": 0,
+  "createdAt": {
+    "$date": "2025-05-16T17:45:37.675Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-20T19:38:46.474Z"
+  },
+  "__v": 0,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "682b8ce014067f363d91b546"
+  },
+  "name": "Ginger Tea for Nausea with new name",
+  "description": "Ginger tea is a natural remedy commonly used to relieve nausea and indigestion.",
+  "category": "herbal",
+  "ingredients": [
+    "1 teaspoon grated fresh ginger",
+    "1 cup hot water",
+    "1 teaspoon honey (optional)"
+  ],
+  "preparationMethod": "Add grated ginger to hot water. Let it steep for 5–10 minutes. Strain and add honey if desired.",
+  "usageInstructions": "Drink 1 cup up to 3 times a day, especially after meals or when experiencing nausea.",
+  "sideEffects": [
+    "Heartburn",
+    "Mild stomach discomfort"
+  ],
+  "aiConfidenceScore": 85,
+  "isAIGenerated": false,
+  "moderationStatus": "approved",
+  "scientificReferences": [
+    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3665023/"
+  ],
+  "geographicRestrictions": [],
+  "createdBy": {
+    "$oid": "682746efca3acc607cabd39c"
+  },
+  "viewCount": 12,
+  "averageRating": 0,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-05-19T19:56:16.602Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-19T19:56:16.602Z"
+  },
+  "__v": 0
+}]
