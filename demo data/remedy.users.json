@@ -1,11 +1,11 @@
 [{
   "_id": {
-    "$oid": "6832216b2ed7d8a2ffea24b9"
+    "$oid": "6835826003d7a3a01f83ea22"
   },
   "username": "Aliyan siddiqui",
   "email": "aliyansiddiqui555@gmail.com",
-  "password": "$2b$10$mELB5e240oA5s7NeoMamSO515Sv0GN87rGAqwUSwIx/qgPEaWTiiy",
-  "accessLevel": "user",
+  "password": "$2b$10$a36oJi6DOCzvfBhDMP21buln.yz58SehdwX68Xp.LDcsgArdX5Wnq",
+  "accessLevel": "admin",
   "geographicRegion": "global",
   "isActive": true,
   "emailVerified": true,
@@ -16,13 +16,49 @@
   "resetRequestCount": 0,
   "resetRequestTimestamp": null,
   "createdAt": {
-    "$date": "2025-05-24T19:43:39.604Z"
+    "$date": "2025-05-27T09:14:08.173Z"
   },
   "updatedAt": {
-    "$date": "2025-05-26T21:44:44.065Z"
+    "$date": "2025-05-29T07:59:03.656Z"
   },
   "__v": 0,
   "lastLogin": {
-    "$date": "2025-05-26T21:44:44.064Z"
+    "$date": "2025-05-29T07:59:03.655Z"
+  },
+  "status": "active"
+},
+{
+  "_id": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "username": "Admin",
+  "email": "admin@remlyo.com",
+  "password": "$2b$10$jsO7liCfMNYALp8sHZwUYu3QIspP36tmA13OnPN837yOGoGWKeBvS",
+  "accessLevel": "admin",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": true,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 1,
+  "emailVerificationTimestamp": {
+    "$date": "2025-05-29T08:07:13.979Z"
+  },
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-05-29T08:07:13.932Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T08:15:02.678Z"
+  },
+  "__v": 0,
+  "emailVerificationExpires": {
+    "$date": "2025-05-29T08:37:13.980Z"
+  },
+  "emailVerificationToken": "b8566dd46df9e036c3916243a7f4dcbb90fb9bd36fbe9eb6d109e72b74540317",
+  "lastLogin": {
+    "$date": "2025-05-29T08:15:02.668Z"
   }
 }]

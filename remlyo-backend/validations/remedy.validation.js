@@ -4,7 +4,6 @@ const remedyValidation = Joi.object({
   name: Joi.string().trim().min(2).max(100).required(),
   description: Joi.string().min(10).required(),
   category: Joi.string()
-    .valid("herbal", "homeopathic", "traditional", "other")
     .required(),
   ingredients: Joi.array().items(Joi.string().trim()).default([]),
   preparationMethod: Joi.string().min(5).required(),
