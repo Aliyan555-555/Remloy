@@ -3,6 +3,7 @@ import Remedy from "../models/remedy.model.js";
 import ModerationStatus from "../models/moderation_status.model.js";
 import { adminModerateRemedyValidation } from "../validations/admin.validation.js";
 import User from "../models/user.model.js";
+import AuditLog from "../models/audit_log.model.js";
 
 /**
  * Admin moderation controller for remedy.
@@ -14,19 +15,25 @@ const adminModerateRemedy = async (req, res) => {
     const adminId = req.user?.id;
     const { error } = adminModerateRemedyValidation.validate(req.body);
     if (error) {
-      return res.status(400).json({ message: error.details[0].message, success: false });
+      return res
+        .status(400)
+        .json({ message: error.details[0].message, success: false });
     }
     const { status, moderatorNote = "", rejectionReason = "" } = req.body;
 
     // Validate remedy ID
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Invalid remedy ID format.", success: false });
+      return res
+        .status(400)
+        .json({ message: "Invalid remedy ID format.", success: false });
     }
 
     // Find remedy
     const remedy = await Remedy.findById(id);
     if (!remedy) {
-      return res.status(404).json({ message: "Remedy not found.", success: false });
+      return res
+        .status(404)
+        .json({ message: "Remedy not found.", success: false });
     }
 
     // Find or create moderation status
@@ -293,4 +300,74 @@ const userAccountStatus = async (req, res) => {
   }
 };
 
-export { adminModerateRemedy, getAllUsers, deleteUser, userAccountStatus };
+const changeUserRole = async (req, res) => {
+  try {
+    const { id, role } = req.body;
+    const adminId = req.user.id;
+
+    // Validate user ID
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user ID format",
+      });
+    }
+
+    // Prevent admin from modifying their own role
+    if (id === adminId) {
+      return res.status(403).json({
+        success: false,
+        message: "Admin cannot modify their own role",
+      });
+    }
+
+    // Validate role
+    const allowedRoles = ["user", "admin", "moderator", "writer"];
+    if (!role || !allowedRoles.includes(role.toLowerCase())) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid role. Allowed roles are: " + allowedRoles.join(", "),
+      });
+    }
+
+    // Find user
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    // Store old role for audit log
+    const oldRole = user.accessLevel;
+
+    // Update user role
+    user.accessLevel = role.toLowerCase();
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "User role updated successfully",
+      data: {
+        userId: user._id,
+        oldRole,
+        newRole: role.toLowerCase(),
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to update user role",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  }
+};
+
+export {
+  adminModerateRemedy,
+  getAllUsers,
+  deleteUser,
+  userAccountStatus,
+  changeUserRole,
+};

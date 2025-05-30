@@ -11,6 +11,7 @@ import reviewRouter from './routes/review.route.js';
 import adminMiddleware from "./middleware/admin.middleware.js";
 import adminRouter from "./routes/admin.route.js";
 import {main} from "./config/openai.config.js"
+import uploadRouter from "./routes/upload.routes.js";
 
 const app = express();
 
@@ -33,6 +34,8 @@ app.use("/api/v1/review",reviewRouter);
 app.use("/api/v1/remedy", remedyRouter);
 // admin Routes
 app.use("/api/v1/admin",auth,adminMiddleware,adminRouter);
+// upload files (images,etc)
+app.use("/api/v1/upload",auth,uploadRouter)
 
 
 // main();

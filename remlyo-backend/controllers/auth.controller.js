@@ -692,3 +692,34 @@ export {
   socialAuth,
   verifyAuth,
 };
+
+
+/** 
+* Paste one or more documents here
+*/
+// {
+//   "username": "Aliyan siddiqui",
+//   "email": "aliyansiddiqui555@gmail.com",
+//   "password": "$2b$10$a36oJi6DOCzvfBhDMP21buln.yz58SehdwX68Xp.LDcsgArdX5Wnq",
+//   "accessLevel": "admin",
+//   "geographicRegion": "global",
+//   "isActive": true,
+//   "emailVerified": true,
+//   "twoFactorStatus": "disabled",
+//   "profileImage": "/user/default.png",
+//   "emailVerificationRequestCount": 0,
+//   "emailVerificationTimestamp": null,
+//   "resetRequestCount": 0,
+//   "resetRequestTimestamp": null,
+//   "createdAt": {
+//     "$date": "2025-05-27T09:14:08.173Z"
+//   },
+//   "updatedAt": {
+//     "$date": "2025-05-29T16:50:28.938Z"
+//   },
+//   "__v": 0,
+//   "lastLogin": {
+//     "$date": "2025-05-29T16:50:28.938Z"
+//   },
+//   "status": "active"
+// }
