@@ -1,34 +1,5 @@
 [{
   "_id": {
-    "$oid": "6835826003d7a3a01f83ea22"
-  },
-  "username": "Aliyan siddiqui",
-  "email": "aliyansiddiqui555@gmail.com",
-  "password": "$2b$10$a36oJi6DOCzvfBhDMP21buln.yz58SehdwX68Xp.LDcsgArdX5Wnq",
-  "accessLevel": "admin",
-  "geographicRegion": "global",
-  "isActive": true,
-  "emailVerified": true,
-  "twoFactorStatus": "disabled",
-  "profileImage": "/user/default.png",
-  "emailVerificationRequestCount": 0,
-  "emailVerificationTimestamp": null,
-  "resetRequestCount": 0,
-  "resetRequestTimestamp": null,
-  "createdAt": {
-    "$date": "2025-05-27T09:14:08.173Z"
-  },
-  "updatedAt": {
-    "$date": "2025-05-29T07:59:03.656Z"
-  },
-  "__v": 0,
-  "lastLogin": {
-    "$date": "2025-05-29T07:59:03.655Z"
-  },
-  "status": "active"
-},
-{
-  "_id": {
     "$oid": "683815b10214394db446fdb3"
   },
   "username": "Admin",
@@ -51,7 +22,7 @@
     "$date": "2025-05-29T08:07:13.932Z"
   },
   "updatedAt": {
-    "$date": "2025-05-29T08:15:02.678Z"
+    "$date": "2025-05-29T22:47:31.684Z"
   },
   "__v": 0,
   "emailVerificationExpires": {
@@ -59,6 +30,121 @@
   },
   "emailVerificationToken": "b8566dd46df9e036c3916243a7f4dcbb90fb9bd36fbe9eb6d109e72b74540317",
   "lastLogin": {
-    "$date": "2025-05-29T08:15:02.668Z"
+    "$date": "2025-05-29T22:47:31.683Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6838cb831d984b618341af13"
+  },
+  "username": "demo moderator",
+  "email": "moderator@remlyo.com",
+  "password": "$2b$10$A86YphX7Hf5pritLBWpVZ./rryshL.QZskMuD59HcVSgk9RbZsql2",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": true,
+  "emailVerified": true,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "warning",
+  "emailVerificationRequestCount": 2,
+  "emailVerificationTimestamp": {
+    "$date": "2025-05-29T21:03:00.120Z"
+  },
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-05-29T21:03:00.004Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T22:47:46.267Z"
+  },
+  "__v": 0,
+  "emailVerificationExpires": {
+    "$date": "2025-05-29T21:33:13.717Z"
+  },
+  "emailVerificationToken": "bb76cf0c26682e29d5d95e1fe14169bf3e4124ac3d693b4a6c420cd3348bd117",
+  "lastLogin": {
+    "$date": "2025-05-29T22:47:02.837Z"
+  },
+  "suspendedAt": {
+    "$date": "2025-05-29T21:53:50.312Z"
+  },
+  "suspendedBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "suspendedMessage": "sos issie",
+  "warningAt": {
+    "$date": "2025-05-29T21:54:23.327Z"
+  },
+  "warningBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "warningMessage": ""
+},
+{
+  "_id": {
+    "$oid": "6838cdff1d984b618341af2b"
+  },
+  "username": "Aliyan",
+  "email": "aliyansiddiqui555@gmail.com",
+  "password": "$2b$10$/4RapNsn/ow42z/.g1qpbOXGZge.w66obwma9COwLkAGERRvRs0qq",
+  "accessLevel": "admin",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": true,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 1,
+  "emailVerificationTimestamp": {
+    "$date": "2025-05-29T21:13:35.756Z"
+  },
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-05-29T21:13:35.695Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T23:11:34.525Z"
+  },
+  "__v": 0,
+  "lastLogin": {
+    "$date": "2025-05-29T23:11:34.517Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6838e297d534bc63c01e000c"
+  },
+  "username": "demo writer",
+  "email": "writer@remlyo.com",
+  "password": "$2b$10$Kj481bBxACWpTrJ.a/sAG.Y77VMDgvZ4qRv2IddvV7545VF724CIO",
+  "accessLevel": "writer",
+  "geographicRegion": "global",
+  "isActive": true,
+  "emailVerified": true,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 1,
+  "emailVerificationTimestamp": {
+    "$date": "2025-05-29T22:41:27.445Z"
+  },
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-05-29T22:41:27.378Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T22:46:12.446Z"
+  },
+  "__v": 0,
+  "emailVerificationExpires": {
+    "$date": "2025-05-29T23:11:27.445Z"
+  },
+  "emailVerificationToken": "6abedda11451aa6630562e9e27743486dd2ff2dacc3b5a06c4a17d76e0ed0e47",
+  "lastLogin": {
+    "$date": "2025-05-29T22:46:12.445Z"
   }
 }]

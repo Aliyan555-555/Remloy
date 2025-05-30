@@ -15,7 +15,7 @@ const AddRemedyPage = () => {
 
   // Form state
   const [formData, setFormData] = useState({
-    title: "",
+    name: "",
     category: "",
     description: "",
     ingredients: "",
@@ -52,8 +52,8 @@ const AddRemedyPage = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.title.trim()) {
-      newErrors.title = "Remedy title is required";
+    if (!formData.name.trim()) {
+      newErrors.name = "Remedy title is required";
     }
 
     if (!formData.category.trim()) {
@@ -80,7 +80,7 @@ const AddRemedyPage = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      const res = await createRemedy(authToken,formData);
+      const res = await createRemedy(authToken,{...formData,type:remedyType});
 
       if (res.success) {
         navigate("/admin/remedies");
@@ -314,14 +314,14 @@ const AddRemedyPage = () => {
           </label>
           <input
             type="text"
-            name="title"
-            value={formData.title}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             placeholder="Enter remedy title"
             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
           />
-          {errors.title && (
-            <p className="text-red-500 text-xs mt-1">{errors.title}</p>
+          {errors.name && (
+            <p className="text-red-500 text-xs mt-1">{errors.name}</p>
           )}
         </div>
       </div>

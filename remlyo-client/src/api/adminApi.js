@@ -15,13 +15,12 @@ const getAuthHeaders = (token) => ({
  * @param {string} defaultMessage
  * @returns {Object}
  */
-const handleApiError = (error, defaultMessage) => (
+const handleApiError = (error, defaultMessage) =>
   error?.response?.data || {
     success: false,
     message: defaultMessage,
     error: error?.message || "Network error",
-  }
-);
+  };
 
 /**
  * Get all users with pagination and filters
@@ -36,15 +35,10 @@ const handleApiError = (error, defaultMessage) => (
  */
 const getAllUsers = async (
   token,
-  {
-    page = 1,
-    limit = 10,
-    search = "",
-    role = "",
-    lastActive = "",
-  } = {}
+  { page = 1, limit = 10, search = "", role = "", lastActive = "" } = {}
 ) => {
   try {
+    console.log(search);
     const { data } = await API.get("/api/v1/admin/users", {
       headers: getAuthHeaders(token),
       params: { page, limit, search, role, lastActive },
@@ -80,11 +74,9 @@ const deleteUser = async (token, id) => {
  */
 const userAccountStatus = async (token, userData) => {
   try {
-    const { data } = await API.post(
-      "/api/v1/admin/users/status",
-      userData,
-      { headers: getAuthHeaders(token) }
-    );
+    const { data } = await API.post("/api/v1/admin/users/status", userData, {
+      headers: getAuthHeaders(token),
+    });
     return data;
   } catch (error) {
     return handleApiError(error, "Failed to update user status");
@@ -101,12 +93,12 @@ const userAccountStatus = async (token, userData) => {
  */
 const getAllRemedies = async (
   token,
-  { page = 1, limit = 10 } = {}
+  { page = 1, limit = 10, search = "" } = {}
 ) => {
   try {
     const { data } = await API.get("/api/v1/remedy", {
       headers: getAuthHeaders(token),
-      params: { page, limit },
+      params: { page, limit, search },
     });
     return data;
   } catch (error) {
@@ -151,6 +143,17 @@ const moderateRemedy = async (token, id, moderateRemedyData) => {
   }
 };
 
+const changeUserRole = async (token, userData) => {
+  try {
+    const { data } = await API.post("/api/v1/admin/users/role", userData, {
+      headers: getAuthHeaders(token),
+    });
+    return data;
+  } catch (error) {
+    return handleApiError(error, "Failed to change user role");
+  }
+};
+
 /**
  * Create a new remedy
  * @param {string} token - Authentication token
@@ -159,11 +162,9 @@ const moderateRemedy = async (token, id, moderateRemedyData) => {
  */
 const createRemedy = async (token, remedyData) => {
   try {
-    const {data} = await API.post(
-      "/api/v1/remedy",
-      remedyData,
-      { headers: getAuthHeaders(token) }
-    );
+    const { data } = await API.post("/api/v1/remedy/create", remedyData, {
+      headers: getAuthHeaders(token),
+    });
     return data;
   } catch (error) {
     return handleApiError(error, "Failed to create remedy");
@@ -175,6 +176,7 @@ export {
   getAllUsers,
   deleteUser,
   userAccountStatus,
+  changeUserRole,
   getAllRemedies,
   deleteRemedy,
   moderateRemedy,

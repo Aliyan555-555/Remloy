@@ -1,60 +1,101 @@
 [{
   "_id": {
-    "$oid": "6838115f0214394db446fd42"
+    "$oid": "6828ea0270f153bb443775c6"
   },
   "contentId": {
-    "$oid": "6837fe2c24de2bc5c53f7e30"
+    "$oid": "682779c1a1955aa79a7d2411"
   },
   "contentType": "Remedy",
-  "status": "rejected",
-  "moderatorNotes": "",
-  "reviewedBy": {
-    "$oid": "6835826003d7a3a01f83ea22"
-  },
+  "status": "approved",
+  "moderationHistory": [
+    {
+      "userId": {
+        "$oid": "6828430a23a5e8310100b20c"
+      },
+      "reason": "Inaccurate dosage information",
+      "note": "This remedy suggests quantities that might be unsafe for children.",
+      "flaggedAt": {
+        "$date": "2025-05-20T19:38:46.463Z"
+      },
+      "_id": {
+        "$oid": "682cda4665e7cff970e89372"
+      }
+    }
+  ],
+  "flagCount": 1,
   "reviewDate": {
-    "$date": "2025-05-29T07:48:47.187Z"
+    "$date": "2025-05-20T19:38:35.722Z"
   },
-  "moderationHistory": [],
-  "flagCount": 0,
-  "rejectionReason": "rejectisds dsf",
   "createdAt": {
-    "$date": "2025-05-29T07:48:47.212Z"
+    "$date": "2025-05-17T19:56:51.030Z"
   },
   "updatedAt": {
-    "$date": "2025-05-29T07:48:47.212Z"
+    "$date": "2025-05-20T19:38:46.470Z"
   },
-  "__v": 0
+  "__v": 7,
+  "moderatorNotes": "Reviewed and verified. Factual and follows community guidelines.",
+  "rejectionReason": "",
+  "reviewedBy": {
+    "$oid": "682746efca3acc607cabd39c"
+  }
 },
 {
   "_id": {
-    "$oid": "6838116b0214394db446fd48"
+    "$oid": "683882decdd5f36b98dc8503"
   },
   "contentId": {
-    "$oid": "6837fe2c24de2bc5c53f7e31"
+    "$oid": "6837fe2c24de2bc5c53f7e33"
   },
   "contentType": "Remedy",
   "status": "approved",
   "moderatorNotes": "",
   "reviewedBy": {
-    "$oid": "6835826003d7a3a01f83ea22"
+    "$oid": "683815b10214394db446fdb3"
   },
   "reviewDate": {
-    "$date": "2025-05-29T07:53:46.183Z"
+    "$date": "2025-05-29T16:09:06.385Z"
   },
   "moderationHistory": [],
   "flagCount": 0,
   "rejectionReason": "",
   "createdAt": {
-    "$date": "2025-05-29T07:48:59.207Z"
+    "$date": "2025-05-29T15:53:02.285Z"
   },
   "updatedAt": {
-    "$date": "2025-05-29T07:53:46.185Z"
+    "$date": "2025-05-29T16:09:06.387Z"
   },
   "__v": 0
 },
 {
   "_id": {
-    "$oid": "6838128c0214394db446fd66"
+    "$oid": "68388375cdd5f36b98dc853c"
+  },
+  "contentId": {
+    "$oid": "6837fe2c24de2bc5c53f7e35"
+  },
+  "contentType": "Remedy",
+  "status": "approved",
+  "moderatorNotes": "",
+  "reviewedBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "reviewDate": {
+    "$date": "2025-05-29T16:09:04.942Z"
+  },
+  "moderationHistory": [],
+  "flagCount": 0,
+  "rejectionReason": "",
+  "createdAt": {
+    "$date": "2025-05-29T15:55:33.354Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-29T16:09:04.943Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "683886a3cdd5f36b98dc8567"
   },
   "contentId": {
     "$oid": "6837fe2c24de2bc5c53f7e32"
@@ -63,19 +104,19 @@
   "status": "rejected",
   "moderatorNotes": "",
   "reviewedBy": {
-    "$oid": "6835826003d7a3a01f83ea22"
+    "$oid": "683815b10214394db446fdb3"
   },
   "reviewDate": {
-    "$date": "2025-05-29T07:53:56.248Z"
+    "$date": "2025-05-29T22:48:02.869Z"
   },
   "moderationHistory": [],
   "flagCount": 0,
-  "rejectionReason": "retected ",
+  "rejectionReason": "SOS",
   "createdAt": {
-    "$date": "2025-05-29T07:53:48.415Z"
+    "$date": "2025-05-29T16:09:07.353Z"
   },
   "updatedAt": {
-    "$date": "2025-05-29T07:53:56.249Z"
+    "$date": "2025-05-29T22:48:02.888Z"
   },
   "__v": 0
 }]

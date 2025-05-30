@@ -6,6 +6,7 @@ import FormSelect from "../components/form/FormSelect";
 import { generateHealthProfileQuestions, healthProfile } from "../api/userApi";
 import { useAuth } from "../contexts/AuthContext";
 import LoadingSpinner from "../components/common/LoadingSpinner";
+import { useUserFlow } from "../contexts/UserFlowContext";
 
 const HealthProfilePage = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const HealthProfilePage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { checkUserFlow } = useUserFlow();
   const [formData, setFormData] = useState({
     // Basic Health Profile
     age: "",
@@ -150,13 +152,13 @@ const HealthProfilePage = () => {
           ...formData,
           // aiGeneratedFields: expandedHealthProfile,// enable in future
         };
+        const redirect =
+          user.accessLevel !== "user" ? "/admin/dashboard" : "/dashboard";
         const res = await healthProfile(completeProfileData, authToken);
-        console.log(res);
         if (res.success) {
-          console.log(user.accessLevel);
-          const redirect =
-            user.accessLevel !== "user" ? "/admin/dashboard" : "/dashboard";
+          checkUserFlow();
           navigate(redirect, { replace: true });
+          return;
         }
       }
     } catch (error) {

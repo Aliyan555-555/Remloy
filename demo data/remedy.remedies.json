@@ -22,7 +22,7 @@
     "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5664031/"
   ],
   "geographicRestrictions": [],
-  "createdBy": "6835826003d7a3a01f83ea22",
+  "createdBy": "683815b10214394db446fdb3",
   "isActive": false,
   "createdAt": "2025-05-29T12:00:00.000Z",
   "updatedAt": {
@@ -54,11 +54,11 @@
     "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2995283/"
   ],
   "geographicRestrictions": [],
-  "createdBy": "6835826003d7a3a01f83ea22",
+  "createdBy": "683815b10214394db446fdb3",
   "isActive": false,
   "createdAt": "2025-05-29T12:00:00.000Z",
   "updatedAt": {
-    "$date": "2025-05-29T07:53:56.249Z"
+    "$date": "2025-05-29T22:48:02.888Z"
   },
   "moderationStatus": "rejected",
   "averageRating": 0,
@@ -66,36 +66,10 @@
 },
 {
   "_id": {
-    "$oid": "6837fe2c24de2bc5c53f7e33"
-  },
-  "name": "Honey and Cinnamon",
-  "description": "A mixture believed to relieve cold and boost immunity.",
-  "category": "Immune Support",
-  "ingredients": [
-    "Honey",
-    "Cinnamon Powder"
-  ],
-  "preparationMethod": "Mix honey with cinnamon to form a paste.",
-  "usageInstructions": "Take one teaspoon in the morning.",
-  "sideEffects": [
-    "Can raise blood sugar levels in diabetics"
-  ],
-  "aiConfidenceScore": 75,
-  "isAIGenerated": true,
-  "scientificReferences": [],
-  "geographicRestrictions": [],
-  "createdBy": "6835826003d7a3a01f83ea22",
-  "isActive": true,
-  "createdAt": "2025-05-29T12:00:00.000Z",
-  "updatedAt": "2025-05-29T12:00:00.000Z",
-  "moderationStatus": "approved"
-},
-{
-  "_id": {
     "$oid": "6837fe2c24de2bc5c53f7e34"
   },
   "name": "Steam Inhalation with Eucalyptus",
-  "description": "Relieves respiratory congestion through steam and essential oils.",
+  "description": "Relieves sex respiratory congestion through steam and essential oils.",
   "category": "Respiratory",
   "ingredients": [
     "Eucalyptus Oil",
@@ -112,7 +86,7 @@
     "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2377254/"
   ],
   "geographicRestrictions": [],
-  "createdBy": "6835826003d7a3a01f83ea22",
+  "createdBy": "683815b10214394db446fdb3",
   "isActive": true,
   "createdAt": "2025-05-29T12:00:00.000Z",
   "updatedAt": "2025-05-29T12:00:00.000Z",
@@ -139,7 +113,7 @@
     "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2763764/"
   ],
   "geographicRestrictions": [],
-  "createdBy": "6835826003d7a3a01f83ea22",
+  "createdBy": "683815b10214394db446fdb3",
   "isActive": true,
   "createdAt": "2025-05-29T12:00:00.000Z",
   "updatedAt": "2025-05-29T12:00:00.000Z",
@@ -165,7 +139,7 @@
   "isAIGenerated": true,
   "scientificReferences": [],
   "geographicRestrictions": [],
-  "createdBy": "6835826003d7a3a01f83ea22",
+  "createdBy": "683815b10214394db446fdb3",
   "isActive": true,
   "createdAt": "2025-05-29T12:00:00.000Z",
   "updatedAt": "2025-05-29T12:00:00.000Z",
@@ -191,7 +165,7 @@
   "isAIGenerated": false,
   "scientificReferences": [],
   "geographicRestrictions": [],
-  "createdBy": "6835826003d7a3a01f83ea22",
+  "createdBy": "683815b10214394db446fdb3",
   "isActive": true,
   "createdAt": "2025-05-29T12:00:00.000Z",
   "updatedAt": {
@@ -219,7 +193,7 @@
   "isAIGenerated": true,
   "scientificReferences": [],
   "geographicRestrictions": [],
-  "createdBy": "6835826003d7a3a01f83ea22",
+  "createdBy": "683815b10214394db446fdb3",
   "isActive": true,
   "createdAt": "2025-05-29T12:00:00.000Z",
   "updatedAt": "2025-05-29T12:00:00.000Z",
@@ -245,7 +219,7 @@
   "isAIGenerated": false,
   "scientificReferences": [],
   "geographicRestrictions": [],
-  "createdBy": "6835826003d7a3a01f83ea22",
+  "createdBy": "683815b10214394db446fdb3",
   "isActive": true,
   "createdAt": "2025-05-29T12:00:00.000Z",
   "updatedAt": "2025-05-29T12:00:00.000Z",
@@ -253,40 +227,32 @@
 },
 {
   "_id": {
-    "$oid": "68382321c22fd4af94fa4d0c"
+    "$oid": "6838ea69d17ed13d6a6dce0b"
   },
-  "name": "Turmeric Golden Milk",
-  "description": "A warm beverage made with turmeric, known for its anti-inflammatory properties.",
-  "category": "Pain Relief",
-  "ingredients": [
-    "Turmeric",
-    "Milk",
-    "Black Pepper",
-    "Honey"
-  ],
-  "preparationMethod": "Warm the milk and mix in turmeric, black pepper, and honey.",
-  "usageInstructions": "Drink once daily before bedtime.",
+  "name": "heolev",
+  "description": " hello this is remedy",
+  "category": "Respiratory",
+  "ingredients": "daya ",
   "sideEffects": [
-    "Stomach upset if taken in excess"
+    " sdaas"
   ],
-  "aiConfidenceScore": 85,
-  "isAIGenerated": true,
-  "moderationStatus": "approved",
-  "scientificReferences": [
-    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5664031/"
-  ],
+  "aiConfidenceScore": 0,
+  "isAIGenerated": false,
+  "moderationStatus": "pending",
+  "scientificReferences": [],
   "geographicRestrictions": [],
+  "type": "pharmaceutical",
   "createdBy": {
-    "$oid": "683815b10214394db446fdb3"
+    "$oid": "6838cdff1d984b618341af2b"
   },
   "viewCount": 0,
   "averageRating": 0,
   "isActive": true,
   "createdAt": {
-    "$date": "2025-05-29T09:04:33.156Z"
+    "$date": "2025-05-29T23:14:49.161Z"
   },
   "updatedAt": {
-    "$date": "2025-05-29T09:04:33.156Z"
+    "$date": "2025-05-29T23:14:49.161Z"
   },
   "__v": 0
 }]

@@ -32,8 +32,8 @@ const AdminSidebar = ({ user, isSidebarOpen }) => {
           />
         </div>
         <div>
-          <h3 className="font-semibold text-gray-800">{user?.name || "Admin"}</h3>
-          <p className="text-sm text-gray-500">{user?.username || "admin123"}</p>
+          <h3 className="font-semibold text-gray-800">{user?.username || "Admin"}</h3>
+          <p className="text-sm text-gray-500 capitalize">{user?.accessLevel || "admin123"}</p>
         </div>
       </div>
 

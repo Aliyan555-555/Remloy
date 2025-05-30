@@ -9,8 +9,14 @@ import StatusBadge from "../../components/common/StatusBadge";
 import Modal, { ConfirmModal } from "../../components/common/Modal";
 import Pagination from "../../components/common/Pagination";
 import { useAuth } from "../../contexts/AuthContext";
-import { deleteUser, getAllUsers, userAccountStatus } from "../../api/adminApi";
+import {
+  changeUserRole,
+  deleteUser,
+  getAllUsers,
+  userAccountStatus,
+} from "../../api/adminApi";
 import { formatDate } from "../../utils";
+
 const UsersManagementPage = () => {
   const { user, authToken } = useAuth();
 
@@ -36,14 +42,13 @@ const UsersManagementPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       setLoading(true);
-      const res = await getAllUsers(
-        authToken,
-        currentPage,
-        10,
-        searchQuery,
-        filterByRole,
-        filterByLastActiveTime
-      );
+      const res = await getAllUsers(authToken, {
+        page: currentPage,
+        limit: 10,
+        search: searchQuery,
+        role: filterByRole,
+        lastActive: filterByLastActiveTime,
+      });
       if (res.success) {
         setUsers(res.data.users);
         setTotalPages(res.data.pagination.totalPages);
@@ -220,7 +225,7 @@ const UsersManagementPage = () => {
   // Handle edit click
   const handleEditClick = (user) => {
     setSelectedUser(user);
-    setEditRoleValue(user.role);
+    setEditRoleValue(user.accessLevel);
     setShowEditModal(true);
   };
 
@@ -239,14 +244,14 @@ const UsersManagementPage = () => {
   const handleSuspendConfirm = async () => {
     const res = await userAccountStatus(authToken, {
       message: suspensionReason,
-      status: "suspended",
+      status: "suspend",
       id: selectedUser._id,
     });
     if (res.success) {
       setUsers(
         users.map((u) => {
           if (u._id == res.data.userId) {
-            return { ...u, status: res.data.status };
+            return { ...u, status: "suspended" };
           }
           return u;
         })
@@ -287,22 +292,26 @@ const UsersManagementPage = () => {
     setFilterByLastActiveTime(e.target.value);
   };
 
-  const handleEditConfirm = () => {
-    // In a real app, you would call an API to update the user's role
-    console.log(
-      `Updating user role: ${selectedUser.id}, New role: ${editRoleValue}`
-    );
+  const handleEditConfirm = async () => {
+    const res = await changeUserRole(authToken, {
+      id: selectedUser._id,
+      role: editRoleValue,
+    });
+    if (res.success) {
+      setUsers(
+        users.map((u) =>
+          u._id === selectedUser._id
+            ? { ...u, accessLevel: res.data.newRole }
+            : u
+        )
+      );
 
-    // Mock update by changing role in state
-    setUsers(
-      users.map((u) =>
-        u.id === selectedUser.id ? { ...u, role: editRoleValue } : u
-      )
-    );
-
-    // Close modal and reset values
-    setShowEditModal(false);
-    setSelectedUser(null);
+      setShowEditModal(false);
+      setSelectedUser(null);
+    } else {
+      setShowEditModal(false);
+      setSelectedUser(null);
+    }
   };
 
   return (
@@ -395,6 +404,7 @@ const UsersManagementPage = () => {
                         <option value="admin">Admin</option>
                         <option value="moderator">Moderator</option>
                         <option value="user">User</option>
+                        <option value="writer">Writer</option>
                       </select>
                     </div>
                   </div>
@@ -574,9 +584,10 @@ const UsersManagementPage = () => {
               value={editRoleValue}
               onChange={(e) => setEditRoleValue(e.target.value)}
             >
-              <option value="User">User</option>
-              <option value="Moderator">Moderator</option>
-              <option value="Admin">Admin</option>
+              <option value="user">User</option>
+              <option value="moderator">Moderator</option>
+              <option value="admin">Admin</option>
+              <option value="writer">Writer</option>
             </select>
           </div>
         </div>

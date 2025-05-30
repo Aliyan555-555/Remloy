@@ -49,7 +49,13 @@ const RemedyManagementPage = () => {
   useEffect(() => {
     const fetchRemedies = async () => {
       setLoading(true);
-      const res = await getAllRemedies(authToken, currentPage, 10);
+      const res = await getAllRemedies(authToken, {
+        page: currentPage,
+        limit: 10,
+        search: searchQuery,
+        type: filterByType,
+        status: filterByStatus,
+      });
       const { success, totalPages, remedies, message } = res;
       if (success) {
         setRemedies(remedies);
@@ -272,9 +278,7 @@ const RemedyManagementPage = () => {
     if (res.success) {
       setRemedies(
         remedies.map((r) =>
-          r._id === remedy._id
-            ? { ...r, moderationStatus: "approved" }
-            : r
+          r._id === remedy._id ? { ...r, moderationStatus: "approved" } : r
         )
       );
     }

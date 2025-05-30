@@ -45,7 +45,7 @@ const DashboardLayout = ({
   };
 
   // Determine if user is admin
-  const isAdmin = user && user.accessLevel === 'admin';
+  const isAdmin = user && user.accessLevel !== 'user';
 
   return (
     <div className="min-h-screen flex flex-col bg-white">

@@ -15,7 +15,7 @@ const GuestRoute = ({ children }) => {
 
   if (flowStatus && flowStatus !== UserFlowStatus.LOGGED_OUT) {
     const redirectTo =
-      user?.accessLevel === "admin" ? "/admin/dashboard" : "/dashboard";
+      user?.accessLevel !== "user" ? "/admin/dashboard" : "/dashboard";
     return <Navigate to={redirectTo} state={{ from: location }} replace />;
   }
   return children;
