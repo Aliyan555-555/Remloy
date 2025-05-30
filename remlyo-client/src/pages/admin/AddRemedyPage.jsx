@@ -18,7 +18,7 @@ const AddRemedyPage = () => {
     name: "",
     category: "",
     description: "",
-    ingredients: "",
+    ingredients: [],
     instructions: "",
     sideEffects: "",
     references: "",
@@ -64,7 +64,7 @@ const AddRemedyPage = () => {
       newErrors.description = "Description is required";
     }
 
-    if (!formData.ingredients.trim()) {
+    if (!formData.ingredients.length > 0) {
       newErrors.ingredients = "Ingredients are required";
     }
 
@@ -368,8 +368,20 @@ const AddRemedyPage = () => {
         </label>
         <textarea
           name="ingredients"
-          value={formData.ingredients}
-          onChange={handleChange}
+          value={formData.ingredients.join(", ")}
+          onChange={(e) => {
+            const input = e.target.value;
+            const values = input
+              .split(",")
+              .map((item) => item.trim())
+
+             setFormData({ ...formData, ingredients: values });
+        
+            // Clear error
+            if (errors.ingredients) {
+              setErrors({ ...errors, ingredients: null });
+            }
+          }}
           placeholder="Enter ingredients here..."
           rows={4}
           className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
