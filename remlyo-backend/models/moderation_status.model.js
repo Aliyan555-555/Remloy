@@ -29,10 +29,8 @@ const ModerationStatusSchema = new mongoose.Schema(
     },
     moderationHistory: [
       {
-        userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-        reason: { type: String },
-        note: { type: String },
-        flaggedAt: { type: Date, default: Date.now },
+        type: String,
+        ref: "Flag",
       },
     ],
     flagCount: {
@@ -44,7 +42,6 @@ const ModerationStatusSchema = new mongoose.Schema(
       type: String,
       maxlength: 500,
     },
-    
   },
   { timestamps: true }
 );

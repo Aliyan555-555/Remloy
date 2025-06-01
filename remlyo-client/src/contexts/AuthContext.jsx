@@ -117,11 +117,11 @@ export const AuthProvider = ({ children }) => {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
-      await signOut(auth);
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {
       handleLogout();
+      await signOut(auth);
       navigate("/signin");
       setLoading(false);
     }
@@ -138,7 +138,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem(LS_KEYS.AUTH_TOKEN, data.token);
         localStorage.setItem(LS_KEYS.USER, JSON.stringify(data.user));
         if (data.redirect) navigate(data.redirect);
-        return data
+        return data;
       } else {
         return { success: false, error: "Invalid response from server" };
       }

@@ -1,4 +1,3 @@
-// src/pages/admin/AddRemedyPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../components/layout/DashboardLayout";
@@ -13,7 +12,6 @@ const AddRemedyPage = () => {
   const [activeTab, setActiveTab] = useState("batch");
   const [remedyType, setRemedyType] = useState(""); // pharmaceutical, alternative, or community
 
-  // Form state
   const [formData, setFormData] = useState({
     name: "",
     category: "",
@@ -23,9 +21,9 @@ const AddRemedyPage = () => {
     sideEffects: "",
     references: "",
     practitionerName: "",
+    mediaFile: null,
   });
 
-  // Form validation
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -34,8 +32,6 @@ const AddRemedyPage = () => {
       ...formData,
       [name]: value,
     });
-
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -44,6 +40,7 @@ const AddRemedyPage = () => {
     }
   };
 
+  console.log(formData.ingredients);
   const handleSelectRemedyType = (type) => {
     setRemedyType(type);
     setActiveTab("general");
@@ -80,7 +77,27 @@ const AddRemedyPage = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      const res = await createRemedy(authToken,{...formData,type:remedyType});
+      const processedIngredients = formData.ingredients
+        .split("\n")
+        .map((item) => item.trim())
+        .filter((item) => item);
+      const processedSideEffect = formData.sideEffects
+        .split("\n")
+        .map((item) => item.trim())
+        .filter((item) => item);
+
+      const processedReferences = formData.references
+        .split("\n")
+        .map((item) => item.trim())
+        .filter((item) => item);
+
+      const res = await createRemedy(authToken, {
+        ...formData,
+        type: remedyType,
+        sideEffects: processedSideEffect,
+        ingredients: processedIngredients,
+        references: processedReferences,
+      });
 
       if (res.success) {
         navigate("/admin/remedies");
@@ -97,7 +114,8 @@ const AddRemedyPage = () => {
     }
   };
 
-  // Render remedy type selection buttons
+  console.log(formData);
+
   const renderRemedyTypeSelection = () => (
     <div className="mt-6">
       <h2 className="text-xl font-semibold mb-6">Select Remedy Type</h2>
@@ -258,6 +276,7 @@ const AddRemedyPage = () => {
           </div>
 
           <FileUpload
+            onFileSelect={(file) => setFormData({ ...formData, mediaFile: file })}
             acceptedFileTypes={[
               "application/vnd.ms-excel",
               "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

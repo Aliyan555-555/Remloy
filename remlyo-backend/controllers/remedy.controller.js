@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Remedy from "../models/remedy.model.js";
 import { remedyValidation } from "../validations/remedy.validation.js";
 import ModerationStatus from "./../models/moderation_status.model.js";
+import Flag from "../models/flag.model.js";
 
 const createRemedy = async (req, res) => {
   try {
@@ -40,16 +41,16 @@ const getAllRemedies = async (req, res) => {
     const limit = Math.min(Math.max(parseInt(req.query.limit) || 10, 1), 100);
     const page = Math.max(parseInt(req.query.page) || 1, 1);
     const skip = (page - 1) * limit;
-    const search = req.query.search || '';
+    const search = req.query.search || "";
 
     // Build search query
     const searchQuery = {};
     if (search) {
       searchQuery.$or = [
-        { name: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-        { ingredients: { $regex: search, $options: 'i' } },
-        { 'createdBy.username': { $regex: search, $options: 'i' } }
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+        { ingredients: { $regex: search, $options: "i" } },
+        { "createdBy.username": { $regex: search, $options: "i" } },
       ];
     }
 
@@ -59,7 +60,7 @@ const getAllRemedies = async (req, res) => {
 
     const [remedies, totalRemedies] = await Promise.all([
       Remedy.find(searchQuery)
-        .populate("createdBy", 'username email')
+        .populate("createdBy", "username email")
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit),
@@ -184,7 +185,7 @@ const deleteRemedy = async (req, res) => {
       });
     }
 
-    const deletedRemedy = await Remedy.findByIdAndDelete(id)
+    const deletedRemedy = await Remedy.findByIdAndDelete(id);
 
     res.status(200).json({
       message: "Remedy successfully deleted",
@@ -202,94 +203,107 @@ const deleteRemedy = async (req, res) => {
 const flagRemedy = async (req, res) => {
   try {
     const { id } = req.params;
-    const { reason, note } = req.body;
+    const { reason, note} = req.body;
 
+    // Input validation
     if (!reason?.trim() || !note?.trim()) {
-      return res
-        .status(400)
-        .json({ message: "Reason and note are required.", success: false });
+      return res.status(400).json({
+        message: "Reason, note, and category are required.",
+        success: false
+      });
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res
-        .status(400)
-        .json({ message: "Invalid remedy ID.", success: false });
+      return res.status(400).json({
+        message: "Invalid remedy ID.",
+        success: false
+      });
     }
 
+    // Find the remedy
     const remedy = await Remedy.findById(id);
-    if (!remedy || !remedy.isActive) {
-      return res
-        .status(404)
-        .json({
-          message: "Remedy not found or already inactive.",
-          success: false,
-        });
+    if (!remedy) {
+      return res.status(404).json({
+        message: "Remedy not found or already inactive.",
+        success: false
+      });
     }
+
+    // Check if user has already flagged this remedy
+    const existingFlag = await Flag.findOne({
+      contentId: id,
+      contentType: "Remedy",
+      flaggedBy: req.user.id,
+    });
+
+    if (existingFlag) {
+      return res.status(400).json({
+        message: "You have already flagged this remedy.",
+        success: false
+      });
+    }
+
+    // Create new flag
+    const flag = new Flag({
+      contentId: id,
+      contentType: "Remedy",
+      flaggedBy: req.user.id,
+      reason: reason.trim(),
+      note: note.trim(),   
+    });
+
+    await flag.save();
 
     let moderationStatus = await ModerationStatus.findOne({
       contentId: id,
-      contentType: "Remedy",
+      contentType: "Remedy"
     });
 
     if (moderationStatus) {
-      const alreadyFlagged = moderationStatus.moderationHistory?.some(
-        (entry) => String(entry.userId) === String(req.user.id)
-      );
-      if (alreadyFlagged) {
-        return res
-          .status(400)
-          .json({
-            message: "You have already flagged this remedy.",
-            success: false,
-          });
-      }
-    }
-
-    // Prepare new flag entry
-    const flagEntry = {
-      userId: req.user.id || undefined,
-      reason: reason.trim(),
-      note: note.trim(),
-      flaggedAt: new Date(),
-    };
-
-    if (moderationStatus) {
-      moderationStatus.flagCount += 1;
-      moderationStatus.moderationHistory.push(flagEntry);
+      moderationStatus.moderationHistory.push(flag._id);
     } else {
       moderationStatus = new ModerationStatus({
         contentId: id,
         contentType: "Remedy",
-        status: "pending",
+        status: "under_review",
+        flags: [flag._id],
         flagCount: 1,
-        moderationHistory: [flagEntry],
+        activeFlagCount: 1,
+        lastFlaggedAt: new Date()
       });
-    }
-    await moderationStatus.save();
-    if (remedy.moderationStatus !== "pending") {
-      remedy.moderationStatus = "pending";
+      await moderationStatus.save();
     }
 
-    // If flag count >= threshold, deactivate remedy
-    if (
-      moderationStatus.flagCount >= 5 // 5 is static i fetch in future with database
-    ) {
+    // Update remedy status
+    remedy.moderationStatus = "under_review";
+    
+    // Check if remedy should be deactivated based on flag count
+    const FLAG_THRESHOLD = 5; // This should be configurable
+    if (moderationStatus.flagCount >= FLAG_THRESHOLD) {
       remedy.isActive = false;
+      remedy.deactivationReason = "Exceeded flag threshold";
     }
 
     await remedy.save();
 
+    // Populate flag details for response
+    await flag.populate('flaggedBy', 'username email');
+    await moderationStatus.populate('flags');
+
     res.status(200).json({
       message: "Remedy flagged successfully.",
       success: true,
-      moderationStatus,
+      data: {
+        flag,
+        moderationStatus
+      }
     });
   } catch (error) {
     console.error("Error flagging remedy:", error);
     res.status(500).json({
       message: "Internal server error.",
       error: error.message,
-      success: false,
+      success: false
     });
   }
 };
