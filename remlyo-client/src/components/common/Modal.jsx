@@ -19,7 +19,8 @@ const Modal = ({
   onClose,
   title,
   children,
-  size = 'md',
+  
+   = 'md',
   showCloseButton = true,
   footer,
   closeOnBackdropClick = true,

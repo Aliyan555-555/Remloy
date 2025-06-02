@@ -37,6 +37,7 @@ const UsersManagementPage = () => {
   const [editRoleValue, setEditRoleValue] = useState("");
   const [suspensionReason, setSuspensionReason] = useState("");
   const [warningMessage, setWarningMessage] = useState("");
+  const [addUserModal, setAddUserModel] = useState(false);
 
   // Fetch users data
   useEffect(() => {
@@ -331,7 +332,7 @@ const UsersManagementPage = () => {
           variant="contained"
           color="brand"
           className="flex items-center"
-          to="/admin/users/add"
+          onClick={() => setAddUserModel(true)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -483,6 +484,15 @@ const UsersManagementPage = () => {
         cancelText="Cancel"
         danger={true}
       />
+
+      {/* Add User Model */}
+
+      <Modal
+        isOpen={addUserModal}
+        onClose={() => setAddUserModel(false)}
+        title="Add New User"
+        size="xl"
+      ></Modal>
 
       {/* Suspend User Modal */}
       <Modal

@@ -111,7 +111,7 @@ const getAllUsers = async (req, res) => {
     };
 
     // Add role filter if provided
-    if (role && ["admin", "user"].includes(role)) {
+    if (role && ["admin", "user", "moderator", "writer"].includes(role)) {
       searchQuery.accessLevel = role;
     }
 

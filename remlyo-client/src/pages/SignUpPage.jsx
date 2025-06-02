@@ -19,6 +19,7 @@ const SignUpPage = () => {
 
   const { isAuthenticated, socialAuth,signup } = useAuth();
 
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
