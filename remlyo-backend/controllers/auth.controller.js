@@ -121,6 +121,7 @@ const validatedEmailToken = async (req, res) => {
     // Prepare safe user data
 
     const { password: _, ...userData } = user.toObject();
+    
 
     return res.status(200).json({
       message: "Valid token",

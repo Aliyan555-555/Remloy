@@ -1,13 +1,34 @@
 // src/components/layout/Navbar.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../common/Button";
 import { useAuth } from "../../contexts/AuthContext";
-
+import UserProfileDropdown from "../common/UserProfileDropdown";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, isAuthenticated,logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+
+  const handleProfileDropdown = () => {
+    setProfileDropdownOpen(!profileDropdownOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    const dropdown = document.querySelector('.profile-dropdown-container');
+    if (dropdown && !dropdown.contains(event.target)) {
+      setProfileDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (profileDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [profileDropdownOpen]);
 
   return (
     <nav className="bg-white py-4">
@@ -50,40 +71,50 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="flex items-center space-x-3">
-          {isAuthenticated?(
-            <React.Fragment>
+            {isAuthenticated ? (
+              <React.Fragment>
                 <Button
-              variant="outlined"
-              color="brand"
-              size="small"
-              onClick={logout}
-              className="md:text-base md:px-5 md:py-2" // Small on mobile, custom medium on desktop
-            >
-              Logout
-            </Button>
-            </React.Fragment>
-          ):(
-            <React.Fragment>
+                  variant="outlined"
+                  color="brand"
+                  size="small"
+                  onClick={logout}
+                  className="md:text-base md:px-5 md:py-2" // Small on mobile, custom medium on desktop
+                >
+                  Logout
+                </Button>
+                <div onClick={handleProfileDropdown} className="flex relative items-center space-x-3 profile-dropdown-container">
+                  <img
+                    src={user.profileImage}
+                    alt="User Avatar"
+                    className="w-10 h-10 rounded-full"
+                  />
+                  <span className="text-gray-700">{user.name}</span>
+
+                  <UserProfileDropdown user={user} profileDropdownOpen={profileDropdownOpen} />
+                </div>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
                 <Button
-              variant="outlined"
-              color="brand"
-              size="small"
-              to="/signin"
-              className="md:text-base md:px-5 md:py-2" // Small on mobile, custom medium on desktop
-            >
-              Sign In
-            </Button>
-            <Button
-              variant="contained"
-              color="brand"
-              size="small"
-              to="/signup"
-              className="md:text-base md:px-5 md:py-2" // Small on mobile, custom medium on desktop
-            >
-              Join Now
-            </Button>
-            </React.Fragment>
-          )}
+                  variant="outlined"
+                  color="brand"
+                  size="small"
+                  to="/signin"
+                  className="md:text-base md:px-5 md:py-2" // Small on mobile, custom medium on desktop
+                >
+                  Sign In
+                </Button>
+                <Button
+                  variant="contained"
+                  color="brand"
+                  size="small"
+                  to="/signup"
+                  className="md:text-base md:px-5 md:py-2" // Small on mobile, custom medium on desktop
+                >
+                  Join Now
+                </Button>
+              </React.Fragment>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
