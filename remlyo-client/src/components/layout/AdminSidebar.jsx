@@ -65,7 +65,7 @@ const AdminSidebar = ({ user, isSidebarOpen }) => {
 
         <Link to="/admin/users" className="block">
           <Button
-            variant={isActive("/admin/users") ? "contained" : "text"}
+            variant={isActive("/admin/users")&& !location.pathname.includes("/add") ? "contained" : "text"}
             color="brand"
             className="w-full justify-start"
           >
@@ -86,6 +86,32 @@ const AdminSidebar = ({ user, isSidebarOpen }) => {
             Users
           </Button>
         </Link>
+
+        <Link to="/admin/users/add" className="block">
+          <Button
+            variant={isActive("/admin/users/add") ? "contained" : "text"}
+            color="brand"
+            className="w-full justify-start"
+          >
+              <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 mr-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            Add User
+          </Button>
+        </Link>
+
+
 
         <Link to="/admin/remedies" className="block">
           <Button

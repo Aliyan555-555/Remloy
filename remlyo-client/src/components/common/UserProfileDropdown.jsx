@@ -9,7 +9,7 @@ const UserProfileDropdown = ({ user, profileDropdownOpen }) => {
       style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
       className={`absolute rounded-lg top-[calc(100%+10px)] bg-white w-[250px] ${
         profileDropdownOpen ? "opacity-100" : "opacity-0"
-      } right-3 z-50 transition-opacity duration-300`}
+      } right-3 z-50 transition-opacity overflow-hidden duration-300`}
     >
       <div className="flex px-4 py-3 items-center gap-3 border-b">
         <img

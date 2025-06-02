@@ -40,6 +40,7 @@ import SendEmailVerificationPage from "./pages/SendEmailVerificationPage";
 import { UserFlowProvider } from "./contexts/UserFlowContext";
 import FlowGuard from "./components/guards/FlowGuard";
 import GuestRoute from "./components/routing/GuestRoute";
+import AddUserPage from "./pages/admin/AddUserPage";
 function App() {
   return (
     <AuthProvider>
@@ -89,6 +90,16 @@ function App() {
               </AdminRoute>
             }
           />
+          
+          <Route
+            path="/admin/users/add"
+            element={
+              <AdminRoute>
+                <AddUserPage/>
+              </AdminRoute>
+            }
+          />
+
 
           <Route
             path="/admin/reports"
