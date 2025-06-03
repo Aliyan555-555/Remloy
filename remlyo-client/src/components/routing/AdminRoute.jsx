@@ -17,7 +17,7 @@ const AdminRoute = ({ children }) => {
   }
 
   // Check if user is admin
-  if (!loading && isAuthenticated && user.accessLevel == "user") {
+  if (!loading && isAuthenticated && user.emailVerified && user.accessLevel == "user") {
     // Redirect to user dashboard if not admin
     return <Navigate to="/dashboard" />;
   }

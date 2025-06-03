@@ -22,7 +22,7 @@ const register = async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
-    const { username, email, password } = req.body;
+    const { password,email } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -35,14 +35,14 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await User.create({
-      username,
-      email,
+      ...req.body,
       password: hashedPassword,
     });
 
     return res.status(201).json({
       message: "Registration successful. Please verify your email.",
       success: true,
+      req:req.body
     });
   } catch (err) {
     console.error("Register error:", err);
@@ -121,7 +121,6 @@ const validatedEmailToken = async (req, res) => {
     // Prepare safe user data
 
     const { password: _, ...userData } = user.toObject();
-    
 
     return res.status(200).json({
       message: "Valid token",
@@ -271,7 +270,10 @@ const login = async (req, res) => {
     const userHealthProfile = await UserProfile.findOne({ userId: user._id });
 
     let redirect = null;
-    if (!userHealthProfile) {
+    // Check if email is verified
+    if (!user.emailVerified) {
+      redirect = "/verify-email";
+    } else if (!userHealthProfile) {
       redirect = "/health-profile";
     } else {
       switch (user.accessLevel.trim().toLowerCase()) {
@@ -677,8 +679,6 @@ const socialAuth = async (req, res) => {
   }
 };
 
-
-
 export {
   register,
   login,
@@ -694,10 +694,9 @@ export {
   verifyAuth,
 };
 
-
-/** 
-* Paste one or more documents here
-*/
+/**
+ * Paste one or more documents here
+ */
 // {
 //   "username": "Aliyan siddiqui",
 //   "email": "aliyansiddiqui555@gmail.com",

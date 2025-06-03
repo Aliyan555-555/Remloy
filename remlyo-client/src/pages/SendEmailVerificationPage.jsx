@@ -8,9 +8,11 @@ const SendEmailVerificationPage = () => {
   const [resendLoading, setResendLoading] = useState(false);
   const [cooldown, setCooldown] = useState(0);
   const [error, setError] = useState(null);
-  const {isAuthenticated,user} = useAuth()
+  const { isAuthenticated, user, loading: authLoading } = useAuth();
   useEffect(() => {
-    sendEmailVerification(setLoading, setError);
+    if (!authLoading) {
+      sendEmailVerification(setLoading, setError, user.email);
+    }
   }, []);
 
   useEffect(() => {
@@ -27,6 +29,10 @@ const SendEmailVerificationPage = () => {
 
   const resendEmail = async () => {
     if (resendLoading || cooldown > 0) return;
+    if (!user.email) {
+      setError("Email not found");
+      return;
+    }
 
     setResendLoading(true);
     setError(null); // Clear any previous error
@@ -43,7 +49,8 @@ const SendEmailVerificationPage = () => {
           }
           // ✅ Only start cooldown if no error
           setCooldown(60);
-        }
+        },
+        user.email
       );
     } catch (err) {
       setError("Something went wrong. Please try again.");
@@ -51,12 +58,13 @@ const SendEmailVerificationPage = () => {
     }
   };
 
-  if (isAuthenticated && user) {
+//  useEffect(() =>{
+  if (!authLoading && isAuthenticated && user.emailVerified) {
+  console.log("redirecting../dashboard")
     return <Navigate  to={user.accessLevel == "user"?'/dashboard':"/admin/dashboard"} />
   }
 
-
-
+//  })
   return (
     <div className="min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center px-6 py-12">
       {loading ? (

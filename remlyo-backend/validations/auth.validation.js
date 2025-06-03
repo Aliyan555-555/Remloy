@@ -16,7 +16,7 @@ const registerValidation = Joi.object({
     "string.empty": "Password is required",
     "string.min": "Password must be at least 6 characters long",
   }),
-  accessLevel: Joi.string().valid("user", "admin").optional(),
+  accessLevel: Joi.string().valid("user", "admin","moderator","writer").optional(),
   geographicRegion: Joi.string().optional(),
   isActive: Joi.boolean(),
   emailVerified: Joi.boolean(),

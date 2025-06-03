@@ -13,7 +13,7 @@ const GuestRoute = ({ children }) => {
   if (loading) return <LoadingSpinner />;
 
 
-  if (flowStatus && flowStatus !== UserFlowStatus.LOGGED_OUT) {
+  if (!loading && flowStatus && flowStatus === UserFlowStatus.COMPLETE) {
     const redirectTo =
       user?.accessLevel !== "user" ? "/admin/dashboard" : "/dashboard";
     return <Navigate to={redirectTo} state={{ from: location }} replace />;

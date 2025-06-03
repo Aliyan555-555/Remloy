@@ -332,7 +332,7 @@ const UsersManagementPage = () => {
           variant="contained"
           color="brand"
           className="flex items-center"
-          onClick={() => setAddUserModel(true)}
+          to={'/admin/users/add'}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -485,14 +485,7 @@ const UsersManagementPage = () => {
         danger={true}
       />
 
-      {/* Add User Model */}
-
-      <Modal
-        isOpen={addUserModal}
-        onClose={() => setAddUserModel(false)}
-        title="Add New User"
-        size="xl"
-      ></Modal>
+     
 
       {/* Suspend User Modal */}
       <Modal

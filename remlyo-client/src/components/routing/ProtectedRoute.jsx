@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children, requiredSubscription = 'free' }) => {
   }
 
   // Check subscription level if required
-  if ( requiredSubscription === 'premium' && user.subscriptionType !== 'premium') {
+  if (!loading && requiredSubscription === 'premium' && user.subscriptionType !== 'premium') {
     // Redirect to upgrade page or regular dashboard
     return <Navigate to="/dashboard" />;
   }

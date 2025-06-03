@@ -64,6 +64,7 @@ const FlowGuard = ({ children }) => {
     [UserFlowStatus.LOGGED_OUT]: "/signin",
   };
 
+  console.log("Redirecting ...", redirectMap[flowStatus]);
   const fallbackRedirect = redirectMap[flowStatus] || "/signin";
 
   return <Navigate to={fallbackRedirect} state={{ from: location }} replace />;

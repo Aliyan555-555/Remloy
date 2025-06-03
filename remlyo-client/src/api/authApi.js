@@ -14,9 +14,10 @@ const verifyEmailToken = async (token, navigate) => {
   }
 };
 
-const sendEmailVerification = async (setLoading, setMessage) => {
+const sendEmailVerification = async (setLoading, setMessage,email) => {
   try {
-    const email = localStorage.getItem("signupEmail");
+    
+    
     const res = await API.post(`/api/v1/auth/verify-email`, { email });
     setLoading(false);
     if (!res.data.success) {

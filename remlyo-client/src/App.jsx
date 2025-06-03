@@ -250,7 +250,9 @@ function App() {
             path="/verify-email/:token"
             element={
               // <GuestRoute>
+              <FlowGuard>
               <VerifyEmailPage />
+              </FlowGuard>
               // </GuestRoute>
             }
           />
@@ -258,7 +260,9 @@ function App() {
             path="/verify-email"
             element={
               // <GuestRoute>
+              <FlowGuard>
               <SendEmailVerificationPage />
+              </FlowGuard>
               // </GuestRoute>
             }
           />
