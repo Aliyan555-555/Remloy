@@ -9,7 +9,7 @@ const UserSubscriptionSchema = new mongoose.Schema(
     },
     plan: {
       type: String,
-      enum: ['free', 'premium'],// maybe update this in future
+      enum: ['free', 'premium-year',"premium-monthly","pay-per-remedy"],// maybe update this in future
       required: true,
     },
     startDate: { 

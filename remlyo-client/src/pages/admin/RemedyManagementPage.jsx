@@ -45,9 +45,8 @@ const RemedyManagementPage = () => {
   const [sortOption, setSortOption] = useState("newest");
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
 
-  // Fetch remedies data
-  useEffect(() => {
-    const fetchRemedies = async () => {
+  // Fetch remedies data 
+  const fetchRemedies = async () => {
       setLoading(true);
       const res = await getAllRemedies(authToken, {
         page: currentPage,
@@ -65,6 +64,8 @@ const RemedyManagementPage = () => {
         console.error("Failed to fetch remedies:", message);
       }
     };
+  useEffect(() => {
+   
 
     fetchRemedies();
   }, [currentPage, searchQuery, selectedCategory]);

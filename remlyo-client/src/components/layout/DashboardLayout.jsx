@@ -3,13 +3,14 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import DashboardSidebar from "./DashboardSidebar";
-import AdminSidebar from "./AdminSidebar";  // Import AdminSidebar
+import AdminSidebar from "./AdminSidebar"; // Import AdminSidebar
+import ModeratorSidebar from "./ModeratorSidebar";
 
-const DashboardLayout = ({ 
-  children, 
+const DashboardLayout = ({
+  children,
   pageTitle = "Dashboard",
   user,
-  isPremiumUser = false 
+  isPremiumUser = false,
 }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     // Check if window exists (for SSR compatibility)
@@ -45,7 +46,24 @@ const DashboardLayout = ({
   };
 
   // Determine if user is admin
-  const isAdmin = user && user.accessLevel !== 'user';
+  const isAdmin = user && user.accessLevel !== "user";
+
+  const RenderSidebar = () => {
+    switch (user.accessLevel) {
+      case "user":
+        return (
+          <DashboardSidebar
+            user={user}
+            isSidebarOpen={isSidebarOpen}
+            isPremiumUser={isPremiumUser}
+          />
+        );
+      case "admin":
+        return (<AdminSidebar user={user} isSidebarOpen={isSidebarOpen} />);
+      case "moderator":
+        return (<ModeratorSidebar user={user} isSidebarOpen={isSidebarOpen} />)
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -62,18 +80,16 @@ const DashboardLayout = ({
       {/* Main Content */}
       <div className="flex-grow flex overflow-hidden">
         {/* Sidebar - conditionally render based on user role */}
-        {isAdmin ? (
-          <AdminSidebar 
-            user={user} 
-            isSidebarOpen={isSidebarOpen}
-          />
+        {/* {isAdmin ? (
+          <AdminSidebar user={user} isSidebarOpen={isSidebarOpen} />
         ) : (
-          <DashboardSidebar 
+          <DashboardSidebar
             user={user}
-            isSidebarOpen={isSidebarOpen} 
+            isSidebarOpen={isSidebarOpen}
             isPremiumUser={isPremiumUser}
           />
-        )}
+        )} */}
+        {RenderSidebar()}
 
         {/* Main Content Area */}
         <div className="flex-grow p-6 md:ml-0 overflow-x-hidden">
