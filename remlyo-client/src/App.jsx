@@ -41,6 +41,12 @@ import { UserFlowProvider } from "./contexts/UserFlowContext";
 import FlowGuard from "./components/guards/FlowGuard";
 import GuestRoute from "./components/routing/GuestRoute";
 import AddUserPage from "./pages/admin/AddUserPage";
+import ModeratorRoute from "./components/routing/ModeratorRoute";
+import ModeratorDashboardPage from "./pages/moderator/ModeratorDashboardPage";
+import ModeratorRemedyManagementPage from "./pages/moderator/ModeratorRemedyManagementPage";
+import ModeratorCommentPage from "./pages/moderator/ModeratorCommentPage";
+import ModeratorFlagPage from "./pages/moderator/ModeratorFlagPage";
+import ModeratorUserManagement from "./pages/moderator/ModeratorUserManagement";
 function App() {
   return (
     <AuthProvider>
@@ -55,6 +61,48 @@ function App() {
           {/* Checkout Routes */}
           <Route path="/checkout/:planType" element={<CheckoutPage />} />
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
+          {/* Moderator routes */}
+          <Route
+            path="/moderator/dashboard"
+            element={
+              <ModeratorRoute>
+                <ModeratorDashboardPage />
+              </ModeratorRoute>
+            }
+          />
+
+          <Route
+            path="/moderator/remedies"
+            element={
+              <ModeratorRoute>
+                <ModeratorRemedyManagementPage />
+              </ModeratorRoute>
+            }
+          />
+          <Route
+            path="/moderator/comments"
+            element={
+              <ModeratorRoute>
+                <ModeratorCommentPage />
+              </ModeratorRoute>
+            }
+          />
+          <Route
+            path="/moderator/flags"
+            element={
+              <ModeratorRoute>
+                <ModeratorFlagPage />
+              </ModeratorRoute>
+            }
+          />
+          <Route
+            path="/moderator/users"
+            element={
+              <ModeratorRoute>
+                <ModeratorUserManagement />
+              </ModeratorRoute>
+            }
+          />
 
           {/* Admin Routes */}
           <Route
@@ -90,16 +138,15 @@ function App() {
               </AdminRoute>
             }
           />
-          
+
           <Route
             path="/admin/users/add"
             element={
               <AdminRoute>
-                <AddUserPage/>
+                <AddUserPage />
               </AdminRoute>
             }
           />
-
 
           <Route
             path="/admin/reports"
@@ -251,7 +298,7 @@ function App() {
             element={
               // <GuestRoute>
               <FlowGuard>
-              <VerifyEmailPage />
+                <VerifyEmailPage />
               </FlowGuard>
               // </GuestRoute>
             }
@@ -261,7 +308,7 @@ function App() {
             element={
               // <GuestRoute>
               <FlowGuard>
-              <SendEmailVerificationPage />
+                <SendEmailVerificationPage />
               </FlowGuard>
               // </GuestRoute>
             }

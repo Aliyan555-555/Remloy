@@ -35,6 +35,29 @@ const ModeratorSidebar = ({ user, isSidebarOpen }) => {
 
       {/* Sidebar Navigation */}
       <nav className="py-6 px-4 space-y-4">
+        <Link to="/moderator/dashboard" className="block">
+          <Button
+            variant={isActive("/moderator/dashboard") ? "contained" : "text"}
+            color="brand"
+            className="w-full justify-start"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 mr-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              />
+            </svg>
+            Dashboard
+          </Button>
+        </Link>
         <Link to="/moderator/remedies" className="block">
           <Button
             variant={isActive("/moderator/remedies") ? "contained" : "text"}
@@ -107,9 +130,9 @@ const ModeratorSidebar = ({ user, isSidebarOpen }) => {
           </Button>
         </Link>
 
-        <Link to="/moderator/user-management" className="block">
+        <Link to="/moderator/users" className="block">
           <Button
-            variant={isActive("/moderator/user-management") ? "contained" : "text"}
+            variant={isActive("/moderator/users") ? "contained" : "text"}
             color="brand"
             className="w-full justify-start"
           >

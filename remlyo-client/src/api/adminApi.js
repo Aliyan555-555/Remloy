@@ -1,13 +1,7 @@
 import API from "../services/api";
+import { getAuthHeaders } from "../utils";
 
-/**
- * Helper to build auth headers
- * @param {string} token
- * @returns {Object}
- */
-const getAuthHeaders = (token) => ({
-  Authorization: `Bearer ${token}`,
-});
+
 
 /**
  * Handles API errors and returns a consistent error object
@@ -38,7 +32,6 @@ const getAllUsers = async (
   { page = 1, limit = 10, search = "", role = "", lastActive = "" } = {}
 ) => {
   try {
-    console.log(search);
     const { data } = await API.get("/api/v1/admin/users", {
       headers: getAuthHeaders(token),
       params: { page, limit, search, role, lastActive },

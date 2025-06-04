@@ -34,10 +34,9 @@ const Table = ({
     // Only sort if sortable is true
     if (!sortable) return;
 
-    // If clicking on the same field, toggle direction
     if (field === sortField) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
-    } else {
+    } else {  
       // If clicking on a different field, set it as the new sort field with default direction
       setSortField(field);
       setSortDirection(defaultSortDirection);

@@ -7,31 +7,42 @@ import LoadingSpinner from "../common/LoadingSpinner";
 
 const FlowGuard = ({ children }) => {
   const { flowStatus, loading } = useUserFlow();
-  const { isAuthenticated, user, authToken } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const location = useLocation();
 
   const currentPath = location.pathname;
-  const isAdmin = user?.accessLevel === "admin";
+  const role = user?.accessLevel;
+
+  const roleDashboardRoutes = {
+    user: "/dashboard",
+    admin: "/admin/dashboard",
+    moderator: "/moderator/dashboard",
+    writer: "/writer/dashboard",
+  };
+
+  const userDashboardRoute = roleDashboardRoutes[role] || "/dashboard";
 
   if (loading) {
     return <LoadingSpinner />;
   }
 
-  // Redirect unauthenticated or unknown flow users to sign-in
+  // Redirect unauthenticated users
   if (!isAuthenticated && !flowStatus) {
     return <Navigate to="/signin" replace />;
   }
 
-  if (!flowStatus) {
+  // Redirect authenticated users accessing base /dashboard to their role-specific dashboard
+  if (isAuthenticated && currentPath === "/dashboard" && role !== "user") {
+    return <Navigate to={userDashboardRoute} replace />;
+  }
+
+  // Skip flow checks for admin routes
+  const isAdminRoute = currentPath.startsWith("/admin");
+  if (isAdminRoute && role === "admin") {
     return children;
   }
 
-  // Redirect admins trying to access /dashboard to /admin/dashboard
-  if (isAdmin && currentPath === "/dashboard") {
-    return <Navigate to="/admin/dashboard" replace />;
-  }
-
-  // Define allowed routes based on user flow status
+  // Define allowed routes based on flow status
   const allowedRoutes = useMemo(
     () => ({
       [UserFlowStatus.LOGGED_OUT]: ["/signin", "/signup", "/forgot-password"],
@@ -42,12 +53,12 @@ const FlowGuard = ({ children }) => {
         "/health-profile",
         "/logout",
       ],
-      [UserFlowStatus.COMPLETE]: ["*"],
+      [UserFlowStatus.COMPLETE]: ["*"], // Full access
     }),
     []
   );
 
-  // Determine if current route is allowed
+  // Check if current route is allowed for this flow status
   const isRouteAllowed = allowedRoutes[flowStatus]?.some(
     (route) => route === "*" || currentPath.startsWith(route)
   );
@@ -56,16 +67,16 @@ const FlowGuard = ({ children }) => {
     return children;
   }
 
-  // Redirect based on current user flow status
+  // Flow-based redirection
   const redirectMap = {
-    [UserFlowStatus.EMAIL_UNVERIFIED]: `/verify-email`,
+    [UserFlowStatus.EMAIL_UNVERIFIED]: "/verify-email",
     [UserFlowStatus.PROFILE_INCOMPLETE]: "/health-profile",
     [UserFlowStatus.SUBSCRIPTION_REQUIRED]: "/subscription",
     [UserFlowStatus.LOGGED_OUT]: "/signin",
   };
 
-  console.log("Redirecting ...", redirectMap[flowStatus]);
   const fallbackRedirect = redirectMap[flowStatus] || "/signin";
+  console.log("Redirecting due to flow restriction:", fallbackRedirect);
 
   return <Navigate to={fallbackRedirect} state={{ from: location }} replace />;
 };

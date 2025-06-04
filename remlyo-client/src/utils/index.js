@@ -11,6 +11,17 @@ function formatDate(inputDate) {
   return date.toLocaleDateString("en-US", options);
 }
 
+
+/**
+ * Helper to build auth headers
+ * @param {string} token
+ * @returns {Object}
+ */
+const getAuthHeaders = (token) => ({
+  Authorization: `Bearer ${token}`,
+});
+
 export {
-  formatDate
+  formatDate,
+  getAuthHeaders
 };

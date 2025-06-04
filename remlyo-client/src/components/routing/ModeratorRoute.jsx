@@ -1,9 +1,9 @@
-// src/components/routing/AdminRoute.jsx
+// src/components/routing/ModeratorRoute.jsx
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import LoadingSpinner from './../common/LoadingSpinner';
 
-const AdminRoute = ({ children }) => {
+const ModeratorRoute = ({ children }) => {
   const { loading, isAuthenticated, user } = useAuth();
 
   if (loading) {
@@ -17,7 +17,7 @@ const AdminRoute = ({ children }) => {
   }
 
   // Check if user is admin
-  if (!loading && isAuthenticated && user.emailVerified && user.accessLevel !== "admin") {
+  if (!loading && isAuthenticated && user.emailVerified && user.accessLevel !== "moderator") {
     // Redirect to user dashboard if not admin
     return <Navigate to="/dashboard" />;
   }
@@ -25,4 +25,4 @@ const AdminRoute = ({ children }) => {
   return children;
 };
 
-export default AdminRoute;
+export default ModeratorRoute;
