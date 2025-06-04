@@ -3,6 +3,8 @@ import Remedy from "../models/remedy.model.js";
 import { remedyValidation } from "../validations/remedy.validation.js";
 import ModerationStatus from "./../models/moderation_status.model.js";
 import Flag from "../models/flag.model.js";
+import Comment from "../models/comment.model.js";
+import { createCommentValidation, moderateCommentValidation } from "../validations/comment.validation.js";
 
 const createRemedy = async (req, res) => {
   try {
@@ -203,7 +205,7 @@ const deleteRemedy = async (req, res) => {
 const flagRemedy = async (req, res) => {
   try {
     const { id } = req.params;
-    const { reason, note} = req.body;
+    const { reason, note } = req.body;
 
     // Input validation
     if (!reason?.trim() || !note?.trim()) {
@@ -249,7 +251,7 @@ const flagRemedy = async (req, res) => {
       contentType: "Remedy",
       flaggedBy: req.user.id,
       reason: reason.trim(),
-      note: note.trim(),   
+      note: note.trim(),
     });
 
     await flag.save();
@@ -276,7 +278,7 @@ const flagRemedy = async (req, res) => {
 
     // Update remedy status
     remedy.moderationStatus = "under_review";
-    
+
     // Check if remedy should be deactivated based on flag count
     const FLAG_THRESHOLD = 5; // This should be configurable
     if (moderationStatus.flagCount >= FLAG_THRESHOLD) {
@@ -307,10 +309,45 @@ const flagRemedy = async (req, res) => {
     });
   }
 };
+
+// 1. Create comment or reply
+const createComment = async (req, res) => {
+  try {
+    const { error, value } = createCommentValidation.validate(req.body);
+    if (error) return res.status(400).json({ message: error.details[0].message,success: false });
+
+    const { content, remedyId, parentCommentId } = value;
+    const userId = req.user.id;
+
+    let level = 0;
+    if (parentCommentId) {
+      const parent = await Comment.findById(parentCommentId);
+      if (!parent) return res.status(404).json({ message: 'Parent comment not found' });
+      level = parent.level + 1;
+    }
+
+    const comment = await Comment.create({
+      content,
+      remedyId,
+      parentCommentId: parentCommentId || null,
+      userId,
+      level
+    });
+
+    res.status(201).json(comment);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to create comment', error: error.message });
+  }
+};
+
+
+
+
 export {
   flagRemedy,
   createRemedy,
   getAllRemedies,
+  createComment,
   getRemedyById,
   updateRemedy,
   deleteRemedy,
