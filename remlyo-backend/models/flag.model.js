@@ -4,6 +4,7 @@ const FlagSchema = new mongoose.Schema(
   {
     contentId: {
       type: mongoose.Schema.Types.ObjectId,
+      refPath: 'contentType',
       required: true,
     },
     contentType: {

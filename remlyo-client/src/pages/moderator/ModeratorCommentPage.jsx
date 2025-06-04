@@ -1,87 +1,157 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import { useAuth } from "../../contexts/AuthContext";
 import { getComments } from "../../api/moderatorApi";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import Pagination from "../../components/common/Pagination";
+import SearchBar from "../../components/common/SearchBar";
+import Button from "../../components/common/Button";
+
+// Constants
+const ITEMS_PER_PAGE = 10;
+const SORT_OPTIONS = {
+  NEWEST: "newest",
+  MOST_REPORTED: "mostReported",
+  MOST_VIEWED: "mostViewed",
+  PENDING_REVIEW: "pendingReview",
+};
+
+const STATUS_FILTERS = {
+  APPROVED: "approved",
+  REJECTED: "rejected",
+  PENDING: "pending",
+};
 
 const ModeratorCommentPage = () => {
   const { user, authToken } = useAuth();
+
+  // State Management
   const [comments, setComments] = useState([]);
-  const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [sortBy, setSortBy] = useState("createdAt");
-  const [sortOrder, setSortOrder] = useState("desc");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
-  const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const [sortField, setSortField] = useState("");
-  const [sortDirection, setSortDirection] = useState("asc");
+  // Filter States
+  const [search, setSearch] = useState("");
+  const [filterByStatus, setFilterByStatus] = useState({
+    [STATUS_FILTERS.APPROVED]: false,
+    [STATUS_FILTERS.REJECTED]: false,
+    [STATUS_FILTERS.PENDING]: false,
+  });
 
-  const fetchComments = async () => {
+  // Sort States
+  const [sortConfig, setSortConfig] = useState({
+    field: "createdAt",
+    order: "desc",
+  });
+
+  // UI States
+  const [filterMenuOpen, setFilterMenuOpen] = useState(false);
+  const [sortMenuOpen, setSortMenuOpen] = useState(false);
+
+  // Pagination States
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  // Memoized filter functions
+  const getSelectedStatuses = useCallback(() => {
+    return Object.entries(filterByStatus)
+      .filter(([_, isSelected]) => isSelected)
+      .map(([status]) => status);
+  }, [filterByStatus]);
+
+  const handleStatusFilterChange = useCallback((status) => {
+    setFilterByStatus((prev) => ({
+      ...prev,
+      [status]: !prev[status],
+    }));
+  }, []);
+
+  const handleFilterReset = useCallback(() => {
+    setFilterByStatus({
+      [STATUS_FILTERS.APPROVED]: false,
+      [STATUS_FILTERS.REJECTED]: false,
+      [STATUS_FILTERS.PENDING]: false,
+    });
+    setSortConfig({
+      field: "createdAt",
+      order: "desc",
+    });
+    setSearch("");
+  }, []);
+
+  const handleSort = useCallback((field) => {
+    setSortConfig((prev) => ({
+      field,
+      order: prev.field === field && prev.order === "asc" ? "desc" : "asc",
+    }));
+  }, []);
+
+  // Fetch comments with error handling
+  const fetchComments = useCallback(async () => {
     try {
       setLoading(true);
+      setError(null);
+
+      const selectedStatuses = getSelectedStatuses();
+      const status = selectedStatuses.length === 1 ? selectedStatuses[0] : "";
+
       const res = await getComments(
         authToken,
         currentPage,
-        itemsPerPage,
+        ITEMS_PER_PAGE,
         search,
-        statusFilter !== "all" ? statusFilter : "",
-        sortBy,
-        sortOrder
+        status,
+        sortConfig.field,
+        sortConfig.order
       );
+
       if (res.success) {
         setComments(res.data);
         setTotalPages(res.pagination.totalPages);
       } else {
-        console.error("Fetch failed:", res.message);
+        setError(res.message || "Failed to fetch comments");
       }
     } catch (err) {
+      setError(err.message || "An error occurred while fetching comments");
       console.error("Error fetching comments:", err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [authToken, currentPage, search, sortConfig, getSelectedStatuses]);
 
+  // Apply filters and sorting
+  const filteredComments = useMemo(() => {
+    const selectedStatuses = getSelectedStatuses();
+
+    return comments
+      .filter(
+        (comment) =>
+          selectedStatuses.length === 0 ||
+          selectedStatuses.includes(comment.status)
+      )
+      .sort((a, b) => {
+        if (sortConfig.field === "createdAt") {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return sortConfig.order === "asc" ? dateA - dateB : dateB - dateA;
+        }
+        if (sortConfig.field === "upvoteCount") {
+          const votesA = a.upvoteCount || 0;
+          const votesB = b.upvoteCount || 0;
+          return sortConfig.order === "asc" ? votesA - votesB : votesB - votesA;
+        }
+        return 0;
+      });
+  }, [comments, getSelectedStatuses, sortConfig]);
+
+  // Effects
   useEffect(() => {
     fetchComments();
-  }, [search, statusFilter, sortBy, sortOrder, currentPage]);
+  }, [fetchComments]);
 
-  const groupedComments = useMemo(() => {
-    const map = new Map();
-    comments.forEach((comment) => {
-      map.set(comment._id, { ...comment, replies: [] });
-    });
-
-    const rootComments = [];
-
-    comments.forEach((comment) => {
-      if (comment.parentCommentId) {
-        const parent = map.get(comment.parentCommentId);
-        if (parent) {
-          parent.replies.push(map.get(comment._id));
-        }
-      } else {
-        rootComments.push(map.get(comment._id));
-      }
-    });
-
-    return rootComments;
-  }, [comments]);
-
-  const handleSort = (field) => {
-    if (sortBy === field) {
-      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-    } else {
-      setSortBy(field);
-      setSortOrder("asc");
-    }
-  };
-
+  // Render functions
   const renderSortIcon = (field) => {
-    if (field !== sortField) {
+    if (field !== sortConfig.field) {
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +170,7 @@ const ModeratorCommentPage = () => {
       );
     }
 
-    return sortDirection === "asc" ? (
+    return sortConfig.order === "asc" ? (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-4 w-4 text-brand-green"
@@ -133,6 +203,106 @@ const ModeratorCommentPage = () => {
     );
   };
 
+  const renderComment = (comment) => (
+    <>
+      <tr
+        key={comment._id}
+        className="bg-white flex justify-between border-b border-gray-100"
+      >
+        {/* User */}
+        <td className="px-6 py-4 whitespace-nowrap flex items-center gap-2">
+          <img
+            src={comment.userId.profileImage}
+            alt={comment.userId.username}
+            className="w-6 h-6 rounded-full"
+          />
+          <span className="text-sm text-gray-800">
+            {comment.userId.username}
+          </span>
+        </td>
+
+        {/* Content */}
+        <td className="px-6 py-4 whitespace-pre-wrap text-sm text-gray-700 max-w-xs">
+          {comment.content}
+        </td>
+
+        {/* Status */}
+        <td className="px-6 py-4">
+          <span
+            className={`px-2 py-1 text-xs rounded-full capitalize ${
+              comment.status === STATUS_FILTERS.APPROVED
+                ? "bg-green-100 text-green-700"
+                : comment.status === STATUS_FILTERS.REJECTED
+                ? "bg-red-100 text-red-700"
+                : "bg-yellow-100 text-yellow-700"
+            }`}
+          >
+            {comment.status}
+          </span>
+        </td>
+
+        {/* Votes */}
+        <td className="px-6 py-4 text-sm text-gray-600">
+          {comment.upvoteCount ?? 0}
+        </td>
+
+        {/* Date */}
+        <td className="px-6 py-4 text-sm text-gray-500">
+          {new Date(comment.createdAt).toLocaleDateString()}
+        </td>
+      </tr>
+
+      {/* Replies (only for approved comments) */}
+      {comment.status === STATUS_FILTERS.APPROVED &&
+        comment.replies?.length > 0 &&
+        comment.replies.map((reply) => (
+          <tr key={reply._id} className="bg-gray-50 border-b border-gray-100">
+            {/* Indented User Info */}
+            <td className="px-6 py-4 whitespace-nowrap pl-12 flex items-center gap-2">
+              <img
+                src={reply.userId.profileImage}
+                alt={reply.userId.username}
+                className="w-5 h-5 rounded-full"
+              />
+              <span className="text-sm text-gray-800">
+                {reply.userId.username}
+              </span>
+            </td>
+
+            {/* Reply Content */}
+            <td className="px-6 py-4 whitespace-pre-wrap text-sm text-gray-700 max-w-xs">
+              {reply.content}
+            </td>
+
+            {/* Status */}
+            <td className="px-6 py-4">
+              <span
+                className={`px-2 py-1 text-xs rounded-full capitalize ${
+                  reply.status === STATUS_FILTERS.APPROVED
+                    ? "bg-green-100 text-green-700"
+                    : reply.status === STATUS_FILTERS.REJECTED
+                    ? "bg-red-100 text-red-700"
+                    : "bg-yellow-100 text-yellow-700"
+                }`}
+              >
+                {reply.status}
+              </span>
+            </td>
+
+            {/* Votes */}
+            <td className="px-6 py-4 text-sm text-gray-600">
+              {reply.upvoteCount ?? 0}
+            </td>
+
+            {/* Date */}
+            <td className="px-6 py-4 text-sm text-gray-500">
+              {new Date(reply.createdAt).toLocaleDateString()}
+            </td>
+          </tr>
+        ))}
+    </>
+  );
+
   const columns = [
     { header: "User", field: "user", sortable: false },
     { header: "Content", field: "content", sortable: false },
@@ -141,154 +311,287 @@ const ModeratorCommentPage = () => {
     { header: "Date", field: "createdAt", sortable: true },
   ];
 
-  const renderNestedComments = (commentList) =>
-    commentList.map((comment) => (
-      <div
-        key={comment._id}
-        className="bg-white shadow  p-4  border border-gray-200"
-      >
-        {/* Parent Comment */}
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-          <div className="mb-2 md:mb-0">
-            <p className="text-gray-900 font-medium">{comment.user?.name}</p>
-            <p className="text-gray-700">{comment.content}</p>
-          </div>
-          <div className="flex items-center gap-4 text-sm mt-2 md:mt-0">
-            <span
-              className={`px-2 py-1 rounded-full capitalize ${
-                comment.status === "approved"
-                  ? "bg-green-100 text-green-700"
-                  : comment.status === "rejected"
-                  ? "bg-red-100 text-red-700"
-                  : "bg-yellow-100 text-yellow-700"
-              }`}
-            >
-              {comment.status}
-            </span>
-            <span className="text-gray-600">
-              {comment.upvoteCount ?? 0} votes
-            </span>
-            <span className="text-gray-500">
-              {new Date(comment.createdAt).toLocaleDateString()}
-            </span>
-          </div>
-        </div>
-
-        {/* Replies */}
-        {comment.status === "approved" && comment.replies.length > 0 && (
-          <div className="pl-6 border-l-2 border-gray-200 space-y-4 mt-4">
-            {comment.replies.map((reply) => (
-              <div
-                key={reply._id}
-                className="bg-gray-50 p-3 rounded-md shadow-sm border"
-              >
-                <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                  <div className="mb-2 md:mb-0">
-                    <p className="text-gray-800 font-medium">
-                      {reply.user?.name}
-                    </p>
-                    <p className="text-gray-700">{reply.content}</p>
-                  </div>
-                  <div className="flex items-center gap-4 text-sm mt-2 md:mt-0">
-                    <span
-                      className={`px-2 py-1 rounded-full capitalize ${
-                        reply.status === "approved"
-                          ? "bg-green-100 text-green-700"
-                          : reply.status === "rejected"
-                          ? "bg-red-100 text-red-700"
-                          : "bg-yellow-100 text-yellow-700"
-                      }`}
-                    >
-                      {reply.status}
-                    </span>
-                    <span className="text-gray-600">
-                      {reply.upVotes ?? 0} votes
-                    </span>
-                    <span className="text-gray-500">
-                      {new Date(reply.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    ));
-
   return (
     <DashboardLayout user={user} pageTitle="Comment Moderation">
+      <div className="mb-6">
+        <p className="text-gray-600">Manage Comments here</p>
+      </div>
+
+      <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+        <h2 className="text-xl font-bold text-gray-800 mb-4 md:mb-0">
+          All Comments ({comments.length})
+        </h2>
+      </div>
+
       <div className="p-4">
-        {/* Filters */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
-          <input
-            type="text"
+        {/* Filters and Search */}
+        <div className="flex relative flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+          <SearchBar
+            className="w-fit"
+            onSearch={setSearch}
             placeholder="Search comments..."
-            value={search}
-            onChange={(e) => {
-              setCurrentPage(1);
-              setSearch(e.target.value);
-            }}
-            className="border px-3 py-2 rounded-md w-full md:w-1/3"
           />
 
-          <select
-            value={statusFilter}
-            onChange={(e) => {
-              setCurrentPage(1);
-              setStatusFilter(e.target.value);
-            }}
-            className="border px-3 py-2 rounded-md"
-          >
-            <option value="all">All Statuses</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
-          </select>
+          <div className="flex gap-2">
+            <Button
+              variant="outlined"
+              color="default"
+              className="flex items-center"
+              onClick={() => setFilterMenuOpen(!filterMenuOpen)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                />
+              </svg>
+              Filters
+            </Button>
+
+            <Button
+              variant="outlined"
+              color="default"
+              className="flex items-center"
+              onClick={() => setSortMenuOpen(!sortMenuOpen)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
+                />
+              </svg>
+              Sort
+            </Button>
+          </div>
+
+          {/* Filter Menu */}
+          {filterMenuOpen && (
+            <div className="absolute top-full right-0 mt-2 w-80 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+              <div className="p-4">
+                <div className="mb-4">
+                  <h3 className="font-semibold text-gray-700 mb-2">
+                    By Comment Status
+                  </h3>
+                  <div className="space-y-2">
+                    {Object.entries(filterByStatus).map(
+                      ([status, isChecked]) => (
+                        <div key={status} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            id={`status-${status}`}
+                            checked={isChecked}
+                            onChange={() => handleStatusFilterChange(status)}
+                            className="mr-2"
+                          />
+                          <label
+                            htmlFor={`status-${status}`}
+                            className="capitalize"
+                          >
+                            {status}
+                          </label>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex justify-between">
+                  <Button
+                    variant="text"
+                    color="default"
+                    onClick={handleFilterReset}
+                  >
+                    Reset
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="brand"
+                    onClick={() => setFilterMenuOpen(false)}
+                  >
+                    Apply Filters
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Sort Menu */}
+          {sortMenuOpen && (
+            <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+              <ul className="py-1">
+                <li
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => {
+                    handleSort("createdAt");
+                    setSortMenuOpen(false);
+                  }}
+                >
+                  Date
+                </li>
+                <li
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => {
+                    handleSort("upvoteCount");
+                    setSortMenuOpen(false);
+                  }}
+                >
+                  Votes
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
 
-        {/* Sortable Table Header */}
         <div className="bg-white border border-gray-200 rounded-t-lg  overflow-x-auto ">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full table-auto border border-gray-200 rounded-md overflow-hidden">
+            <thead className="bg-gray-100">
               <tr>
-                {columns.map((col, index) => (
+                {columns.map((col) => (
                   <th
-                    key={index}
-                    className={`px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${
-                      col.sortable ? "cursor-pointer" : ""
-                    }`}
+                    key={col.field}
+                    className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
                     onClick={() => col.sortable && handleSort(col.field)}
                   >
-                    <div className="flex items-center space-x-1">
-                      <span>{col.header}</span>
+                    <div className="flex items-center gap-1 cursor-pointer">
+                      {col.header}
                       {col.sortable && renderSortIcon(col.field)}
                     </div>
                   </th>
                 ))}
               </tr>
             </thead>
+
+            <tbody className="bg-white divide-y divide-gray-100">
+              {filteredComments.map((comment) => {
+                const rows = [];
+
+                rows.push(
+                  <tr key={comment._id}>
+                    {/* User */}
+                    <td className="px-6 py-4 whitespace-nowrap flex items-center gap-2">
+                      <img
+                        src={comment.userId.profileImage}
+                        alt={comment.userId.username}
+                        className="w-6 h-6 rounded-full"
+                      />
+                      <span className="text-sm text-gray-800">
+                        {comment.userId.username}
+                      </span>
+                    </td>
+
+                    {/* Content */}
+                    <td className="px-6 py-4 whitespace-pre-wrap text-sm text-gray-700 max-w-xs">
+                      {comment.content}
+                    </td>
+
+                    {/* Status */}
+                    <td className="px-6 py-4">
+                      <span
+                        className={`px-2 py-1 text-xs rounded-full capitalize ${
+                          comment.status === STATUS_FILTERS.APPROVED
+                            ? "bg-green-100 text-green-700"
+                            : comment.status === STATUS_FILTERS.REJECTED
+                            ? "bg-red-100 text-red-700"
+                            : "bg-yellow-100 text-yellow-700"
+                        }`}
+                      >
+                        {comment.status}
+                      </span>
+                    </td>
+
+                    {/* Votes */}
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {comment.upvoteCount ?? 0}
+                    </td>
+
+                    {/* Date */}
+                    <td className="px-6 py-4 text-sm text-gray-500">
+                      {new Date(comment.createdAt).toLocaleDateString()}
+                    </td>
+                  </tr>
+                );
+
+                // Replies
+                if (
+                  comment.status === STATUS_FILTERS.APPROVED &&
+                  Array.isArray(comment.replies) &&
+                  comment.replies.length > 0
+                ) {
+                  comment.replies.forEach((reply) => {
+                    rows.push(
+                      <tr key={reply._id} className="bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap pl-12 flex items-center gap-2">
+                          <img
+                            src={reply.userId.profileImage}
+                            alt={reply.userId.username}
+                            className="w-5 h-5 rounded-full"
+                          />
+                          <span className="text-sm text-gray-800">
+                            {reply.userId.username}
+                          </span>
+                        </td>
+
+                        <td className="px-6 py-4 whitespace-pre-wrap text-sm text-gray-700 max-w-xs">
+                          {reply.content}
+                        </td>
+
+                        <td className="px-6 py-4">
+                          <span
+                            className={`px-2 py-1 text-xs rounded-full capitalize ${
+                              reply.status === STATUS_FILTERS.APPROVED
+                                ? "bg-green-100 text-green-700"
+                                : reply.status === STATUS_FILTERS.REJECTED
+                                ? "bg-red-100 text-red-700"
+                                : "bg-yellow-100 text-yellow-700"
+                            }`}
+                          >
+                            {reply.status}
+                          </span>
+                        </td>
+
+                        <td className="px-6 py-4 text-sm text-gray-600">
+                          {reply.upvoteCount ?? 0}
+                        </td>
+
+                        <td className="px-6 py-4 text-sm text-gray-500">
+                          {new Date(reply.createdAt).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    );
+                  });
+                }
+
+                return rows;
+              })}
+            </tbody>
           </table>
         </div>
 
-        {/* Comments */}
-        {loading ? (
-          <LoadingSpinner />
-        ) : groupedComments.length === 0 ? (
-          <p className="text-gray-500">No comments found.</p>
-        ) : (
-          <div className="">
-            {renderNestedComments(groupedComments)}
-          </div>
-        )}
-
         {/* Pagination */}
-        <Pagination
-          currentPage={currentPage}
-          onPageChange={(page) => setCurrentPage(page)}
-          totalPages={totalPages}
-          maxDisplayedPages={5}
-        />
+        <div className="mt-6">
+          <Pagination
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+            totalPages={totalPages}
+            maxDisplayedPages={5}
+          />
+        </div>
       </div>
     </DashboardLayout>
   );
