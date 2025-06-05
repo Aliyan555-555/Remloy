@@ -327,7 +327,7 @@ const ModeratorCommentPage = () => {
         {/* Filters and Search */}
         <div className="flex relative flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
           <SearchBar
-            className="w-fit"
+            className="!w-fit"
             onSearch={setSearch}
             placeholder="Search comments..."
           />
@@ -458,7 +458,7 @@ const ModeratorCommentPage = () => {
           )}
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-t-lg  overflow-x-auto ">
+    {    <div className="bg-white border border-gray-200 rounded-t-lg  overflow-x-auto ">
           <table className="min-w-full table-auto border border-gray-200 rounded-md overflow-hidden">
             <thead className="bg-gray-100">
               <tr>
@@ -581,7 +581,7 @@ const ModeratorCommentPage = () => {
               })}
             </tbody>
           </table>
-        </div>
+        </div>}
 
         {/* Pagination */}
         <div className="mt-6">

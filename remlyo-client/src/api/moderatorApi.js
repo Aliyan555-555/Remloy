@@ -48,7 +48,8 @@ const getFlags = async (token, page, limit, search) => {
 
 const moderateFlag = async (token, flagId, status, resolutionNote) => {
   try {
-    const res = await API.post(`/api/v1/moderator/flags/${flagId}`,
+    const res = await API.post(
+      `/api/v1/moderator/flags/${flagId}`,
       {
         status,
         resolutionNote,
@@ -61,5 +62,19 @@ const moderateFlag = async (token, flagId, status, resolutionNote) => {
   } catch (error) {
     return error.response.data;
   }
-}
-export { getComments, getFlags,moderateFlag };
+};
+
+const suspendUser = async (authToken, userId, flagId, message, status) => {
+  try {
+    const res = await API.post(
+      "/api/v1/moderator/users/status",
+      { userId, flagId, message, status },
+      { headers: getAuthHeaders(authToken) }
+    );
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export { getComments, getFlags, moderateFlag, suspendUser };

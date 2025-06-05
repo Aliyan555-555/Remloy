@@ -7,6 +7,7 @@ import Flag from "../models/flag.model.js";
 import Remedy from "../models/remedy.model.js";
 import Review from "../models/review.model.js";
 import AiFeedback from "../models/ai_feedback.model.js";
+import User from "../models/user.model.js";
 
 // Constants for sorting and filtering
 const SORT_FIELDS = {
@@ -346,7 +347,7 @@ const getAllFlags = async (req, res) => {
       Flag.find(filter)
         .skip(skip)
         .limit(parseInt(limit))
-        .populate("flaggedBy", "username email profileImage")
+        .populate("flaggedBy", "username email profileImage status")
         .populate("contentId", "name description")
         .lean(),
     ]);
@@ -409,9 +410,6 @@ const moderateFlag = async (req, res) => {
         message: "Invalid status. Must be either 'resolved' or 'dismissed'",
       });
     }
-
-    // Find flag
-    console.log(`[ModerateFlag] Fetching flag with ID: ${id}`);
     const flag = await Flag.findById(id);
 
     if (!flag) {
@@ -420,22 +418,11 @@ const moderateFlag = async (req, res) => {
         message: "Flag not found",
       });
     }
-
-    // Check if flag is already moderated
-    if (flag.status !== "active") {
-      return res.status(400).json({
-        success: false,
-        message: `Flag is already ${flag.status}`,
-      });
-    }
-
-    // Update flag status
     flag.status = status;
     flag.resolvedBy = moderatorId;
     flag.resolvedAt = new Date();
     flag.resolutionNote = resolutionNote || "";
 
-    // If status is resolved, update the content status
     if (status === "resolved") {
       let contentModel;
       switch (flag.contentType) {
@@ -462,13 +449,9 @@ const moderateFlag = async (req, res) => {
         },
       });
     }
-
-    // Save changes
     await flag.save();
-
-    // Populate the updated flag
     const updatedFlag = await Flag.findById(id)
-      .populate("flaggedBy", "username email profileImage")
+      .populate("flaggedBy", "username email profileImage status")
       .populate("contentId", "name description")
       .populate("resolvedBy", "username email profileImage")
       .lean();
@@ -476,13 +459,7 @@ const moderateFlag = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: `Flag successfully ${status}`,
-      data: {
-        ...updatedFlag,
-        timeAgo: new Date(updatedFlag.resolvedAt).toISOString(),
-        statusLabel:
-          updatedFlag.status.charAt(0).toUpperCase() +
-          updatedFlag.status.slice(1),
-      },
+      data: updatedFlag,
     });
   } catch (error) {
     console.error("[ModerateFlag] Error:", error);
@@ -494,10 +471,83 @@ const moderateFlag = async (req, res) => {
   }
 };
 
+/**
+ * Suspend a user based on flag violations
+ */
+const suspendUser = async (req, res) => {
+  try {
+    const { userId, flagId, message, status } = req.body;
+    const moderatorId = req.user.id;
+
+    // Validate user ID
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user ID format",
+      });
+    }
+
+    // Validate flag ID if provided
+    if (flagId && !mongoose.Types.ObjectId.isValid(flagId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid flag ID format",
+      });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    if (user.status === status) {
+      return res.status(400).json({
+        success: false,
+        message: `User is already ${status}`,
+      });
+    }
+    user.status = status;
+    user.suspendedAt = new Date();
+    user.suspendedBy = moderatorId;
+    user.suspendedMessage = message || "Violation of community guidelines";
+
+    // If flagId is provided, update the flag status
+    let flag = null;
+    if (flagId) {
+      flag = await Flag.findById(flagId);
+      if (flag) {
+        flag.status = "resolved";
+        flag.resolvedBy = moderatorId;
+        flag.resolvedAt = new Date();
+        flag.resolutionNote = `User ${status} due to violation`;
+        await flag.save();
+      }
+    }
+    await user.save();
+    await flag.populate("flaggedBy", "username email status profileImage");
+    return res.status(200).json({
+      success: true,
+      message: `User successfully ${status}`,
+      data: flag,
+    });
+  } catch (error) {
+    console.error("[SuspendUser] Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error suspending user",
+      error: error.message,
+    });
+  }
+};
+
 export {
   getComments,
   getAllFlags,
   moderateComment,
   getCommentStats,
   moderateFlag,
+  suspendUser,
 };

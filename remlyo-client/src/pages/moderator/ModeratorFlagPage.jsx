@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import Pagination from "../../components/common/Pagination";
 import SearchBar from "../../components/common/SearchBar";
 import Table from "../../components/common/Table";
-import { getFlags, moderateFlag } from "../../api/moderatorApi";
+import { getFlags, moderateFlag, suspendUser } from "../../api/moderatorApi";
 import Modal from "../../components/common/Modal";
 import Button from "../../components/common/Button";
 
@@ -17,8 +17,9 @@ const ModeratorFlagPage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [dismissedReason, setDismissedReason] = useState("");
   const [selectedFlagId, setSelectedFlagId] = useState(null);
+  const [suspendUserReason, setSuspendUserReason] = useState("");
   const [showSuspendedModal, setShowSuspendedModal] = useState(false);
-
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const fetchFlags = async () => {
     const res = await getFlags(authToken, currentPage, 10, search);
     if (res && res.success) {
@@ -35,31 +36,58 @@ const ModeratorFlagPage = () => {
     const res = await moderateFlag(authToken, id, "resolved", "");
     if (res && res.success) {
       setFlags((prev) =>
-        prev.map((flag) =>
-          flag._id === id ? { ...flag, status: "resolved" } : flag
-        )
+        prev.map((flag) => (flag._id === id ? res.data : flag))
       );
+      setSelectedFlagId(null);
     }
   };
 
   const handleDismiss = async () => {
-    const res = await moderateFlag(authToken, selectedFlagId, "dismissed",dismissedReason);
+    const res = await moderateFlag(
+      authToken,
+      selectedFlagId,
+      "dismissed",
+      dismissedReason
+    );
     if (res && res.success) {
       setFlags((prev) =>
-        prev.map((flag) =>
-          flag._id === id ? { ...flag, status: "dismissed" } : flag
-        )
+        prev.map((flag) => (flag._id === selectedFlagId ? res.data : flag))
       );
+      setSelectedFlagId(null);
+      setShowDismissedModal(false);
     }
   };
+
+  const handleSuspendUser = async () => {
+    const res = await suspendUser(
+      authToken,
+      selectedUserId,
+      selectedFlagId,
+      suspendUserReason,
+      "suspended"
+    );
+    if (res && res.success) {
+      setFlags((prev) =>
+        prev.map((flag) => (flag._id === selectedFlagId ? res.data : flag))
+      );
+      setShowSuspendedModal(false);
+      setSuspendUserReason("");
+      setSelectedUserId(null);
+      setSelectedFlagId(null)
+    }
+  };
+
   const handleDismissModal = (flagId) => {
     setSelectedFlagId(flagId);
     setShowDismissedModal(true);
     setDismissedReason("");
   };
 
-  const handleSuspendUser = (userId) => {
-    alert(`User ${userId} suspended (demo)`);
+  const handleSuspendUserModel = (flagId, userId) => {
+    setSelectedUserId(userId);
+    setSelectedFlagId(flagId);
+    setShowSuspendedModal(true);
+    setSuspendUserReason("");
   };
 
   const columns = [
@@ -96,11 +124,31 @@ const ModeratorFlagPage = () => {
         };
         return (
           <span
-            className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
+            className={`inline-flex px-2 py-1 capitalize rounded-full text-xs font-medium ${
               statusStyles[row.status] || "bg-gray-100 text-gray-700"
             }`}
           >
             {row.status}
+          </span>
+        );
+      },
+    },
+    {
+      header: "User Status",
+      field: "flaggedBy.status",
+      render: (row) => {
+        const statusStyles = {
+          warning: "bg-yellow-100 text-yellow-700",
+          active: "bg-green-100 text-green-700",
+          suspended: "bg-red-100 text-red-700",
+        };
+        return (
+          <span
+            className={`inline-flex px-2 py-1 capitalize rounded-full text-xs font-medium ${
+              statusStyles[row.flaggedBy.status] || "bg-gray-100 text-gray-700"
+            }`}
+          >
+            {row.flaggedBy.status}
           </span>
         );
       },
@@ -112,9 +160,10 @@ const ModeratorFlagPage = () => {
         <div className="flex gap-2">
           <button
             className={" text-green-500 hover:text-green-700"}
-            title={"Approved"}
+            title={"resolved"}
             onClick={() => handleResolve(row._id)}
-            aria-label={"Approved"}
+            disabled={row.status == "resolved"}
+            aria-label={"resolved"}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -134,10 +183,10 @@ const ModeratorFlagPage = () => {
 
           <button
             onClick={() => handleDismissModal(row._id)}
-            disabled={row.status !== "active"}
             title="Dismiss"
             className={" text-green-500 hover:text-green-700"}
             aria-label="Dismiss"
+            disabled={row.status == "dismissed"}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -156,7 +205,7 @@ const ModeratorFlagPage = () => {
           </button>
           <button
             aria-label="Suspend User"
-            onClick={() => handleSuspendUser(row.flaggedBy._id)}
+            onClick={() => handleSuspendUserModel(row._id, row.flaggedBy._id)}
             title="Suspend User"
           >
             <svg
@@ -220,12 +269,12 @@ const ModeratorFlagPage = () => {
       <Modal
         isOpen={showDismissedModal}
         onClose={() => setShowDismissedModal(false)}
-        title="Reject Remedy"
+        title="Dismissed Flag"
         size="md"
       >
         <div className="mb-6">
           <p className="text-gray-600 mb-4">
-            Please provide a reason for dismissed this remedy. This will be sent
+            Please provide a reason for dismissed this flag. This will be sent
             to the user.
           </p>
           <textarea
@@ -251,7 +300,46 @@ const ModeratorFlagPage = () => {
             onClick={handleDismiss}
             disabled={!dismissedReason.trim()}
           >
-            dismiss flag
+            Dismiss flag
+          </Button>
+        </div>
+      </Modal>
+
+      {/* Suspend User */}
+      <Modal
+        isOpen={showSuspendedModal}
+        onClose={() => setShowSuspendedModal(false)}
+        title="Suspend User"
+        size="md"
+      >
+        <div className="mb-6">
+          <p className="text-gray-600 mb-4">
+            Please provide a reason for suspend user
+          </p>
+          <textarea
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+            rows={4}
+            placeholder="Enter suspend reason..."
+            value={suspendUserReason}
+            onChange={(e) => setSuspendUserReason(e.target.value)}
+          />
+        </div>
+        <div className="flex justify-end space-x-3">
+          <Button
+            variant="outlined"
+            color="default"
+            onClick={() => setShowSuspendedModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="default"
+            className="bg-red-500 text-white hover:bg-red-600"
+            onClick={handleSuspendUser}
+            disabled={!suspendUserReason.trim()}
+          >
+            Suspend
           </Button>
         </div>
       </Modal>

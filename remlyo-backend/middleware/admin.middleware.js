@@ -1,6 +1,5 @@
 export const adminMiddleware = (req, res, next) => {
   try {
-    console.log(req.user)
     if (!req.user || req.user.role === "user") {
       return res.status(403).json({ message: "Access denied. Admins only." });
     }
@@ -11,6 +10,5 @@ export const adminMiddleware = (req, res, next) => {
       .json({ message: "Admin check failed.", error: error.message });
   }
 };
-
 
 export default adminMiddleware;

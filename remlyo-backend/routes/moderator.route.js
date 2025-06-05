@@ -3,6 +3,7 @@ import {
   getAllFlags,
   getComments,
   moderateFlag,
+  suspendUser,
 } from "../controllers/moderator.controller.js";
 
 const ModeratorRoute = express.Router();
@@ -12,5 +13,8 @@ ModeratorRoute.get("/comments", getComments);
 ModeratorRoute.get("/flags", getAllFlags);
 // moderate flag content route
 ModeratorRoute.post("/flags/:id",moderateFlag)
+// moderator suspend user
+ModeratorRoute.post("/users/status",suspendUser );
+
 
 export default ModeratorRoute;
