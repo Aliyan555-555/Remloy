@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import DashboardSidebar from "./DashboardSidebar";
 import AdminSidebar from "./AdminSidebar"; // Import AdminSidebar
 import ModeratorSidebar from "./ModeratorSidebar";
+import WriterSidebar from "./WriterSidebar";
 
 const DashboardLayout = ({
   children,
@@ -59,9 +60,11 @@ const DashboardLayout = ({
           />
         );
       case "admin":
-        return (<AdminSidebar user={user} isSidebarOpen={isSidebarOpen} />);
+        return <AdminSidebar user={user} isSidebarOpen={isSidebarOpen} />;
       case "moderator":
-        return (<ModeratorSidebar user={user} isSidebarOpen={isSidebarOpen} />)
+        return <ModeratorSidebar user={user} isSidebarOpen={isSidebarOpen} />;
+      case "writer":
+        return <WriterSidebar user={user} isSidebarOpen={isSidebarOpen} />;
     }
   };
 

@@ -390,7 +390,7 @@ const getAllFlags = async (req, res) => {
  */
 const moderateFlag = async (req, res) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id;
     const { status, resolutionNote } = req.body;
     const moderatorId = req.user.id;
 
@@ -411,7 +411,9 @@ const moderateFlag = async (req, res) => {
     }
 
     // Find flag
+    console.log(`[ModerateFlag] Fetching flag with ID: ${id}`);
     const flag = await Flag.findById(id);
+
     if (!flag) {
       return res.status(404).json({
         success: false,

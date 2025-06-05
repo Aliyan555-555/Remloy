@@ -47,6 +47,9 @@ import ModeratorRemedyManagementPage from "./pages/moderator/ModeratorRemedyMana
 import ModeratorCommentPage from "./pages/moderator/ModeratorCommentPage";
 import ModeratorFlagPage from "./pages/moderator/ModeratorFlagPage";
 import ModeratorUserManagement from "./pages/moderator/ModeratorUserManagement";
+import WriterRoutes from "./components/routing/WriterRoutes";
+import WriterDashboardPage from "./pages/writer/WriterDashboardPage";
+import WriterRemedyManagementPage from "./pages/writer/WriterRemedyMAnagementPage";
 function App() {
   return (
     <AuthProvider>
@@ -95,12 +98,31 @@ function App() {
               </ModeratorRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/moderator/users"
             element={
               <ModeratorRoute>
                 <ModeratorUserManagement />
               </ModeratorRoute>
+            }
+          /> */}
+
+          {/* Writer Routes */}
+
+          <Route
+            path="/writer/dashboard"
+            element={
+              <WriterRoutes>
+                <WriterDashboardPage />
+              </WriterRoutes>
+            }
+          />
+          <Route
+            path="/writer/remedies"
+            element={
+              <WriterRoutes>
+                <WriterRemedyManagementPage/>
+              </WriterRoutes>
             }
           />
 

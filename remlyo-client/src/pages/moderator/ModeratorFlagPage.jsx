@@ -4,49 +4,20 @@ import { useAuth } from "../../contexts/AuthContext";
 import Pagination from "../../components/common/Pagination";
 import SearchBar from "../../components/common/SearchBar";
 import Table from "../../components/common/Table";
-import { getFlags } from "../../api/moderatorApi";
-
-// Temporary mock data based on new schema
-const demoFlags = [
-  {
-    _id: "1",
-    contentType: "Remedy",
-    contentTitle: "Turmeric for Inflammation",
-    flaggedBy: { _id: "user123", username: "user123" },
-    reason: "Contains misleading medical claims",
-    note: "User says this may cause confusion.",
-    createdAt: "2025-06-03T10:15:00Z",
-    status: "active",
-    contentId: "remedy123",
-  },
-  {
-    _id: "2",
-    contentType: "Review",
-    contentTitle: "This remedy is stupid",
-    flaggedBy: { _id: "user456", username: "user456" },
-    reason: "Inappropriate language",
-    createdAt: "2025-06-02T14:22:00Z",
-    status: "active",
-    contentId: "comment456",
-  },
-  {
-    _id: "3",
-    contentType: "Remedy",
-    contentTitle: "Garlic for Cold",
-    flaggedBy: { _id: "user789", username: "user789" },
-    reason: "Plagiarized content",
-    createdAt: "2025-06-01T08:00:00Z",
-    status: "resolved",
-    contentId: "remedy789",
-  },
-];
+import { getFlags, moderateFlag } from "../../api/moderatorApi";
+import Modal from "../../components/common/Modal";
+import Button from "../../components/common/Button";
 
 const ModeratorFlagPage = () => {
   const { user, authToken } = useAuth();
   const [search, setSearch] = useState("");
   const [flags, setFlags] = useState([]);
+  const [showDismissedModal, setShowDismissedModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [dismissedReason, setDismissedReason] = useState("");
+  const [selectedFlagId, setSelectedFlagId] = useState(null);
+  const [showSuspendedModal, setShowSuspendedModal] = useState(false);
 
   const fetchFlags = async () => {
     const res = await getFlags(authToken, currentPage, 10, search);
@@ -60,20 +31,31 @@ const ModeratorFlagPage = () => {
     fetchFlags();
   }, [currentPage, search]);
 
-  const handleResolve = (id) => {
-    setFlags((prev) =>
-      prev.map((flag) =>
-        flag._id === id ? { ...flag, status: "resolved" } : flag
-      )
-    );
+  const handleResolve = async (id) => {
+    const res = await moderateFlag(authToken, id, "resolved", "");
+    if (res && res.success) {
+      setFlags((prev) =>
+        prev.map((flag) =>
+          flag._id === id ? { ...flag, status: "resolved" } : flag
+        )
+      );
+    }
   };
 
-  const handleDismiss = (id) => {
-    setFlags((prev) =>
-      prev.map((flag) =>
-        flag._id === id ? { ...flag, status: "dismissed" } : flag
-      )
-    );
+  const handleDismiss = async () => {
+    const res = await moderateFlag(authToken, selectedFlagId, "dismissed",dismissedReason);
+    if (res && res.success) {
+      setFlags((prev) =>
+        prev.map((flag) =>
+          flag._id === id ? { ...flag, status: "dismissed" } : flag
+        )
+      );
+    }
+  };
+  const handleDismissModal = (flagId) => {
+    setSelectedFlagId(flagId);
+    setShowDismissedModal(true);
+    setDismissedReason("");
   };
 
   const handleSuspendUser = (userId) => {
@@ -151,7 +133,7 @@ const ModeratorFlagPage = () => {
           </button>
 
           <button
-            onClick={() => handleDismiss(row._id)}
+            onClick={() => handleDismissModal(row._id)}
             disabled={row.status !== "active"}
             title="Dismiss"
             className={" text-green-500 hover:text-green-700"}
@@ -233,6 +215,46 @@ const ModeratorFlagPage = () => {
         onPageChange={() => setCurrentPage((p) => p + 1)}
         className="mt-6"
       />
+
+      {/* dismissed model */}
+      <Modal
+        isOpen={showDismissedModal}
+        onClose={() => setShowDismissedModal(false)}
+        title="Reject Remedy"
+        size="md"
+      >
+        <div className="mb-6">
+          <p className="text-gray-600 mb-4">
+            Please provide a reason for dismissed this remedy. This will be sent
+            to the user.
+          </p>
+          <textarea
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+            rows={4}
+            placeholder="Enter dismiss flag reason..."
+            value={dismissedReason}
+            onChange={(e) => setDismissedReason(e.target.value)}
+          />
+        </div>
+        <div className="flex justify-end space-x-3">
+          <Button
+            variant="outlined"
+            color="default"
+            onClick={() => setShowDismissedModal(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="default"
+            className="bg-red-500 text-white hover:bg-red-600"
+            onClick={handleDismiss}
+            disabled={!dismissedReason.trim()}
+          >
+            dismiss flag
+          </Button>
+        </div>
+      </Modal>
     </DashboardLayout>
   );
 };
