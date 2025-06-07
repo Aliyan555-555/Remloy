@@ -5,6 +5,8 @@ import Button from "../../components/common/Button";
 import FileUpload from "../../components/common/FileUpload";
 import { useAuth } from "../../contexts/AuthContext";
 import { createRemedy } from "../../api/adminApi";
+import TextEditor from "../../components/common/TextEditor";
+import { uploadImage} from "../../api/uploadApi";
 
 // Constants
 const REMEDY_TYPES = {
@@ -42,6 +44,9 @@ const AddRemedyPage = () => {
   const [remedyType, setRemedyType] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -50,6 +55,7 @@ const AddRemedyPage = () => {
     ingredients: [],
     instructions: "",
     sideEffects: "",
+    content:"",
     references: "",
     practitionerName: "",
     mediaFile: null,
@@ -77,6 +83,9 @@ const AddRemedyPage = () => {
     [errors]
   );
 
+  const handleChangeContent = (e) =>{
+    setFormData((prev) =>({...prev,content:e}));
+  }
   const handleIngredientsChange = useCallback(
     (e) => {
       const input = e.target.value;
@@ -98,12 +107,33 @@ const AddRemedyPage = () => {
     [errors]
   );
 
-  const handleFileUpload = useCallback((file) => {
-    setFormData((prev) => ({
-      ...prev,
-      mediaFile: file,
-    }));
-  }, []);
+  const handleFileUpload = async (file) => {
+    try {
+      setIsUploading(true);
+      setUploadError(null);
+      setUploadSuccess(false);
+
+      const result = await uploadImage(authToken, file);
+      
+      if (result.success) {
+        setFormData(prev => ({
+          ...prev,
+          image: result.data.secureUrl
+        }));
+        setUploadSuccess(true);
+        // Optional: Show success message
+        console.log('Image uploaded successfully:', result.data.secureUrl);
+      } else {
+        setUploadError(result.error);
+        console.error('Upload failed:', result.error);
+      }
+    } catch (error) {
+      setUploadError(error.message || 'Failed to upload image');
+      console.error('Error uploading image:', error);
+    } finally {
+      setIsUploading(false);
+    }
+  }
 
   const handleSelectRemedyType = useCallback((type) => {
     setRemedyType(type);
@@ -409,6 +439,13 @@ const AddRemedyPage = () => {
           helperText="Supported file types: JPG, PNG, GIF. Maximum file size: 2MB"
         />
       </div>
+
+      <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+          Content <span className="text-red-500">*</span>
+        </label>
+        <TextEditor content={formData.content} maxLength={10000} className="" placeholder="Type content here..." error={null} onChange={handleChangeContent} />
+      </div>
     </div>
   );
 
@@ -503,6 +540,19 @@ const AddRemedyPage = () => {
     </div>
   );
 
+  const renderUploadStatus = () => {
+    if (isUploading) {
+      return <div className="text-blue-500">Uploading image...</div>;
+    }
+    if (uploadError) {
+      return <div className="text-red-500">{uploadError}</div>;
+    }
+    if (uploadSuccess) {
+      return <div className="text-green-500">Image uploaded successfully!</div>;
+    }
+    return null;
+  };
+
   return (
     <DashboardLayout pageTitle="Add Remedy" user={user}>
       <div className="mb-6">
@@ -584,6 +634,8 @@ const AddRemedyPage = () => {
           </div>
         )}
       </form>
+
+      {renderUploadStatus()}
     </DashboardLayout>
   );
 };

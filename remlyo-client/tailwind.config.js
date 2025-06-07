@@ -4,6 +4,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
+    './node_modules/@mantine/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -37,6 +38,7 @@ export default {
     },
   },
   plugins: [
+    require('@tailwindcss/typography'),
     function({ addComponents }) {
       addComponents({
         '.btn': {

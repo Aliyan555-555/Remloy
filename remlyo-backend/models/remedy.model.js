@@ -36,6 +36,15 @@ const RemedySchema = new mongoose.Schema(
     usageInstructions: {
       type: String,
     },
+    media:{
+      type:{
+        type:String,
+        enum:["image",'video'],
+      },
+      source:{
+        type:String,
+      }
+    },
     sideEffects: {
       type: [String],
       default: [],
