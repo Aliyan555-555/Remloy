@@ -4,7 +4,10 @@ import { remedyValidation } from "../validations/remedy.validation.js";
 import ModerationStatus from "./../models/moderation_status.model.js";
 import Flag from "../models/flag.model.js";
 import Comment from "../models/comment.model.js";
-import { createCommentValidation, moderateCommentValidation } from "../validations/comment.validation.js";
+import {
+  createCommentValidation,
+  moderateCommentValidation,
+} from "../validations/comment.validation.js";
 
 const createRemedy = async (req, res) => {
   try {
@@ -51,7 +54,7 @@ const getAllRemedies = async (req, res) => {
       searchQuery.$or = [
         { name: { $regex: search, $options: "i" } },
         { description: { $regex: search, $options: "i" } },
-        { ingredients: { $regex: search, $options: "i" } },
+        // { ingredients: { $regex: search, $options: "i" } },
         { "createdBy.username": { $regex: search, $options: "i" } },
       ];
     }
@@ -101,7 +104,10 @@ const getRemedyById = async (req, res) => {
         .json({ message: "Invalid remedy ID", success: false });
     }
 
-    const remedy = await Remedy.findById(id);
+    const remedy = await Remedy.findById(id).populate(
+      "createdBy",
+      "username email profileImage status"
+    );
     if (!remedy || !remedy.isActive) {
       return res
         .status(404)
@@ -111,7 +117,7 @@ const getRemedyById = async (req, res) => {
     res.status(200).json({
       message: "Successfully fetched remedy",
       remedy,
-      success: false,
+      success: true,
     });
   } catch (error) {
     res.status(500).json({
@@ -211,14 +217,14 @@ const flagRemedy = async (req, res) => {
     if (!reason?.trim() || !note?.trim()) {
       return res.status(400).json({
         message: "Reason, note, and category are required.",
-        success: false
+        success: false,
       });
     }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         message: "Invalid remedy ID.",
-        success: false
+        success: false,
       });
     }
 
@@ -227,7 +233,7 @@ const flagRemedy = async (req, res) => {
     if (!remedy) {
       return res.status(404).json({
         message: "Remedy not found or already inactive.",
-        success: false
+        success: false,
       });
     }
 
@@ -241,7 +247,7 @@ const flagRemedy = async (req, res) => {
     if (existingFlag) {
       return res.status(400).json({
         message: "You have already flagged this remedy.",
-        success: false
+        success: false,
       });
     }
 
@@ -258,7 +264,7 @@ const flagRemedy = async (req, res) => {
 
     let moderationStatus = await ModerationStatus.findOne({
       contentId: id,
-      contentType: "Remedy"
+      contentType: "Remedy",
     });
 
     if (moderationStatus) {
@@ -271,7 +277,7 @@ const flagRemedy = async (req, res) => {
         flags: [flag._id],
         flagCount: 1,
         activeFlagCount: 1,
-        lastFlaggedAt: new Date()
+        lastFlaggedAt: new Date(),
       });
       await moderationStatus.save();
     }
@@ -289,23 +295,23 @@ const flagRemedy = async (req, res) => {
     await remedy.save();
 
     // Populate flag details for response
-    await flag.populate('flaggedBy', 'username email');
-    await moderationStatus.populate('flags');
+    await flag.populate("flaggedBy", "username email");
+    await moderationStatus.populate("flags");
 
     res.status(200).json({
       message: "Remedy flagged successfully.",
       success: true,
       data: {
         flag,
-        moderationStatus
-      }
+        moderationStatus,
+      },
     });
   } catch (error) {
     console.error("Error flagging remedy:", error);
     res.status(500).json({
       message: "Internal server error.",
       error: error.message,
-      success: false
+      success: false,
     });
   }
 };
@@ -314,7 +320,10 @@ const flagRemedy = async (req, res) => {
 const createComment = async (req, res) => {
   try {
     const { error, value } = createCommentValidation.validate(req.body);
-    if (error) return res.status(400).json({ message: error.details[0].message,success: false });
+    if (error)
+      return res
+        .status(400)
+        .json({ message: error.details[0].message, success: false });
 
     const { content, remedyId, parentCommentId } = value;
     const userId = req.user.id;
@@ -322,7 +331,8 @@ const createComment = async (req, res) => {
     let level = 0;
     if (parentCommentId) {
       const parent = await Comment.findById(parentCommentId);
-      if (!parent) return res.status(404).json({ message: 'Parent comment not found' });
+      if (!parent)
+        return res.status(404).json({ message: "Parent comment not found" });
       level = parent.level + 1;
     }
 
@@ -331,17 +341,16 @@ const createComment = async (req, res) => {
       remedyId,
       parentCommentId: parentCommentId || null,
       userId,
-      level
+      level,
     });
 
     res.status(201).json(comment);
   } catch (error) {
-    res.status(500).json({ message: 'Failed to create comment', error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to create comment", error: error.message });
   }
 };
-
-
-
 
 export {
   flagRemedy,

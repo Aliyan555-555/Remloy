@@ -4,6 +4,9 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
+import { getRemedyById } from "../api/remediesApi";
+import { formatDate } from "../utils";
+import HtmlRenderer from "../components/common/HtmlRenderer";
 
 const CommunityRemedyDetail = () => {
   const { remedyId } = useParams();
@@ -41,138 +44,143 @@ const CommunityRemedyDetail = () => {
   const [showAIInsightPopup, setShowAIInsightPopup] = useState(false);
 
   // Fetch remedy details
+  const fetchRemedyDetails = async () => {
+    setLoading(true);
+    // Simulating API call
+    const res = await getRemedyById(remedyId);
+    if (res && res.success) {
+      setRemedy(res.remedy);
+      setLoading(false);
+    }
+
+    //   // Mock data for demonstration
+    //   const mockRemedy = {
+    //     id: remedyId,
+    //     type: "Community Remedy",
+    //     name: "Turmeric Tea Recipe & Benefits",
+    //     description:
+    //       "Explore turmeric tea with our guide! Whether you're into herbal teas or adding superfoods to your diet, this golden tonic is for you. Learn what turmeric tea is, how to make it, and get easy, delicious recipes. Our straightforward recipe makes brewing turmeric tea a breeze!",
+    //     postedBy: "Dr. John",
+    //     postedDate: "Feb 19, 2025",
+    //     updatedDate: "Feb 22, 2025",
+    //     verifiedContributor: true,
+    //     rating: 5,
+    //     reviewCount: 128,
+    //     image: "/images/remedies/turmeric-tea-2.jpg",
+    //     preparationTime: "5-10 minutes to prepare",
+    //     ingredients: [
+    //       "2½ cups water",
+    //       "¼ tsp black pepper (optional)",
+    //       "1 tbsp honey (optional)",
+    //       "1-inch fresh turmeric root (roughly chopped) or 1 tsp turmeric powder",
+    //     ],
+    //     equipment: [
+    //       "Small saucepan",
+    //       "Strainer",
+    //       "Mugs",
+    //       "Pestle or something similar for crushing",
+    //     ],
+    //     treatmentDetails: {
+    //       title: "What is turmeric tea?",
+    //       description:
+    //         "Turmeric tea is made by steeping fresh or powdered turmeric in water, often with ginger and black pepper. Despite the name, it doesn't contain traditional tea unless added. The blend results in an earthy, slightly bitter drink with warmth and spice. Perfect for any time of day!",
+    //     },
+    //     instructions: [
+    //       {
+    //         step: "Heat the water",
+    //         detail: "Just heat 2½ cups of water in a small saucepan.",
+    //       },
+    //       {
+    //         step: "Add turmeric and ginger",
+    //         detail:
+    //           "When it's hot, turn the heat down to low and add the gently crushed slices of ½-inch fresh ginger root and 1-inch turmeric root.",
+    //       },
+    //       {
+    //         step: "Add spices",
+    //         detail:
+    //           "Proceed to add black pepper, cloves, and a cinnamon stick if using.",
+    //       },
+    //       {
+    //         step: "Simmer",
+    //         detail: "Let the mixture simmer for 8-10 minutes.",
+    //       },
+    //       {
+    //         step: "Strain",
+    //         detail: "Remove from heat and strain the tea into mugs.",
+    //       },
+    //       {
+    //         step: "Add flavors",
+    //         detail:
+    //           "Taste the tea and add honey, lemon juice, or mint leaves if desired.",
+    //       },
+    //       {
+    //         step: "Serve",
+    //         detail: "Enjoy your customized turmeric tea!",
+    //       },
+    //     ],
+    //     conclusion:
+    //       "You've now mastered making turmeric tea and its variations! This simple and healthy drink, rooted in Indian culture, offers potential medicinal benefits like reducing inflammation and easing digestion. Easily incorporate it into your routine and customize it to your liking. Enjoy the wellness boost and delightful taste!",
+    //     relatedRemedies: [
+    //       {
+    //         id: "r1",
+    //         name: "Ginger Honey Lemon Drink",
+    //         description: "A soothing drink made with fresh ginger...",
+    //         image: "/images/remedies/ginger-lemon.jpg",
+    //         rating: 5,
+    //         reviewCount: 128,
+    //       },
+    //       {
+    //         id: "r2",
+    //         name: "Peppermint Infusion",
+    //         description: "A refreshing herbal infusion made with...",
+    //         image: "/images/remedies/peppermint.jpg",
+    //         rating: 5,
+    //         reviewCount: 128,
+    //       },
+    //     ],
+    //   };
+
+    //   // Mock comments
+    //   const mockComments = [
+    //     {
+    //       id: "c1",
+    //       user: {
+    //         name: "Marie Claire",
+    //         avatar: "/images/avatars/user1.jpg",
+    //       },
+    //       text: "I recently made a turmeric tea recipe that I found very helpful, and I'd like to try it once!",
+    //       upvotes: 100,
+    //       date: "3h ago",
+    //     },
+    //     {
+    //       id: "c2",
+    //       user: {
+    //         name: "Romeo",
+    //         avatar: "/images/avatars/user2.jpg",
+    //       },
+    //       text: "Yes, I found it helpful, great remedy....",
+    //       upvotes: 30,
+    //       date: "3h ago",
+    //     },
+    //     {
+    //       id: "c3",
+    //       user: {
+    //         name: "Joy Claire",
+    //         avatar: "/images/avatars/user3.jpg",
+    //       },
+    //       text: "Great Remedy....",
+    //       upvotes: 10,
+    //       date: "4h ago",
+    //     },
+    //   ];
+
+    //   setRemedy(mockRemedy);
+    //   setComments(mockComments);
+    //   setLoading(false);
+    // }, 500);
+  };
+
   useEffect(() => {
-    const fetchRemedyDetails = async () => {
-      setLoading(true);
-      // Simulating API call
-      setTimeout(() => {
-        // Mock data for demonstration
-        const mockRemedy = {
-          id: remedyId,
-          type: "Community Remedy",
-          name: "Turmeric Tea Recipe & Benefits",
-          description:
-            "Explore turmeric tea with our guide! Whether you're into herbal teas or adding superfoods to your diet, this golden tonic is for you. Learn what turmeric tea is, how to make it, and get easy, delicious recipes. Our straightforward recipe makes brewing turmeric tea a breeze!",
-          postedBy: "Dr. John",
-          postedDate: "Feb 19, 2025",
-          updatedDate: "Feb 22, 2025",
-          verifiedContributor: true,
-          rating: 5,
-          reviewCount: 128,
-          image: "/images/remedies/turmeric-tea-2.jpg",
-          preparationTime: "5-10 minutes to prepare",
-          ingredients: [
-            "2½ cups water",
-            "¼ tsp black pepper (optional)",
-            "1 tbsp honey (optional)",
-            "1-inch fresh turmeric root (roughly chopped) or 1 tsp turmeric powder",
-          ],
-          equipment: [
-            "Small saucepan",
-            "Strainer",
-            "Mugs",
-            "Pestle or something similar for crushing",
-          ],
-          treatmentDetails: {
-            title: "What is turmeric tea?",
-            description:
-              "Turmeric tea is made by steeping fresh or powdered turmeric in water, often with ginger and black pepper. Despite the name, it doesn't contain traditional tea unless added. The blend results in an earthy, slightly bitter drink with warmth and spice. Perfect for any time of day!",
-          },
-          instructions: [
-            {
-              step: "Heat the water",
-              detail: "Just heat 2½ cups of water in a small saucepan.",
-            },
-            {
-              step: "Add turmeric and ginger",
-              detail:
-                "When it's hot, turn the heat down to low and add the gently crushed slices of ½-inch fresh ginger root and 1-inch turmeric root.",
-            },
-            {
-              step: "Add spices",
-              detail:
-                "Proceed to add black pepper, cloves, and a cinnamon stick if using.",
-            },
-            {
-              step: "Simmer",
-              detail: "Let the mixture simmer for 8-10 minutes.",
-            },
-            {
-              step: "Strain",
-              detail: "Remove from heat and strain the tea into mugs.",
-            },
-            {
-              step: "Add flavors",
-              detail:
-                "Taste the tea and add honey, lemon juice, or mint leaves if desired.",
-            },
-            {
-              step: "Serve",
-              detail: "Enjoy your customized turmeric tea!",
-            },
-          ],
-          conclusion:
-            "You've now mastered making turmeric tea and its variations! This simple and healthy drink, rooted in Indian culture, offers potential medicinal benefits like reducing inflammation and easing digestion. Easily incorporate it into your routine and customize it to your liking. Enjoy the wellness boost and delightful taste!",
-          relatedRemedies: [
-            {
-              id: "r1",
-              name: "Ginger Honey Lemon Drink",
-              description: "A soothing drink made with fresh ginger...",
-              image: "/images/remedies/ginger-lemon.jpg",
-              rating: 5,
-              reviewCount: 128,
-            },
-            {
-              id: "r2",
-              name: "Peppermint Infusion",
-              description: "A refreshing herbal infusion made with...",
-              image: "/images/remedies/peppermint.jpg",
-              rating: 5,
-              reviewCount: 128,
-            },
-          ],
-        };
-
-        // Mock comments
-        const mockComments = [
-          {
-            id: "c1",
-            user: {
-              name: "Marie Claire",
-              avatar: "/images/avatars/user1.jpg",
-            },
-            text: "I recently made a turmeric tea recipe that I found very helpful, and I'd like to try it once!",
-            upvotes: 100,
-            date: "3h ago",
-          },
-          {
-            id: "c2",
-            user: {
-              name: "Romeo",
-              avatar: "/images/avatars/user2.jpg",
-            },
-            text: "Yes, I found it helpful, great remedy....",
-            upvotes: 30,
-            date: "3h ago",
-          },
-          {
-            id: "c3",
-            user: {
-              name: "Joy Claire",
-              avatar: "/images/avatars/user3.jpg",
-            },
-            text: "Great Remedy....",
-            upvotes: 10,
-            date: "4h ago",
-          },
-        ];
-
-        setRemedy(mockRemedy);
-        setComments(mockComments);
-        setLoading(false);
-      }, 500);
-    };
-
     fetchRemedyDetails();
   }, [remedyId]);
 
@@ -233,6 +241,27 @@ const CommunityRemedyDetail = () => {
     }
 
     setComments(sortedComments);
+  };
+
+  const renderContent = (content) => {
+    if (!content) return null;
+
+    // If content is an array, render as list
+    if (Array.isArray(content)) {
+      return (
+        <ul className="list-none space-y-2">
+          {content.map((item, index) => (
+            <li key={index} className="flex items-start">
+              <span className="text-brand-green mr-2">•</span>
+              <HtmlRenderer html={item} className="text-gray-700" />
+            </li>
+          ))}
+        </ul>
+      );
+    }
+
+    // If content is a string, render as HTML
+    return <HtmlRenderer html={content} className="text-gray-700" />;
   };
 
   if (loading) {
@@ -296,7 +325,7 @@ const CommunityRemedyDetail = () => {
 
           {/* Remedy Type Badge - CENTERED */}
           <div className="text-center mb-4">
-            <span className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm">
+            <span className="bg-blue-500 capitalize text-white px-4 py-1 rounded-full text-sm">
               {remedy.type}
             </span>
           </div>
@@ -308,8 +337,10 @@ const CommunityRemedyDetail = () => {
 
           {/* Posted Information - CENTERED */}
           <div className="text-gray-600 text-sm mb-4 text-center">
-            Posted by {remedy.postedBy} on {remedy.postedDate}
-            {remedy.updatedDate && ` (Last updated on ${remedy.updatedDate})`}
+            Posted by {remedy.createdBy.username} on{" "}
+            {formatDate(remedy.createdAt)}
+            {remedy.updatedAt &&
+              ` (Last updated on ${formatDate(remedy.updatedAt)})`}
             {remedy.verifiedContributor && (
               <span className="ml-2 bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs">
                 Verified Contributor
@@ -320,9 +351,11 @@ const CommunityRemedyDetail = () => {
           {/* Rating and Actions - RESPONSIVE */}
           <div className="flex flex-col items-center mb-6">
             <div className="flex items-center mb-3">
-              <div className="flex mr-2">{renderStars(remedy.rating)}</div>
+              <div className="flex mr-2">
+                {renderStars(remedy.averageRating)}
+              </div>
               <span className="text-gray-600 text-sm">
-                ({remedy.reviewCount})
+                ({remedy.averageRating})
               </span>
               <button className="ml-2 text-brand-green underline text-sm">
                 Rate this remedy
@@ -507,7 +540,7 @@ const CommunityRemedyDetail = () => {
               {/* Remedy Image - Now inside the grid layout, in left column */}
               <div className="mb-6">
                 <img
-                  src={remedy.image}
+                  src={remedy.media.source}
                   alt={remedy.name}
                   className="w-full h-auto max-h-96 object-cover rounded-lg shadow-lg"
                   onError={(e) => {
@@ -519,111 +552,89 @@ const CommunityRemedyDetail = () => {
               </div>
 
               {/* What is turmeric tea section */}
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  {remedy.treatmentDetails.title}
-                </h2>
-                <p className="text-gray-700">
-                  {remedy.treatmentDetails.description}
-                </p>
-              </div>
-
-              {/* Instructions */}
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Instructions
-                </h2>
-                <ul className="space-y-4">
-                  {remedy.instructions.map((instruction, index) => (
-                    <li key={index} className="flex">
-                      <span className="font-semibold mr-2">•</span>
-                      <div>
-                        <span className="font-semibold">
-                          {instruction.step} :{" "}
-                        </span>
-                        <span className="text-gray-700">
-                          {instruction.detail}
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Conclusion */}
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Conclusion
-                </h2>
-                <p className="text-gray-700">{remedy.conclusion}</p>
-              </div>
+              <div
+                className=" prose"
+                dangerouslySetInnerHTML={{ __html: remedy.content }}
+              />
             </div>
 
             {/* Right Sidebar */}
             <div className="md:col-span-1">
               {/* Preparation Time */}
-              <div className="bg-white rounded-lg shadow-md p-5 mb-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                  Estimated Preparation Time
-                </h3>
-                <p className="flex items-center text-gray-700">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-2 text-brand-green"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  {remedy.preparationTime}
-                </p>
-              </div>
+              {remedy.preparationTime && (
+                <div className="bg-white rounded-lg shadow-md p-5 mb-6">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                    Estimated Preparation Time
+                  </h3>
+                  <p className="flex items-center text-gray-700">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-2 text-brand-green"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    {remedy.preparationTime}
+                  </p>
+                </div>
+              )}
 
               {/* Ingredients */}
-              <div className="bg-white rounded-lg shadow-md p-5 mb-6">
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                  Ingredients
-                </h3>
-                <ul className="space-y-2">
-                  {remedy.ingredients.map((ingredient, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-brand-green mr-2">•</span>
-                      <span className="text-gray-700">{ingredient}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {remedy.ingredients && (
+                <div className="bg-white rounded-lg shadow-md p-5 mb-6">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                    Ingredients
+                  </h3>
+                  {
+                    <div
+                      className=" prose"
+                      dangerouslySetInnerHTML={{ __html: remedy.ingredients }}
+                    />
+                  }
+                </div>
+              )}
+
+              {remedy.instructions && (
+                <div className="bg-white rounded-lg shadow-md p-5 mb-6">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                    Instructions
+                  </h3>
+                  <div
+                    className=" prose"
+                    dangerouslySetInnerHTML={{ __html: remedy.instructions }}
+                  />
+                </div>
+              )}
 
               {/* Equipment */}
-              <div className="bg-white rounded-lg shadow-md p-5">
-                <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                  Equipment
-                </h3>
-                <ul className="space-y-2">
-                  {remedy.equipment.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-brand-green mr-2">•</span>
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {remedy.equipments && (
+                <div className="bg-white rounded-lg shadow-md p-5">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                    Equipment
+                  </h3>
+                  <div
+                    className=" prose"
+                    dangerouslySetInnerHTML={{ __html: remedy.equipments }}
+                  />
+                </div>
+              )}
             </div>
           </div>
 
           {/* Related Remedies */}
           <div className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            {/* <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Related Remedies
-            </h2>
+            </h2> */}
             <div className="grid grid-cols-1 gap-6">
-              {remedy.relatedRemedies.map((related) => (
+              {/* {remedy.relatedRemedies.map((related) => (
                 <div
                   key={related.id}
                   className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100"
@@ -650,15 +661,15 @@ const CommunityRemedyDetail = () => {
                       </p>
                       <div className="flex items-center mb-4">
                         <div className="flex mr-2">
-                          {renderStars(related.rating)}
+                          {renderStars(related.averageRating)}
                         </div>
                         <span className="text-gray-600 text-sm">
-                          ({related.reviewCount})
+                          ({related.averageRating})
                         </span>
                       </div>
                       <Button
                         variant="readMore"
-                        to={`/remedies/community/${related.id}`}
+                        to={`/remedies/community/${related._id}`}
                         state={{ from: backPath }} // This preserves navigation history
                         size="small"
                       >
@@ -667,7 +678,7 @@ const CommunityRemedyDetail = () => {
                     </div>
                   </div>
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
 

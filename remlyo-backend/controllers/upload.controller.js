@@ -1,26 +1,29 @@
 const uploadToCloudinary = async (req, res) => {
   try {
-    if (!req.file) {
+    if (!req.files || req.files.length === 0) {
       return res
         .status(400)
-        .json({ success: false, message: "No file uploaded" });
+        .json({ success: false, message: "No files uploaded" });
     }
 
- 
+    const uploaded = req.files.map((file) => ({
+      public_id: file.filename,
+      secure_url: file.path,
+      originalname: file.originalname,
+      mimetype: file.mimetype,
+      size: file.size,
+    }));
+
     res.status(200).json({
       success: true,
-      message: "File uploaded to Cloudinary successfully",
-      public_id: req.file.filename,
-      secure_url: req.file.path,
-      originalname: req.file.originalname,
-      mimetype: req.file.mimetype,
-      size: req.file.size,
+      message: "Files uploaded successfully to Cloudinary",
+      files: uploaded,
     });
   } catch (error) {
     console.error("Upload error:", error);
     res.status(500).json({
       success: false,
-      message: "Failed to upload file to Cloudinary",
+      message: "Failed to upload files",
       error: error.message,
     });
   }

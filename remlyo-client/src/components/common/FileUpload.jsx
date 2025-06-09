@@ -1,6 +1,8 @@
 // src/components/common/FileUpload.jsx
-import React, { useState, useRef } from 'react';
-import Button from './Button';
+import React, { useState, useRef } from "react";
+import Button from "./Button";
+import { useAuth } from "../../contexts/AuthContext";
+import { uploadFiles } from "../../api/uploadApi";
 
 /**
  * FileUpload component for handling file uploads
@@ -34,26 +36,38 @@ const FileUpload = ({
   const [error, setError] = useState(errorMessage);
   const [files, setFiles] = useState([]);
   const fileInputRef = useRef(null);
+  const { authToken } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   // Format file size for display
   const formatFileSize = (size) => {
     if (size < 1024) return `${size} B`;
     else if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
-    else if (size < 1024 * 1024 * 1024) return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+    else if (size < 1024 * 1024 * 1024)
+      return `${(size / (1024 * 1024)).toFixed(1)} MB`;
     else return `${(size / (1024 * 1024 * 1024)).toFixed(1)} GB`;
   };
 
   // Validate file type and size
   const validateFile = (file) => {
     // Check file type if acceptedFileTypes is provided
-    if (acceptedFileTypes.length > 0 && !acceptedFileTypes.includes(file.type)) {
-      setError(`File type not accepted. Accepted types: ${acceptedFileTypes.join(', ')}`);
+    if (
+      acceptedFileTypes.length > 0 &&
+      !acceptedFileTypes.includes(file.type)
+    ) {
+      setError(
+        `File type not accepted. Accepted types: ${acceptedFileTypes.join(
+          ", "
+        )}`
+      );
       return false;
     }
 
     // Check file size if maxFileSize is provided
     if (maxFileSize && file.size > maxFileSize) {
-      setError(`File size exceeds the maximum allowed (${formatFileSize(maxFileSize)})`);
+      setError(
+        `File size exceeds the maximum allowed (${formatFileSize(maxFileSize)})`
+      );
       return false;
     }
 
@@ -61,20 +75,24 @@ const FileUpload = ({
   };
 
   // Handle file selection
-  const handleFileSelect = (selectedFiles) => {
+  const handleFileSelect = async (selectedFiles) => {
     setError(null);
-    
+    setLoading(true);
+
     const validFiles = Array.from(selectedFiles).filter(validateFile);
-    
-    if (validFiles.length === 0) return;
-    
-    // If multiple is false, only keep the first valid file
+
+    if (validFiles.length === 0) {
+      setLoading(false);
+      return;
+    }
+
     const newFiles = multiple ? [...files, ...validFiles] : [validFiles[0]];
-    setFiles(newFiles);
-    
-    // Call the onFileSelect callback with the new files
-    if (onFileSelect) {
-      onFileSelect(multiple ? newFiles : newFiles[0]);
+    const res = await uploadFiles(authToken, newFiles);
+    if (onFileSelect && res.success) {
+      onFileSelect(res.data);
+      setFiles(res.data);
+      setLoading(false);
+      console.log(res.data);
     }
   };
 
@@ -115,7 +133,7 @@ const FileUpload = ({
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-    
+
     const droppedFiles = e.dataTransfer.files;
     if (droppedFiles.length > 0) {
       handleFileSelect(droppedFiles);
@@ -127,7 +145,7 @@ const FileUpload = ({
     const newFiles = [...files];
     newFiles.splice(index, 1);
     setFiles(newFiles);
-    
+
     // Call the onFileSelect callback with the new files
     if (onFileSelect) {
       onFileSelect(multiple ? newFiles : newFiles[0] || null);
@@ -145,12 +163,12 @@ const FileUpload = ({
   // Get variant classes
   const getVariantClasses = () => {
     switch (variant) {
-      case 'compact':
-        return 'p-2 border border-gray-300 bg-white';
-      case 'bordered':
-        return 'p-6 border-2 border-dashed border-gray-300 bg-gray-50';
+      case "compact":
+        return "p-2 border border-gray-300 bg-white";
+      case "bordered":
+        return "p-6 border-2 border-dashed border-gray-300 bg-gray-50";
       default:
-        return 'p-6 border border-gray-300 bg-white';
+        return "p-6 border border-gray-300 bg-white";
     }
   };
 
@@ -164,57 +182,97 @@ const FileUpload = ({
       {/* Dropzone */}
       <div
         className={`rounded-lg ${getVariantClasses()} ${
-          isDragging ? 'border-brand-green bg-green-50' : ''
-        } ${error ? 'border-red-300' : ''}`}
+          isDragging ? "border-brand-green  bg-green-50" : ""
+        } ${error ? "border-red-300" : ""}`}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         onClick={handleClick}
       >
-        <div className="text-center">
-          {/* Hidden file input */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleChange}
-            accept={acceptedFileTypes.join(',')}
-            multiple={multiple}
-            className="hidden"
-          />
-
-          {/* Icon */}
-          <div className="flex justify-center mb-3">
+        {loading ? (
+          <div className="flex  items-center h-[120px] justify-center">
             <svg
+              className="!animate-spin !w-16 !h-16"
               xmlns="http://www.w3.org/2000/svg"
-              className="h-10 w-10 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="xMidYMid"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              style={{
+                shapeRendering: "auto",
+                display: "block",
+                backgroundPositionX: "0%",
+                backgroundPositionY: "0%",
+                backgroundSize: "auto",
+                backgroundOrigin: "padding-box",
+                backgroundClip: "border-box",
+                background: "scroll rgba(0, 0, 0, 0) none  repeat",
+              }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-              />
+              <g>
+                <circle
+                  strokeDasharray="164.93361431346415 56.97787143782138"
+                  r="35"
+                  strokeWidth="10"
+                  stroke="#2f6a50"
+                  fill="none"
+                  cy="50"
+                  cx="50"
+                  transform="matrix(1,0,0,1,0,0)"
+                  style={{
+                    fill: "none",
+                    stroke: " rgb(47, 106, 80)",
+                    transform: "matrix(1, 0, 0, 1, 0, 0)",
+                    animation: "none",
+                  }}
+                ></circle>
+                <g></g>
+              </g>
             </svg>
           </div>
+        ) : (
+          <div className="text-center">
+            {/* Hidden file input */}
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleChange}
+              accept={acceptedFileTypes.join(",")}
+              multiple={multiple}
+              className="hidden"
+            />
 
-          {/* Dropzone text */}
-          <p className="text-gray-600 mb-2">{dropzoneText}</p>
+            {/* Icon */}
+            <div className="flex justify-center mb-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-10 w-10 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                />
+              </svg>
+            </div>
 
-          {/* Browse button */}
-          <Button variant="outlined" size="small" type="button">
-            {browseText}
-          </Button>
-        </div>
+            {/* Dropzone text */}
+            <p className="text-gray-600 mb-2">{dropzoneText}</p>
+
+            {/* Browse button */}
+            <Button variant="outlined" size="small" type="button">
+              {browseText}
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Error message */}
-      {error && (
-        <p className="mt-2 text-sm text-red-600">{error}</p>
-      )}
+      {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
 
       {/* Helper text */}
       {helperText && !error && (
@@ -225,7 +283,9 @@ const FileUpload = ({
       {files.length > 0 && (
         <div className="mt-4">
           <div className="flex justify-between items-center mb-2">
-            <h4 className="text-sm font-medium text-gray-700">Selected Files</h4>
+            <h4 className="text-sm font-medium text-gray-700">
+              Selected Files
+            </h4>
             {files.length > 0 && (
               <button
                 onClick={(e) => {
@@ -261,10 +321,15 @@ const FileUpload = ({
                     />
                   </svg>
                   <div>
-                    <p className="text-sm font-medium text-gray-700 truncate" style={{ maxWidth: '200px' }}>
-                      {file.name}
+                    <p
+                      className="text-sm font-medium text-gray-700 truncate"
+                      style={{ maxWidth: "200px" }}
+                    >
+                      {file.originalname}
                     </p>
-                    <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+                    <p className="text-xs text-gray-500">
+                      {formatFileSize(file.size)}
+                    </p>
                   </div>
                 </div>
                 <button

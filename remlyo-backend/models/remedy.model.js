@@ -28,26 +28,32 @@ const RemedySchema = new mongoose.Schema(
       required: true,
     },
     ingredients: {
-      type: [String],
+      type: String,
     },
     preparationMethod: {
       type: String,
     },
-    usageInstructions: {
+    instructions: {
+      type: String,
+      default: "",
+    },
+    content: {
       type: String,
     },
-    media:{
-      type:{
-        type:String,
-        enum:["image",'video'],
+    media: {
+      type: {
+        type: String,
+        enum: ["image/jpeg", "image/jpg", "image/png", "image/gif"],
       },
-      source:{
-        type:String,
-      }
+      source: {
+        type: String,
+      },
     },
     sideEffects: {
-      type: [String],
-      default: [],
+      type: String,
+    },
+    preparationTime: {
+      type: String,
     },
     aiConfidenceScore: {
       type: Number,
@@ -85,6 +91,9 @@ const RemedySchema = new mongoose.Schema(
     viewCount: {
       type: Number,
       default: 0,
+    },
+    equipments: {
+      type: String,
     },
     averageRating: {
       type: Number,

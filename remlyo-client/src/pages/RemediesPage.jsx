@@ -1,93 +1,114 @@
 // src/pages/RemediesPage.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
 import SearchBar from "../components/common/SearchBar";
 import Pagination from "../components/common/Pagination";
+import { getAllRemedies } from "../api/remediesApi";
+import LoadingSpinner from "../components/common/LoadingSpinner";
 
 const RemediesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [remedies, setRemedies] = useState([]);
+  const [search, setSearch] = useState("");
+  const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const limit = 10;
   // Mock data for remedies
-  const remedies = [
-    {
-      id: "1",
-      title: "Turmeric Tea Recipe",
-      description: "Drink a lot of water with lemon...",
-      image: "/images/remedies/turmeric-tea.jpg",
-      type: "Community Remedies",
-      rating: 5,
-      reviewCount: 128,
-      helps: "Helps with inflammation & digestion",
-      buttonText: "Read User Reviews",
-    },
-    {
-      id: "2",
-      title: "Turmeric Tea Recipe",
-      description: "Drink a lot of water with lemon...",
-      image: "/images/remedies/turmeric-tea.jpg",
-      type: "Alternative Remedies",
-      rating: 5,
-      reviewCount: 120,
-      helps: "Helps with inflammation & digestion",
-      buttonText: "Explore Alternative Remedy",
-    },
-    {
-      id: "3",
-      title: "Turmeric Tea Recipe",
-      description: "Drink a lot of water with lemon...",
-      image: "/images/remedies/turmeric-tea.jpg",
-      type: "AI Remedies",
-      rating: 5,
-      reviewCount: 208,
-      successRate: "78% success rate",
-      buttonText: "See AI Insights",
-    },
-    {
-      id: "4",
-      title: "Turmeric Tea Recipe",
-      description: "Drink a lot of water with lemon...",
-      image: "/images/remedies/turmeric-tea.jpg",
-      type: "Pharmaceutical Remedies",
-      rating: 5,
-      reviewCount: 128,
-      buttonText: "See Dosage & Side Effects",
-    },
-    {
-      id: "5",
-      title: "Turmeric Tea Recipe",
-      description: "Drink a lot of water with lemon...",
-      image: "/images/remedies/turmeric-tea.jpg",
-      type: "Community Remedies",
-      rating: 5,
-      reviewCount: 128,
-      buttonText: "Read User Reviews",
-    },
-    {
-      id: "6",
-      title: "Turmeric Tea Recipe",
-      description: "Drink a lot of water with lemon...",
-      image: "/images/remedies/turmeric-tea.jpg",
-      type: "AI Remedies",
-      rating: 5,
-      reviewCount: 208,
-      successRate: "78% success rate",
-      buttonText: "See AI Insights",
-    },
-  ];
+  // const remedies = [
+  //   {
+  //     id: "1",
+  //     title: "Turmeric Tea Recipe",
+  //     description: "Drink a lot of water with lemon...",
+  //     image: "/images/remedies/turmeric-tea.jpg",
+  //     type: "Community Remedies",
+  //     rating: 5,
+  //     reviewCount: 128,
+  //     helps: "Helps with inflammation & digestion",
+  //     buttonText: "Read User Reviews",
+  //   },
+  //   {
+  //     id: "2",
+  //     title: "Turmeric Tea Recipe",
+  //     description: "Drink a lot of water with lemon...",
+  //     image: "/images/remedies/turmeric-tea.jpg",
+  //     type: "Alternative Remedies",
+  //     rating: 5,
+  //     reviewCount: 120,
+  //     helps: "Helps with inflammation & digestion",
+  //     buttonText: "Explore Alternative Remedy",
+  //   },
+  //   {
+  //     id: "3",
+  //     title: "Turmeric Tea Recipe",
+  //     description: "Drink a lot of water with lemon...",
+  //     image: "/images/remedies/turmeric-tea.jpg",
+  //     type: "AI Remedies",
+  //     rating: 5,
+  //     reviewCount: 208,
+  //     successRate: "78% success rate",
+  //     buttonText: "See AI Insights",
+  //   },
+  //   {
+  //     id: "4",
+  //     title: "Turmeric Tea Recipe",
+  //     description: "Drink a lot of water with lemon...",
+  //     image: "/images/remedies/turmeric-tea.jpg",
+  //     type: "Pharmaceutical Remedies",
+  //     rating: 5,
+  //     reviewCount: 128,
+  //     buttonText: "See Dosage & Side Effects",
+  //   },
+  //   {
+  //     id: "5",
+  //     title: "Turmeric Tea Recipe",
+  //     description: "Drink a lot of water with lemon...",
+  //     image: "/images/remedies/turmeric-tea.jpg",
+  //     type: "Community Remedies",
+  //     rating: 5,
+  //     reviewCount: 128,
+  //     buttonText: "Read User Reviews",
+  //   },
+  //   {
+  //     id: "6",
+  //     title: "Turmeric Tea Recipe",
+  //     description: "Drink a lot of water with lemon...",
+  //     image: "/images/remedies/turmeric-tea.jpg",
+  //     type: "AI Remedies",
+  //     rating: 5,
+  //     reviewCount: 208,
+  //     successRate: "78% success rate",
+  //     buttonText: "See AI Insights",
+  //   },
+  // ];
+
+  const fetchRemedies = async () => {
+    setLoading(true);
+    const res = await getAllRemedies({ currentPage, limit, search });
+    if (res && res.success) {
+      console.log(res);
+      setRemedies(res.remedies);
+      setLoading(false);
+      setTotalPages(res.totalPages);
+    }
+  };
+
+  useEffect(() => {
+    fetchRemedies();
+  }, [search]);
 
   const getRemedyTypeRoute = (remedy) => {
     // Map remedy types to routes
     const typeRoutes = {
-      "Community Remedies": `/remedies/community/${remedy.id}`,
-      "Alternative Remedies": `/remedies/alternative/${remedy.id}`,
-      "Pharmaceutical Remedies": `/remedies/pharmaceutical/${remedy.id}`,
-      "AI Remedies": `/remedies/ai/${remedy.id}`
+      community: `/remedies/community/${remedy._id}`,
+      alternative: `/remedies/alternative/${remedy._id}`,
+      pharmaceutical: `/remedies/pharmaceutical/${remedy._id}`,
+      "AI Remedies": `/remedies/ai/${remedy._id}`,
     };
-    
-    return typeRoutes[remedy.type] || `/remedies/${remedy.id}`;
+
+    return typeRoutes[remedy.type] || `/remedies/${remedy._id}`;
   };
 
   // Function to render star ratings
@@ -108,14 +129,14 @@ const RemediesPage = () => {
 
   // Function to get badge color based on remedy type
   const getBadgeColor = (type) => {
-    switch (type) {
-      case "Community Remedies":
+    switch (type.toLowerCase()) {
+      case "community":
         return "bg-blue-500";
-      case "Alternative Remedies":
+      case "alternative":
         return "bg-purple-500";
       case "AI Remedies":
         return "bg-yellow-500";
-      case "Pharmaceutical Remedies":
+      case "pharmaceutical":
         return "bg-green-500";
       default:
         return "bg-gray-500";
@@ -123,8 +144,7 @@ const RemediesPage = () => {
   };
 
   const handleSearch = (query) => {
-    console.log("Searching for:", query);
-    // Implement search functionality here
+    setSearch(query);
   };
 
   const handlePageChange = (page) => {
@@ -132,6 +152,10 @@ const RemediesPage = () => {
     // You would typically fetch data for the new page here
     window.scrollTo(0, 0);
   };
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -167,12 +191,12 @@ const RemediesPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {remedies.map((remedy) => (
               <div
-                key={remedy.id}
+                key={remedy._id}
                 className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 flex flex-col h-full"
               >
                 <div className="relative">
                   <img
-                    src={remedy.image}
+                    src={remedy.media.source}
                     alt={remedy.title}
                     className="w-full h-48 object-cover"
                     onError={(e) => {
@@ -184,7 +208,7 @@ const RemediesPage = () => {
                   <div
                     className={`absolute top-2 left-2 ${getBadgeColor(
                       remedy.type
-                    )} text-white px-3 py-1 rounded-full text-xs font-medium`}
+                    )} text-white px-3 capitalize py-1 rounded-full text-xs font-medium`}
                   >
                     {remedy.type}
                   </div>
@@ -208,10 +232,10 @@ const RemediesPage = () => {
 
                   <div className="flex items-center mb-4">
                     <div className="flex mr-2">
-                      {renderStars(remedy.rating)}
+                      {renderStars(remedy.averageRating)}
                     </div>
                     <span className="text-gray-600 text-sm">
-                      ({remedy.reviewCount})
+                      ({remedy.averageRating})
                     </span>
                   </div>
 
@@ -222,7 +246,7 @@ const RemediesPage = () => {
                         to={getRemedyTypeRoute(remedy)}
                         fullWidth
                       >
-                        {remedy.buttonText}
+                        View Remedy
                       </Button>
                     </div>
                   </div>
@@ -234,7 +258,7 @@ const RemediesPage = () => {
           {/* Pagination */}
           <Pagination
             currentPage={currentPage}
-            totalPages={12}
+            totalPages={totalPages}
             onPageChange={handlePageChange}
           />
         </div>

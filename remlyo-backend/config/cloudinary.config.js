@@ -1,5 +1,4 @@
-// config/cloudinary.js
-import cloudinary from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import { config } from "dotenv";
 
@@ -13,9 +12,14 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
-    folder: "uploads", // Cloudinary folder name
-    allowed_formats: ["jpg", "jpeg", "png", "webp"],
+  params: async (req, file) => {
+    const isImage = file.mimetype.startsWith("image/");
+    return {
+      folder: "uploads",
+      allowed_formats: ["jpg", "jpeg", "png", "webp", "csv", "xlsx", "xls"],
+      public_id: `${Date.now()}-${file.originalname.split('.')[0]}`,
+      resource_type: isImage ? "image" : "raw",
+    };
   },
 });
 

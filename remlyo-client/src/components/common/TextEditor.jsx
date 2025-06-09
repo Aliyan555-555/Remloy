@@ -1,24 +1,33 @@
-import { RichTextEditor, Link } from '@mantine/tiptap';
-import { useEditor } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
-import Highlight from '@tiptap/extension-highlight';
-import TextAlign from '@tiptap/extension-text-align';
-import Superscript from '@tiptap/extension-superscript';
-import Subscript from '@tiptap/extension-subscript';
-import { useEffect } from 'react';
+import { RichTextEditor, Link } from "@mantine/tiptap";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import Highlight from "@tiptap/extension-highlight";
+import TextAlign from "@tiptap/extension-text-align";
+import Superscript from "@tiptap/extension-superscript";
+import Subscript from "@tiptap/extension-subscript";
+import { useEffect } from "react";
 
-import '@mantine/tiptap/styles.css';
-import '@mantine/core/styles.css';
+import "@mantine/tiptap/styles.css";
+import "@mantine/core/styles.css";
 
 function TextEditor({
-  value = '',
+  value = "",
   onChange = () => {},
   maxlength,
-  className = '',
+  className = "",
   readOnly = false,
-  placeholder = 'Start typing...',
-  minHeight = '300px',
+  placeholder = "Start typing...",
+  minHeight = "300px",
+  name = "",
+  // NEW configurable props
+  isHeadings = true,
+  isAlignment = true,
+  isLists = true,
+  isFormatting = true,
+  isHighlight = true,
+  isLinks = true,
+  isUndoRedo = true,
 }) {
   const editor = useEditor({
     extensions: [
@@ -31,14 +40,14 @@ function TextEditor({
       Superscript,
       Subscript,
       Highlight,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: value,
     editable: !readOnly,
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
       if (!maxlength || html.length <= maxlength) {
-        onChange(html);
+        onChange({target:{value:html,name:name}});
       }
     },
   });
@@ -50,57 +59,72 @@ function TextEditor({
   }, [value, editor]);
 
   return (
-    <div className={`p-4 bg-white rounded-md shadow border ${className}`}>
+    <div className={`p-1 bg-white  ${className}`}>
+      {name && (
+        <input type="hidden" name={name} value={editor?.getHTML() || ""} />
+      )}
       <RichTextEditor editor={editor}>
         {!readOnly && (
           <RichTextEditor.Toolbar sticky stickyOffset={60}>
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.Bold />
-              <RichTextEditor.Italic />
-              <RichTextEditor.Underline />
-              <RichTextEditor.Strikethrough />
-              <RichTextEditor.ClearFormatting />
-              <RichTextEditor.Highlight />
-              <RichTextEditor.Code />
-            </RichTextEditor.ControlsGroup>
+            {isFormatting && (
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Bold />
+                <RichTextEditor.Italic />
+                <RichTextEditor.Underline />
+                <RichTextEditor.Strikethrough />
+                <RichTextEditor.ClearFormatting />
+                {isHighlight && <RichTextEditor.Highlight />}
+                <RichTextEditor.Code />
+              </RichTextEditor.ControlsGroup>
+            )}
 
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.H1 />
-              <RichTextEditor.H2 />
-              <RichTextEditor.H3 />
-              <RichTextEditor.H4 />
-            </RichTextEditor.ControlsGroup>
+            {isHeadings && (
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.H1 />
+                <RichTextEditor.H2 />
+                <RichTextEditor.H3 />
+                <RichTextEditor.H4 />
+              </RichTextEditor.ControlsGroup>
+            )}
 
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.Blockquote />
-              <RichTextEditor.Hr />
-              <RichTextEditor.BulletList />
-              <RichTextEditor.OrderedList />
-              <RichTextEditor.Subscript />
-              <RichTextEditor.Superscript />
-            </RichTextEditor.ControlsGroup>
+            {isLists && (
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Blockquote />
+                <RichTextEditor.Hr />
+                <RichTextEditor.BulletList />
+                <RichTextEditor.OrderedList />
+                <RichTextEditor.Subscript />
+                <RichTextEditor.Superscript />
+              </RichTextEditor.ControlsGroup>
+            )}
 
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.Link />
-              <RichTextEditor.Unlink />
-            </RichTextEditor.ControlsGroup>
+            {isLinks && (
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Link />
+                <RichTextEditor.Unlink />
+              </RichTextEditor.ControlsGroup>
+            )}
 
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.AlignLeft />
-              <RichTextEditor.AlignCenter />
-              <RichTextEditor.AlignJustify />
-              <RichTextEditor.AlignRight />
-            </RichTextEditor.ControlsGroup>
+            {isAlignment && (
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.AlignLeft />
+                <RichTextEditor.AlignCenter />
+                <RichTextEditor.AlignJustify />
+                <RichTextEditor.AlignRight />
+              </RichTextEditor.ControlsGroup>
+            )}
 
-            <RichTextEditor.ControlsGroup>
-              <RichTextEditor.Undo />
-              <RichTextEditor.Redo />
-            </RichTextEditor.ControlsGroup>
+            {isUndoRedo && (
+              <RichTextEditor.ControlsGroup>
+                <RichTextEditor.Undo />
+                <RichTextEditor.Redo />
+              </RichTextEditor.ControlsGroup>
+            )}
           </RichTextEditor.Toolbar>
         )}
 
         <RichTextEditor.Content
-         className="bg-gray-50 border rounded-lg p-2 prose prose-sm max-w-none list-disc list-inside"
+          className="bg-gray-50 !rounded-lg !p-1 prose prose-sm max-w-none"
           style={{ minHeight }}
           placeholder={placeholder}
         />

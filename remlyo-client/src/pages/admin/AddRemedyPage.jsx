@@ -6,7 +6,6 @@ import FileUpload from "../../components/common/FileUpload";
 import { useAuth } from "../../contexts/AuthContext";
 import { createRemedy } from "../../api/adminApi";
 import TextEditor from "../../components/common/TextEditor";
-import { uploadImage} from "../../api/uploadApi";
 
 // Constants
 const REMEDY_TYPES = {
@@ -52,18 +51,24 @@ const AddRemedyPage = () => {
     name: "",
     category: "",
     description: "",
-    ingredients: [],
+    ingredients: "",
     instructions: "",
+    preparationTime: "",
     sideEffects: "",
-    content:"",
+    content: "",
     references: "",
+    equipments: "",
+    media: {
+      type: "",
+      source: "",
+    },
+    howToTakeIt: "",
+    dosageAndUsage: "",
+    storageInstructions: "",
     practitionerName: "",
-    mediaFile: null,
   });
 
   const [errors, setErrors] = useState({});
-
-  // Handlers
   const handleChange = useCallback(
     (e) => {
       const { name, value } = e.target;
@@ -83,57 +88,22 @@ const AddRemedyPage = () => {
     [errors]
   );
 
-  const handleChangeContent = (e) =>{
-    setFormData((prev) =>({...prev,content:e}));
-  }
-  const handleIngredientsChange = useCallback(
-    (e) => {
-      const input = e.target.value;
-      const values = input
-        .split("\n") // Split by new line instead of comma
-        .map((item) => item.trim());
-
+  const handleFileUpload = async (files) => {
+    try {
       setFormData((prev) => ({
         ...prev,
-        ingredients: values,
+        media: {
+          type: files[0].mimetype,
+          source: files[0].secure_url,
+        },
       }));
-      if (errors.ingredients) {
-        setErrors((prev) => ({
-          ...prev,
-          ingredients: null,
-        }));
-      }
-    },
-    [errors]
-  );
-
-  const handleFileUpload = async (file) => {
-    try {
-      setIsUploading(true);
-      setUploadError(null);
-      setUploadSuccess(false);
-
-      const result = await uploadImage(authToken, file);
-      
-      if (result.success) {
-        setFormData(prev => ({
-          ...prev,
-          image: result.data.secureUrl
-        }));
-        setUploadSuccess(true);
-        // Optional: Show success message
-        console.log('Image uploaded successfully:', result.data.secureUrl);
-      } else {
-        setUploadError(result.error);
-        console.error('Upload failed:', result.error);
-      }
     } catch (error) {
-      setUploadError(error.message || 'Failed to upload image');
-      console.error('Error uploading image:', error);
+      setUploadError(error.message || "Failed to upload image");
+      console.error("Error uploading image:", error);
     } finally {
       setIsUploading(false);
     }
-  }
+  };
 
   const handleSelectRemedyType = useCallback((type) => {
     setRemedyType(type);
@@ -165,7 +135,7 @@ const AddRemedyPage = () => {
       newErrors.description = "Description is required";
     }
 
-    if (!formData.ingredients.length) {
+    if (!formData.ingredients.trim()) {
       newErrors.ingredients = "At least one ingredient is required";
     }
 
@@ -195,14 +165,6 @@ const AddRemedyPage = () => {
         const processedData = {
           ...formData,
           type: remedyType,
-          sideEffects: formData.sideEffects
-            .split("\n")
-            .map((item) => item.trim())
-            .filter((item) => item),
-          references: formData.references
-            .split("\n")
-            .map((item) => item.trim())
-            .filter((item) => item),
         };
 
         const res = await createRemedy(authToken, processedData);
@@ -441,10 +403,19 @@ const AddRemedyPage = () => {
       </div>
 
       <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
           Content <span className="text-red-500">*</span>
         </label>
-        <TextEditor content={formData.content} maxLength={10000} className="" placeholder="Type content here..." error={null} onChange={handleChangeContent} />
+        <TextEditor
+          value={formData.content}
+          maxLength={1000}
+          className=""
+          placeholder="Enter content"
+          error={null}
+          onChange={handleChange}
+          minHeight="100px"
+          name="content"
+        />
       </div>
     </div>
   );
@@ -453,39 +424,84 @@ const AddRemedyPage = () => {
     <div className="bg-white p-6 rounded-lg border border-gray-200">
       <h3 className="text-lg font-semibold mb-4">Ingredients & Instructions</h3>
 
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Ingredients <span className="text-red-500">*</span>
-        </label>
-        <textarea
-          name="ingredients"
-          value={formData.ingredients.join("\n")}
-          onChange={handleIngredientsChange}
-          placeholder="Enter ingredients (comma-separated)..."
-          rows={4}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-        />
-        {errors.ingredients && (
-          <p className="text-red-500 text-xs mt-1">{errors.ingredients}</p>
-        )}
-      </div>
+      {remedyType !== REMEDY_TYPES.PHARMACEUTICAL && (
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Ingredients <span className="text-red-500">*</span>
+          </label>
 
-      <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Instructions <span className="text-red-500">*</span>
-        </label>
-        <textarea
-          name="instructions"
-          value={formData.instructions}
-          onChange={handleChange}
-          placeholder="Enter instructions here..."
-          rows={4}
-          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-        />
-        {errors.instructions && (
-          <p className="text-red-500 text-xs mt-1">{errors.instructions}</p>
-        )}
-      </div>
+          <TextEditor
+            name="ingredients"
+            value={formData.ingredients}
+            onChange={handleChange}
+            placeholder="Enter ingredients"
+            minHeight="100px"
+            isHeadings={false}
+            isLinks={false}
+            isFormatting={false}
+            isAlignment={false}
+            isHighlight={false}
+          />
+          {errors.ingredients && (
+            <p className="text-red-500 text-xs mt-1">{errors.ingredients}</p>
+          )}
+        </div>
+      )}
+
+      {remedyType !== REMEDY_TYPES.PHARMACEUTICAL && (
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Instructions <span className="text-red-500">*</span>
+          </label>
+
+          <TextEditor
+            name="instructions"
+            value={formData.instructions}
+            onChange={handleChange}
+            placeholder="Enter instructions"
+            isAlignment={false}
+            minHeight="100px"
+            isHeadings={false}
+          />
+          {errors.instructions && (
+            <p className="text-red-500 text-xs mt-1">{errors.instructions}</p>
+          )}
+        </div>
+      )}
+
+      {remedyType === REMEDY_TYPES.PHARMACEUTICAL && (
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Dosage & Usage
+          </label>
+          <TextEditor
+            name="dosageAndUsage"
+            value={formData.dosageAndUsage}
+            onChange={handleChange}
+            isHeadings={false}
+            placeholder="Enter how To Take It instructions"
+            minHeight="100px"
+            isAlignment={false}
+          />
+        </div>
+      )}
+
+      {remedyType === REMEDY_TYPES.PHARMACEUTICAL && (
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            How to Take It
+          </label>
+          <TextEditor
+            name="howToTakeIt"
+            value={formData.howToTakeIt}
+            onChange={handleChange}
+            isHeadings={false}
+            placeholder="Enter how To Take It instructions"
+            minHeight="100px"
+            isAlignment={false}
+          />
+        </div>
+      )}
 
       {remedyType === REMEDY_TYPES.PHARMACEUTICAL && (
         <>
@@ -493,13 +509,14 @@ const AddRemedyPage = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Side Effects
             </label>
-            <textarea
+            <TextEditor
               name="sideEffects"
               value={formData.sideEffects}
               onChange={handleChange}
-              placeholder="Enter side effects (one per line)..."
-              rows={4}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+              isHeadings={false}
+              placeholder="Enter side effects"
+              minHeight="100px"
+              isAlignment={false}
             />
           </div>
 
@@ -507,13 +524,15 @@ const AddRemedyPage = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Medical References
             </label>
-            <textarea
+
+            <TextEditor
               name="references"
               value={formData.references}
               onChange={handleChange}
-              placeholder="Enter medical references (one per line)..."
-              rows={4}
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+              placeholder="Enter medical references"
+              isAlignment={false}
+              isHeadings={false}
+              minHeight="100px"
             />
             {errors.references && (
               <p className="text-red-500 text-xs mt-1">{errors.references}</p>
@@ -522,21 +541,88 @@ const AddRemedyPage = () => {
         </>
       )}
 
+      {remedyType === REMEDY_TYPES.PHARMACEUTICAL && (
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Storage Instructions
+          </label>
+          <TextEditor
+            name="storageInstructions"
+            value={formData.storageInstructions}
+            onChange={handleChange}
+            isHeadings={false}
+            placeholder="Enter side effects"
+            minHeight="100px"
+            isAlignment={false}
+          />
+        </div>
+      )}
+
       {remedyType === REMEDY_TYPES.ALTERNATIVE && (
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Practitioner Name
           </label>
-          <input
-            type="text"
+          <TextEditor
             name="practitionerName"
             value={formData.practitionerName}
             onChange={handleChange}
             placeholder="Enter practitioner name"
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+            isHeadings={false}
+            isAlignment={false}
+            isLinks={false}
+            isHighlight={false}
+            minHeight="50px"
           />
         </div>
       )}
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Equipment
+        </label>
+        <TextEditor
+          value={formData.equipments}
+          onChange={handleChange}
+          name="equipments"
+          placeholder="Enter Equipments"
+          isHeadings={false}
+          minHeight="50px"
+          isAlignment={false}
+          isLinks={false}
+          isHighlight={false}
+        />
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Estimated Preparation Time
+        </label>
+        <select
+          onChange={handleChange}
+          name={"preparationTime"}
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+        >
+          <option value="">Select time</option>
+          <option value="5–10 minutes to prepare">
+            5–10 minutes to prepare
+          </option>
+          <option value="10–15 minutes to prepare">
+            10–15 minutes to prepare
+          </option>
+          <option value="15–30 minutes to prepare">
+            15–30 minutes to prepare
+          </option>
+          <option value="30–45 minutes to prepare">
+            30–45 minutes to prepare
+          </option>
+          <option value="45–60 minutes to prepare">
+            45–60 minutes to prepare
+          </option>
+          <option value="More than 1 hour to prepare">
+            More than 1 hour to prepare
+          </option>
+        </select>
+      </div>
     </div>
   );
 

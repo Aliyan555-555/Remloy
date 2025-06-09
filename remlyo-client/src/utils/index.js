@@ -21,7 +21,22 @@ const getAuthHeaders = (token) => ({
   Authorization: `Bearer ${token}`,
 });
 
+
+/**
+ * Handles API errors and returns a consistent error object
+ * @param {any} error
+ * @param {string} defaultMessage
+ * @returns {Object}
+ */
+const handleApiError = (error, defaultMessage) =>
+  error?.response?.data || {
+    success: false,
+    message: defaultMessage,
+    error: error?.message || "Network error",
+  };
+
 export {
+  handleApiError,
   formatDate,
   getAuthHeaders
 };
