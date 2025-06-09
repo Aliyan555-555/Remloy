@@ -1,258 +1,37 @@
 [{
   "_id": {
-    "$oid": "6837fe2c24de2bc5c53f7e30"
+    "$oid": "68475afa7857fc73d55a7a7d"
   },
-  "name": "Turmeric Golden Milk",
-  "description": "A warm beverage made with turmeric, known for its anti-inflammatory properties.",
-  "category": "Pain Relief",
-  "ingredients": [
-    "Turmeric",
-    "Milk",
-    "Black Pepper",
-    "Honey"
-  ],
-  "preparationMethod": "Warm the milk and mix in turmeric, black pepper, and honey.",
-  "usageInstructions": "Drink once daily before bedtime.",
-  "sideEffects": [
-    "Stomach upset if taken in excess"
-  ],
-  "aiConfidenceScore": 85,
-  "isAIGenerated": true,
-  "scientificReferences": [
-    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5664031/"
-  ],
-  "geographicRestrictions": [],
-  "createdBy": "683815b10214394db446fdb3",
-  "isActive": false,
-  "createdAt": "2025-05-29T12:00:00.000Z",
-  "updatedAt": {
-    "$date": "2025-05-29T07:48:47.212Z"
-  },
-  "moderationStatus": "rejected",
-  "averageRating": 0,
-  "viewCount": 0
-},
-{
-  "_id": {
-    "$oid": "6837fe2c24de2bc5c53f7e32"
-  },
-  "name": "Chamomile Infusion",
-  "description": "Chamomile tea is commonly used as a sleep aid.",
-  "category": "Sleep Aid",
-  "ingredients": [
-    "Chamomile Flowers",
-    "Water"
-  ],
-  "preparationMethod": "Steep chamomile flowers in hot water for 10 minutes.",
-  "usageInstructions": "Drink 30 minutes before sleeping.",
-  "sideEffects": [
-    "May cause allergic reaction in people allergic to ragweed"
-  ],
-  "aiConfidenceScore": 80,
-  "isAIGenerated": false,
-  "scientificReferences": [
-    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2995283/"
-  ],
-  "geographicRestrictions": [],
-  "createdBy": "683815b10214394db446fdb3",
-  "isActive": false,
-  "createdAt": "2025-05-29T12:00:00.000Z",
-  "updatedAt": {
-    "$date": "2025-05-29T22:48:02.888Z"
-  },
-  "moderationStatus": "rejected",
-  "averageRating": 0,
-  "viewCount": 0
-},
-{
-  "_id": {
-    "$oid": "6837fe2c24de2bc5c53f7e34"
-  },
-  "name": "Steam Inhalation with Eucalyptus",
-  "description": "Relieves sex respiratory congestion through steam and essential oils.",
-  "category": "Respiratory",
-  "ingredients": [
-    "Eucalyptus Oil",
-    "Hot Water"
-  ],
-  "preparationMethod": "Add a few drops of eucalyptus oil to hot water and inhale the steam.",
-  "usageInstructions": "Use for 5–10 minutes once or twice a day.",
-  "sideEffects": [
-    "May irritate eyes or throat"
-  ],
-  "aiConfidenceScore": 88,
-  "isAIGenerated": false,
-  "scientificReferences": [
-    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2377254/"
-  ],
-  "geographicRestrictions": [],
-  "createdBy": "683815b10214394db446fdb3",
-  "isActive": true,
-  "createdAt": "2025-05-29T12:00:00.000Z",
-  "updatedAt": "2025-05-29T12:00:00.000Z",
-  "moderationStatus": "approved"
-},
-{
-  "_id": {
-    "$oid": "6837fe2c24de2bc5c53f7e35"
-  },
-  "name": "Aloe Vera Gel",
-  "description": "Used topically to soothe sunburn and promote skin healing.",
+  "name": "Honey & Cinnamon Paste for Acne",
+  "description": "A natural antibacterial remedy using honey and cinnamon to help soothe inflammation, reduce acne-causing bacteria, and promote healing.",
   "category": "Skin Care",
-  "ingredients": [
-    "Aloe Vera Leaf"
-  ],
-  "preparationMethod": "Extract gel from aloe vera leaf and store in refrigerator.",
-  "usageInstructions": "Apply directly to the skin as needed.",
-  "sideEffects": [
-    "Mild itching or burning for some people"
-  ],
-  "aiConfidenceScore": 82,
-  "isAIGenerated": false,
-  "scientificReferences": [
-    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2763764/"
-  ],
-  "geographicRestrictions": [],
-  "createdBy": "683815b10214394db446fdb3",
-  "isActive": true,
-  "createdAt": "2025-05-29T12:00:00.000Z",
-  "updatedAt": "2025-05-29T12:00:00.000Z",
-  "moderationStatus": "approved"
-},
-{
-  "_id": {
-    "$oid": "6837fe2c24de2bc5c53f7e36"
+  "ingredients": "<ul><li><p>1 tablespoon raw honey (preferably organic or Manuka)</p></li><li><p>1/2 teaspoon ground cinnamon (fresh and finely ground)</p></li></ul>",
+  "instructions": "<ul><li><p>Clean your face with a gentle cleanser and pat dry.</p></li><li><p>Apply the paste to acne-prone areas using a cotton swab or clean fingers.</p></li><li><p>Leave it on for 10–15 minutes.</p></li><li><p>Rinse off with lukewarm water.</p></li><li><p>Use 1–2 times per week.</p></li></ul>",
+  "content": "<h1>What is this Remedy?</h1><p>Honey &amp; cinnamon paste is a traditional skincare remedy aimed at reducing acne. Both ingredients have natural antibacterial and anti-inflammatory properties that can help cleanse the skin and promote healing.</p><h1>How Does It Work?</h1><ul><li><p><strong>Honey</strong> acts as a humectant and antimicrobial agent, drawing moisture into the skin while killing bacteria.</p></li><li><p><strong>Cinnamon</strong> contains cinnamaldehyde, which helps reduce inflammation and also fights acne-causing microbes.</p></li></ul><h1>Pros</h1><ul><li><p>Natural and chemical-free</p></li><li><p>Inexpensive and easy to prepare at home</p></li><li><p>Antibacterial and soothing properties</p></li></ul><h1>Cons</h1><ul><li><p>May cause irritation for sensitive skin</p></li><li><p>Cinnamon may create a mild burning sensation</p></li><li><p>Patch test is highly recommended before full application</p></li></ul><h1>Conclusion</h1><p>Honey &amp; Cinnamon Paste is a safe and natural option for managing mild acne. While not a cure, it can support a healthy skincare routine when used properly. Always test for skin sensitivity first.</p>",
+  "media": {
+    "type": "image/png",
+    "source": "https://res.cloudinary.com/dtupoan8j/image/upload/v1749506581/uploads/1749506579957-5_3-Team-Brainstorm.png"
   },
-  "name": "Clove Oil for Toothache",
-  "description": "Clove oil is a traditional remedy for dental pain.",
-  "category": "Pain Relief",
-  "ingredients": [
-    "Clove Oil",
-    "Cotton Ball"
-  ],
-  "preparationMethod": "Soak a cotton ball in clove oil.",
-  "usageInstructions": "Place on the affected tooth for temporary relief.",
-  "sideEffects": [
-    "Burning sensation in the mouth"
-  ],
-  "aiConfidenceScore": 78,
-  "isAIGenerated": true,
-  "scientificReferences": [],
-  "geographicRestrictions": [],
-  "createdBy": "683815b10214394db446fdb3",
-  "isActive": true,
-  "createdAt": "2025-05-29T12:00:00.000Z",
-  "updatedAt": "2025-05-29T12:00:00.000Z",
-  "moderationStatus": "approved"
-},
-{
-  "_id": {
-    "$oid": "6837fe2c24de2bc5c53f7e37"
-  },
-  "name": "Peppermint Tea",
-  "description": "Soothes stomach cramps and aids digestion.",
-  "category": "Digestive",
-  "ingredients": [
-    "Peppermint Leaves",
-    "Water"
-  ],
-  "preparationMethod": "Steep peppermint leaves in hot water for 5–10 minutes.",
-  "usageInstructions": "Drink after meals.",
-  "sideEffects": [
-    "May worsen acid reflux"
-  ],
-  "aiConfidenceScore": 87,
-  "isAIGenerated": false,
-  "scientificReferences": [],
-  "geographicRestrictions": [],
-  "createdBy": "683815b10214394db446fdb3",
-  "isActive": true,
-  "createdAt": "2025-05-29T12:00:00.000Z",
-  "updatedAt": {
-    "$date": "2025-05-29T07:07:17.937Z"
-  },
-  "moderationStatus": "approved",
-  "averageRating": 0,
-  "viewCount": 0
-},
-{
-  "_id": {
-    "$oid": "6837fe2c24de2bc5c53f7e38"
-  },
-  "name": "Neem Paste",
-  "description": "Used for treating acne and other skin infections.",
-  "category": "Skin Care",
-  "ingredients": [
-    "Neem Leaves",
-    "Water"
-  ],
-  "preparationMethod": "Grind neem leaves with water to make a paste.",
-  "usageInstructions": "Apply to the affected area and leave for 15 minutes.",
-  "sideEffects": [],
-  "aiConfidenceScore": 76,
-  "isAIGenerated": true,
-  "scientificReferences": [],
-  "geographicRestrictions": [],
-  "createdBy": "683815b10214394db446fdb3",
-  "isActive": true,
-  "createdAt": "2025-05-29T12:00:00.000Z",
-  "updatedAt": "2025-05-29T12:00:00.000Z",
-  "moderationStatus": "approved"
-},
-{
-  "_id": {
-    "$oid": "6837fe2c24de2bc5c53f7e39"
-  },
-  "name": "Salt Water Gargle",
-  "description": "Simple remedy to ease sore throat symptoms.",
-  "category": "Respiratory",
-  "ingredients": [
-    "Salt",
-    "Warm Water"
-  ],
-  "preparationMethod": "Dissolve salt in warm water.",
-  "usageInstructions": "Gargle for 30 seconds, then spit out. Repeat 2–3 times daily.",
-  "sideEffects": [
-    "None if done properly"
-  ],
-  "aiConfidenceScore": 92,
-  "isAIGenerated": false,
-  "scientificReferences": [],
-  "geographicRestrictions": [],
-  "createdBy": "683815b10214394db446fdb3",
-  "isActive": true,
-  "createdAt": "2025-05-29T12:00:00.000Z",
-  "updatedAt": "2025-05-29T12:00:00.000Z",
-  "moderationStatus": "approved"
-},
-{
-  "_id": {
-    "$oid": "6838ea69d17ed13d6a6dce0b"
-  },
-  "name": "heolev",
-  "description": " hello this is remedy",
-  "category": "Respiratory",
-  "ingredients": "daya ",
-  "sideEffects": [
-    " sdaas"
-  ],
+  "sideEffects": "",
+  "preparationTime": "5–10 minutes to prepare",
   "aiConfidenceScore": 0,
   "isAIGenerated": false,
   "moderationStatus": "pending",
   "scientificReferences": [],
   "geographicRestrictions": [],
-  "type": "pharmaceutical",
+  "type": "community",
   "createdBy": {
-    "$oid": "6838cdff1d984b618341af2b"
+    "$oid": "683815b10214394db446fdb3"
   },
   "viewCount": 0,
+  "equipments": "<ul><li><p>Small mixing bowl</p></li><li><p>Measuring spoons</p></li><li><p>Clean spoon or spatula</p></li><li><p>Cotton swab or clean fingers</p></li><li><p>Mirror (optional)</p></li></ul>",
   "averageRating": 0,
   "isActive": true,
   "createdAt": {
-    "$date": "2025-05-29T23:14:49.161Z"
+    "$date": "2025-06-09T22:06:50.459Z"
   },
   "updatedAt": {
-    "$date": "2025-05-29T23:14:49.161Z"
+    "$date": "2025-06-09T22:06:50.459Z"
   },
   "__v": 0
 }]
