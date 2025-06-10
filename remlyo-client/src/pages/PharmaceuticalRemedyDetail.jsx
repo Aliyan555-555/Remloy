@@ -1,13 +1,14 @@
 // src/pages/PharmaceuticalRemedyDetail.jsx
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom"; 
+import { useParams, useLocation } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
+import { getRemedyById } from "../api/remediesApi";
 
 const PharmaceuticalRemedyDetail = () => {
   const { remedyId } = useParams();
-  const location = useLocation(); 
+  const location = useLocation();
   const [remedy, setRemedy] = useState(null);
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState([]);
@@ -40,155 +41,17 @@ const PharmaceuticalRemedyDetail = () => {
     ? "Back to Ailment"
     : "Back to Remedies";
 
-  // Fetch remedy details
+  const fetchRemedyDetails = async () => {
+    setLoading(true);
+    // Simulating API call
+    const res = await getRemedyById(remedyId);
+    if (res && res.success) {
+      setRemedy(res.remedy);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchRemedyDetails = async () => {
-      setLoading(true);
-      // Simulating API call
-      setTimeout(() => {
-        // Mock data for demonstration
-        const mockRemedy = {
-          id: remedyId,
-          type: "Pharmaceuticals Remedy",
-          name: "Sumatriptan : Migraine Relief Medication",
-          description:
-            "Sumatriptan is a selective serotonin receptor agonist used primarily for the acute treatment of migraines and cluster headaches. It works by stimulating serotonin receptors in the brain, which helps to reduce inflammation and constrict blood vessels, thereby relieving headache pain.",
-          postedBy: "Dr. Jane",
-          postedDate: "March 3, 2025",
-          updatedDate: "March 5, 2025",
-          verifiedPractitioner: true,
-          rating: 5,
-          reviewCount: 128,
-          image: "/images/remedies/ibuprofen.jpg",
-          brandNames: [
-            "Imitrex",
-            "Imigran",
-            "Treximet (combination with naproxen)",
-          ],
-          dosage: [
-            {
-              type: "Oral Tablets",
-              details: "Typically 25mg, 50mg, or 100mg per dose.",
-            },
-            {
-              type: "Nasal Spray",
-              details: "5mg or 20mg per spray.",
-            },
-            {
-              type: "Injection",
-              details: "6mg subcutaneous injection.",
-            },
-          ],
-          howToTake: [
-            {
-              type: "Oral Tablets",
-              details:
-                "Swallow whole with water. Can be taken with or without food.",
-            },
-            {
-              type: "Nasal Spray",
-              details: "Spray into one nostril.",
-            },
-            {
-              type: "Injection",
-              details:
-                "Administer subcutaneously using the pre-filled syringe or autoinjector.",
-            },
-          ],
-          sideEffects: {
-            common: ["Nausea", "Dizziness", "Fatigue", "Tingling sensations"],
-            serious: [
-              "Chest pain or tightness",
-              "Allergic reactions",
-              "Serotonin syndrome (when used with other serotonergic drugs)",
-            ],
-          },
-          effectiveness: {
-            clinicalStudies: {
-              text: "78% of patients experienced relief within 2 hours.",
-              source: "[1]",
-            },
-            userFeedback: {
-              text: "High satisfaction reported in migraine reduction.",
-              source: "[2]",
-            },
-          },
-          warnings: {
-            shouldNotUse: [
-              "Individuals with a history of heart disease, uncontrolled hypertension, or stroke.",
-              "Pregnant or breastfeeding women should consult their doctor before use.",
-              "Those with known allergies to Sumatriptan or any components of the medication.",
-            ],
-            interactions: [
-              "Avoid use with other serotonergic drugs (e.g., SSRIs, SNRIs) due to the risk of serotonin syndrome.",
-              "Consult a healthcare provider if taking MAO inhibitors or ergot-type medications.",
-            ],
-          },
-          storage: [
-            "Store at room temperature, away from direct sunlight and heat.",
-            "Keep out of reach of children and pets.",
-            "Do not store in damp or humid places like bathrooms.",
-            "Check the packaging for specific storage requirements.",
-          ],
-          medicalSources: ["WebMD", "RxList", "Mayo Clinic", "MedlinePlus"],
-          conclusion:
-            "Sumatriptan is a well-established medication for the acute treatment of migraines and cluster headaches. Its effectiveness in relieving pain and associated symptoms has been widely documented in medical studies and user feedback.",
-          relatedRemedies: [
-            {
-              id: "r1",
-              name: "Ibuprofen + Caffeine",
-              description:
-                "Combined treatment for mild to moderate migraines...",
-              image: "/images/remedies/ibuprofen.jpg",
-              effectiveness: 92,
-              dosage: "400mg + 200mg caffeine",
-              sideEffects: ["Stomach upset", "Heartburn"],
-              rating: 5,
-              reviewCount: 128,
-            },
-          ],
-        };
-
-        // Mock comments
-        const mockComments = [
-          {
-            id: "c1",
-            user: {
-              name: "Marie Claire",
-              avatar: "/images/avatars/user1.jpg",
-            },
-            text: "I recently made a turmeric tea recipe that I found very helpful, and I'd like to try it once!",
-            upvotes: 100,
-            date: "3h ago",
-          },
-          {
-            id: "c2",
-            user: {
-              name: "Romeo",
-              avatar: "/images/avatars/user2.jpg",
-            },
-            text: "Yes, I found it helpful, great remedy....",
-            upvotes: 30,
-            date: "3h ago",
-          },
-          {
-            id: "c3",
-            user: {
-              name: "Joy Claire",
-              avatar: "/images/avatars/user3.jpg",
-            },
-            text: "Great Remedy....",
-            upvotes: 10,
-            date: "4h ago",
-          },
-        ];
-
-        setRemedy(mockRemedy);
-        setComments(mockComments);
-        setLoading(false);
-      }, 500);
-    };
-
     fetchRemedyDetails();
   }, [remedyId]);
 
@@ -313,7 +176,7 @@ const PharmaceuticalRemedyDetail = () => {
 
           {/* Remedy Type Badge - CENTERED */}
           <div className="text-center mb-4">
-            <span className="bg-green-500 text-white px-4 py-1 rounded-full text-sm">
+            <span className="bg-green-500 capitalize text-white px-4 py-1 rounded-full text-sm">
               {remedy.type}
             </span>
           </div>
@@ -326,9 +189,9 @@ const PharmaceuticalRemedyDetail = () => {
           {/* Rating and Actions - RESPONSIVE */}
           <div className="flex flex-col items-center mb-6">
             <div className="flex items-center mb-3">
-              <div className="flex mr-2">{renderStars(remedy.rating)}</div>
+              <div className="flex mr-2">{renderStars(remedy.averageRating)}</div>
               <span className="text-gray-600 text-sm">
-                ({remedy.reviewCount})
+                ({remedy.averageRating})
               </span>
               <button className="ml-2 text-brand-green underline text-sm">
                 Rate this remedy
@@ -504,7 +367,7 @@ const PharmaceuticalRemedyDetail = () => {
             </div>
           </div>
           {/* Medication description */}
-          <p className="text-gray-700 mb-6">{remedy.description}</p>
+          <p className="text-gray-700 text-center mb-6">{remedy.description}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             {/* Main Medication Content */}
@@ -512,7 +375,7 @@ const PharmaceuticalRemedyDetail = () => {
               {/* Medication Image */}
               <div className="mb-6">
                 <img
-                  src={remedy.image}
+                  src={remedy.media.source}
                   alt={remedy.name}
                   className="w-full h-auto max-h-96 object-cover rounded-lg shadow-lg"
                   onError={(e) => {
@@ -522,91 +385,10 @@ const PharmaceuticalRemedyDetail = () => {
                   }}
                 />
               </div>
-
-              {/* Effectiveness Rating */}
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Effectiveness Rating
-                </h2>
-                <ul className="space-y-3">
-                  <li className="flex">
-                    <span className="text-brand-green mr-2">•</span>
-                    <div>
-                      <span className="font-semibold">Clinical Studies : </span>
-                      <span className="text-gray-700">
-                        {remedy.effectiveness.clinicalStudies.text}{" "}
-                        {remedy.effectiveness.clinicalStudies.source}
-                      </span>
-                    </div>
-                  </li>
-                  <li className="flex">
-                    <span className="text-brand-green mr-2">•</span>
-                    <div>
-                      <span className="font-semibold">User Feedback : </span>
-                      <span className="text-gray-700">
-                        {remedy.effectiveness.userFeedback.text}{" "}
-                        {remedy.effectiveness.userFeedback.source}
-                      </span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Warnings & Contraindications */}
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Warnings & Contraindications
-                </h2>
-                <div className="mb-4">
-                  <h3 className="font-semibold text-gray-800 mb-2">
-                    Who Should Not Use:
-                  </h3>
-                  <ul className="space-y-2">
-                    {remedy.warnings.shouldNotUse.map((warning, index) => (
-                      <li key={index} className="flex">
-                        <span className="text-red-500 mr-2">•</span>
-                        <span className="text-gray-700">{warning}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="font-semibold text-gray-800 mb-2">
-                    Interactions:
-                  </h3>
-                  <ul className="space-y-2">
-                    {remedy.warnings.interactions.map((interaction, index) => (
-                      <li key={index} className="flex">
-                        <span className="text-red-500 mr-2">•</span>
-                        <span className="text-gray-700">{interaction}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Medical References */}
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Medical References & Sources
-                </h2>
-                <ul className="space-y-2">
-                  {remedy.medicalSources.map((source, index) => (
-                    <li key={index} className="text-gray-700">
-                      • {source}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Conclusion */}
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Conclusion
-                </h2>
-                <p className="text-gray-700">{remedy.conclusion}</p>
-              </div>
+              <div
+                className=" prose"
+                dangerouslySetInnerHTML={{ __html: remedy.content }}
+              />
             </div>
 
             {/* Right Sidebar */}
@@ -616,14 +398,10 @@ const PharmaceuticalRemedyDetail = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">
                   Brand Name
                 </h3>
-                <ul className="space-y-2">
-                  {remedy.brandNames.map((brand, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-brand-green mr-2">•</span>
-                      <span className="text-gray-700">{brand}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div
+                  className=" prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.brandName }}
+                />
               </div>
 
               {/* Recommended Dosage & Usage */}
@@ -631,17 +409,10 @@ const PharmaceuticalRemedyDetail = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">
                   Recommended Dosage & Usage
                 </h3>
-                <ul className="space-y-3">
-                  {remedy.dosage.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-brand-green mr-2">•</span>
-                      <div>
-                        <span className="font-medium">{item.type}: </span>
-                        <span className="text-gray-700">{item.details}</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                <div
+                  className=" prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.dosageAndUsage }}
+                />
               </div>
 
               {/* How to Take It */}
@@ -649,17 +420,10 @@ const PharmaceuticalRemedyDetail = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">
                   How to Take It
                 </h3>
-                <ul className="space-y-3">
-                  {remedy.howToTake.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-brand-green mr-2">•</span>
-                      <div>
-                        <span className="font-medium">{item.type}: </span>
-                        <span className="text-gray-700">{item.details}</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                <div
+                  className=" prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.howToTakeIt }}
+                />
               </div>
 
               {/* Potential Side Effects */}
@@ -668,33 +432,10 @@ const PharmaceuticalRemedyDetail = () => {
                   Potential Side Effects
                 </h3>
 
-                <div className="mb-3">
-                  <h4 className="font-medium text-gray-800 mb-2">
-                    Common Side Effects:
-                  </h4>
-                  <ul className="space-y-1">
-                    {remedy.sideEffects.common.map((effect, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-yellow-500 mr-2">•</span>
-                        <span className="text-gray-700">{effect}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-medium text-gray-800 mb-2">
-                    Serious/Rare Side Effects (consult a doctor):
-                  </h4>
-                  <ul className="space-y-1">
-                    {remedy.sideEffects.serious.map((effect, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-red-500 mr-2">•</span>
-                        <span className="text-gray-700">{effect}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <div
+                  className=" prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.sideEffects }}
+                />
               </div>
 
               {/* Storage Instructions */}
@@ -702,20 +443,18 @@ const PharmaceuticalRemedyDetail = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">
                   Storage Instructions
                 </h3>
-                <ul className="space-y-2">
-                  {remedy.storage.map((instruction, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-brand-green mr-2">•</span>
-                      <span className="text-gray-700">{instruction}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div
+                  className=" prose"
+                  dangerouslySetInnerHTML={{
+                    __html: remedy.storageInstructions,
+                  }}
+                />
               </div>
             </div>
           </div>
 
           {/* Related Remedies */}
-          <div className="mb-10">
+          {/* <div className="mb-10">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Related Remedies
             </h2>
@@ -793,7 +532,7 @@ const PharmaceuticalRemedyDetail = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Comments Section */}
           <div>

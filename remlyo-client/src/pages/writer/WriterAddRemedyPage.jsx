@@ -6,22 +6,12 @@ import FileUpload from "../../components/common/FileUpload";
 import { useAuth } from "../../contexts/AuthContext";
 import { createRemedy } from "../../api/adminApi";
 import TextEditor from "../../components/common/TextEditor";
+import { CATEGORIES } from "../../constants";
 
 // Constants
 const REMEDY_TYPES = {
-  PHARMACEUTICAL: "pharmaceutical",
-  ALTERNATIVE: "alternative",
   COMMUNITY: "community",
 };
-
-const CATEGORIES = [
-  "Pain Relief",
-  "Respiratory",
-  "Digestive",
-  "Immune Support",
-  "Sleep Aid",
-  "Skin Care",
-];
 
 const TABS = {
   BATCH: "batch",
@@ -34,7 +24,7 @@ const MAX_FILE_SIZE = {
   IMAGE: 2 * 1024 * 1024, // 2MB
 };
 
-const AddRemedyPage = () => {
+const WriterRemedyAddPage = () => {
   const { user, authToken } = useAuth();
   const navigate = useNavigate();
 
@@ -116,7 +106,7 @@ const AddRemedyPage = () => {
       setActiveTab(TABS.BATCH);
       setRemedyType("");
     } else {
-      navigate("/admin/remedies");
+      navigate("/writer/remedies");
     }
   }, [remedyType, activeTab, navigate]);
 
@@ -188,7 +178,7 @@ const AddRemedyPage = () => {
         const res = await createRemedy(authToken, processedData);
 
         if (res.success) {
-          navigate("/admin/remedies");
+          navigate("/writer/remedies");
         } else {
           setError(res.message || "Failed to create remedy");
         }
@@ -442,50 +432,46 @@ const AddRemedyPage = () => {
     <div className="bg-white p-6 rounded-lg border border-gray-200">
       <h3 className="text-lg font-semibold mb-4">Ingredients & Instructions</h3>
 
-      {remedyType !== REMEDY_TYPES.PHARMACEUTICAL && (
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Ingredients <span className="text-red-500">*</span>
-          </label>
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Ingredients <span className="text-red-500">*</span>
+        </label>
 
-          <TextEditor
-            name="ingredients"
-            value={formData.ingredients}
-            onChange={handleChange}
-            placeholder="Enter ingredients"
-            minHeight="100px"
-            isHeadings={false}
-            isLinks={false}
-            isFormatting={false}
-            isAlignment={false}
-            isHighlight={false}
-          />
-          {errors.ingredients && (
-            <p className="text-red-500 text-xs mt-1">{errors.ingredients}</p>
-          )}
-        </div>
-      )}
+        <TextEditor
+          name="ingredients"
+          value={formData.ingredients}
+          onChange={handleChange}
+          placeholder="Enter ingredients"
+          minHeight="100px"
+          isHeadings={false}
+          isLinks={false}
+          isFormatting={false}
+          isAlignment={false}
+          isHighlight={false}
+        />
+        {errors.ingredients && (
+          <p className="text-red-500 text-xs mt-1">{errors.ingredients}</p>
+        )}
+      </div>
 
-      {remedyType !== REMEDY_TYPES.PHARMACEUTICAL && (
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Instructions <span className="text-red-500">*</span>
-          </label>
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Instructions <span className="text-red-500">*</span>
+        </label>
 
-          <TextEditor
-            name="instructions"
-            value={formData.instructions}
-            onChange={handleChange}
-            placeholder="Enter instructions"
-            isAlignment={false}
-            minHeight="100px"
-            isHeadings={false}
-          />
-          {errors.instructions && (
-            <p className="text-red-500 text-xs mt-1">{errors.instructions}</p>
-          )}
-        </div>
-      )}
+        <TextEditor
+          name="instructions"
+          value={formData.instructions}
+          onChange={handleChange}
+          placeholder="Enter instructions"
+          isAlignment={false}
+          minHeight="100px"
+          isHeadings={false}
+        />
+        {errors.instructions && (
+          <p className="text-red-500 text-xs mt-1">{errors.instructions}</p>
+        )}
+      </div>
 
       {remedyType === REMEDY_TYPES.PHARMACEUTICAL && (
         <div className="mb-6">
@@ -507,121 +493,6 @@ const AddRemedyPage = () => {
         </div>
       )}
 
-      {remedyType === REMEDY_TYPES.PHARMACEUTICAL && (
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Dosage & Usage
-          </label>
-          <TextEditor
-            name="dosageAndUsage"
-            value={formData.dosageAndUsage}
-            onChange={handleChange}
-            isHeadings={false}
-            placeholder="Enter how To Take It instructions"
-            minHeight="100px"
-            isAlignment={false}
-          />
-          {errors.dosageAndUsage && (
-            <p className="text-red-500 text-xs mt-1">{errors.dosageAndUsage}</p>
-          )}
-        </div>
-      )}
-
-      {remedyType === REMEDY_TYPES.PHARMACEUTICAL && (
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            How to Take It
-          </label>
-          <TextEditor
-            name="howToTakeIt"
-            value={formData.howToTakeIt}
-            onChange={handleChange}
-            isHeadings={false}
-            placeholder="Enter how To Take It instructions"
-            minHeight="100px"
-            isAlignment={false}
-          />
-        </div>
-      )}
-
-      {remedyType === REMEDY_TYPES.PHARMACEUTICAL && (
-        <>
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Side Effects
-            </label>
-            <TextEditor
-              name="sideEffects"
-              value={formData.sideEffects}
-              onChange={handleChange}
-              isHeadings={false}
-              placeholder="Enter side effects"
-              minHeight="100px"
-              isAlignment={false}
-            />
-          </div>
-
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Medical References
-            </label>
-
-            <TextEditor
-              name="references"
-              value={formData.references}
-              onChange={handleChange}
-              placeholder="Enter medical references"
-              isAlignment={false}
-              isHeadings={false}
-              minHeight="100px"
-            />
-            {errors.references && (
-              <p className="text-red-500 text-xs mt-1">{errors.references}</p>
-            )}
-          </div>
-        </>
-      )}
-
-      {remedyType === REMEDY_TYPES.PHARMACEUTICAL && (
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Storage Instructions
-          </label>
-          <TextEditor
-            name="storageInstructions"
-            value={formData.storageInstructions}
-            onChange={handleChange}
-            isHeadings={false}
-            placeholder="Enter side effects"
-            minHeight="100px"
-            isAlignment={false}
-          />
-          {errors.storageInstructions && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.storageInstructions}
-            </p>
-          )}
-        </div>
-      )}
-
-      {remedyType === REMEDY_TYPES.ALTERNATIVE && (
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Practitioner Name
-          </label>
-          <TextEditor
-            name="practitionerName"
-            value={formData.practitionerName}
-            onChange={handleChange}
-            placeholder="Enter practitioner name"
-            isHeadings={false}
-            isAlignment={false}
-            isLinks={false}
-            isHighlight={false}
-            minHeight="50px"
-          />
-        </div>
-      )}
       <div className="mb-6">
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Equipment
@@ -776,4 +647,4 @@ const AddRemedyPage = () => {
   );
 };
 
-export default AddRemedyPage;
+export default WriterRemedyAddPage;

@@ -4,6 +4,8 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
+import { formatDate } from "../utils";
+import { getRemedyById } from "../api/remediesApi";
 
 const AlternativeRemedyDetail = () => {
   const { remedyId } = useParams();
@@ -40,157 +42,17 @@ const AlternativeRemedyDetail = () => {
   const [showAIInsightPopup, setShowAIInsightPopup] = useState(false);
 
   // Fetch remedy details
+  const fetchRemedyDetails = async () => {
+    setLoading(true);
+    // Simulating API call
+    const res = await getRemedyById(remedyId);
+    if (res && res.success) {
+      setRemedy(res.remedy);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchRemedyDetails = async () => {
-      setLoading(true);
-      // Simulating API call
-      setTimeout(() => {
-        // Mock data for demonstration
-        const mockRemedy = {
-          id: remedyId,
-          type: "Alternative Remedy",
-          name: "Acupuncture Treatment & Benefits",
-          description:
-            "Discover the ancient healing power of acupuncture with this comprehensive guide. From how it works to health benefits, dive into the world of traditional Chinese medicine.",
-          postedBy: "Dr. Jane",
-          postedDate: "March 3, 2025",
-          updatedDate: "March 5, 2025",
-          verifiedPractitioner: true,
-          rating: 5,
-          reviewCount: 128,
-          image: "/images/remedies/acupuncture.jpg",
-          applicationTime: "Takes 1-2 hours",
-          ingredients: [
-            "Acupuncture needles are essential for the treatment.",
-            "Alcohol swabs are used to clean the skin before needle insertion.",
-            "Moxa sticks are used for moxibustion to warm and invigorate the flow of Qi.",
-            "Therapeutic oils are added for relaxation and to enhance the treatment.",
-            "Cotton balls are used to apply pressure and avoid bleeding post needle removal.",
-          ],
-          equipment: [
-            "Sterile acupuncture needles",
-            "Treatment bed",
-            "Alcohol swabs",
-            "Sharps disposal container",
-            "Acupuncture needles",
-          ],
-          treatmentDetails: {
-            title: "What is Acupuncture Treatment?",
-            description:
-              "Acupuncture involves inserting thin needles into specific points on the body to stimulate natural healing and relieve pain. Practiced for thousands of years, it's revered for its effectiveness in treating various ailments and enhancing overall well-being.",
-          },
-          instructions: [
-            {
-              step: "Preparation",
-              detail:
-                "Ensure a clean, well-lit environment with sterile tools. If not self-administering, verify the practitioner is licensed and trained",
-            },
-            {
-              step: "Needle Insertion",
-              detail:
-                "Insert sterile needles into acupoints, following the practitioner's directions.",
-            },
-            {
-              step: "Relaxation",
-              detail:
-                "Allow the patient to rest with the needles in place for the recommended duration.",
-            },
-            {
-              step: "Needle Removal",
-              detail:
-                "Carefully remove the needles and dispose of them properly.",
-            },
-            {
-              step: "Post-Treatment Care",
-              detail:
-                "Advise the patient on aftercare, including hydration and rest.",
-            },
-          ],
-          precautions: [
-            {
-              title: "Choose Qualified Practitioner",
-              detail:
-                "Ensure that the acupuncturist is licensed and certified. Proper training and experience are crucial for safe practice.",
-            },
-            {
-              title: "Sterile Needles",
-              detail:
-                "Make sure the practitioner uses sterile, disposable needles to prevent infections.",
-            },
-          ],
-          sideEffects: [
-            {
-              title: "Fatigue",
-              detail:
-                "Some people feel tired or lightheaded after an acupuncture session.",
-            },
-            {
-              title: "Infection",
-              detail:
-                "There is a small risk of infection if the needles are not sterile.",
-            },
-          ],
-          conclusion:
-            "Acupuncture offers a holistic approach to health, addressing both physical and emotional well-being. Try this ancient practice to experience its therapeutic benefits.",
-          relatedRemedies: [
-            {
-              id: "r1",
-              name: "Aromatherapy with Lavender",
-              type: "Aromatherapy",
-              description:
-                "Essential oil therapy using pure lavender oil & Powder...",
-              image: "/images/remedies/aromatherapy.jpg",
-              rating: 5,
-              reviewCount: 128,
-              successRate: 78,
-              requirements: [
-                { name: "Pure Essential Oils", value: true },
-                { name: "Diffuser", value: true },
-              ],
-            },
-          ],
-        };
-
-        // Mock comments
-        const mockComments = [
-          {
-            id: "c1",
-            user: {
-              name: "Marie Claire",
-              avatar: "/images/avatars/user1.jpg",
-            },
-            text: "I recently made a turmeric tea recipe that I found very helpful, and I'd like to try it once!",
-            upvotes: 100,
-            date: "3h ago",
-          },
-          {
-            id: "c2",
-            user: {
-              name: "Romeo",
-              avatar: "/images/avatars/user2.jpg",
-            },
-            text: "Yes, I found it helpful, great remedy....",
-            upvotes: 30,
-            date: "3h ago",
-          },
-          {
-            id: "c3",
-            user: {
-              name: "Joy Claire",
-              avatar: "/images/avatars/user3.jpg",
-            },
-            text: "Great Remedy....",
-            upvotes: 10,
-            date: "4h ago",
-          },
-        ];
-
-        setRemedy(mockRemedy);
-        setComments(mockComments);
-        setLoading(false);
-      }, 500);
-    };
-
     fetchRemedyDetails();
   }, [remedyId]);
 
@@ -315,7 +177,7 @@ const AlternativeRemedyDetail = () => {
 
           {/* Remedy Type Badge - CENTERED */}
           <div className="text-center mb-4">
-            <span className="bg-purple-500 text-white px-4 py-1 rounded-full text-sm">
+            <span className="bg-purple-500 capitalize text-white px-4 py-1 rounded-full text-sm">
               {remedy.type}
             </span>
           </div>
@@ -327,21 +189,25 @@ const AlternativeRemedyDetail = () => {
 
           {/* Posted Information - CENTERED */}
           <div className="text-gray-600 text-sm mb-4 text-center">
-            Posted by {remedy.postedBy} on {remedy.postedDate}
-            {remedy.updatedDate && ` (Last updated on ${remedy.updatedDate})`}
-            {remedy.verifiedPractitioner && (
+            Posted by {remedy.createdBy.username} on{" "}
+            {formatDate(remedy.createdAt)}
+            {remedy.updatedDate &&
+              ` (Last updated on ${formatDate(remedy.updatedAt)})`}
+            {/* {remedy.verifiedPractitioner && (
               <span className="ml-2 bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs">
                 Verified Practitioner
               </span>
-            )}
+            )} */}
           </div>
 
           {/* Rating and Actions - RESPONSIVE */}
           <div className="flex flex-col items-center mb-6">
             <div className="flex items-center mb-3">
-              <div className="flex mr-2">{renderStars(remedy.rating)}</div>
+              <div className="flex mr-2">
+                {renderStars(remedy.averageRating)}
+              </div>
               <span className="text-gray-600 text-sm">
-                ({remedy.reviewCount})
+                ({remedy.averageRating})
               </span>
               <button className="ml-2 text-brand-green underline text-sm">
                 Rate this remedy
@@ -526,7 +392,7 @@ const AlternativeRemedyDetail = () => {
               {/* Remedy Image */}
               <div className="mb-6">
                 <img
-                  src={remedy.image}
+                  src={remedy.media.source}
                   alt={remedy.name}
                   className="w-full h-auto max-h-96 object-cover rounded-lg shadow-lg"
                   onError={(e) => {
@@ -537,85 +403,10 @@ const AlternativeRemedyDetail = () => {
                 />
               </div>
 
-              {/* What is Acupuncture */}
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  {remedy.treatmentDetails.title}
-                </h2>
-                <p className="text-gray-700">
-                  {remedy.treatmentDetails.description}
-                </p>
-              </div>
-
-              {/* Instructions */}
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Instructions
-                </h2>
-                <ul className="space-y-4">
-                  {remedy.instructions.map((instruction, index) => (
-                    <li key={index} className="flex">
-                      <span className="font-semibold mr-2">•</span>
-                      <div>
-                        <span className="font-semibold">
-                          {instruction.step} :{" "}
-                        </span>
-                        <span className="text-gray-700">
-                          {instruction.detail}
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Precautions */}
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Precautions
-                </h2>
-                <ul className="space-y-4">
-                  {remedy.precautions.map((precaution, index) => (
-                    <li key={index} className="flex">
-                      <span className="font-semibold mr-2">•</span>
-                      <div>
-                        <span className="font-semibold">
-                          {precaution.title} :{" "}
-                        </span>
-                        <span className="text-gray-700">
-                          {precaution.detail}
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Possible Side Effects */}
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Possible Side Effects
-                </h2>
-                <ul className="space-y-4">
-                  {remedy.sideEffects.map((effect, index) => (
-                    <li key={index} className="flex">
-                      <span className="font-semibold mr-2">•</span>
-                      <div>
-                        <span className="font-semibold">{effect.title} : </span>
-                        <span className="text-gray-700">{effect.detail}</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Conclusion */}
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Conclusion
-                </h2>
-                <p className="text-gray-700">{remedy.conclusion}</p>
-              </div>
+              <div
+                className=" prose"
+                dangerouslySetInnerHTML={{ __html: remedy.content }}
+              />
             </div>
 
             {/* Right Sidebar */}
@@ -640,7 +431,7 @@ const AlternativeRemedyDetail = () => {
                       d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  {remedy.applicationTime}
+                  {remedy.preparationTime}
                 </p>
               </div>
 
@@ -649,14 +440,10 @@ const AlternativeRemedyDetail = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">
                   Ingredients
                 </h3>
-                <ul className="space-y-2">
-                  {remedy.ingredients.map((ingredient, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-brand-green mr-2">•</span>
-                      <span className="text-gray-700">{ingredient}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div
+                    className=" prose"
+                    dangerouslySetInnerHTML={{ __html: remedy.ingredients }}
+                  />
               </div>
 
               {/* Equipment */}
@@ -664,20 +451,16 @@ const AlternativeRemedyDetail = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">
                   Equipment
                 </h3>
-                <ul className="space-y-2">
-                  {remedy.equipment.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-brand-green mr-2">•</span>
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div
+                    className=" prose"
+                    dangerouslySetInnerHTML={{ __html: remedy.equipments }}
+                  />
               </div>
             </div>
           </div>
 
           {/* Related Remedies */}
-          <div className="mb-10">
+          {/* <div className="mb-10">
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               Related Remedies
             </h2>
@@ -717,7 +500,7 @@ const AlternativeRemedyDetail = () => {
                       </p>
 
                       {/* Requirements */}
-                      <div className="mb-4">
+                      {/* <div className="mb-4">
                         <h4 className="text-sm font-medium text-gray-700 mb-2">
                           Requirements:
                         </h4>
@@ -731,8 +514,8 @@ const AlternativeRemedyDetail = () => {
                             </span>
                           ))}
                         </div>
-                      </div>
-
+                      </div> */} 
+{/* 
                       <div className="flex items-center mb-4">
                         <div className="flex mr-2">
                           {renderStars(related.rating)}
@@ -754,7 +537,7 @@ const AlternativeRemedyDetail = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Comments Section */}
           <div>

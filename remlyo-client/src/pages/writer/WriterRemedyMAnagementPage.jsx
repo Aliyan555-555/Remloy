@@ -127,8 +127,8 @@ const WriterRemedyManagementPage = () => {
       sortable: false,
       render: (row) => (
         <ActionButtonGroup
-          viewUrl={`/admin/remedies/${row._id}`}
-          editUrl={`/admin/remedies/${row._id}/edit`}
+          viewUrl={`/writer/remedies/${row._id}`}
+          editUrl={`/writer/remedies/${row._id}/edit`}
           onDelete={() => handleDeleteClick(row)}
           extraActions={[
             {
@@ -300,7 +300,7 @@ const WriterRemedyManagementPage = () => {
           variant="contained"
           color="brand"
           className="flex items-center"
-          to="/admin/remedies/add"
+          to="/writer/remedies/add"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

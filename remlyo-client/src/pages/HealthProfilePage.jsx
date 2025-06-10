@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import FormLayout from "../components/form/FormLayout";
 import FormInput from "../components/form/FormInput";
@@ -8,6 +8,19 @@ import { useAuth } from "../contexts/AuthContext";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import { useUserFlow } from "../contexts/UserFlowContext";
 
+const INITIAL_FORM_DATA = {
+  age: "",
+  height: "",
+  weight: "",
+  sex: "",
+  bloodType: "",
+  located: "",
+  ethnicity: "",
+  birthplace: "",
+  diet: "",
+  chronicConditions: [""],
+};
+
 const HealthProfilePage = () => {
   const navigate = useNavigate();
   const { authToken, user } = useAuth();
@@ -15,72 +28,49 @@ const HealthProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const { checkUserFlow } = useUserFlow();
-  const [formData, setFormData] = useState({
-    // Basic Health Profile
-    age: "",
-    height: "",
-    weight: "",
-    sex: "",
-    bloodType: "",
-    located: "",
-    ethnicity: "",
-    birthplace: "",
-    diet: "",
-    chronicConditions: [""],
-  });
-
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState({});
   const [expandedSections, setExpandedSections] = useState({});
   const [aiQuestions, setAiQuestions] = useState([]);
   const [expandedHealthProfile, setExpandedHealthProfile] = useState({});
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
 
-    if (type === "select-multiple") {
-      const selectedOptions = Array.from(
-        e.target.selectedOptions,
-        (option) => option.value
-      );
-      setFormData({
-        ...formData,
-        [name]: selectedOptions,
-      });
-    } else if (type === "checkbox") {
-      setFormData({
-        ...formData,
-        [name]: checked,
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
-    setErrors({ ...errors, [name]: "" });
-  };
+    setFormData((prev) => {
+      if (type === "select-multiple") {
+        const selectedOptions = Array.from(
+          e.target.selectedOptions,
+          (option) => option.value
+        );
+        return { ...prev, [name]: selectedOptions };
+      }
+      if (type === "checkbox") {
+        return { ...prev, [name]: checked };
+      }
+      return { ...prev, [name]: value };
+    });
 
-  const handleChangeExpendedHealthProfileFields = (e) => {
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  }, []);
+
+  const handleChangeExpendedHealthProfileFields = useCallback((e) => {
     const { name, value } = e.target;
     setExpandedHealthProfile((prev) => ({
       ...prev,
       [name]: value,
     }));
-    // Clear any existing errors for this field
-    setErrors((prev) => ({
-      ...prev,
-      [name]: "",
-    }));
-  };
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  }, []);
 
-  const toggleSection = (sectionId) => {
+  const toggleSection = useCallback((sectionId) => {
     setExpandedSections((prev) => ({
       ...prev,
       [sectionId]: !prev[sectionId],
     }));
-  };
+  }, []);
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors = {};
     const requiredFields =
       currentStep === 1
@@ -100,14 +90,28 @@ const HealthProfilePage = () => {
 
     // Validate basic profile fields
     requiredFields.forEach((field) => {
-      if (!formData[field]) {
-        newErrors[field] = field + " is required";
+      if (
+        !formData[field] ||
+        (Array.isArray(formData[field]) && formData[field].length === 0)
+      ) {
+        newErrors[field] = `${
+          field.charAt(0).toUpperCase() + field.slice(1)
+        } is required`;
       }
     });
 
+    // Validate numeric fields
+    if (formData.height && (isNaN(formData.height) || formData.height <= 0)) {
+      newErrors.height = "Please enter a valid height";
+    }
+    if (formData.weight && (isNaN(formData.weight) || formData.weight <= 0)) {
+      newErrors.weight = "Please enter a valid weight";
+    }
+
     // Validate AI-generated fields in step 2
-    if (currentStep === 2) {
-      aiQuestions.forEach((section) => {
+    if (currentStep > 1) {
+      // aiQuestions.forEach((section) => {
+        const section = aiQuestions[currentStep - 2]
         if (section.questions) {
           section.questions.forEach((question) => {
             if (!expandedHealthProfile[question.name]) {
@@ -115,17 +119,18 @@ const HealthProfilePage = () => {
             }
           });
         }
-      });
+      // });
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
+  }, [currentStep, formData, aiQuestions, expandedHealthProfile]);
 
   const handleNext = async () => {
+    console.log("submit calling",errors)
     if (!validateForm()) return;
+    console.log("validator")
     setLoading(true);
-
     try {
       if (currentStep === 1) {
         const res = await generateHealthProfileQuestions(formData, authToken);
@@ -147,10 +152,10 @@ const HealthProfilePage = () => {
           setExpandedHealthProfile(initialHealthProfileState);
           setCurrentStep(2);
         }
-      } else {
+      } else if (currentStep === 6) {
         const completeProfileData = {
           ...formData,
-          // aiGeneratedFields: expandedHealthProfile,// enable in future
+          aiGeneratedFields: expandedHealthProfile,
         };
         const redirect =
           user.accessLevel !== "user" ? "/admin/dashboard" : "/dashboard";
@@ -160,12 +165,14 @@ const HealthProfilePage = () => {
           navigate(redirect, { replace: true });
           return;
         }
+      } else {
+        setCurrentStep((prev) => prev + 1);
       }
     } catch (error) {
-      console.error("Submission error:", error.message);
+      console.error("Submission error:", error);
       setErrors((prev) => ({
         ...prev,
-        submit: "Failed to submit form. Please try again.",
+        submit: error.message || "Failed to submit form. Please try again.",
       }));
     } finally {
       setLoading(false);
@@ -332,13 +339,19 @@ const HealthProfilePage = () => {
     </div>
   );
 
-  const renderExtendedProfile = () => (
-    <div className="px-8 py-6 overflow-y-auto max-h-[60vh]">
-      {aiQuestions.map((section, i) => (
-        <div key={i} className="mb-6 border border-gray-200 rounded-lg">
+  const renderExtendedProfile = (index) => {
+    // console.log(i);
+    const section = aiQuestions[index];
+    return (
+      <div className="px-8 py-6 overflow-y-auto max-h-[60vh]">
+        {/* {aiQuestions.map((section, index) => ( */}
+        <div
+          key={section.id}
+          className="mb-6 border border-gray-200 rounded-lg"
+        >
           <div
             className="p-4 flex justify-between items-center cursor-pointer"
-            onClick={() => toggleSection(i)}
+            onClick={() => toggleSection(section.id)}
           >
             <div>
               <h2 className="text-xl font-semibold text-gray-800">
@@ -347,11 +360,11 @@ const HealthProfilePage = () => {
               <p className="text-gray-600">{section.description}</p>
             </div>
             <button className="text-gray-500 text-2xl">
-              {expandedSections[i] ? "−" : "+"}
+              {expandedSections[section.id] ? "−" : "+"}
             </button>
           </div>
 
-          {expandedSections[i] && section.questions && (
+          {expandedSections[section.id] && section.questions && (
             <div className="p-4 pt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                 {section.questions.map((question) => (
@@ -369,21 +382,19 @@ const HealthProfilePage = () => {
             </div>
           )}
         </div>
-      ))}
-    </div>
-  );
-
+        {/* ))} */}
+      </div>
+    );
+  };
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <LoadingSpinner heightClass="h-auto" />
-        {/* <div className="text-center"> */}
         <h3 className="text-xl mt-4 font-semibold text-gray-800 mb-2">
           {currentStep === 1
             ? "Analyzing Your Health Profile..."
             : "Generating Personalized Questions..."}
         </h3>
-        {/* </div> */}
       </div>
     );
   }
@@ -402,15 +413,16 @@ const HealthProfilePage = () => {
             : "Optional AI-Driven Questions (50+ Dynamic Fields)\nTake your time, enhance wellness with personalized remedies every step!"
         }
         currentStep={currentStep}
-        totalSteps={2}
+        totalSteps={6}
         onNext={handleNext}
         onBack={handleBack}
-        showBackButton={currentStep === 2}
+        showBackButton={currentStep > 1}
       >
-        {currentStep === 1 ? renderBasicProfile() : renderExtendedProfile()}
+        {currentStep === 1
+          ? renderBasicProfile()
+          : renderExtendedProfile(currentStep - 2)}
       </FormLayout>
 
-      {/* Modal - Show when finish button clicked */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
@@ -449,7 +461,7 @@ const HealthProfilePage = () => {
                 How Much Sugar Do You Consume?
               </label>
               <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green mb-4">
-                <option disabled selected>
+                <option value="" disabled>
                   Select level
                 </option>
                 <option value="very_low">Very Low</option>

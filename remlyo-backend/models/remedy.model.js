@@ -33,6 +33,9 @@ const RemedySchema = new mongoose.Schema(
     preparationMethod: {
       type: String,
     },
+    brandName:{
+      type:String,
+    },
     instructions: {
       type: String,
       default: "",

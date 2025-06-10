@@ -12,6 +12,8 @@ import adminMiddleware from "./middleware/admin.middleware.js";
 import adminRouter from "./routes/admin.route.js";
 import uploadRouter from "./routes/upload.routes.js";
 import ModeratorRoute from "./routes/moderator.route.js";
+import WriterRouter from "./routes/writer.route.js";
+import writerMiddleware from './middleware/writer.middleware.js';
 
 const app = express();
 
@@ -38,7 +40,8 @@ app.use("/api/v1/admin",auth,adminMiddleware,adminRouter);
 app.use("/api/v1/upload",auth,uploadRouter)
 // moderator routes
 app.use("/api/v1/moderator",auth,ModeratorRoute);
-
+// writer routes
+app.use("/api/v1/writer",auth,writerMiddleware,WriterRouter)
 
 // main();
 const PORT = process.env.PORT || 3000;

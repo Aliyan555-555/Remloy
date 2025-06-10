@@ -203,7 +203,7 @@ const WriterDashboardPage = () => {
   ];
 
   return (
-    <DashboardLayout pageTitle="Moderator Dashboard" user={user}>
+    <DashboardLayout pageTitle="Writer Dashboard" user={user}>
       {/* Stats Row */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {statsData.map((stat, index) => (

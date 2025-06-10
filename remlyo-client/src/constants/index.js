@@ -16,4 +16,13 @@ const UserFlowStatus = {
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 
-export { LS_KEYS, UserFlowStatus, ALLOWED_FILE_TYPES, MAX_FILE_SIZE };
+const CATEGORIES = [
+  "Pain Relief",
+  "Respiratory",
+  "Digestive",
+  "Immune Support",
+  "Sleep Aid",
+  "Skin Care",
+];
+
+export { LS_KEYS, UserFlowStatus, ALLOWED_FILE_TYPES, MAX_FILE_SIZE,CATEGORIES };
