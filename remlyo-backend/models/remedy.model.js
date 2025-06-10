@@ -95,6 +95,15 @@ const RemedySchema = new mongoose.Schema(
     equipments: {
       type: String,
     },
+    howToTakeIt: {
+      type: String,
+    },
+    dosageAndUsage: {
+      type: String,
+    },
+    storageInstructions: {
+      type: String,
+    },
     averageRating: {
       type: Number,
       default: 0,

@@ -65,6 +65,7 @@ const AddRemedyPage = () => {
     howToTakeIt: "",
     dosageAndUsage: "",
     storageInstructions: "",
+    brandName: "",
     practitionerName: "",
   });
 
@@ -466,6 +467,23 @@ const AddRemedyPage = () => {
           {errors.instructions && (
             <p className="text-red-500 text-xs mt-1">{errors.instructions}</p>
           )}
+        </div>
+      )}
+
+      {remedyType === REMEDY_TYPES.PHARMACEUTICAL && (
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Brand Name
+          </label>
+          <TextEditor
+            name="brandName"
+            value={formData.brandName}
+            onChange={handleChange}
+            isHeadings={false}
+            placeholder="Enter Brand Name"
+            minHeight="100px"
+            isAlignment={false}
+          />
         </div>
       )}
 
