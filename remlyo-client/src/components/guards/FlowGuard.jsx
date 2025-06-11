@@ -27,9 +27,9 @@ const FlowGuard = ({ children }) => {
   }
 
   // Redirect unauthenticated users
-  if (!isAuthenticated && !flowStatus) {
-    return <Navigate to="/signin" replace />;
-  }
+  // if (!isAuthenticated && !flowStatus) {
+  //   return <Navigate to="/signin" replace />;
+  // }
 
   // Redirect authenticated users accessing base /dashboard to their role-specific dashboard
   if (isAuthenticated && currentPath === "/dashboard" && role !== "user") {

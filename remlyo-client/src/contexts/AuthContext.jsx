@@ -45,10 +45,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signup = async (userData) => {
-    // setLoading(true);
+    setLoading(true);
     try {
       const { data } = await API.post("/api/v1/auth/register", userData);
       localStorage.setItem("signupEmail", userData.email);
+       setLoading(false);
       return data;
     } catch (error) {
       return error?.response?.data || { message: "Signup failed" };

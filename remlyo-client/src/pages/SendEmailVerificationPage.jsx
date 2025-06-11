@@ -9,9 +9,10 @@ const SendEmailVerificationPage = () => {
   const [cooldown, setCooldown] = useState(0);
   const [error, setError] = useState(null);
   const { isAuthenticated, user, loading: authLoading } = useAuth();
+  const email = localStorage.getItem("signupEmail");
   useEffect(() => {
     if (!authLoading) {
-      sendEmailVerification(setLoading, setError, user.email);
+      sendEmailVerification(setLoading, setError, email);
     }
   }, []);
 
@@ -58,13 +59,17 @@ const SendEmailVerificationPage = () => {
     }
   };
 
-//  useEffect(() =>{
+  //  useEffect(() =>{
   if (!authLoading && isAuthenticated && user.emailVerified) {
-  console.log("redirecting../dashboard")
-    return <Navigate  to={user.accessLevel == "user"?'/dashboard':"/admin/dashboard"} />
+    console.log("redirecting../dashboard");
+    return (
+      <Navigate
+        to={user.accessLevel == "user" ? "/dashboard" : "/admin/dashboard"}
+      />
+    );
   }
 
-//  })
+  //  })
   return (
     <div className="min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center px-6 py-12">
       {loading ? (

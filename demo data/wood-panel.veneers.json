@@ -1,0 +1,38 @@
+[{
+  "_id": {
+    "$oid": "67f43d43e4cf7278f0bf058b"
+  },
+  "source": "http://localhost:5000/uploads/1744060022831618942667.jpg",
+  "specie": "Maple",
+  "cut": "Rotary",
+  "match": "Book match",
+  "grade": "AA",
+  "value": "maple_rotary_book-match_aa",
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2025-04-07T21:01:55.086Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-07T21:07:02.833Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f43efee4cf7278f0bf05ad"
+  },
+  "source": "http://localhost:5000/uploads/1744060158886665327248.jpg",
+  "specie": "Birch",
+  "cut": "Rotary",
+  "match": "Book match",
+  "grade": "D",
+  "value": "birch_rotary_book-match_d",
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2025-04-07T21:09:18.889Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-07T21:16:56.608Z"
+  },
+  "__v": 0
+}]

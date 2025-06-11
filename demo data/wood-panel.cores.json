@@ -1,0 +1,90 @@
+[{
+  "_id": {
+    "$oid": "67f249b2e0c668af997c53b8"
+  },
+  "source": "http://localhost:5000/uploads/1743932587396735650959.jpg",
+  "name": "updated",
+  "value": "updated",
+  "isDeleted": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f2bdf38706edeabec4776a"
+  },
+  "source": "http://localhost:5000/uploads/1743961587113750161858.png",
+  "name": "appleply",
+  "value": "appleply",
+  "isDeleted": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f2db9a8706edeabec47790"
+  },
+  "source": "http://localhost:5000/uploads/1743969178560120437157.jpg",
+  "name": "demo",
+  "value": "demo",
+  "isDeleted": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f2dbd08706edeabec47792"
+  },
+  "source": "http://localhost:5000/uploads/1743969232703248137102.jpg",
+  "name": "demo",
+  "value": "demo",
+  "isDeleted": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f2dc3b8706edeabec47794"
+  },
+  "source": "http://localhost:5000/uploads/1743969339123503139332.jpg",
+  "name": "demo",
+  "value": "demo",
+  "isDeleted": true,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f2dca78706edeabec4779b"
+  },
+  "source": "http://localhost:5000/uploads/1744048533351728080800.jpg",
+  "name": "appleply",
+  "value": "appleply",
+  "isDeleted": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f2dce18706edeabec4779f"
+  },
+  "source": "http://localhost:5000/uploads/174396950510261244526.png",
+  "name": "armorcore",
+  "value": "armorcore",
+  "isDeleted": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f2dd7e8706edeabec477a3"
+  },
+  "source": "http://localhost:5000/uploads/1743969662754888939045.png",
+  "name": "hdf",
+  "value": "hdf",
+  "isDeleted": false,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67f2ddc88706edeabec477a5"
+  },
+  "source": "http://localhost:5000/uploads/1743969736533902198558.png",
+  "name": "mdf",
+  "value": "mdf",
+  "isDeleted": true,
+  "__v": 0
+}]

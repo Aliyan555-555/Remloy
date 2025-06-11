@@ -51,6 +51,7 @@ import WriterRoutes from "./components/routing/WriterRoutes";
 import WriterDashboardPage from "./pages/writer/WriterDashboardPage";
 import WriterRemedyManagementPage from "./pages/writer/WriterRemedyMAnagementPage";
 import WriterRemedyAddPage from "./pages/writer/WriterAddRemedyPage";
+import EditRemedyPage from "./pages/admin/EditRemedyPage";
 function App() {
   return (
     <AuthProvider>
@@ -153,6 +154,15 @@ function App() {
               </AdminRoute>
             }
           />
+          <Route
+            path="/admin/remedies/:remedyId/edit"
+            element={
+              <AdminRoute>
+                <EditRemedyPage />
+              </AdminRoute>
+            }
+          />
+
           <Route
             path="/admin/remedies"
             element={
@@ -328,9 +338,9 @@ function App() {
             path="/verify-email/:token"
             element={
               // <GuestRoute>
-              <FlowGuard>
+              // <FlowGuard>
                 <VerifyEmailPage />
-              </FlowGuard>
+              // </FlowGuard>
               // </GuestRoute>
             }
           />
@@ -338,9 +348,9 @@ function App() {
             path="/verify-email"
             element={
               // <GuestRoute>
-              <FlowGuard>
+              // <FlowGuard>
                 <SendEmailVerificationPage />
-              </FlowGuard>
+              // </FlowGuard>
               // </GuestRoute>
             }
           />

@@ -44,7 +44,7 @@ const articleSchema = new mongoose.Schema(
       },
     ],
 
-    author:{
+    author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -72,11 +72,6 @@ const articleSchema = new mongoose.Schema(
       keywords: [{ type: String }],
       canonicalUrl: { type: String },
     },
-
-    readingTime: {
-      type: String,
-    },
-
     publishedAt: {
       type: Date,
     },
@@ -100,23 +95,15 @@ const articleSchema = new mongoose.Schema(
       default: 0,
     },
 
-    likesCount: {
-      type: Number,
-      default: 0,
-    },
-
     commentsCount: {
       type: Number,
       default: 0,
     },
   },
   {
-    timestamps: true, // adds createdAt and updatedAt
+    timestamps: true,
   }
 );
-
-articleSchema.index({ slug: 1 });
-articleSchema.index({ title: "text", content: "text", tags: "text" });
 
 const Article = mongoose.model("Article", articleSchema);
 export default Article;
