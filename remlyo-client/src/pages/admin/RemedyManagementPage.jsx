@@ -23,7 +23,7 @@ const RemedyManagementPage = () => {
   const [remedies, setRemedies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(12);
+  const [totalPages, setTotalPages] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [filterMenuOpen, setFilterMenuOpen] = useState(false);

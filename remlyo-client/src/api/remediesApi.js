@@ -1,5 +1,5 @@
 import API from "../services/api";
-import { handleApiError } from "../utils";
+import { getAuthHeaders, handleApiError } from "../utils";
 // import { getAuthHeaders } from "../utils";
 
 /**
@@ -29,4 +29,14 @@ const getRemedyById = async (id) => {
     return error.response.data;
   }
 };
-export { getAllRemedies,getRemedyById };
+
+
+const updateRemedy = async (token, id, remedyData) => {
+  try {
+    const res = await API.put(`/api/v1/remedy/${id}`, remedyData, { headers: getAuthHeaders(token) });
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+export { getAllRemedies, getRemedyById, updateRemedy };

@@ -25,4 +25,24 @@ const CATEGORIES = [
   "Skin Care",
 ];
 
-export { LS_KEYS, UserFlowStatus, ALLOWED_FILE_TYPES, MAX_FILE_SIZE,CATEGORIES };
+const REMEDY_TYPES = {
+  PHARMACEUTICAL: "pharmaceutical",
+  ALTERNATIVE: "alternative",
+  COMMUNITY: "community",
+};
+
+const TABS = {
+  GENERAL: "general",
+  INGREDIENTS: "ingredients",
+};
+
+
+export {
+  TABS,
+  MAX_FILE_SIZE,
+  LS_KEYS,
+  UserFlowStatus,
+  ALLOWED_FILE_TYPES,
+  CATEGORIES,
+  REMEDY_TYPES,
+};

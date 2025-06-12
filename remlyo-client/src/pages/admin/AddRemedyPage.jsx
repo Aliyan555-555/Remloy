@@ -6,22 +6,9 @@ import FileUpload from "../../components/common/FileUpload";
 import { useAuth } from "../../contexts/AuthContext";
 import { createRemedy } from "../../api/adminApi";
 import TextEditor from "../../components/common/TextEditor";
+import { CATEGORIES, MAX_FILE_SIZE } from "../../constants";
 
-// Constants
-const REMEDY_TYPES = {
-  PHARMACEUTICAL: "pharmaceutical",
-  ALTERNATIVE: "alternative",
-  COMMUNITY: "community",
-};
 
-const CATEGORIES = [
-  "Pain Relief",
-  "Respiratory",
-  "Digestive",
-  "Immune Support",
-  "Sleep Aid",
-  "Skin Care",
-];
 
 const TABS = {
   BATCH: "batch",
@@ -29,10 +16,6 @@ const TABS = {
   INGREDIENTS: "ingredients",
 };
 
-const MAX_FILE_SIZE = {
-  EXCEL: 5 * 1024 * 1024, // 5MB
-  IMAGE: 2 * 1024 * 1024, // 2MB
-};
 
 const AddRemedyPage = () => {
   const { user, authToken } = useAuth();
@@ -328,7 +311,7 @@ const AddRemedyPage = () => {
               "application/vnd.ms-excel",
               "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             ]}
-            maxFileSize={MAX_FILE_SIZE.EXCEL}
+            maxFileSize={MAX_FILE_SIZE}
             dropzoneText="Drag & Drop Excel File or Click to Browse"
             helperText="Supported file types: XLS, XLSX. Maximum file size: 5MB"
           />
@@ -414,7 +397,7 @@ const AddRemedyPage = () => {
         <FileUpload
           onFileSelect={handleFileUpload}
           acceptedFileTypes={["image/jpeg", "image/png", "image/gif"]}
-          maxFileSize={MAX_FILE_SIZE.IMAGE}
+          maxFileSize={MAX_FILE_SIZE}
           dropzoneText="Drag & Drop image or Click to Browse"
           helperText="Supported file types: JPG, PNG, GIF. Maximum file size: 2MB"
         />

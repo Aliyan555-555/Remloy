@@ -3,6 +3,7 @@ const writerMiddleware = (req, res, next) => {
       if (!req.user || req.user.role !== "writer") {
         return res.status(403).json({ message: "Access denied. Writer only." });
       }
+
       next();
     } catch (error) {
       return res

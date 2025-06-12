@@ -46,12 +46,12 @@ import ModeratorDashboardPage from "./pages/moderator/ModeratorDashboardPage";
 import ModeratorRemedyManagementPage from "./pages/moderator/ModeratorRemedyManagementPage";
 import ModeratorCommentPage from "./pages/moderator/ModeratorCommentPage";
 import ModeratorFlagPage from "./pages/moderator/ModeratorFlagPage";
-import ModeratorUserManagement from "./pages/moderator/ModeratorUserManagement";
 import WriterRoutes from "./components/routing/WriterRoutes";
 import WriterDashboardPage from "./pages/writer/WriterDashboardPage";
-import WriterRemedyManagementPage from "./pages/writer/WriterRemedyMAnagementPage";
-import WriterRemedyAddPage from "./pages/writer/WriterAddRemedyPage";
 import EditRemedyPage from "./pages/admin/EditRemedyPage";
+import WriterArticlePage from "./pages/writer/WriterArticlePage";
+import WriterAddArticlePage from "./pages/writer/WriterAddArticlePage";
+import WriterEditArticlePage from "./pages/writer/WriterEditArticlePage";
 function App() {
   return (
     <AuthProvider>
@@ -120,18 +120,26 @@ function App() {
             }
           />
           <Route
-            path="/writer/remedies"
+            path="/writer/articles"
             element={
               <WriterRoutes>
-                <WriterRemedyManagementPage />
+                <WriterArticlePage />
               </WriterRoutes>
             }
           />
           <Route
-            path="/writer/remedies/add"
+            path="/writer/articles/add"
             element={
               <WriterRoutes>
-                <WriterRemedyAddPage />
+                <WriterAddArticlePage />
+              </WriterRoutes>
+            }
+          />
+          <Route
+            path="/writer/articles/:articleId/edit"
+            element={
+              <WriterRoutes>
+                <WriterEditArticlePage />
               </WriterRoutes>
             }
           />
@@ -339,7 +347,7 @@ function App() {
             element={
               // <GuestRoute>
               // <FlowGuard>
-                <VerifyEmailPage />
+              <VerifyEmailPage />
               // </FlowGuard>
               // </GuestRoute>
             }
@@ -349,7 +357,7 @@ function App() {
             element={
               // <GuestRoute>
               // <FlowGuard>
-                <SendEmailVerificationPage />
+              <SendEmailVerificationPage />
               // </FlowGuard>
               // </GuestRoute>
             }

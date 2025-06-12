@@ -138,17 +138,17 @@ const updateRemedy = async (req, res) => {
         .json({ message: "Invalid remedy ID", success: false });
     }
 
-    const { error } = remedyValidation.validate(req.body);
-    if (error) {
-      return res.status(400).json({
-        message: "Validation error",
-        details: error.details,
-        success: false,
-      });
-    }
+    // const { error } = remedyValidation.validate(req.body);
+    // if (error) {
+    //   return res.status(400).json({
+    //     message: "Validation error",
+    //     details: error.details,
+    //     success: false,
+    //   });
+    // }
 
     const remedy = await Remedy.findById(id);
-    if (!remedy || remedy.isActive) {
+    if (!remedy) {
       return res
         .status(404)
         .json({ message: "Remedy not found or inactive", success: false });

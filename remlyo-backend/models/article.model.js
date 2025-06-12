@@ -1,5 +1,4 @@
-// models/Article.js
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const articleSchema = new mongoose.Schema(
   {
@@ -20,16 +19,18 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    excerpt: {
+    shortDescription: {
       type: String,
-      maxlength: 300,
-      default: "",
     },
-    coverImage: {
-      url: { type: String, default: "" },
-      alt: { type: String, default: "" },
+    media: {
+      type: {
+        type: String,
+        enum: ["image/jpeg", "image/jpg", "image/png", "image/gif"],
+      },
+      source: {
+        type: String,
+      },
     },
-
     category: {
       type: String,
       enum: ["health", "wellness", "remedy", "nutrition", "lifestyle", "other"],

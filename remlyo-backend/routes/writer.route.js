@@ -1,7 +1,9 @@
 import express from "express";
+import ArticleRouter from "./article.route.js";
 
 const WriterRouter = express.Router();
 
-WriterRouter.get("/remedies",() => {});
+
+WriterRouter.use('/articles',ArticleRouter)
 
 export default WriterRouter;

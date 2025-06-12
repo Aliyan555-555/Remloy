@@ -4,41 +4,19 @@ import DashboardLayout from "../../components/layout/DashboardLayout";
 import Button from "../../components/common/Button";
 import FileUpload from "../../components/common/FileUpload";
 import { useAuth } from "../../contexts/AuthContext";
-import { createRemedy } from "../../api/adminApi";
 import TextEditor from "../../components/common/TextEditor";
-import { getRemedyById } from "../../api/remediesApi";
+import { getRemedyById, updateRemedy } from "../../api/remediesApi";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
+import { CATEGORIES, MAX_FILE_SIZE, REMEDY_TYPES, TABS } from "../../constants";
 
-// Constants
-const REMEDY_TYPES = {
-  PHARMACEUTICAL: "pharmaceutical",
-  ALTERNATIVE: "alternative",
-  COMMUNITY: "community",
-};
 
-const CATEGORIES = [
-  "Pain Relief",
-  "Respiratory",
-  "Digestive",
-  "Immune Support",
-  "Sleep Aid",
-  "Skin Care",
-];
 
-const TABS = {
-  GENERAL: "general",
-  INGREDIENTS: "ingredients",
-};
 
-const MAX_FILE_SIZE = {
-  EXCEL: 5 * 1024 * 1024, // 5MB
-  IMAGE: 2 * 1024 * 1024, // 2MB
-};
 
 const EditRemedy = () => {
   const { user, authToken } = useAuth();
   const navigate = useNavigate();
-  const [initialLoading,setInitialLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
   const { remedyId } = useParams();
 
   const [activeTab, setActiveTab] = useState(TABS.GENERAL);
@@ -58,8 +36,6 @@ const EditRemedy = () => {
         ...prev,
         [name]: value,
       }));
-
-      // Clear error when field is modified
       if (errors[name]) {
         setErrors((prev) => ({
           ...prev,
@@ -87,31 +63,29 @@ const EditRemedy = () => {
     }
   };
 
-  const handleSelectRemedyType = useCallback((type) => {
+  const handleSelectRemedyType = (type) => {
     setRemedyType(type);
-    setActiveTab(TABS.GENERAL);
-  }, []);
+  };
 
   const fetchRemedy = async () => {
     const res = await getRemedyById(remedyId);
-    if (res.success){
-        setFormData(res.remedy);
-        setInitialLoading(false);
-        setRemedyType(res.remedy.type)
+    if (res.success) {
+      setFormData(res.remedy);
+      setInitialLoading(false);
+      setRemedyType(res.remedy.type);
     }
   };
 
-  const handleBack = useCallback(() => {
+  const handleBack = () => {
     if (remedyType && activeTab !== TABS.BATCH) {
-      setActiveTab(TABS.BATCH);
-      setRemedyType("");
+      setActiveTab(TABS.GENERAL);
     } else {
       navigate("/admin/remedies");
     }
-  }, [remedyType, activeTab, navigate]);
+  };
 
   // Validation
-  const validateForm = useCallback(() => {
+  const validateForm = () => {
     const newErrors = {};
 
     if (!formData.name.trim()) {
@@ -160,7 +134,7 @@ const EditRemedy = () => {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  }, [formData, remedyType]);
+  };
 
   // Form Submission
   const handleSubmit = async (e) => {
@@ -175,7 +149,7 @@ const EditRemedy = () => {
           type: remedyType,
         };
 
-        const res = await createRemedy(authToken, processedData);
+        const res = await updateRemedy(authToken, remedyId, processedData);
 
         if (res.success) {
           navigate("/admin/remedies");
@@ -199,8 +173,12 @@ const EditRemedy = () => {
         {Object.entries(REMEDY_TYPES).map(([key, type]) => (
           <button
             key={type}
+            type="button"
             onClick={() => handleSelectRemedyType(type)}
-            className="bg-white hover:bg-gray-50 border border-gray-300 rounded-lg p-6 text-center transition-colors flex flex-col items-center"
+            className={
+              "bg-white hover:bg-gray-50 border border-gray-300 rounded-lg p-6 text-center transition-colors flex flex-col items-center" +
+              (remedyType === type ? " !border-2 !border-brand-green" : "")
+            }
           >
             <div
               className={`bg-${
@@ -261,7 +239,6 @@ const EditRemedy = () => {
           <button
             key={value}
             onClick={() => setActiveTab(value)}
-            disabled={!remedyType && value !== TABS.BATCH}
             className={`py-4 px-1 border-b-2 font-medium text-sm ${
               activeTab === value
                 ? "border-brand-green text-brand-green"
@@ -348,7 +325,7 @@ const EditRemedy = () => {
         <FileUpload
           onFileSelect={handleFileUpload}
           acceptedFileTypes={["image/jpeg", "image/png", "image/gif"]}
-          maxFileSize={MAX_FILE_SIZE.IMAGE}
+          maxFileSize={MAX_FILE_SIZE}
           dropzoneText="Drag & Drop image or Click to Browse"
           helperText="Supported file types: JPG, PNG, GIF. Maximum file size: 2MB"
         />
@@ -610,27 +587,12 @@ const EditRemedy = () => {
     </div>
   );
 
-  const renderUploadStatus = () => {
-    if (isUploading) {
-      return <div className="text-blue-500">Uploading image...</div>;
-    }
-    if (uploadError) {
-      return <div className="text-red-500">{uploadError}</div>;
-    }
-    if (uploadSuccess) {
-      return <div className="text-green-500">Image uploaded successfully!</div>;
-    }
-    return null;
-  };
-
   useEffect(() => {
     fetchRemedy();
   }, []);
 
-  if (initialLoading){
-    return (
-        <LoadingSpinner  />
-    )
+  if (initialLoading) {
+    return <LoadingSpinner />;
   }
   return (
     <DashboardLayout pageTitle="Edit Remedy" user={user}>
@@ -669,13 +631,13 @@ const EditRemedy = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
+      <div>
         {renderTabs()}
 
         {activeTab === TABS.GENERAL && renderGeneralTab()}
         {activeTab === TABS.INGREDIENTS && renderIngredientsTab()}
 
-        {/* {activeTab !== TABS.BATCH && (
+        {activeTab !== TABS.BATCH && (
           <div className="flex justify-end mt-6 space-x-4">
             <Button
               variant="outlined"
@@ -703,17 +665,16 @@ const EditRemedy = () => {
               <Button
                 variant="contained"
                 color="brand"
-                type="submit"
+                type="button"
+                onClick={handleSubmit}
                 disabled={loading}
               >
                 {loading ? "Saving..." : "Save"}
               </Button>
             )}
           </div>
-        )} */}
-      </form>
-
-      {renderUploadStatus()}
+        )}
+      </div>
     </DashboardLayout>
   );
 };
