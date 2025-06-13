@@ -1,66 +1,76 @@
-// validations/articleValidation.js
 import Joi from "joi";
-import mongoose from "mongoose";
 
-const articleValidationSchema = Joi.object({
-  title: Joi.string().trim().max(200).required(),
+// Define allowed media types
+const ALLOWED_MEDIA_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
 
-  slug: Joi.string().trim().lowercase().required(),
+// Base schema
+const articleSchema = Joi.object({
+  title: Joi.string().max(200).required().messages({
+    "string.empty": "Title is required",
+    "string.max": "Title must be at most 200 characters",
+  }),
 
-  content: Joi.string().required(),
+  slug: Joi.string()
+    .pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+    .required()
+    .messages({
+      "string.empty": "Slug is required",
+      "string.pattern.base": "Slug must be lowercase letters, numbers, and hyphens only",
+    }),
 
-  excerpt: Joi.string().max(300).allow(""),
+  content: Joi.string().required().messages({
+    "string.empty": "Content is required",
+  }),
 
-  coverImage: Joi.object({
-    url: Joi.string().uri().allow(""),
-    alt: Joi.string().allow(""),
-  }).default({ url: "", alt: "" }),
+  shortDescription: Joi.string().allow("").optional(),
 
-  category: Joi.string()
-    .valid("health", "wellness", "remedy", "nutrition", "lifestyle", "other")
-    .default("other"),
+  media: Joi.object({
+    type: Joi.string().valid(...ALLOWED_MEDIA_TYPES).optional(),
+    source: Joi.string().uri().optional(),
+  }).optional(),
 
-  tags: Joi.array().items(Joi.string().trim().lowercase()),
+  category: Joi.string().allow("").optional(),
 
-  author: Joi.string()
-    .custom((value, helpers) => {
-      if (!mongoose.Types.ObjectId.isValid(value)) {
-        return helpers.error("any.invalid");
-      }
-      return value;
-    })
-    .required(),
+  tags: Joi.array()
+    .items(
+      Joi.string()
+        .trim()
+        .lowercase()
+        .max(50)
+    )
+    .max(5)
+    .optional(),
+
+  author: Joi.string(),
+
+  seo: Joi.object({
+    metaTitle: Joi.string().max(60).optional(),
+    metaDescription: Joi.string().max(160).optional(),
+    keywords: Joi.array().items(Joi.string().max(50)).optional(),
+    canonicalUrl: Joi.string().uri().optional(),
+  }).optional(),
 
   status: Joi.string()
     .valid("draft", "review", "published", "archived")
-    .default("draft"),
+    .optional(),
 
   moderationStatus: Joi.string()
     .valid("pending", "approved", "rejected")
-    .default("pending"),
+    .optional(),
 
-  rejectionReason: Joi.string().allow(""),
-
-  seo: Joi.object({
-    metaTitle: Joi.string().max(60).allow(""),
-    metaDescription: Joi.string().max(160).allow(""),
-    keywords: Joi.array().items(Joi.string()),
-    canonicalUrl: Joi.string().uri().allow(""),
-  }).default({}),
+  rejectionReason: Joi.string().allow("").optional(),
 
   publishedAt: Joi.date().optional(),
-
   lastEditedAt: Joi.date().optional(),
 
-  version: Joi.number().integer().min(1).default(1),
+  version: Joi.number().integer().min(1).optional(),
+  isFeatured: Joi.boolean().optional(),
 
-  isFeatured: Joi.boolean().default(false),
-
-  viewsCount: Joi.number().integer().min(0).default(0),
-
-  commentsCount: Joi.number().integer().min(0).default(0),
+  // Views and comments are usually controlled internally, not from client
+  viewsCount: Joi.number().integer().min(0).optional(),
+  commentsCount: Joi.number().integer().min(0).optional(),
 });
 
 
 
-export default articleValidationSchema;
+export default articleSchema;

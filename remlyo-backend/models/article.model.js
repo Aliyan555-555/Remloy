@@ -33,8 +33,6 @@ const articleSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["health", "wellness", "remedy", "nutrition", "lifestyle", "other"],
-      default: "other",
     },
 
     tags: [
@@ -71,7 +69,6 @@ const articleSchema = new mongoose.Schema(
       metaTitle: { type: String, maxlength: 60 },
       metaDescription: { type: String, maxlength: 160 },
       keywords: [{ type: String }],
-      canonicalUrl: { type: String },
     },
     publishedAt: {
       type: Date,

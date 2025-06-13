@@ -33,7 +33,7 @@ const getArticlesByWriterId = async (token, page, limit, search, status) => {
 
     return res.data;
   } catch (error) {
-   return error.response.data
+    return error.response.data
   }
 };
 
@@ -74,12 +74,30 @@ const createArticle = async (token, articleData) => {
 };
 
 
-const checkSlug = async (token,slug) =>{
+const checkSlug = async (token, slug) => {
   try {
-    const res = await API.get(`/api/v1/writer/articles/check-slug/${slug}`)
+    const res = await API.get(`/api/v1/writer/articles/check-slug/${slug}`, { headers: getAuthHeaders(token) });
+    return res.data;
   } catch (error) {
     return error.response.data;
   }
 }
 
-export { getArticlesByWriterId, createArticle };
+const generateSlug = async (token, title) => {
+  try {
+    const res = await API.post("/api/v1/writer/articles/generate-slug", { title },
+      {
+        headers: getAuthHeaders(token)
+      })
+
+    return res.data.slug
+  } catch (error) {
+    error.response.data;
+  }
+}
+export {
+  getArticlesByWriterId,
+  generateSlug,
+  createArticle,
+  checkSlug
+};

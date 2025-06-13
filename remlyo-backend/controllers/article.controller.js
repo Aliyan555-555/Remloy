@@ -84,7 +84,7 @@ const getArticlesByWriterId = async (req, res) => {
     const skip = (parsedPage - 1) * parsedLimit;
 
     // Build query
-    const query = {  };
+    const query = {};
 
     if (status) query.status = status;
 
@@ -240,32 +240,77 @@ const deleteArticle = async (req, res) => {
 };
 
 const checkSlugUniqueness = async (req, res) => {
-    try {
-        const { slug } = req.params;
+  try {
+    const { slug } = req.params;
 
-        if (!slug) {
-            return res.status(400).json({
-                success: false,
-                message: "Slug is required"
-            });
-        }
-
-        // Find article with the given slug
-        const existingArticle = await Article.findOne({ slug });
-
-        return res.status(200).json({
-            success: true,
-            isUnique: !existingArticle,
-            message: existingArticle ? "Slug already exists" : "Slug is available"
-        });
-
-    } catch (error) {
-        console.error("Error checking slug uniqueness:", error);
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error while checking slug uniqueness"
-        });
+    if (!slug) {
+      return res.status(400).json({
+        success: false,
+        message: "Slug is required"
+      });
     }
+
+    // Find article with the given slug
+    const existingArticle = await Article.findOne({ slug });
+
+    return res.status(200).json({
+      success: true,
+      isUnique: !existingArticle,
+      message: existingArticle ? "Slug already exists" : "Slug is available"
+    });
+
+  } catch (error) {
+    console.error("Error checking slug uniqueness:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error while checking slug uniqueness"
+    });
+  }
+};
+
+const generateSlug = async (req, res) => {
+  try {
+    const { title } = req.body;
+    let slug;
+
+    if (title) {
+      slug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric chars with hyphens
+        .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+    } else {
+      // Generate random slug if no title provided
+      const randomString = Math.random().toString(36).substring(2, 8);
+      slug = `article-${randomString}`;
+    }
+
+    // Check if slug exists and append number if needed
+    let isUnique = false;
+    let counter = 1;
+    let finalSlug = slug;
+
+    while (!isUnique) {
+      const existingArticle = await Article.findOne({ slug: finalSlug });
+      if (!existingArticle) {
+        isUnique = true;
+      } else {
+        finalSlug = `${slug}-${counter}`;
+        counter++;
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      slug: finalSlug
+    });
+  } catch (error) {
+    console.error("Error generating slug:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error generating slug",
+      error: error.message
+    });
+  }
 };
 
 export {
@@ -276,4 +321,5 @@ export {
   updateArticle,
   deleteArticle,
   checkSlugUniqueness,
+  generateSlug,
 };

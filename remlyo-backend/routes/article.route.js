@@ -6,6 +6,7 @@ import {
   getArticlesByWriterId,
   updateArticle,
   checkSlugUniqueness,
+  generateSlug,
 } from "../controllers/article.controller.js";
 
 const ArticleRouter = express.Router();
@@ -21,5 +22,7 @@ ArticleRouter.get("/:id", getArticleById);
 ArticleRouter.put("/:id", updateArticle);
 // check slug uniqueness
 ArticleRouter.get("/check-slug/:slug", checkSlugUniqueness);
+// generate slug 
+ArticleRouter.post("/generate-slug",generateSlug)
 
 export default ArticleRouter;
