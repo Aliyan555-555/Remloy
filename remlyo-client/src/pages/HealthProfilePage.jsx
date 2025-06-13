@@ -7,6 +7,7 @@ import { generateHealthProfileQuestions, healthProfile } from "../api/userApi";
 import { useAuth } from "../contexts/AuthContext";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import { useUserFlow } from "../contexts/UserFlowContext";
+import { UserFlowStatus } from "../constants";
 
 const INITIAL_FORM_DATA = {
   age: "",
@@ -27,7 +28,7 @@ const HealthProfilePage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { checkUserFlow } = useUserFlow();
+  const { checkUserFlow,setFlowStatus} = useUserFlow();
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState({});
   const [expandedSections, setExpandedSections] = useState({});
@@ -162,6 +163,7 @@ const HealthProfilePage = () => {
           user.accessLevel !== "user" ? "/admin/dashboard" : "/dashboard";
         const res = await healthProfile(completeProfileData, authToken);
         if (res.success) {
+          setFlowStatus(UserFlowStatus.COMPLETE)
           checkUserFlow();
           navigate(redirect, { replace: true });
           return;

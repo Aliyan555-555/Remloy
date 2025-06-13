@@ -26,7 +26,16 @@ export const UserFlowProvider = ({ children }) => {
   
     try {
       const healthProfileRes = await checkHealthProfile(authToken);
-      if (!healthProfileRes.success) {
+      
+      // If profile check is successful, set status to complete
+      if (healthProfileRes && healthProfileRes.success) {
+        setFlowStatus(UserFlowStatus.COMPLETE);
+        setLoading(false);
+        return;
+      }
+
+      // Only set profile incomplete if the check explicitly failed
+      if (healthProfileRes && !healthProfileRes.success) {
         setFlowStatus(UserFlowStatus.PROFILE_INCOMPLETE);
         setLoading(false);
         return;
@@ -43,6 +52,7 @@ export const UserFlowProvider = ({ children }) => {
       setFlowStatus(UserFlowStatus.COMPLETE);
     } catch (error) {
       console.error("Error checking user flow:", error);
+      // Don't set profile incomplete on error, keep previous status
     } finally {
       setLoading(false);
     }
@@ -60,10 +70,10 @@ export const UserFlowProvider = ({ children }) => {
     }
 
     return setLoading(false)
-  }, [isAuthenticated, authToken]);
+  }, [location.pathname]);
 
   return (
-    <UserFlowContext.Provider value={{ flowStatus, loading, checkUserFlow }}>
+    <UserFlowContext.Provider value={{ flowStatus, loading, checkUserFlow,setFlowStatus }}>
       {children}
     </UserFlowContext.Provider>
   );
