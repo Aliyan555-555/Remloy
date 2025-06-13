@@ -1,0 +1,165 @@
+[{
+  "_id": {
+    "$oid": "684b1e621b141ee01ba51cd3"
+  },
+  "title": "10 Benefits of Morning Walks",
+  "slug": "10-benefits-of-morning-walks",
+  "content": "Walking in the morning can improve cardiovascular health, boost mood, and enhance metabolism. It’s a simple yet powerful habit.",
+  "shortDescription": "Discover why a morning walk is one of the best ways to start your day.",
+  "media": {
+    "type": "image/jpeg",
+    "source": "https://example.com/images/morning-walk.jpg"
+  },
+  "category": "health",
+  "tags": [
+    "exercise",
+    "morning",
+    "walking"
+  ],
+  "author": "6838e297d534bc63c01e000c",
+  "status": "published",
+  "moderationStatus": "approved",
+  "seo": {
+    "metaTitle": "Benefits of Morning Walks",
+    "metaDescription": "Explore the top 10 reasons to start your day with a morning walk.",
+    "keywords": [
+      "morning walk",
+      "health tips",
+      "fitness"
+    ],
+    "canonicalUrl": "https://example.com/articles/10-benefits-of-morning-walks"
+  },
+  "publishedAt": "2025-06-01T08:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "684b1e621b141ee01ba51cd4"
+  },
+  "title": "How to Boost Your Immunity Naturally",
+  "slug": "boost-immunity-naturally",
+  "content": "Natural ways to improve immunity include eating a balanced diet, sleeping well, exercising regularly, and managing stress effectively.",
+  "shortDescription": "Simple lifestyle changes that can enhance your immune system.",
+  "media": {
+    "type": "image/png",
+    "source": "https://example.com/images/immunity-boost.png"
+  },
+  "category": "health",
+  "tags": [
+    "immunity",
+    "natural",
+    "wellness"
+  ],
+  "author": "6838e297d534bc63c01e000c",
+  "status": "published",
+  "moderationStatus": "approved",
+  "seo": {
+    "metaTitle": "Boost Immunity the Natural Way",
+    "metaDescription": "Learn how to strengthen your immune system with natural methods.",
+    "keywords": [
+      "immunity",
+      "natural health",
+      "immune system"
+    ],
+    "canonicalUrl": "https://example.com/articles/boost-immunity-naturally"
+  },
+  "publishedAt": "2025-06-02T10:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "684b1e621b141ee01ba51cd5"
+  },
+  "title": "Understanding Mental Health: A Beginner’s Guide",
+  "slug": "understanding-mental-health-guide",
+  "content": "Mental health includes emotional, psychological, and social well-being. It's crucial to recognize early signs and seek help when needed.",
+  "shortDescription": "An introduction to mental health and why it matters.",
+  "media": {
+    "type": "image/jpeg",
+    "source": "https://example.com/images/mental-health.jpg"
+  },
+  "category": "health",
+  "tags": [
+    "mental health",
+    "psychology",
+    "stress"
+  ],
+  "author": "6838e297d534bc63c01e000c",
+  "status": "published",
+  "moderationStatus": "approved",
+  "seo": {
+    "metaTitle": "Beginner’s Guide to Mental Health",
+    "metaDescription": "What is mental health and why it's essential for your overall well-being.",
+    "keywords": [
+      "mental health",
+      "well-being",
+      "guide"
+    ],
+    "canonicalUrl": "https://example.com/articles/understanding-mental-health-guide"
+  },
+  "publishedAt": "2025-06-03T09:30:00Z"
+},
+{
+  "_id": {
+    "$oid": "684b1e621b141ee01ba51cd6"
+  },
+  "title": "Healthy Eating Habits for a Better Life",
+  "slug": "healthy-eating-habits",
+  "content": "Eating healthy isn't about strict diets. It's about feeling great, having more energy, and improving your health naturally.",
+  "shortDescription": "Transform your life with these easy and effective healthy eating habits.",
+  "media": {
+    "type": "image/jpeg",
+    "source": "https://example.com/images/healthy-eating.jpg"
+  },
+  "category": "health",
+  "tags": [
+    "nutrition",
+    "healthy food",
+    "lifestyle"
+  ],
+  "author": "6838e297d534bc63c01e000c",
+  "status": "published",
+  "moderationStatus": "approved",
+  "seo": {
+    "metaTitle": "Healthy Eating Habits",
+    "metaDescription": "Adopt healthy eating habits to live a better and fuller life.",
+    "keywords": [
+      "healthy eating",
+      "nutrition",
+      "lifestyle"
+    ],
+    "canonicalUrl": "https://example.com/articles/healthy-eating-habits"
+  },
+  "publishedAt": "2025-06-04T14:00:00Z"
+},
+{
+  "_id": {
+    "$oid": "684b1e621b141ee01ba51cd7"
+  },
+  "title": "Hydration Tips You Need to Know This Summer",
+  "slug": "hydration-tips-summer",
+  "content": "Staying hydrated is vital in the summer. Drink water regularly, avoid sugary drinks, and eat hydrating foods like watermelon and cucumber.",
+  "shortDescription": "Don’t underestimate the importance of hydration. Stay healthy and cool this summer.",
+  "media": {
+    "type": "image/jpeg",
+    "source": "https://example.com/images/hydration.jpg"
+  },
+  "category": "health",
+  "tags": [
+    "hydration",
+    "summer",
+    "water"
+  ],
+  "author": "6838e297d534bc63c01e000c",
+  "status": "published",
+  "moderationStatus": "approved",
+  "seo": {
+    "metaTitle": "Summer Hydration Tips",
+    "metaDescription": "Learn the best tips to stay hydrated and safe during hot weather.",
+    "keywords": [
+      "hydration",
+      "summer health",
+      "tips"
+    ],
+    "canonicalUrl": "https://example.com/articles/hydration-tips-summer"
+  },
+  "publishedAt": "2025-06-05T11:15:00Z"
+}]

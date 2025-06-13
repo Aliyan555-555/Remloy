@@ -11,7 +11,7 @@
   "emailVerified": true,
   "twoFactorStatus": "disabled",
   "profileImage": "/user/default.png",
-  "status": "active",
+  "status": "suspended",
   "emailVerificationRequestCount": 1,
   "emailVerificationTimestamp": {
     "$date": "2025-05-29T08:07:13.979Z"
@@ -22,7 +22,7 @@
     "$date": "2025-05-29T08:07:13.932Z"
   },
   "updatedAt": {
-    "$date": "2025-05-29T22:47:31.684Z"
+    "$date": "2025-06-12T18:50:52.220Z"
   },
   "__v": 0,
   "emailVerificationExpires": {
@@ -30,8 +30,15 @@
   },
   "emailVerificationToken": "b8566dd46df9e036c3916243a7f4dcbb90fb9bd36fbe9eb6d109e72b74540317",
   "lastLogin": {
-    "$date": "2025-05-29T22:47:31.683Z"
-  }
+    "$date": "2025-06-12T18:50:52.211Z"
+  },
+  "suspendedAt": {
+    "$date": "2025-06-05T19:35:45.890Z"
+  },
+  "suspendedBy": {
+    "$oid": "6838cb831d984b618341af13"
+  },
+  "suspendedMessage": "poor info"
 },
 {
   "_id": {
@@ -40,7 +47,7 @@
   "username": "demo moderator",
   "email": "moderator@remlyo.com",
   "password": "$2b$10$A86YphX7Hf5pritLBWpVZ./rryshL.QZskMuD59HcVSgk9RbZsql2",
-  "accessLevel": "user",
+  "accessLevel": "moderator",
   "geographicRegion": "global",
   "isActive": true,
   "emailVerified": true,
@@ -57,7 +64,7 @@
     "$date": "2025-05-29T21:03:00.004Z"
   },
   "updatedAt": {
-    "$date": "2025-05-29T22:47:46.267Z"
+    "$date": "2025-06-05T20:49:13.064Z"
   },
   "__v": 0,
   "emailVerificationExpires": {
@@ -65,7 +72,7 @@
   },
   "emailVerificationToken": "bb76cf0c26682e29d5d95e1fe14169bf3e4124ac3d693b4a6c420cd3348bd117",
   "lastLogin": {
-    "$date": "2025-05-29T22:47:02.837Z"
+    "$date": "2025-06-05T20:49:13.063Z"
   },
   "suspendedAt": {
     "$date": "2025-05-29T21:53:50.312Z"
@@ -81,37 +88,6 @@
     "$oid": "683815b10214394db446fdb3"
   },
   "warningMessage": ""
-},
-{
-  "_id": {
-    "$oid": "6838cdff1d984b618341af2b"
-  },
-  "username": "Aliyan",
-  "email": "aliyansiddiqui555@gmail.com",
-  "password": "$2b$10$/4RapNsn/ow42z/.g1qpbOXGZge.w66obwma9COwLkAGERRvRs0qq",
-  "accessLevel": "admin",
-  "geographicRegion": "global",
-  "isActive": false,
-  "emailVerified": true,
-  "twoFactorStatus": "disabled",
-  "profileImage": "/user/default.png",
-  "status": "active",
-  "emailVerificationRequestCount": 1,
-  "emailVerificationTimestamp": {
-    "$date": "2025-05-29T21:13:35.756Z"
-  },
-  "resetRequestCount": 0,
-  "resetRequestTimestamp": null,
-  "createdAt": {
-    "$date": "2025-05-29T21:13:35.695Z"
-  },
-  "updatedAt": {
-    "$date": "2025-05-29T23:11:34.525Z"
-  },
-  "__v": 0,
-  "lastLogin": {
-    "$date": "2025-05-29T23:11:34.517Z"
-  }
 },
 {
   "_id": {
@@ -137,7 +113,7 @@
     "$date": "2025-05-29T22:41:27.378Z"
   },
   "updatedAt": {
-    "$date": "2025-05-29T22:46:12.446Z"
+    "$date": "2025-06-12T20:41:27.578Z"
   },
   "__v": 0,
   "emailVerificationExpires": {
@@ -145,6 +121,274 @@
   },
   "emailVerificationToken": "6abedda11451aa6630562e9e27743486dd2ff2dacc3b5a06c4a17d76e0ed0e47",
   "lastLogin": {
-    "$date": "2025-05-29T22:46:12.445Z"
+    "$date": "2025-06-12T20:41:27.562Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "683a1f9b54f92467127ac395"
+  },
+  "username": "Jiya",
+  "email": "jiyamaryam39@gmail.com",
+  "password": "$2b$10$OuVmrd1U3wDxMsslp4drCuf/yHKqwYmMY9FCaVy6qM362jWcJ3zF.",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": false,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 2,
+  "emailVerificationTimestamp": {
+    "$date": "2025-05-30T21:14:04.012Z"
+  },
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-05-30T21:14:03.878Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-30T21:15:00.886Z"
+  },
+  "__v": 0,
+  "emailVerificationExpires": {
+    "$date": "2025-05-30T21:45:00.886Z"
+  },
+  "emailVerificationToken": "c3207baa4166eed84f2e44ee5a53876986004f26c439b75854bff4e2b9de3d3b"
+},
+{
+  "_id": {
+    "$oid": "683f1ddd36601d8d70856922"
+  },
+  "username": "test 1",
+  "email": "test11@gmail.com",
+  "password": "$2b$10$8SlgCvzw7A8.b6pjNlwH4.uaZ7WQSTgCdSp.xm8DB13DKEBxecScm",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": false,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 0,
+  "emailVerificationTimestamp": null,
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-06-03T16:07:57.237Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-03T16:07:57.237Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "683f1f1136601d8d7085693c"
+  },
+  "username": "test22",
+  "email": "test22@gmail.com",
+  "password": "$2b$10$LFHpYz8EjTfxla6rfVeUJOj3o6Yj9zU.nschP4/E88BZ4RFeVjeZ.",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": false,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 0,
+  "emailVerificationTimestamp": null,
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-06-03T16:13:05.782Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-03T16:13:05.782Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "683f1f3d36601d8d70856942"
+  },
+  "username": "test33",
+  "email": "test33@gmail.com",
+  "password": "$2b$10$6mP7IRPPJb8IA9jfB7IWR.zKQZcPJJQBMFyy.ucmd4pNGXIb8d7Hq",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": false,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 0,
+  "emailVerificationTimestamp": null,
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-06-03T16:13:49.264Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-03T16:13:49.264Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "683f1f9536601d8d70856948"
+  },
+  "username": "test44",
+  "email": "test44@gmail.com",
+  "password": "$2b$10$ZmSx5GifiP4GDGNT4As9UOeMEtvvoK2bUgqzGa9L31c/b.8mU3vJy",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": false,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 0,
+  "emailVerificationTimestamp": null,
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-06-03T16:15:17.622Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-03T16:15:17.622Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "683f250136601d8d7085695c"
+  },
+  "username": "test55",
+  "email": "test55@gmail.com",
+  "password": "$2b$10$HGZ3i75Z9E/Hz7K5x5hvyORKQJxYPcfDDXwz6AtiLN3sSKf9/uMo.",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": false,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 0,
+  "emailVerificationTimestamp": null,
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-06-03T16:38:25.809Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-03T16:38:25.809Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "683f256a36601d8d70856962"
+  },
+  "username": "test66",
+  "email": "test66@gmail.com",
+  "password": "$2b$10$HB09ODmt1fjH9d8FTC11CuimyTvjJK5TddU4fI8a7eixIxpaHqZ2.",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": false,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 0,
+  "emailVerificationTimestamp": null,
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-06-03T16:40:10.358Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-03T16:40:10.358Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "683f25a836601d8d70856968"
+  },
+  "username": "test77",
+  "email": "test77@gmail.com",
+  "password": "$2b$10$/JwqJXA1ZzIs.Iqq2XPoOOsko7JgKNL3H1wnBoolb3sYwdbAMNNUe",
+  "accessLevel": "admin",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": true,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "warning",
+  "emailVerificationRequestCount": 1,
+  "emailVerificationTimestamp": {
+    "$date": "2025-06-05T20:28:37.000Z"
+  },
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-06-03T16:41:12.139Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-05T20:28:37.003Z"
+  },
+  "__v": 0,
+  "suspendedAt": {
+    "$date": "2025-06-03T19:14:35.727Z"
+  },
+  "suspendedBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "suspendedMessage": "fasf",
+  "warningAt": {
+    "$date": "2025-06-03T19:34:45.287Z"
+  },
+  "warningBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "warningMessage": "",
+  "lastLogin": {
+    "$date": "2025-06-05T20:28:36.872Z"
+  },
+  "emailVerificationExpires": {
+    "$date": "2025-06-05T20:58:37.001Z"
+  },
+  "emailVerificationToken": "03bc7ab4c211841c1d588f1362fdf40550f37f49f25e8c0ff1e2f7a0931119e0"
+},
+{
+  "_id": {
+    "$oid": "6849b7170ab11e1e5ad1dd06"
+  },
+  "username": "Aliyan",
+  "email": "aliyansiddiqui555@gmail.com",
+  "password": "$2b$10$bpaO.vfm.x1B7qmqM9L8LuzIoE02l3hme8RKRQBu/yvKINjdmJk/i",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": true,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "emailVerificationRequestCount": 1,
+  "emailVerificationTimestamp": {
+    "$date": "2025-06-11T17:04:23.645Z"
+  },
+  "resetRequestCount": 0,
+  "resetRequestTimestamp": null,
+  "createdAt": {
+    "$date": "2025-06-11T17:04:23.543Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-11T17:04:46.997Z"
+  },
+  "__v": 0,
+  "lastLogin": {
+    "$date": "2025-06-11T17:04:46.967Z"
   }
 }]

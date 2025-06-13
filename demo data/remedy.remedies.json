@@ -34,4 +34,86 @@
     "$date": "2025-06-09T22:06:50.459Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68480fd874ba437860facbbc"
+  },
+  "name": "Paracetamol – Pain Relief and Fever Reducer",
+  "description": "Paracetamol (also known as acetaminophen) is a commonly used over-the-counter medication that relieves mild to moderate pain and reduces fever. It is widely used for headaches, muscle aches, arthritis, backaches, toothaches, colds, and fevers.",
+  "category": "Respiratory",
+  "ingredients": "",
+  "brandName": "<ul><li><p><strong>Common Brand Names:</strong> Tylenol, Panadol, Calpol, Crocin</p></li><li><p><strong>Generic Name:</strong> Paracetamol / Acetaminophen</p></li></ul>",
+  "instructions": "",
+  "content": "<h2><strong>Pros:</strong></h2><ul><li><p>Easily available without prescription</p></li><li><p>Safe when used as directed</p></li><li><p>Effective for various types of pain and fever</p></li><li><p>Available in multiple forms (tablet, syrup, etc.)</p></li></ul><h2><strong>Cons:</strong></h2><ul><li><p>Risk of liver damage if overdosed</p></li><li><p>Not effective for inflammation</p></li><li><p>May interact with alcohol or other medications</p></li><li><p>Some users may experience allergic reactions</p></li></ul><h2><strong>Conclusion:</strong></h2><p>Paracetamol is a trusted and effective remedy for relieving pain and fever in both adults and children. It should be used responsibly and in the correct dosage to avoid serious side effects. Always read the label or consult a healthcare provider before use, especially in cases of long-term use, pregnancy, or underlying health conditions.</p>",
+  "media": {
+    "type": "image/jpeg",
+    "source": "https://res.cloudinary.com/dtupoan8j/image/upload/v1749552289/uploads/1749552288101-istockphoto-179051628-1024x1024.jpg"
+  },
+  "sideEffects": "<p><strong>Common Side Effects:</strong></p><ul><li><p>Nausea</p></li><li><p>Stomach pain</p></li><li><p>Loss of appetite</p></li><li><p>Mild skin rash</p></li></ul><p><strong>Rare but Serious Side Effects:</strong></p><ul><li><p>Liver damage (especially with overdose)</p></li><li><p>Allergic reactions (swelling, itching, rash, dizziness)</p></li><li><p>Yellowing of the skin or eyes (jaundice)</p></li></ul><p><strong>Seek immediate medical help if you experience any serious side effects.</strong></p>",
+  "preparationTime": "15–30 minutes to prepare",
+  "aiConfidenceScore": 0,
+  "isAIGenerated": false,
+  "moderationStatus": "pending",
+  "scientificReferences": [],
+  "geographicRestrictions": [],
+  "type": "pharmaceutical",
+  "createdBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "viewCount": 0,
+  "equipments": "<p>no need</p>",
+  "howToTakeIt": "<ul><li><p>Take with or without food.</p></li><li><p>Swallow tablets whole with a glass of water.</p></li><li><p>Measure syrup carefully using a dosing spoon or cup.</p></li><li><p>Follow prescribed dose; do not double up if you miss one.</p></li><li><p>Do not take with alcohol.</p></li></ul>",
+  "dosageAndUsage": "<p><strong>Maximum Daily Dose:</strong></p><ul><li><p><strong>Adults:</strong> Do not exceed 4000mg per day.</p></li></ul><p><strong>Forms Available:</strong></p><ul><li><p>Tablets</p></li><li><p>Capsules</p></li><li><p>Syrups</p></li><li><p>Suppositories</p></li><li><p>Effervescent tablets</p></li></ul>",
+  "storageInstructions": "<ul><li><p>Store at room temperature (15°C – 25°C / 59°F – 77°F)</p></li><li><p>Keep away from direct sunlight and moisture</p></li><li><p>Keep out of reach of children</p></li><li><p>Do not use after expiration date</p></li></ul>",
+  "averageRating": 0,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-06-10T10:58:32.772Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-10T10:58:32.772Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68481a8274ba437860facc33"
+  },
+  "name": "Acupuncture Treatment & Benefits",
+  "description": "Discover the ancient healing power of acupuncture with this comprehensive guide. From how it works to health benefits, dive into the world of traditional Chinese medicine.",
+  "category": "Pain Relief",
+  "ingredients": "<ul><li><p>Acupuncture needles are essential for the treatment.</p></li><li><p>Alcohol swabs are used to clean the skin before needle insertion.</p></li><li><p>Moxa sticks are used for moxibustion to warm and invigorate the flow of Qi.</p></li><li><p>Therapeutic oils are added for relaxation and to enhance the treatment.</p></li><li><p>Cotton balls are used to apply pressure and avoid bleeding post needle removal.</p></li></ul>",
+  "brandName": "",
+  "instructions": "<ul><li><p>Sterile acupuncture needles</p></li><li><p>Treatment bed</p></li><li><p>Alcohol swabs</p></li><li><p>Sharps disposal container</p></li><li><p>Acupuncture needles</p></li></ul>",
+  "content": "<h2><strong>What is Acupuncture Treatment?</strong></h2><p>Acupuncture involves inserting thin needles into specific points on the body to stimulate natural healing and relieve pain. Practiced for thousands of years, it's revered for its effectiveness in treating various ailments and enhancing overall well-being.</p><h2><strong>Instructions</strong></h2><ul><li><p><strong>Preparation : </strong>Ensure a clean, well-lit environment with sterile tools. If not self-administering, verify the practitioner is licensed and trained</p></li><li><p><strong>Needle Insertion : </strong>Insert sterile needles into acupoints, following the practitioner's directions.</p></li><li><p><strong>Relaxation : </strong>Allow the patient to rest with the needles in place for the recommended duration.</p></li><li><p><strong>Needle Removal : </strong>Carefully remove the needles and dispose of them properly.</p></li><li><p><strong>Post-Treatment Care : </strong>Advise the patient on aftercare, including hydration and rest.</p></li></ul><h2><strong>Precautions</strong></h2><ul><li><p><strong>Choose Qualified Practitioner : </strong>Ensure that the acupuncturist is licensed and certified. Proper training and experience are crucial for safe practice.</p></li><li><p><strong>Sterile Needles : </strong>Make sure the practitioner uses sterile, disposable needles to prevent infections.</p></li></ul><h2><strong>Possible Side Effects</strong></h2><ul><li><p><strong>Fatigue : </strong>Some people feel tired or lightheaded after an acupuncture session.</p></li><li><p><strong>Infection : </strong>There is a small risk of infection if the needles are not sterile.</p></li></ul><h2><strong>Conclusion</strong></h2><p>Acupuncture offers a holistic approach to health, addressing both physical and emotional well-being. Try this ancient practice to experience its therapeutic benefits.</p>",
+  "media": {
+    "type": "image/jpeg",
+    "source": "https://res.cloudinary.com/dtupoan8j/image/upload/v1749744562/uploads/1749744560557-download.jpg"
+  },
+  "sideEffects": "",
+  "preparationTime": "More than 1 hour to prepare",
+  "aiConfidenceScore": 0,
+  "isAIGenerated": false,
+  "moderationStatus": "pending",
+  "scientificReferences": [],
+  "geographicRestrictions": [],
+  "type": "alternative",
+  "createdBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "viewCount": 0,
+  "equipments": "<ul><li><p>Sterile acupuncture needles</p></li><li><p>•Treatment bed</p></li><li><p>•Alcohol swabs</p></li><li><p>•Sharps di</p></li><li><p>•Acupuncture needles</p></li></ul>",
+  "howToTakeIt": "",
+  "dosageAndUsage": "",
+  "storageInstructions": "",
+  "averageRating": 0,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-06-10T11:44:02.780Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-12T16:09:25.168Z"
+  },
+  "__v": 0
 }]

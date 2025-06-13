@@ -1,0 +1,27 @@
+[{
+  "_id": {
+    "$oid": "683ade73260cab55348808ef"
+  },
+  "contentId": "6840a92b50deee48a2fa8a26",
+  "contentType": "Remedy",
+  "flaggedBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "reason": "Inaccurate dosage information",
+  "note": "This remedy suggests quantities that might be unsafe for children.",
+  "status": "dismissed",
+  "createdAt": {
+    "$date": "2025-05-31T10:48:19.644Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-05T19:36:01.406Z"
+  },
+  "__v": 0,
+  "resolutionNote": "fla",
+  "resolvedAt": {
+    "$date": "2025-06-05T19:36:01.405Z"
+  },
+  "resolvedBy": {
+    "$oid": "6838cb831d984b618341af13"
+  }
+}]

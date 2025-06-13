@@ -35,26 +35,28 @@
   "userId": {
     "$oid": "683815b10214394db446fdb3"
   },
-  "age": 30,
+  "age": 15,
   "sex": "male",
-  "weight": 42,
+  "weight": 32,
   "height": 123,
-  "bloodType": "AB-",
+  "bloodType": "AB+",
   "allergies": [],
   "chronicConditions": [
-    "mental_health",
-    "autoimmune"
+    "hypertension",
+    "asthma",
+    "arthritis",
+    "mental_health"
   ],
   "medications": [],
   "familyHistory": [],
   "dataShareConsent": false,
   "preferredLanguage": "en",
-  "located": "karachi",
-  "ethnicity": "hispanic",
+  "located": "Karachi",
+  "ethnicity": "black",
   "birthplace": "pakistan",
-  "diet": "pescatarian",
+  "diet": "vegan",
   "lastUpdated": {
-    "$date": "2025-05-29T08:12:34.804Z"
+    "$date": "2025-06-10T16:01:26.104Z"
   },
   "__v": 0
 },
@@ -173,6 +175,36 @@
   "diet": "keto",
   "lastUpdated": {
     "$date": "2025-05-29T22:45:25.477Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6849b8900ab11e1e5ad1dd14"
+  },
+  "userId": {
+    "$oid": "6849b7170ab11e1e5ad1dd06"
+  },
+  "age": 10,
+  "sex": "male",
+  "weight": 23,
+  "height": 231,
+  "bloodType": "A-",
+  "allergies": [],
+  "chronicConditions": [
+    "autoimmune",
+    "other"
+  ],
+  "medications": [],
+  "familyHistory": [],
+  "dataShareConsent": false,
+  "preferredLanguage": "en",
+  "located": "Karachi",
+  "ethnicity": "asian",
+  "birthplace": "pakistan",
+  "diet": "other",
+  "lastUpdated": {
+    "$date": "2025-06-11T17:14:10.975Z"
   },
   "__v": 0
 }]
