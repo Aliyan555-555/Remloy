@@ -37,21 +37,29 @@ const createArticle = async (req, res) => {
 
 const getAllArticles = async (req, res) => {
   try {
-    const { status, category, page = 1, limit = 10 } = req.query;
+    const { search, page = 1, limit = 10 } = req.query;
 
     // Build query
     const query = {};
-    if (status) query.status = status;
-    if (category) query.category = category;
+    
+    // Add search functionality
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { content: { $regex: search, $options: 'i' } },
+        { shortDescription: { $regex: search, $options: 'i' } },
+        { category: { $regex: search, $options: 'i' } },
+        { tags: { $regex: search, $options: 'i' } }
+      ];
+    }
 
-    // Calculate skip value for pagination
     const skip = (page - 1) * limit;
 
     const articles = await Article.find(query)
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(parseInt(limit))
-      .populate("writerId", "name email");
+      .populate("author", "username profileImage email");
 
     const total = await Article.countDocuments(query);
 
@@ -123,6 +131,91 @@ const getArticlesByWriterId = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+const getArticleBySlug = async (req, res) => {
+    try {
+        const { slug } = req.params;
+
+        // Input validation
+        if (!slug || typeof slug !== 'string' || slug.trim() === '') {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid slug provided",
+                error: "Slug must be a non-empty string"
+            });
+        }
+
+        // Sanitize the slug
+        const sanitizedSlug = slug.trim().toLowerCase();
+
+        // Find the article
+        const article = await Article.findOne({ slug: sanitizedSlug })
+            .populate("author", "username email profileImage")
+            .lean();
+
+        if (!article) {
+            return res.status(404).json({
+                success: false,
+                message: "Article not found",
+                error: `No article found with slug: ${sanitizedSlug}`
+            });
+        }
+
+        // Increment view count
+        await Article.findByIdAndUpdate(article._id, {
+            $inc: { viewsCount: 1 }
+        });
+
+        // Return success response
+        return res.status(200).json({
+            success: true,
+            message: "Article retrieved successfully",
+            article
+        });
+
+    } catch (error) {
+        // Log the error with detailed information
+        console.error("Error in getArticleBySlug:", {
+            error: error.message,
+            stack: error.stack,
+            slug: req.params.slug,
+            timestamp: new Date().toISOString()
+        });
+
+        // Handle specific error types
+        if (error.name === 'CastError') {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid article format",
+                error: "The article data is malformed"
+            });
+        }
+
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({
+                success: false,
+                message: "Validation error",
+                error: error.message
+            });
+        }
+
+        // Handle database connection errors
+        if (error.name === 'MongoError' || error.name === 'MongoServerError') {
+            return res.status(503).json({
+                success: false,
+                message: "Database service unavailable",
+                error: "Unable to connect to the database"
+            });
+        }
+
+        // Generic error response
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: "An unexpected error occurred while fetching the article"
+        });
+    }
 };
 
 const getArticleById = async (req, res) => {
@@ -268,6 +361,9 @@ const checkSlugUniqueness = async (req, res) => {
   }
 };
 
+
+
+
 const generateSlug = async (req, res) => {
   try {
     const { title } = req.body;
@@ -317,6 +413,7 @@ export {
   createArticle,
   getAllArticles,
   getArticlesByWriterId,
+  getArticleBySlug,
   getArticleById,
   updateArticle,
   deleteArticle,

@@ -34,6 +34,7 @@ const HealthProfilePage = () => {
   const [aiQuestions, setAiQuestions] = useState([]);
   const [expandedHealthProfile, setExpandedHealthProfile] = useState({});
 
+
   const handleChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
 
@@ -147,10 +148,10 @@ const HealthProfilePage = () => {
               });
             }
           });
-
           setExpandedSections(initialExpandedState);
           setExpandedHealthProfile(initialHealthProfileState);
           setCurrentStep(2);
+          
         }
       } else if (currentStep === 6) {
         const completeProfileData = {

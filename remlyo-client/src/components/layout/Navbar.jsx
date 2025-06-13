@@ -15,7 +15,7 @@ const Navbar = () => {
   };
 
   const handleClickOutside = (event) => {
-    const dropdown = document.querySelector('.profile-dropdown-container');
+    const dropdown = document.querySelector(".profile-dropdown-container");
     if (dropdown && !dropdown.contains(event.target)) {
       setProfileDropdownOpen(false);
     }
@@ -23,10 +23,10 @@ const Navbar = () => {
 
   useEffect(() => {
     if (profileDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [profileDropdownOpen]);
 
@@ -67,6 +67,12 @@ const Navbar = () => {
             <Link to="/about" className="text-gray-700 hover:text-brand-green">
               About
             </Link>
+            <Link
+              to="/articles"
+              className="text-gray-700 hover:text-brand-green"
+            >
+              Articles
+            </Link>
           </div>
 
           {/* Auth Buttons */}
@@ -82,7 +88,10 @@ const Navbar = () => {
                 >
                   Logout
                 </Button>
-                <div onClick={handleProfileDropdown} className="flex relative items-center space-x-3 profile-dropdown-container">
+                <div
+                  onClick={handleProfileDropdown}
+                  className="flex relative items-center space-x-3 profile-dropdown-container"
+                >
                   <img
                     src={user.profileImage}
                     alt="User Avatar"
@@ -90,7 +99,10 @@ const Navbar = () => {
                   />
                   <span className="text-gray-700">{user.name}</span>
 
-                  <UserProfileDropdown user={user} profileDropdownOpen={profileDropdownOpen} />
+                  <UserProfileDropdown
+                    user={user}
+                    profileDropdownOpen={profileDropdownOpen}
+                  />
                 </div>
               </React.Fragment>
             ) : (

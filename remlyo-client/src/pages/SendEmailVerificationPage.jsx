@@ -30,7 +30,7 @@ const SendEmailVerificationPage = () => {
 
   const resendEmail = async () => {
     if (resendLoading || cooldown > 0) return;
-    if (!user.email) {
+    if (!email) {
       setError("Email not found");
       return;
     }
@@ -51,7 +51,7 @@ const SendEmailVerificationPage = () => {
           // ✅ Only start cooldown if no error
           setCooldown(60);
         },
-        user.email
+        email
       );
     } catch (err) {
       setError("Something went wrong. Please try again.");

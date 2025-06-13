@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import { getArticlesByWriterId } from "../../api/articleApi";
+import { deleteArticle, getArticlesByWriterId } from "../../api/articleApi";
 import Button from "../../components/common/Button";
 import SearchBar from "../../components/common/SearchBar";
 import Table from "../../components/common/Table";
 import { formatDate } from "../../utils";
+import ActionButtonGroup from "../../components/common/ActionButtonGroup";
+import { ConfirmModal } from "../../components/common/Modal";
+import Pagination from "../../components/common/Pagination";
 
 const WriterArticlePage = () => {
   const { user, authToken } = useAuth();
@@ -13,6 +16,8 @@ const WriterArticlePage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [status, setStatus] = useState("");
+  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [articles, setArticles] = useState([]);
   const limit = 10;
   const [loading, setLoading] = useState(true);
@@ -28,7 +33,7 @@ const WriterArticlePage = () => {
       );
       if (res.success) {
         setArticles(res.articles);
-        setTotalPages(res.pagination.total);
+        setTotalPages(res.pagination.pages);
         setLoading(true);
       }
     } catch (error) {
@@ -42,33 +47,68 @@ const WriterArticlePage = () => {
     setSearchQuery(value);
   };
 
+  const handleDeleteClick = (article) => {
+    setSelectedArticle(article);
+    setShowDeleteModal(true);
+  };
+
   const columns = [
     {
       filed: "title",
       header: "Title",
       sortable: false,
-      render:(row) => (<div className="font-medium text-gray-900">{row.title}</div>)
+      render: (row) => (
+        <div className="font-medium text-gray-900">{row.title}</div>
+      ),
     },
     {
       filed: "category",
       header: "Category",
       sortable: false,
-      render:(row) => (<div className="font-medium text-gray-900">{row.category}</div>)
+      render: (row) => (
+        <div className="font-medium text-gray-900">{row.category}</div>
+      ),
     },
     {
       filed: "createdAt",
       header: "Created At",
       sortable: false,
-      render:(row) => (<div className="font-medium text-gray-900">{formatDate(row.createdAt)}</div>)
+      render: (row) => (
+        <div className="font-medium text-gray-900">
+          {formatDate(row.createdAt)}
+        </div>
+      ),
     },
     {
-      filed: "title",
-      header: "Title",
+      field: "actions",
+      header: "Action",
       sortable: false,
-      render:(row) => (<div className="font-medium text-gray-900">{row.title}</div>)
+      render: (row) => (
+        <ActionButtonGroup
+          viewUrl={`/writer/articles/${row._id}`}
+          editUrl={`/writer/articles/${row._id}/edit`}
+          onDelete={() => handleDeleteClick(row)}
+        />
+      ),
     },
   ];
 
+  const handleDeleteConfirm = async () => {
+    const res = await deleteArticle(authToken, selectedArticle._id);
+    if (res.success) {
+      setArticles((prev) => prev.filter(a => a._id !== selectedArticle._id));
+      setSelectedArticle(null);
+      setShowDeleteModal(false)
+    }
+  };
+  const handlePageChange = () => {
+    setCurrentPage((prev) => {
+      if (totalPages === prev) {
+        return;
+      }
+      return prev + 1;
+    });
+  };
   useEffect(() => {
     fetchArticles();
   }, [currentPage, searchQuery]);
@@ -125,6 +165,24 @@ const WriterArticlePage = () => {
           defaultSortDirection="desc"
         />
       </div>
+      <div className="mt-6">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
+      {/* Delete Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={handleDeleteConfirm}
+        title="Delete Article"
+        message="This will permanently remove the article from the platform. Are you sure you want to delete this article?"
+        confirmText="Delete"
+        cancelText="Cancel"
+        danger={true}
+      />
     </DashboardLayout>
   );
 };

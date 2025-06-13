@@ -33,7 +33,7 @@ const getArticlesByWriterId = async (token, page, limit, search, status) => {
 
     return res.data;
   } catch (error) {
-    return error.response.data
+    return error.response.data;
   }
 };
 
@@ -73,31 +73,88 @@ const createArticle = async (token, articleData) => {
   }
 };
 
-
 const checkSlug = async (token, slug) => {
   try {
-    const res = await API.get(`/api/v1/writer/articles/check-slug/${slug}`, { headers: getAuthHeaders(token) });
+    const res = await API.get(`/api/v1/writer/articles/check-slug/${slug}`, {
+      headers: getAuthHeaders(token),
+    });
     return res.data;
   } catch (error) {
     return error.response.data;
   }
-}
+};
+
+const deleteArticle = async (token, id) => {
+  try {
+    const res = await API.delete(`/api/v1/writer/articles/${id}`, {
+      headers: getAuthHeaders(token),
+    });
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
 
 const generateSlug = async (token, title) => {
   try {
-    const res = await API.post("/api/v1/writer/articles/generate-slug", { title },
+    const res = await API.post(
+      "/api/v1/writer/articles/generate-slug",
+      { title },
       {
-        headers: getAuthHeaders(token)
-      })
+        headers: getAuthHeaders(token),
+      }
+    );
 
-    return res.data.slug
+    return res.data.slug;
   } catch (error) {
     error.response.data;
   }
-}
+};
+
+/**
+ * Fetches articles written by a specific writer
+ * @param {string} token - Authentication token
+ * @param {number} page - Page number for pagination
+ * @param {number} limit - Number of items per page
+ * @param {string} [search] - Optional search query
+ * @param {string} [status] - Optional article status filter
+ * @returns {Promise<Object>} Response data containing articles and pagination info
+ * @throws {Error} If the API request fails
+ */
+const getAllArticles = async (page, limit, search) => {
+  try {
+    const res = await API.get("/api/v1/articles", {
+      params: {
+        page: page || 1,
+        limit: limit || 10,
+        search: search || "",
+      },
+    });
+
+    if (!res.data.success) {
+      throw new Error(res.data.message || "Failed to fetch articles");
+    }
+
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+const getArticleBySlug = async (slug) => {
+  try {
+    const res = await API.get(`/api/v1/articles/${slug}`);
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
 export {
+  getArticleBySlug,
   getArticlesByWriterId,
+  deleteArticle,
+  getAllArticles,
   generateSlug,
   createArticle,
-  checkSlug
+  checkSlug,
 };

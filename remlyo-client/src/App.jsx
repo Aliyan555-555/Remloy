@@ -52,6 +52,8 @@ import EditRemedyPage from "./pages/admin/EditRemedyPage";
 import WriterArticlePage from "./pages/writer/WriterArticlePage";
 import WriterAddArticlePage from "./pages/writer/WriterAddArticlePage";
 import WriterEditArticlePage from "./pages/writer/WriterEditArticlePage";
+import ArticlesPage from "./pages/ArticlesPage";
+import SingleArticlePage from "./pages/SingleArticlePage";
 function App() {
   return (
     <AuthProvider>
@@ -62,6 +64,8 @@ function App() {
           <Route path="/ailments" element={<AilmentsPage />} />
           <Route path="/ailments/:ailmentId" element={<AilmentDetailPage />} />
           <Route path="/remedies" element={<RemediesPage />} />
+          <Route path="/articles" element={<ArticlesPage/>} />
+          <Route path="/articles/:slug" element={<SingleArticlePage/>} />
 
           {/* Checkout Routes */}
           <Route path="/checkout/:planType" element={<CheckoutPage />} />
