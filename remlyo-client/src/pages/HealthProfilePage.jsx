@@ -28,13 +28,12 @@ const HealthProfilePage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { checkUserFlow,setFlowStatus} = useUserFlow();
+  const { checkUserFlow, setFlowStatus } = useUserFlow();
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState({});
   const [expandedSections, setExpandedSections] = useState({});
   const [aiQuestions, setAiQuestions] = useState([]);
   const [expandedHealthProfile, setExpandedHealthProfile] = useState({});
-
 
   const handleChange = useCallback((e) => {
     const { name, value, type, checked } = e.target;
@@ -113,14 +112,14 @@ const HealthProfilePage = () => {
     // Validate AI-generated fields in step 2
     if (currentStep > 1) {
       // aiQuestions.forEach((section) => {
-        const section = aiQuestions[currentStep - 2]
-        if (section.questions) {
-          section.questions.forEach((question) => {
-            if (!expandedHealthProfile[question.name]) {
-              newErrors[question.name] = "This field is required";
-            }
-          });
-        }
+      const section = aiQuestions[currentStep - 2];
+      if (section.questions) {
+        section.questions.forEach((question) => {
+          if (!expandedHealthProfile[question.name]) {
+            newErrors[question.name] = "This field is required";
+          }
+        });
+      }
       // });
     }
 
@@ -129,9 +128,9 @@ const HealthProfilePage = () => {
   }, [currentStep, formData, aiQuestions, expandedHealthProfile]);
 
   const handleNext = async () => {
-    console.log("submit calling",errors)
+    console.log("submit calling", errors);
     if (!validateForm()) return;
-    console.log("validator")
+    console.log("validator");
     setLoading(true);
     try {
       if (currentStep === 1) {
@@ -152,7 +151,6 @@ const HealthProfilePage = () => {
           setExpandedSections(initialExpandedState);
           setExpandedHealthProfile(initialHealthProfileState);
           setCurrentStep(2);
-          
         }
       } else if (currentStep === 6) {
         const completeProfileData = {
@@ -163,10 +161,9 @@ const HealthProfilePage = () => {
           user.accessLevel !== "user" ? "/admin/dashboard" : "/dashboard";
         const res = await healthProfile(completeProfileData, authToken);
         if (res.success) {
-          setFlowStatus(UserFlowStatus.COMPLETE)
-          checkUserFlow();
-          navigate(redirect, { replace: true });
-          return;
+          setFlowStatus(UserFlowStatus.COMPLETE);
+          // checkUserFlow().then(() => navigate(redirect, { replace: true }))
+          navigate(redirect);
         }
       } else {
         setCurrentStep((prev) => prev + 1);

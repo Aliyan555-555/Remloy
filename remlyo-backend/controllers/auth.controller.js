@@ -22,7 +22,7 @@ const register = async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
-    const { password,email } = req.body;
+    const { password, email } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -39,12 +39,10 @@ const register = async (req, res) => {
       password: hashedPassword,
     });
 
-    
-
     return res.status(201).json({
       message: "Registration successful. Please verify your email.",
       success: true,
-      req:req.body
+      req: req.body,
     });
   } catch (err) {
     console.error("Register error:", err);
@@ -285,9 +283,13 @@ const login = async (req, res) => {
         case "user":
           redirect = "/dashboard";
           break;
-        default:
-          redirect = "/signin";
+        case "writer":
+          redirect = "/writer/dashboard";
           break;
+        case "moderator":
+          redirect = "/moderator/dashboard";
+          break;
+
       }
     }
 

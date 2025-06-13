@@ -85,7 +85,7 @@ const WriterArticlePage = () => {
       sortable: false,
       render: (row) => (
         <ActionButtonGroup
-          viewUrl={`/writer/articles/${row._id}`}
+          viewUrl={`/articles/${row.slug}`}
           editUrl={`/writer/articles/${row._id}/edit`}
           onDelete={() => handleDeleteClick(row)}
         />
