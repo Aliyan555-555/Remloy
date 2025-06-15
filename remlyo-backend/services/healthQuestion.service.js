@@ -1,16 +1,17 @@
-import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
-import { AzureKeyCredential } from "@azure/core-auth";
+import OpenAI from "openai";
 
-const token = process.env.GITHUB_TOKEN;
-const endpoint = "https://models.github.ai/inference";
-const model = "openai/gpt-4.1";
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY, // Make sure this is set in your env
+});
+
+const model = "gpt-4-turbo"; // or your preferred model, e.g., "gpt-4o" or "gpt-4-turbo"
 
 const generateHealthQuestionsPrompt = (userHealthData) => `
 You are a health questionnaire assistant. Based on the following user health data:
 
 ${JSON.stringify(userHealthData, null, 2)}
 
-Generate at least 50 multiple-choice questions, distributed across these categories:
+Generate at least 50+ multiple-choice questions, distributed across these categories:
 - Lifestyle Habits
 - Dietary Habits
 - Medical History
@@ -40,36 +41,31 @@ Respond only with a valid JSON object that is an array of categories.
 
 const generateHealthQuestions = async (userHealthData) => {
   try {
-    const client =  ModelClient(endpoint, new AzureKeyCredential(token));
-
-    const response = await client.path("/chat/completions").post({
-      body: {
-        messages: [
-          {
-            role: "system",
-            content: "You are a helpful assistant that returns JSON only.",
-          },
-          {
-            role: "user",
-            content: generateHealthQuestionsPrompt(userHealthData),
-          },
-        ],
-        temperature: 0.7,
-        top_p: 1,
-        model: model,
-      },
+    const response = await openai.chat.completions.create({
+      model: model,
+      messages: [
+        {
+          role: "system",
+          content: "You are a helpful assistant that returns JSON only.",
+        },
+        {
+          role: "user",
+          content: generateHealthQuestionsPrompt(userHealthData),
+        },
+      ],
+      temperature: 0.7,
     });
 
-    if (isUnexpected(response)) {
-      throw response.body.error;
+    const output = response.choices[0].message?.content;
+    if (!output) {
+      throw new Error("No content returned from OpenAI");
     }
 
-    const output = response.body.choices[0].message.content;
     const parsed = JSON.parse(output);
     return parsed;
   } catch (error) {
     console.error("Error generating health questions:", error);
-    throw error
+    throw error;
   }
 };
 

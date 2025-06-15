@@ -26,6 +26,9 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin","moderator","writer"], // maybe update this in future
       default: "user",
     },
+    futureAccessLevel:{
+
+    },
     geographicRegion: {
       type: String,
       default: "global",

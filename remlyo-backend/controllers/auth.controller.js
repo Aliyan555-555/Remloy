@@ -289,7 +289,6 @@ const login = async (req, res) => {
         case "moderator":
           redirect = "/moderator/dashboard";
           break;
-
       }
     }
 
@@ -652,18 +651,29 @@ const socialAuth = async (req, res) => {
 
     const { password: _, ...userData } = user.toObject();
 
-    let redirect = null;
+    const userHealthProfile = await UserProfile.findOne({ userId: user._id });
 
-    switch (user.accessLevel.trim().toLowerCase()) {
-      case "admin":
-        redirect = "/admin/dashboard";
-        break;
-      case "user":
-        redirect = "/dashboard";
-        break;
-      default:
-        redirect = "/signin";
-        break;
+    let redirect = null;
+    // Check if email is verified
+    if (!user.emailVerified) {
+      redirect = "/verify-email";
+    } else if (!userHealthProfile) {
+      redirect = "/health-profile";
+    } else {
+      switch (user.accessLevel.trim().toLowerCase()) {
+        case "admin":
+          redirect = "/admin/dashboard";
+          break;
+        case "user":
+          redirect = "/dashboard";
+          break;
+        case "writer":
+          redirect = "/writer/dashboard";
+          break;
+        case "moderator":
+          redirect = "/moderator/dashboard";
+          break;
+      }
     }
 
     return res.status(200).json({

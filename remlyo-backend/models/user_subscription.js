@@ -46,6 +46,7 @@ const UserSubscriptionSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    
     canceledAt: { 
       type: Date 
     },

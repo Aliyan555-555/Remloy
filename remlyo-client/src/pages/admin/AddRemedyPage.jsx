@@ -6,7 +6,7 @@ import FileUpload from "../../components/common/FileUpload";
 import { useAuth } from "../../contexts/AuthContext";
 import { createRemedy } from "../../api/adminApi";
 import TextEditor from "../../components/common/TextEditor";
-import { CATEGORIES, MAX_FILE_SIZE } from "../../constants";
+import { CATEGORIES, MAX_FILE_SIZE,REMEDY_TYPES } from "../../constants";
 
 
 
