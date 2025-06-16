@@ -48,8 +48,16 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const { data } = await API.post("/api/v1/auth/register", userData);
-      localStorage.setItem("signupEmail", userData.email);
-       setLoading(false);
+      if (data.success && data.user && data.token) {
+        setUser(data.user);
+        setAuthToken(data.token);
+        setIsAuthenticated(true);
+        localStorage.setItem(LS_KEYS.USER, JSON.stringify(data.user));
+        localStorage.setItem(LS_KEYS.AUTH_TOKEN, data.token);
+        if (data.redirect) navigate(data.redirect);
+      } else {
+        setError(data.message || "Sign up failed");
+      }
       return data;
     } catch (error) {
       return error?.response?.data || { message: "Signup failed" };
@@ -62,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const { data } = await API.post("/api/v1/auth/login", credentials);
-      if (data.user && data.token) {
+      if (data.success && data.user && data.token) {
         setUser(data.user);
         setAuthToken(data.token);
         setIsAuthenticated(true);

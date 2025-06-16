@@ -1,0 +1,142 @@
+[{
+  "_id": {
+    "$oid": "685053006078207a837d5141"
+  },
+  "name": "Free",
+  "type": "monthly",
+  "price": 0,
+  "originalPrice": 0,
+  "features": [
+    "Access 3 Remedies per Ailment",
+    "Rate & Review Remedies",
+    "Save Favorite Remedies"
+  ],
+  "remediesPerAilment": 3,
+  "isUnlimitedRemedies": false,
+  "hasAIRemedies": false,
+  "hasPrioritySupport": false,
+  "hasPersonalizedInsights": false,
+  "hasRatingSystem": true,
+  "hasFavoriteSystem": true,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "685053b76078207a837d5143"
+  },
+  "name": "Premium",
+  "type": "monthly",
+  "price": 9.99,
+  "originalPrice": 9.99,
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights"
+  ],
+  "remediesPerAilment": 0,
+  "isUnlimitedRemedies": true,
+  "hasAIRemedies": true,
+  "hasPrioritySupport": true,
+  "hasPersonalizedInsights": true,
+  "hasRatingSystem": true,
+  "hasFavoriteSystem": true,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "685054566078207a837d5145"
+  },
+  "name": "Premium",
+  "type": "yearly",
+  "price": 99,
+  "originalPrice": 120,
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights",
+    "Save 20% when you pay yearly"
+  ],
+  "discountPercentage": 20,
+  "remediesPerAilment": 0,
+  "isUnlimitedRemedies": true,
+  "hasAIRemedies": true,
+  "hasPrioritySupport": true,
+  "hasPersonalizedInsights": true,
+  "hasRatingSystem": true,
+  "hasFavoriteSystem": true,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "6850546a6078207a837d5147"
+  },
+  "name": "Free",
+  "type": "yearly",
+  "price": 0,
+  "originalPrice": 0,
+  "features": [
+    "Access 3 Remedies per Ailment",
+    "Rate & Review Remedies",
+    "Save Favorite Remedies"
+  ],
+  "remediesPerAilment": 3,
+  "isUnlimitedRemedies": false,
+  "hasAIRemedies": false,
+  "hasPrioritySupport": false,
+  "hasPersonalizedInsights": false,
+  "hasRatingSystem": true,
+  "hasFavoriteSystem": true,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "685058e76078207a837d514c"
+  },
+  "name": "Per Remedy",
+  "type": "one-time",
+  "price": 2.99,
+  "originalPrice": 2.99,
+  "features": [
+    "Select an ailment, and unlock access to its top remedies",
+    "Access 5 remedies for your selected ailment",
+    "One-time purchase grants access to selected remedies for your chosen ailment",
+    "No refunds after purchase"
+  ],
+  "remediesPerAilment": 5,
+  "isUnlimitedRemedies": false,
+  "hasAIRemedies": false,
+  "hasPrioritySupport": false,
+  "hasPersonalizedInsights": false,
+  "hasRatingSystem": true,
+  "hasFavoriteSystem": true,
+  "isActive": true
+},
+{
+  "_id": {
+    "$oid": "685059616078207a837d514e"
+  },
+  "name": "Per Remedy",
+  "type": "one-time",
+  "price": 4.99,
+  "originalPrice": 4.99,
+  "features": [
+    "Select an ailment, and unlock access to its top remedies",
+    "Access 10 remedies for your selected ailment",
+    "One-time purchase grants access to selected remedies for your chosen ailment",
+    "No refunds after purchase"
+  ],
+  "remediesPerAilment": 10,
+  "isUnlimitedRemedies": false,
+  "hasAIRemedies": false,
+  "hasPrioritySupport": false,
+  "hasPersonalizedInsights": false,
+  "hasRatingSystem": true,
+  "hasFavoriteSystem": true,
+  "isActive": true
+}]

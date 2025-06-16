@@ -16,10 +16,8 @@ import { signInWithPopup } from "firebase/auth";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-
-  const { isAuthenticated, socialAuth,signup } = useAuth();
-
-
+  const { isAuthenticated, socialAuth, signup } = useAuth();
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -28,7 +26,6 @@ const SignUpPage = () => {
     agreeTerms: false,
   });
 
-  const [error, setError] = useState("");
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prevState) => ({
@@ -57,14 +54,7 @@ const SignUpPage = () => {
       password,
     };
 
-    const res = await signup(userData);
-
-    if (res?.success) {
-      // navigate("/verify-email"); for email verification
-      navigate("/dashboard")
-    } else {
-      setError(res.message);
-    }
+    await signup(userData);
   };
 
   const handleSocialSignIn = async (provider) => {
@@ -185,8 +175,6 @@ const SignUpPage = () => {
               </div>
               <div className="border-t border-gray-300 w-full"></div>
             </div>
-
-
 
             {error && (
               <div className="mb-4 text-red-600 text-sm text-center">

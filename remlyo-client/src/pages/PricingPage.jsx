@@ -1,21 +1,30 @@
 // Updated src/pages/PricingPage.jsx with checkout links
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
+import { getAllPlans } from "../api/pricingApi";
 
 const PricingPage = () => {
   const [billingPeriod, setBillingPeriod] = useState("monthly");
   const navigate = useNavigate();
+  const [plans, setPlans] = useState([]);
+
+  const fetchPlans = async () => {
+    const res = await getAllPlans();
+    if (res.success) {
+      setPlans(res.plans);
+    }
+  };
 
   // Handle subscription purchase
   const handleSubscribe = (type) => {
     // Navigate to checkout page with the appropriate plan type
-    if (type === 'premium') {
-      navigate('/checkout/premium');
-    } else if (type === 'remedy') {
-      navigate('/checkout/remedy');
+    if (type === "premium") {
+      navigate("/checkout/premium");
+    } else if (type === "remedy") {
+      navigate("/checkout/remedy");
     }
   };
 
@@ -29,410 +38,115 @@ const PricingPage = () => {
     if (billingPeriod === "monthly") {
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <div className="border border-gray-200 rounded-lg p-6 bg-white shadow-sm">
-            <h2 className="text-xl font-bold text-gray-800 mb-1">Free</h2>
-            <div className="flex items-baseline mb-6">
-              <span className="text-3xl font-bold text-gray-900">$0</span>
-              <span className="text-gray-600 ml-1">/month</span>
-            </div>
+          {plans
+            .filter((p) => p.type == "monthly")
+            .map((p) => (
+              <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+                {p.isPopular && (
+                  <div className="bg-brand-green text-white text-center py-1 font-medium text-sm uppercase">
+                    POPULAR
+                  </div>
+                )}
+                <div className="p-6">
+                  <h2 className="text-xl font-bold text-gray-800 mb-1">
+                    {p.name}
+                  </h2>
+                  <div className="flex items-baseline mb-6">
+                    <span className="text-3xl font-bold text-gray-900">
+                      ${p.price}
+                    </span>
+                    <span className="text-gray-600 ml-1">/month</span>
+                  </div>
 
-            <ul className="space-y-4 mb-8">
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="ml-3 text-gray-700">
-                  Access 3 Remedies per Ailment
-                </span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="ml-3 text-gray-700">
-                  Rate & Review Remedies
-                </span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="ml-3 text-gray-700">
-                  Save Favorite Remedies
-                </span>
-              </li>
-            </ul>
+                  <ul className="space-y-4 mb-8">
+                    {p.features.map((feature) => (
+                      <li className="flex items-start">
+                        <svg
+                          className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        <span className="ml-3 text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-            <Button variant="outlined" color="brand" fullWidth>
-              Get Started
-            </Button>
-          </div>
-
-          <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
-            <div className="bg-brand-green text-white text-center py-1 font-medium text-sm uppercase">
-              POPULAR
-            </div>
-            <div className="p-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-1">Premium</h2>
-              <div className="flex items-baseline mb-6">
-                <span className="text-3xl font-bold text-gray-900">$9.99</span>
-                <span className="text-gray-600 ml-1">/month</span>
+                  <Button
+                    variant="contained"
+                    color="brand"
+                    fullWidth
+                    onClick={() => handleSubscribe("premium")}
+                  >
+                    Subscribe Now
+                  </Button>
+                </div>
               </div>
-
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    Unlimited Remedy Access
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    AI-Generated Remedy Recommendations
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    Success Rate & AI Confidence Scores
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">Priority Support</span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    Save Favorite Remedies
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    Personalized AI Insights
-                  </span>
-                </li>
-              </ul>
-
-              <Button 
-                variant="contained" 
-                color="brand" 
-                fullWidth
-                onClick={() => handleSubscribe('premium')}>
-                Subscribe Now
-              </Button>
-            </div>
-          </div>
+            ))}
         </div>
       );
     } else if (billingPeriod === "annually") {
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <div className="border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-xl font-bold text-gray-800 mb-1">Free</h2>
-            <div className="flex items-baseline mb-6">
-              <span className="text-3xl font-bold text-gray-900">$0</span>
-              <span className="text-gray-600 ml-1">/year</span>
-            </div>
+          {plans
+            .filter((p) => p.type == "yearly")
+            .map((p) => (
+              <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+                {p.isPopular && (
+                  <div className="bg-brand-green text-white text-center py-1 font-medium text-sm uppercase">
+                    POPULAR
+                  </div>
+                )}
+                <div className="p-6">
+                  <h2 className="text-xl font-bold text-gray-800 mb-1">
+                    {p.name}
+                  </h2>
+                  <div className="flex items-baseline mb-6">
+                    <span className="text-3xl font-bold text-gray-900">
+                      ${p.price}
+                    </span>
+                    <span className="text-gray-600 ml-1">/year</span>
+                  </div>
 
-            <ul className="space-y-4 mb-8">
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="ml-3 text-gray-700">
-                  Access 3 Remedies per Ailment
-                </span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="ml-3 text-gray-700">
-                  Rate & Review Remedies
-                </span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="ml-3 text-gray-700">
-                  Save Favorite Remedies
-                </span>
-              </li>
-            </ul>
+                  <ul className="space-y-4 mb-8">
+                    {p.features.map((feature) => (
+                      <li className="flex items-start">
+                        <svg
+                          className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        <span className="ml-3 text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-            <Button variant="outlined" color="brand" fullWidth>
-              Get Started
-            </Button>
-          </div>
-
-          <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
-            <div className="bg-brand-green text-white text-center py-1 font-medium text-sm uppercase">
-              POPULAR
-            </div>
-            <div className="p-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-1">Premium</h2>
-              <div className="flex items-baseline mb-2">
-                <span className="text-3xl font-bold text-gray-900">$99.00</span>
-                <span className="text-gray-600 ml-1">/year</span>
+                  <Button
+                    variant="contained"
+                    color="brand"
+                    fullWidth
+                    onClick={() => handleSubscribe("premium")}
+                  >
+                    Subscribe Now
+                  </Button>
+                </div>
               </div>
-              <p className="text-sm text-green-600 mb-4">
-                Save 20% when you pay yearly
-              </p>
-
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    Unlimited Remedy Access
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    AI-Generated Remedy Recommendations
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    Success Rate & AI Confidence Scores
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">Priority Support</span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    Save Favorite Remedies
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    Personalized AI Insights
-                  </span>
-                </li>
-              </ul>
-
-              <Button 
-                variant="contained" 
-                color="brand" 
-                fullWidth
-                onClick={() => handleSubscribe('premium')}>
-                Subscribe Now
-              </Button>
-            </div>
-          </div>
+            ))}
         </div>
       );
     } else if (billingPeriod === "payPerRemedy") {
@@ -491,11 +205,12 @@ const PricingPage = () => {
               chosen ailment. No refunds after purchase.
             </div>
 
-            <Button 
-              variant="contained" 
-              color="brand" 
+            <Button
+              variant="contained"
+              color="brand"
               fullWidth
-              onClick={() => handleSubscribe('remedy')}>
+              onClick={() => handleSubscribe("remedy")}
+            >
               Unlock 5 Remedies
             </Button>
           </div>
@@ -554,11 +269,12 @@ const PricingPage = () => {
                 One-time purchase grants access to selected remedies for your
                 chosen ailment. No refunds after purchase.
               </div>
-              <Button 
-                variant="contained" 
-                color="brand" 
+              <Button
+                variant="contained"
+                color="brand"
                 fullWidth
-                onClick={() => handleSubscribe('remedy')}>
+                onClick={() => handleSubscribe("remedy")}
+              >
                 Unlock 10 Remedies
               </Button>
             </div>
@@ -594,6 +310,10 @@ const PricingPage = () => {
         "Refunds are available within 30 days of purchase, subject to review by our support team. View our full refund policy page for complete details.",
     },
   ];
+
+  useEffect(() => {
+    fetchPlans();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -680,10 +400,10 @@ const PricingPage = () => {
                 </div>
               ))}
             </div>
-            
+
             <div className="text-center mt-8">
-              <Link 
-                to="/refund-policy" 
+              <Link
+                to="/refund-policy"
                 className="text-brand-green hover:underline"
               >
                 View our full Refund & Cancellation Policy

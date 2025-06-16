@@ -15,6 +15,7 @@ import ModeratorRoute from "./routes/moderator.route.js";
 import WriterRouter from "./routes/writer.route.js";
 import writerMiddleware from './middleware/writer.middleware.js';
 import ArticleRouter from "./routes/article.route.js";
+import PlanRouter from "./routes/plan.route.js";
 
 const app = express();
 
@@ -45,8 +46,8 @@ app.use("/api/v1/moderator",auth,ModeratorRoute);
 app.use("/api/v1/writer",auth,writerMiddleware,WriterRouter)
 // articles route
 app.use("/api/v1/articles",ArticleRouter)
-
-// main();
+// pricing plan
+app.use("/api/v1/pricing",PlanRouter)
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
