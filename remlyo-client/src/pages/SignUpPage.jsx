@@ -60,7 +60,8 @@ const SignUpPage = () => {
     const res = await signup(userData);
 
     if (res?.success) {
-      navigate("/verify-email");
+      // navigate("/verify-email"); for email verification
+      navigate("/dashboard")
     } else {
       setError(res.message);
     }

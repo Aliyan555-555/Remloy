@@ -1,10 +1,4 @@
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, // Make sure this is set in your env
-});
-
-const model = "gpt-4-turbo"; // or your preferred model, e.g., "gpt-4o" or "gpt-4-turbo"
+import { generateChatCompletion } from "../config/openai.config.js";
 
 const generateHealthQuestionsPrompt = (userHealthData) => `
 You are a health questionnaire assistant. Based on the following user health data:
@@ -41,22 +35,20 @@ Respond only with a valid JSON object that is an array of categories.
 
 const generateHealthQuestions = async (userHealthData) => {
   try {
-    const response = await openai.chat.completions.create({
-      model: model,
+    const output = await generateChatCompletion({
       messages: [
         {
           role: "system",
-          content: "You are a helpful assistant that returns JSON only.",
+          content:
+            "You are a helpful assistant that returns JSON only. and fallow interactions properly",
         },
         {
           role: "user",
           content: generateHealthQuestionsPrompt(userHealthData),
         },
       ],
-      temperature: 0.7,
+      temperature: 0.4,
     });
-
-    const output = response.choices[0].message?.content;
     if (!output) {
       throw new Error("No content returned from OpenAI");
     }

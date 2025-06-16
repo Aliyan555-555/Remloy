@@ -1,81 +1,49 @@
-import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
-import { AzureKeyCredential } from "@azure/core-auth";
-import dotenv from "dotenv";
-dotenv.config();
+// lib/openaiClient.js
 
-const token = process.env.GITHUB_TOKEN;
-const endpoint = "https://models.github.ai/inference";
-const model = "openai/gpt-4.1";
+import OpenAI from "openai";
 
-const userHealthData = {
-  firstName: "Aliyan",
-  lastName: "Siddiqui",
-  age: 18,
-  sex: "Male",
-  weight: 40,
-  height: 180,
-  bloodType: "O+",
-  allergies: ["Peanuts"],
-  chronicConditions: ["Hypertension"],
-  medications: ["Atenolol"],
-  familyHistory: ["Diabetes"],
-  dataShareConsent: true,
-  preferredLanguage: "en",
-};
+// Create a singleton instance (best practice for Node/serverless)
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-const prompt = `
-You are a health questionnaire assistant. Based on the following user health data:
+/**
+ * Generate a chat completion using OpenAI's API.
+ * 
+ * @param {Object} params
+ * @param {Array} params.messages - Array of message objects: { role: "system" | "user" | "assistant", content: string }
+ * @param {number} [params.temperature=0.7] - Sampling temperature (0-2)
+ * @param {string} [params.model="gpt-4o"] - Model name to use
+ * @returns {Promise<string>} - The generated text
+ */
+export const generateChatCompletion = async ({
+  messages,
+  temperature = 0.7,
+  model = "gpt-4-turbo",
+}) => {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error("OPENAI_API_KEY is missing in environment variables.");
+  }
 
-${JSON.stringify(userHealthData, null, 2)}
-
-Generate at least 50 multiple-choice questions, distributed across these categories:
-- Lifestyle Habits
-- Dietary Habits
-- Medical History
-- Environmental Exposure
-- Health Monitoring
-
-Each category should follow this format:
-{
-  "title": "Category Name",
-  "description": "One-sentence motivation about why these questions are important",
-  "questions": [
-    {
-      "question": "Question text?",
-      "options": ["Option A", "Option B", "Option C", "Option D"]
-    },
-    ...
-  ]
-}
-
-Respond only with a valid JSON object that is an array of categories.
-`;
-
-export async function main() {
-  const client = ModelClient(endpoint, new AzureKeyCredential(token));
-
-  const response = await client.path("/chat/completions").post({
-    body: {
-      messages: [
-        { role: "system", content: "You are a helpful assistant that returns JSON only." },
-        { role: "user", content: prompt },
-      ],
-      temperature: 0.7,
-      top_p: 1,
-      model: model,
-    },
-  });
-
-  if (isUnexpected(response)) {
-    throw response.body.error;
+  if (!Array.isArray(messages) || messages.length === 0) {
+    throw new Error("`messages` must be a non-empty array.");
   }
 
   try {
-    const output = response.body.choices[0].message.content;
-    const parsed = JSON.parse(output);
-    console.dir(parsed, { depth: null });
-  } catch (err) {
-    console.error("Failed to parse JSON response:", err);
-    console.log("Raw response:", response.body.choices[0].message.content);
+    const response = await openai.chat.completions.create({
+      model,
+      messages,
+      temperature,
+    });
+
+    const output = response.choices?.[0]?.message?.content?.trim();
+    if (!output) {
+      throw new Error("No content returned from OpenAI API.");
+    }
+
+    return output;
+  } catch (error) {
+    console.error("OpenAI API Error:", error);
+    throw new Error(error?.message || "Failed to generate chat completion.");
   }
-}
+};

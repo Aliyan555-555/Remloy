@@ -36,6 +36,7 @@ const register = async (req, res) => {
 
     await User.create({
       ...req.body,
+      emailVerified:true,
       password: hashedPassword,
     });
 
