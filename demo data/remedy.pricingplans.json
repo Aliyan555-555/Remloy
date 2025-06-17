@@ -1,11 +1,14 @@
 [{
   "_id": {
-    "$oid": "685053006078207a837d5141"
+    "$oid": "68506dc46078207a837d5150"
   },
   "name": "Free",
   "type": "monthly",
   "price": 0,
   "originalPrice": 0,
+  "discountPercentage": 0,
+  "currency": "USD",
+  "billingCycle": 1,
   "features": [
     "Access 3 Remedies per Ailment",
     "Rate & Review Remedies",
@@ -14,20 +17,24 @@
   "remediesPerAilment": 3,
   "isUnlimitedRemedies": false,
   "hasAIRemedies": false,
-  "hasPrioritySupport": false,
   "hasPersonalizedInsights": false,
   "hasRatingSystem": true,
   "hasFavoriteSystem": true,
-  "isActive": true
+  "isActive": true,
+  "isPopular": false,
+  "purchaseCount": 0
 },
 {
   "_id": {
-    "$oid": "685053b76078207a837d5143"
+    "$oid": "68506dc46078207a837d5151"
   },
   "name": "Premium",
   "type": "monthly",
   "price": 9.99,
   "originalPrice": 9.99,
+  "discountPercentage": 0,
+  "currency": "USD",
+  "billingCycle": 1,
   "features": [
     "Unlimited Remedy Access",
     "AI-Generated Remedy Recommendations",
@@ -39,20 +46,24 @@
   "remediesPerAilment": 0,
   "isUnlimitedRemedies": true,
   "hasAIRemedies": true,
-  "hasPrioritySupport": true,
   "hasPersonalizedInsights": true,
   "hasRatingSystem": true,
   "hasFavoriteSystem": true,
-  "isActive": true
+  "isActive": true,
+  "isPopular": true,
+  "purchaseCount": 0
 },
 {
   "_id": {
-    "$oid": "685054566078207a837d5145"
+    "$oid": "68506dc46078207a837d5152"
   },
   "name": "Premium",
   "type": "yearly",
   "price": 99,
   "originalPrice": 120,
+  "discountPercentage": 20,
+  "currency": "USD",
+  "billingCycle": 12,
   "features": [
     "Unlimited Remedy Access",
     "AI-Generated Remedy Recommendations",
@@ -62,24 +73,27 @@
     "Personalized AI Insights",
     "Save 20% when you pay yearly"
   ],
-  "discountPercentage": 20,
   "remediesPerAilment": 0,
   "isUnlimitedRemedies": true,
   "hasAIRemedies": true,
-  "hasPrioritySupport": true,
   "hasPersonalizedInsights": true,
   "hasRatingSystem": true,
   "hasFavoriteSystem": true,
-  "isActive": true
+  "isActive": true,
+  "isPopular": true,
+  "purchaseCount": 0
 },
 {
   "_id": {
-    "$oid": "6850546a6078207a837d5147"
+    "$oid": "68506dc46078207a837d5153"
   },
   "name": "Free",
   "type": "yearly",
   "price": 0,
   "originalPrice": 0,
+  "discountPercentage": 0,
+  "currency": "USD",
+  "billingCycle": 12,
   "features": [
     "Access 3 Remedies per Ailment",
     "Rate & Review Remedies",
@@ -88,20 +102,24 @@
   "remediesPerAilment": 3,
   "isUnlimitedRemedies": false,
   "hasAIRemedies": false,
-  "hasPrioritySupport": false,
   "hasPersonalizedInsights": false,
   "hasRatingSystem": true,
   "hasFavoriteSystem": true,
-  "isActive": true
+  "isActive": true,
+  "isPopular": false,
+  "purchaseCount": 0
 },
 {
   "_id": {
-    "$oid": "685058e76078207a837d514c"
+    "$oid": "68506dc46078207a837d5154"
   },
   "name": "Per Remedy",
   "type": "one-time",
   "price": 2.99,
   "originalPrice": 2.99,
+  "discountPercentage": 0,
+  "currency": "USD",
+  "billingCycle": 0,
   "features": [
     "Select an ailment, and unlock access to its top remedies",
     "Access 5 remedies for your selected ailment",
@@ -111,20 +129,24 @@
   "remediesPerAilment": 5,
   "isUnlimitedRemedies": false,
   "hasAIRemedies": false,
-  "hasPrioritySupport": false,
   "hasPersonalizedInsights": false,
   "hasRatingSystem": true,
   "hasFavoriteSystem": true,
-  "isActive": true
+  "isActive": true,
+  "isPopular": false,
+  "purchaseCount": 0
 },
 {
   "_id": {
-    "$oid": "685059616078207a837d514e"
+    "$oid": "68506dc46078207a837d5155"
   },
   "name": "Per Remedy",
   "type": "one-time",
   "price": 4.99,
   "originalPrice": 4.99,
+  "discountPercentage": 0,
+  "currency": "USD",
+  "billingCycle": 0,
   "features": [
     "Select an ailment, and unlock access to its top remedies",
     "Access 10 remedies for your selected ailment",
@@ -134,9 +156,10 @@
   "remediesPerAilment": 10,
   "isUnlimitedRemedies": false,
   "hasAIRemedies": false,
-  "hasPrioritySupport": false,
   "hasPersonalizedInsights": false,
   "hasRatingSystem": true,
   "hasFavoriteSystem": true,
-  "isActive": true
+  "isActive": true,
+  "isPopular": false,
+  "purchaseCount": 0
 }]

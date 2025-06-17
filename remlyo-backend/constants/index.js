@@ -41,4 +41,32 @@ const SUCCESS_MESSAGES = {
   USER_FETCHED: "Successfully fetched user",
 };
 
-export { SUCCESS_MESSAGES, ERROR_MESSAGES, AUTH_CONSTANTS };
+const AlimentCategories = [
+  "Digestive Health",
+  "Mental Health",
+  "Respiratory Health",
+  "Skin & Dermatology",
+  "Cardiovascular Health",
+  "Women's Health",
+  "Men's Health",
+  "Immune System",
+  "Muscle & Joint",
+  "Sleep & Energy",
+  "Hair & Scalp",
+  "Allergies & Sensitivities",
+  "Urinary & Kidney",
+  "Endocrine & Hormones",
+  "Oral & Dental",
+  "Liver & Detox",
+  "Eye & Vision",
+  "Ear, Nose & Throat",
+  "Neurological",
+  "General Wellness",
+  "Neurological Health",
+  "Skin Health",
+  "Immune Health",
+  "Reproductive Health",
+  "Oral Health",
+];
+
+export { AlimentCategories, SUCCESS_MESSAGES, ERROR_MESSAGES, AUTH_CONSTANTS };
