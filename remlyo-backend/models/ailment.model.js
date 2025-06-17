@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
 
-/**
- * Schema for storing information about ailments.
- */
 const AilmentSchema = new mongoose.Schema({
     name: {
         type: String,

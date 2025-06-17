@@ -8,9 +8,8 @@ const UserSubscriptionSchema = new mongoose.Schema(
       required: true,
     },
     plan: {
-      type: String,
-      enum: ['free', 'premium-year',"premium-monthly","pay-per-remedy"],// maybe update this in future
-      required: true,
+     type:mongoose.Schema.Types.ObjectId,
+     ref:"PricingPlan"
     },
     startDate: { 
       type: Date, 

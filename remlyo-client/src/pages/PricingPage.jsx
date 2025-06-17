@@ -152,133 +152,58 @@ const PricingPage = () => {
     } else if (billingPeriod === "payPerRemedy") {
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <div className="border border-gray-200 rounded-lg p-6 bg-white">
-            <h2 className="text-xl font-bold text-gray-800 mb-1">
-              $2.99{" "}
-              <span className="text-sm font-normal text-gray-600">
-                /Top 5 Remedies
-              </span>
-            </h2>
+          {plans
+            .filter((p) => p.type == "one-time")
+            .map((p) => (
+              <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+                {p.isPopular && (
+                  <div className="bg-brand-green text-white text-center py-1 font-medium text-sm uppercase">
+                    POPULAR
+                  </div>
+                )}
+                <div className="p-6">
+                  <h2 className="text-xl font-bold text-gray-800 mb-1">
+                    {p.name}
+                  </h2>
+                  <div className="flex items-baseline mb-6">
+                    <span className="text-3xl font-bold text-gray-900">
+                      ${p.price}
+                    </span>
+                    <span className="text-gray-600 ml-1">/Top {p.remediesPerAilment} remedies</span>
+                  </div>
 
-            <ul className="space-y-4 my-6">
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="ml-3 text-gray-700">
-                  Select an ailment, and unlock access to its top remedies
-                </span>
-              </li>
-              <li className="flex items-start">
-                <svg
-                  className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="ml-3 text-gray-700">
-                  Access 5 remedies for your selected ailment. One-time
-                  purchase.
-                </span>
-              </li>
-            </ul>
+                  <ul className="space-y-4 mb-8">
+                    {p.features.map((feature) => (
+                      <li className="flex items-start">
+                        <svg
+                          className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                        <span className="ml-3 text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-            <div className="bg-gray-100 p-3 text-xs text-gray-600 rounded mb-6">
-              One-time purchase grants access to selected remedies for your
-              chosen ailment. No refunds after purchase.
-            </div>
-
-            <Button
-              variant="contained"
-              color="brand"
-              fullWidth
-              onClick={() => handleSubscribe("remedy")}
-            >
-              Unlock 5 Remedies
-            </Button>
-          </div>
-
-          <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
-            <div className="bg-brand-green text-white text-center py-1 font-medium text-sm uppercase">
-              POPULAR
-            </div>
-            <div className="p-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-1">
-                $4.99{" "}
-                <span className="text-sm font-normal text-gray-600">
-                  /Top 10 Remedies
-                </span>
-              </h2>
-              <ul className="space-y-4 my-6">
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                  <Button
+                    variant="contained"
+                    color="brand"
+                    fullWidth
+                    onClick={() => handleSubscribe("premium")}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    Select an ailment, and unlock access to its top remedies
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="ml-3 text-gray-700">
-                    Access 10 remedies for your selected ailment. One-time
-                    purchase.
-                  </span>
-                </li>
-              </ul>
-              <div className="bg-gray-100 p-3 text-xs text-gray-600 rounded mb-6">
-                One-time purchase grants access to selected remedies for your
-                chosen ailment. No refunds after purchase.
+                    Subscribe Now
+                  </Button>
+                </div>
               </div>
-              <Button
-                variant="contained"
-                color="brand"
-                fullWidth
-                onClick={() => handleSubscribe("remedy")}
-              >
-                Unlock 10 Remedies
-              </Button>
-            </div>
-          </div>
+            ))}
         </div>
       );
     }
