@@ -4,6 +4,7 @@ import API from "../services/api";
 import { auth } from "../config/firebase";
 import { signOut } from "firebase/auth";
 import { LS_KEYS } from "../constants";
+import { refreshUser } from "../api/authApi";
 
 const AuthContext = createContext(null);
 
@@ -11,6 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -52,6 +54,7 @@ export const AuthProvider = ({ children }) => {
         setUser(data.user);
         setAuthToken(data.token);
         setIsAuthenticated(true);
+
         localStorage.setItem(LS_KEYS.USER, JSON.stringify(data.user));
         localStorage.setItem(LS_KEYS.AUTH_TOKEN, data.token);
         if (data.redirect) navigate(data.redirect);
@@ -168,9 +171,23 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("signupEmail");
   };
 
+  const refresh = async () => {
+    try {
+      setLoading(true)
+      const res = await refreshUser(authToken);
+      if (res.success) {
+        setUser(res.user);
+        localStorage.setItem(LS_KEYS.USER, JSON.stringify(res.user));
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
+        refresh,
         isAuthenticated,
         verifyEmailToken,
         user,

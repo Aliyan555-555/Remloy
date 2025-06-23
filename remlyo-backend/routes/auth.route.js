@@ -1,11 +1,11 @@
 import express from "express";
 import auth from "./../middleware/auth.middleware.js";
 import {
-  
   getAllUsers,
   getUserById,
   login,
   logout,
+  refreshUser,
   register,
   resetPasswordChangePassword,
   resetPasswordSendMail,
@@ -24,22 +24,24 @@ authRouter.post("/register", register);
 authRouter.post("/login", login);
 //logout route
 authRouter.post("/logout", auth, logout);
-// forget password route 
-authRouter.post("/reset-password",resetPasswordSendMail);
-// verify email 
-authRouter.post('/verify-email/:token',validatedEmailToken),
-// send email verification
-authRouter.post('/verify-email',sendEmailVerification),
-// verify reset token
-authRouter.get("/reset-password/:token",resetPasswordVerifyResetToken);
+// forget password route
+authRouter.post("/reset-password", resetPasswordSendMail);
+// verify email
+authRouter.post("/verify-email/:token", validatedEmailToken),
+  // send email verification
+  authRouter.post("/verify-email", sendEmailVerification),
+  // verify reset token
+  authRouter.get("/reset-password/:token", resetPasswordVerifyResetToken);
 // verify token and change password
-authRouter.post("/reset-password/:token",resetPasswordChangePassword);
+authRouter.post("/reset-password/:token", resetPasswordChangePassword);
 // Verify token route
-authRouter.get('/verify', auth, verifyAuth); 
+authRouter.get("/verify", auth, verifyAuth);
 // get all users ⬇️
 authRouter.get("/users", getAllUsers);
 // get user by id
 authRouter.get("/users/:id", getUserById);
 // social auth
-authRouter.post("/social/:uid",socialAuth)
+authRouter.post("/social/:uid", socialAuth);
+// refresh user data
+authRouter.get("/refresh", auth, refreshUser);
 export default authRouter;

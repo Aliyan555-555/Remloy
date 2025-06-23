@@ -252,7 +252,7 @@ const AIRemediesTab = ({ ailmentId, count, sortOption }) => {
                 <div className="flex justify-between items-center">
                   <Button
                     variant="readMore"
-                    to={`/remedies/ai/${remedy.id}`}
+                    to={`/remedies/ai/${remedy.id}?id=${ailmentId}`}
                     state={{ from: `/ailments/${ailmentId}` }}
                     size="small"
                   >

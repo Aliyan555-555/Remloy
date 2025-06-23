@@ -1,10 +1,12 @@
 // src/pages/PharmaceuticalRemedyDetail.jsx
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useSearchParams } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
 import { getRemedyById } from "../api/remediesApi";
+import { useAuth } from "../contexts/AuthContext";
+import AccessDeniedComponent from "../components/common/AccessDeniedComponent";
 
 const PharmaceuticalRemedyDetail = () => {
   const { remedyId } = useParams();
@@ -16,6 +18,9 @@ const PharmaceuticalRemedyDetail = () => {
   const [sortOption, setSortOption] = useState("newest");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [showAIInsightPopup, setShowAIInsightPopup] = useState(false);
+  const { authToken,refresh} = useAuth();
+  const [searchParams] = useSearchParams();
+  const ailmentId = searchParams.get("id");
 
   // Add getBackPath function
   const getBackPath = () => {
@@ -41,13 +46,25 @@ const PharmaceuticalRemedyDetail = () => {
     ? "Back to Ailment"
     : "Back to Remedies";
 
+  const [accessDenied, setAccessDenied] = useState(false);
+  const [accessDeniedMessage, setAccessDeniedMessage] = useState("");
+
+  // Fetch remedy details
   const fetchRemedyDetails = async () => {
-    setLoading(true);
-    // Simulating API call
-    const res = await getRemedyById(remedyId);
-    if (res && res.success) {
-      setRemedy(res.remedy);
+    try {
+      setLoading(true);
+      // Simulating API call
+      const res = await getRemedyById(authToken, remedyId,ailmentId);
+      console.log(res);
+      if (res && res.success) {
+        setRemedy(res.remedy);
+      } else {
+        setAccessDenied(true);
+        setAccessDeniedMessage(res.message);
+      }
+    } finally {
       setLoading(false);
+      await refresh();
     }
   };
 
@@ -132,6 +149,14 @@ const PharmaceuticalRemedyDetail = () => {
     );
   }
 
+  if (accessDenied) {
+    return (
+      <div className="max-w-screen flex items-center justify-center  h-screen">
+        <AccessDeniedComponent message={accessDeniedMessage} />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* AI Banner */}
@@ -189,7 +214,9 @@ const PharmaceuticalRemedyDetail = () => {
           {/* Rating and Actions - RESPONSIVE */}
           <div className="flex flex-col items-center mb-6">
             <div className="flex items-center mb-3">
-              <div className="flex mr-2">{renderStars(remedy.averageRating)}</div>
+              <div className="flex mr-2">
+                {renderStars(remedy.averageRating)}
+              </div>
               <span className="text-gray-600 text-sm">
                 ({remedy.averageRating})
               </span>

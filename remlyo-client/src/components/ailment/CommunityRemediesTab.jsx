@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Pagination from "../common/Pagination";
 import Button from "../common/Button";
 import { getRemediesByAilmentAndType } from "../../api/remediesApi";
+import { useAuth } from "../../contexts/AuthContext";
 
 const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const [remedies, setRemedies] = useState([]);
@@ -10,6 +11,8 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRemediesCount, setTotalRemediesCount] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
+
+  const {user} = useAuth();
   //
   // Fetch community remedies based on ailmentId, page and sortOption
   const fetchRemedies = async () => {
@@ -119,7 +122,7 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
                 <div className="flex justify-between items-center">
                   <Button
                     variant="readMore"
-                    to={`/remedies/community/${remedy._id}`}
+                    to={`/remedies/community/${remedy._id}?id=${ailmentId}`}
                     state={{ from: `/ailments/${ailmentId}` }}
                     size="small"
                   >

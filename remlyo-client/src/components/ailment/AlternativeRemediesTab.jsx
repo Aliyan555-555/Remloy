@@ -19,7 +19,7 @@ const AlternativeRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
         ailmentId,
         activeTab,
         currentPage,
-        sortOption,
+        sortOption
       );
       if (res.success) {
         setRemedies(res.remedies);
@@ -175,7 +175,7 @@ const AlternativeRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
                 <div className="flex justify-between items-center">
                   <Button
                     variant="readMore"
-                    to={`/remedies/alternative/${remedy._id}`}
+                    to={`/remedies/alternative/${remedy._id}?id=${ailmentId}`}
                     state={{ from: `/ailments/${ailmentId}` }}
                     size="small"
                   >

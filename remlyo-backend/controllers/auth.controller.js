@@ -122,6 +122,15 @@ const login = async (req, res) => {
     setAuthCookie(res, token, rememberMe);
     await createSession(user, token, req);
 
+    if (user?.activeSubscription) {
+      await user.populate({
+        path: "activeSubscription",
+        populate: {
+          path: "plan",
+        },
+      });
+    }
+
     // Get redirect path and prepare response
     const redirect = await getRedirectPath(user);
     const { password: _, ...userData } = user.toObject();
@@ -740,7 +749,32 @@ const socialAuth = async (req, res) => {
   }
 };
 
+const refreshUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId).populate({
+      path: "activeSubscription",
+      populate: {
+        path: "plan",
+      },
+    });
+
+    res.status(200).json({
+      message: "User data refreshed successfully",
+      success: true,
+      user,
+    });
+  } catch (error) {
+    console.error("refreshUser error:", error);
+    res.status(500).json({
+      message: "Something went wrong",
+      success: false,
+    });
+  }
+};
+
 export {
+  refreshUser,
   register,
   login,
   getAllUsers,

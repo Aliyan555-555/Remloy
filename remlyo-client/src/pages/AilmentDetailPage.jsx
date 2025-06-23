@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
-import Pagination from "../components/common/Pagination";
-import Button from "../components/common/Button";
 
 // Import Tab Components
 import CommunityRemediesTab from "../components/ailment/CommunityRemediesTab";

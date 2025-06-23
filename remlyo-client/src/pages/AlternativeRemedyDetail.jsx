@@ -1,16 +1,23 @@
 // src/pages/AlternativeRemedyDetail.jsx
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
 import { formatDate } from "../utils";
 import { getRemedyById } from "../api/remediesApi";
+import { useAuth } from "../contexts/AuthContext";
 
 const AlternativeRemedyDetail = () => {
   const { remedyId } = useParams();
+  // Get id from search params (e.g., ?id=xyz)
+  const [searchParams] = useSearchParams();
+  const ailmentId = searchParams.get("id");
+  const { authToken, refresh } = useAuth();
   const location = useLocation();
 
+
+  
   const getBackPath = () => {
     if (location.state?.from && location.state.from.includes("/ailments/")) {
       return location.state.from;
@@ -41,14 +48,25 @@ const AlternativeRemedyDetail = () => {
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [showAIInsightPopup, setShowAIInsightPopup] = useState(false);
 
+  const [accessDenied, setAccessDenied] = useState(false);
+  const [accessDeniedMessage, setAccessDeniedMessage] = useState("");
+
   // Fetch remedy details
   const fetchRemedyDetails = async () => {
-    setLoading(true);
-    // Simulating API call
-    const res = await getRemedyById(remedyId);
-    if (res && res.success) {
-      setRemedy(res.remedy);
+    try {
+      setLoading(true);
+      // Simulating API call
+      const res = await getRemedyById(authToken, remedyId,ailmentId);
+      console.log(res);
+      if (res && res.success) {
+        setRemedy(res.remedy);
+      } else {
+        setAccessDenied(true);
+        setAccessDeniedMessage(res.message);
+      }
+    } finally {
       setLoading(false);
+      await refresh();
     }
   };
 
@@ -129,6 +147,14 @@ const AlternativeRemedyDetail = () => {
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-green"></div>
         </div>
         <Footer />
+      </div>
+    );
+  }
+
+  if (accessDenied) {
+    return (
+      <div className="max-w-screen flex items-center justify-center  h-screen">
+        <AccessDeniedComponent message={accessDeniedMessage} />
       </div>
     );
   }
@@ -441,9 +467,9 @@ const AlternativeRemedyDetail = () => {
                   Ingredients
                 </h3>
                 <div
-                    className=" prose"
-                    dangerouslySetInnerHTML={{ __html: remedy.ingredients }}
-                  />
+                  className=" prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.ingredients }}
+                />
               </div>
 
               {/* Equipment */}
@@ -452,9 +478,9 @@ const AlternativeRemedyDetail = () => {
                   Equipment
                 </h3>
                 <div
-                    className=" prose"
-                    dangerouslySetInnerHTML={{ __html: remedy.equipments }}
-                  />
+                  className=" prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.equipments }}
+                />
               </div>
             </div>
           </div>
@@ -500,7 +526,7 @@ const AlternativeRemedyDetail = () => {
                       </p>
 
                       {/* Requirements */}
-                      {/* <div className="mb-4">
+          {/* <div className="mb-4">
                         <h4 className="text-sm font-medium text-gray-700 mb-2">
                           Requirements:
                         </h4>
@@ -514,8 +540,8 @@ const AlternativeRemedyDetail = () => {
                             </span>
                           ))}
                         </div>
-                      </div> */} 
-{/* 
+                      </div> */}
+          {/* 
                       <div className="flex items-center mb-4">
                         <div className="flex mr-2">
                           {renderStars(related.rating)}

@@ -12,6 +12,7 @@ import {
 import auth from "../middleware/auth.middleware.js";
 import adminMiddleware from "./../middleware/admin.middleware.js";
 import subscriptionMiddleware from './../middleware/subscription.middleware.js';
+import remedyAccessMiddleware from "../middleware/remedies.middleware.js";
 
 const RemedyRouter = express.Router();
 // create remedy route
@@ -21,7 +22,7 @@ RemedyRouter.get('/ailment/:id', getRemediesByAilmentId);
 // get all remedy
 RemedyRouter.get("/", getAllRemedies);
 // get remedy by id
-RemedyRouter.get("/:id", auth, subscriptionMiddleware, getRemedyById);
+RemedyRouter.get("/:id", auth, subscriptionMiddleware,remedyAccessMiddleware, getRemedyById);
 // remedy flag route
 RemedyRouter.post("/flag/:id", auth, flagRemedy);
 // update remedy by id

@@ -5,11 +5,12 @@ import Button from "../../components/common/Button";
 import FileUpload from "../../components/common/FileUpload";
 import { useAuth } from "../../contexts/AuthContext";
 import TextEditor from "../../components/common/TextEditor";
-import { getRemedyById, updateRemedy } from "../../api/remediesApi";
+import { updateRemedy } from "../../api/remediesApi";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import { CATEGORIES, MAX_FILE_SIZE, REMEDY_TYPES, TABS } from "../../constants";
 import { fetchAilments } from "../../api/ailmentsApi";
 import Select from "react-select";
+import { getRemedyById } from "../../api/adminApi";
 const EditRemedy = () => {
   const { user, authToken } = useAuth();
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const EditRemedy = () => {
   const { remedyId } = useParams();
   const [activeTab, setActiveTab] = useState(TABS.GENERAL);
   const [remedyType, setRemedyType] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
@@ -26,6 +27,7 @@ const EditRemedy = () => {
   const [formData, setFormData] = useState(null);
 
   const [errors, setErrors] = useState({});
+
   const handleChange = useCallback(
     (e) => {
       const { name, value } = e.target;
@@ -81,7 +83,7 @@ const EditRemedy = () => {
   };
 
   const fetchRemedy = async () => {
-    const res = await getRemedyById(remedyId);
+    const res = await getRemedyById(authToken, remedyId);
     if (res.success) {
       setFormData(res.remedy);
       setInitialLoading(false);
@@ -97,8 +99,8 @@ const EditRemedy = () => {
     }
   };
 
-   // New handler for ailments select
-   const handleAilmentsChange = (selected) => {
+  // New handler for ailments select
+  const handleAilmentsChange = (selected) => {
     setFormData((prev) => ({
       ...prev,
       ailments: selected ? selected.map((s) => s.value) : [],

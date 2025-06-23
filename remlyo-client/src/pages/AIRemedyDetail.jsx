@@ -17,6 +17,8 @@ const AIRemedyDetail = () => {
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [showAIInsightPopup, setShowAIInsightPopup] = useState(false);
 
+  
+
   // Add getBackPath function
   const getBackPath = () => {
     if (location.state?.from && location.state.from.includes("/ailments/")) {

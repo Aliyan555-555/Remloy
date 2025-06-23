@@ -151,8 +151,20 @@ const createRemedy = async (token, remedyData) => {
 };
 
 
+const getRemedyById = async (token, id) => {
+  try {
+    const { data } = await API.get(`/api/v1/admin/remedy/${id}`, {
+      headers: getAuthHeaders(token),
+    });
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 
 export {
+  getRemedyById,
   createRemedy,
   getAllUsers,
   deleteUser,

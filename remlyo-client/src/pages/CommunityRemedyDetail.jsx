@@ -1,6 +1,6 @@
 // src/pages/CommunityRemedyDetail.jsx
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
@@ -13,6 +13,8 @@ const CommunityRemedyDetail = () => {
   const { remedyId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const ailmentId = searchParams.get("id");
 
   const getBackPath = () => {
     if (location.state?.from && location.state.from.includes("/ailments/")) {
@@ -43,16 +45,26 @@ const CommunityRemedyDetail = () => {
   const [sortOption, setSortOption] = useState("newest");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [showAIInsightPopup, setShowAIInsightPopup] = useState(false);
-  const { authToken } = useAuth();
+  const { authToken, refresh } = useAuth();
+  const [accessDenied, setAccessDenied] = useState(false);
+  const [accessDeniedMessage, setAccessDeniedMessage] = useState("");
 
   // Fetch remedy details
   const fetchRemedyDetails = async () => {
-    setLoading(true);
-    // Simulating API call
-    const res = await getRemedyById(authToken,remedyId);
-    if (res && res.success) {
-      setRemedy(res.remedy);
+    try {
+      setLoading(true);
+      // Simulating API call
+      const res = await getRemedyById(authToken, remedyId,ailmentId);
+      console.log(res);
+      if (res && res.success) {
+        setRemedy(res.remedy);
+      } else {
+        setAccessDenied(true);
+        setAccessDeniedMessage(res.message);
+      }
+    } finally {
       setLoading(false);
+      await refresh();
     }
   };
 
@@ -153,6 +165,14 @@ const CommunityRemedyDetail = () => {
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-green"></div>
         </div>
         <Footer />
+      </div>
+    );
+  }
+
+  if (accessDenied) {
+    return (
+      <div className="max-w-screen flex items-center justify-center  h-screen">
+        <AccessDeniedComponent message={accessDeniedMessage} />
       </div>
     );
   }

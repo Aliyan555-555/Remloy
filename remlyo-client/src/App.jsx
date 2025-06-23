@@ -402,9 +402,9 @@ function App() {
           <Route
             path="/premium-dashboard"
             element={
-              <ProtectedRoute requiredSubscription="premium">
+              // <ProtectedRoute requiredSubscription="premium">
                 <PremiumDashboardPage />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           />
           <Route

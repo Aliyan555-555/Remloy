@@ -19,9 +19,9 @@ const PharmaceuticalRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
         ailmentId,
         activeTab,
         currentPage,
-        sortOption,
+        sortOption
       );
-      
+
       if (res.success) {
         setRemedies(res.remedies);
         setTotalPages(res.pagination.pages);
@@ -187,7 +187,7 @@ const PharmaceuticalRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
                 <div className="flex justify-between items-center">
                   <Button
                     variant="readMore"
-                    to={`/remedies/pharmaceutical/${remedy.id}`}
+                    to={`/remedies/pharmaceutical/${remedy.id}?id=${ailmentId}`}
                     state={{ from: `/ailments/${ailmentId}` }}
                     size="small"
                   >

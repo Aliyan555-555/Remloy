@@ -6,6 +6,8 @@ import DashboardSidebar from "./DashboardSidebar";
 import AdminSidebar from "./AdminSidebar"; // Import AdminSidebar
 import ModeratorSidebar from "./ModeratorSidebar";
 import WriterSidebar from "./WriterSidebar";
+import { useAuth } from "../../contexts/AuthContext";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 const DashboardLayout = ({
   children,
@@ -13,6 +15,7 @@ const DashboardLayout = ({
   user,
   isPremiumUser = false,
 }) => {
+  const {loading} = useAuth()
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
     // Check if window exists (for SSR compatibility)
     if (typeof window !== "undefined") {
@@ -45,12 +48,15 @@ const DashboardLayout = ({
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  if (loading){
+    return <LoadingSpinner/>
+  }
 
   // Determine if user is admin
   const isAdmin = user && user.accessLevel !== "user";
 
   const RenderSidebar = () => {
-    switch (user.accessLevel) {
+    switch (user?.accessLevel) {
       case "user":
         return (
           <DashboardSidebar

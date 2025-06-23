@@ -85,13 +85,26 @@ const userSchema = new mongoose.Schema(
     warningAt: {
       type: Date,
     },
+    saveRemedies: [
+      {
+        type: {
+          type: String,
+          enum: ["to-try", "favorite"],
+          default: "favorite",
+        },
+        remedy: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Remedy",
+        },
+      },
+    ],
     unlockedRemedies: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Remedy"
-      }
+        ref: "Remedy",
+      },
     ],
-  
+
     emailVerificationToken: String,
     emailVerificationExpires: Date,
     emailVerificationRequestCount: {

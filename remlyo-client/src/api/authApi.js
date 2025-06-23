@@ -1,23 +1,19 @@
 import API from "../services/api";
+import { getAuthHeaders } from "../utils";
 
 const verifyEmailToken = async (token, navigate) => {
   try {
     const res = await API.post(`/api/v1/auth/verify-email/${token}`);
 
     if (!res.data.success) {
-   
       navigate("/");
       return;
     }
-  } catch (error) {
- 
-  }
+  } catch (error) {}
 };
 
-const sendEmailVerification = async (setLoading, setMessage,email) => {
+const sendEmailVerification = async (setLoading, setMessage, email) => {
   try {
-    
-    
     const res = await API.post(`/api/v1/auth/verify-email`, { email });
     setLoading(false);
     if (!res.data.success) {
@@ -30,4 +26,14 @@ const sendEmailVerification = async (setLoading, setMessage,email) => {
     return error.response.data;
   }
 };
-export { verifyEmailToken, sendEmailVerification };
+const refreshUser = async (token) => {
+  try {
+    const { data } = await API.get("/api/v1/auth/refresh", {
+      headers: getAuthHeaders(token),
+    });
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+export { verifyEmailToken, sendEmailVerification, refreshUser };

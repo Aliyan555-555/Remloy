@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import { reCheckInSuccess } from "../api/subscriptionApi";
 import { useAuth } from "../contexts/AuthContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "../components/common/Button";
+import { useUserFlow } from "../contexts/UserFlowContext";
 
 const PaymentSuccessPage = () => {
   const [loading, setLoading] = useState(true);
   const [subscriptionData, setSubscriptionData] = useState(null);
+  const navigate = useNavigate();
   const { planId } = useParams();
   const { authToken } = useAuth();
+  const { checkUserFlow } = useUserFlow();
 
   const checking = async () => {
     try {
@@ -20,6 +23,7 @@ const PaymentSuccessPage = () => {
         }
 
         setSubscriptionData(res.data.subscription);
+        await checkUserFlow();
       }
     } finally {
       setLoading(false);
@@ -58,8 +62,18 @@ const PaymentSuccessPage = () => {
           </p>
         </div>
         <div className="flex gap-5 !mt-6">
-          <Button href={"/dashboard"} className="text-nowrap rounded-md text-[#2E604A] !bg-white border-2 border-[#2E604A]">Go to Dashboard</Button>
-          <Button href={"/remedies"} className="text-nowrap rounded-md bg-[#2E604A] ">View Remedies</Button>
+          <Button
+            onClick={() => navigate("/dashboard")}
+            className="text-nowrap rounded-md !text-[#2E604A] !bg-white border-2 border-[#2E604A]"
+          >
+            Go to Dashboard
+          </Button>
+          <Button
+            onClick={() => navigate("/remedies")}
+            className="text-nowrap rounded-md bg-[#2E604A] "
+          >
+            View Remedies
+          </Button>
         </div>
       </div>
     </div>

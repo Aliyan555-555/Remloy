@@ -21,10 +21,15 @@ const getAllRemedies = async ({ page = 1, limit = 10, search = "" } = {}) => {
   }
 };
 
-const getRemedyById = async (token, id) => {
+const getRemedyById = async (token, id, ailmentId) => {
   try {
     const { data } = await API.get(`/api/v1/remedy/${id}`, {
-      headers: getAuthHeaders(token)
+      headers: getAuthHeaders(token),
+      params: ailmentId
+        ? {
+            id: ailmentId,
+          }
+        : undefined,
     });
     return data;
   } catch (error) {
@@ -43,7 +48,12 @@ const updateRemedy = async (token, id, remedyData) => {
   }
 };
 
-const getRemediesByAilmentAndType = async (ailmentId, type, currentPage, sort) => {
+const getRemediesByAilmentAndType = async (
+  ailmentId,
+  type,
+  currentPage,
+  sort
+) => {
   try {
     const { data } = await API.get(`/api/v1/remedy/ailment/${ailmentId}`, {
       params: {

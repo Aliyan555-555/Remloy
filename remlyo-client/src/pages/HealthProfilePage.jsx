@@ -163,6 +163,7 @@ const HealthProfilePage = () => {
         if (res.success) {
           setFlowStatus(UserFlowStatus.COMPLETE);
           // checkUserFlow().then(() => navigate(redirect, { replace: true }))
+          await checkUserFlow();
           navigate(redirect);
         }
       } else {

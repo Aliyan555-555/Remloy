@@ -7,11 +7,10 @@ import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../components/layout/DashboardLayout";
 
 const UserDashboardPage = () => {
-  const { upgradeToPremium, user } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const handleUpgrade = () => {
-    upgradeToPremium();
     navigate("/premium-dashboard");
   };
 
@@ -55,11 +54,7 @@ const UserDashboardPage = () => {
   ];
 
   return (
-    <DashboardLayout 
-      pageTitle="Dashboard" 
-      user={user}
-      isPremiumUser={false}
-    >
+    <DashboardLayout pageTitle="Dashboard" user={user} isPremiumUser={false}>
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {/* My Remedies Card */}
@@ -86,12 +81,23 @@ const UserDashboardPage = () => {
 
           <div className="flex items-center justify-between">
             <div className="text-left">
-              <div className="text-3xl font-bold text-gray-900 mb-1">3</div>
-              <p className="text-xs text-red-500">
-                You've reached your free limit.
-                <br />
-                Upgrade for full access.
-              </p>
+              <div className="text-3xl font-bold text-gray-900 mb-1">
+                {user?.unlockedRemedies?.length ?? 0}
+              </div>
+              {user?.activeSubscription &&
+                user.activeSubscription.plan &&
+                Array.isArray(user.activeSubscription.accessRemediesWithAilments) &&
+                user.activeSubscription.accessRemediesWithAilments.some(
+                  (a) =>
+                    Array.isArray(a.remedies) &&
+                    a.remedies.length >= user.activeSubscription.plan.remediesPerAilment
+                ) && (
+                  <p className="text-xs text-red-500">
+                    You've reached your free limit for some ailment.
+                    <br />
+                    Upgrade for full access.
+                  </p>
+                )}
             </div>
             <div className="opacity-400">
               <img
@@ -153,14 +159,33 @@ const UserDashboardPage = () => {
 
           <div className="flex items-center justify-between">
             <div className="text-left">
-              <p className="text-sm text-gray-600 mb-1">
-                You've used 1 of 3 free full
-                <br />
-                remedy views.
-              </p>
-              <p className="text-xs font-medium mb-2">
-                Unlock Unlimited Remedies
-              </p>
+              {user?.activeSubscription && user.activeSubscription.plan ? (
+                <>
+                  <p className="text-sm text-gray-600 mb-1">
+                    Your plan:{" "}
+                    <span className="font-semibold">
+                      {user.activeSubscription.plan.name}
+                    </span>
+                  </p>
+                  <p className="text-xs text-gray-500 mb-1">
+                    Remedies per ailment allowed:{" "}
+                    <span className="font-semibold">
+                      {user.activeSubscription.plan.remediesPerAilment}
+                    </span>
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-gray-600 mb-1">
+                    You've used 1 of 3 free full
+                    <br />
+                    remedy views.
+                  </p>
+                  <p className="text-xs font-medium mb-2">
+                    Unlock Unlimited Remedies
+                  </p>
+                </>
+              )}
               <Button
                 variant="contained"
                 color="brand"
@@ -200,9 +225,7 @@ const UserDashboardPage = () => {
                   <div>
                     <p className="text-gray-700">
                       Tried new remedy :{" "}
-                      <span className="font-medium">
-                        {activity.remedyName}
-                      </span>
+                      <span className="font-medium">{activity.remedyName}</span>
                     </p>
                     <p className="text-sm text-gray-500 mt-1">
                       Rated {activity.rating} stars{" "}
@@ -215,9 +238,7 @@ const UserDashboardPage = () => {
                   <div>
                     <p className="text-gray-700">
                       Left a review for{" "}
-                      <span className="font-medium">
-                        {activity.remedyName}
-                      </span>
+                      <span className="font-medium">{activity.remedyName}</span>
                     </p>
                     <p className="text-sm text-gray-500 mt-1">
                       <span className="text-brand-green underline cursor-pointer">
@@ -280,9 +301,7 @@ const UserDashboardPage = () => {
       {/* Saved Remedies Section */}
       <div>
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800">
-            Saved Remedies
-          </h2>
+          <h2 className="text-xl font-bold text-gray-800">Saved Remedies</h2>
           <Button variant="text" color="brand" to="/saved-remedies">
             View All Saved Remedies
           </Button>
