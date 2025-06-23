@@ -1,0 +1,77 @@
+[{
+  "_id": {
+    "$oid": "6855bf42cc59247e7ce3e40d"
+  },
+  "name": "Acid Reflux",
+  "description": "Acid Reflux, also known as gastroesophageal reflux disease (GERD) when chronic, is a condition in which stomach acid frequently flows back into the esophagus, causing irritation and a burning sensation known as heartburn. It can lead to discomfort after eating, regurgitation of food or sour liquid, and difficulty swallowing. Lifestyle changes, dietary modifications, and natural remedies can help manage symptoms and prevent flare-ups.",
+  "category": "Digestive Health",
+  "symptoms": [
+    "Burning sensation in the chest (heartburn)",
+    "Regurgitation of food or sour liquid",
+    "Difficulty swallowing"
+  ],
+  "causesAndRisks": [
+    "Avoid lying down immediately after eating",
+    "Maintain a healthy weight"
+  ],
+  "preventionTips": [
+    "Limit spicy, fatty, and acidic foods"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": true,
+  "requiresMedicalAttention": true,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-06-20T20:06:26.213Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-21T10:55:51.305Z"
+  },
+  "__v": 0,
+  "slug": "acid-reflux"
+},
+{
+  "_id": {
+    "$oid": "6856bac0cf7b86b3d0cf7741"
+  },
+  "name": "Migraine",
+  "slug": "migraine",
+  "description": "Migraine is a neurological condition characterized by intense, debilitating headaches, often accompanied by nausea, vomiting, and sensitivity to light or sound. Migraines can last for hours or days and may be triggered by stress, certain foods, hormonal changes, or environmental factors.",
+  "category": "Mental Health",
+  "symptoms": [
+    "Severe throbbing or pulsing headache",
+    "Nausea",
+    "Vomiting",
+    "Sensitivity to light",
+    "Sensitivity to sound"
+  ],
+  "causesAndRisks": [
+    "Stress and anxiety",
+    "Hormonal changes in women",
+    "Certain foods and drinks (e.g., aged cheese, alcohol)",
+    "Changes in sleep patterns",
+    "Bright lights or loud noises"
+  ],
+  "preventionTips": [
+    "Identify and avoid known triggers",
+    "Maintain a regular sleep schedule",
+    "Stay hydrated"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true,
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-06-21T13:59:28.660Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-21T13:59:28.660Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,144 @@
+[{
+  "_id": {
+    "$oid": "6857d9aec3d14524f9aac632"
+  },
+  "name": "Honey & Cinnamon Paste for Acne",
+  "description": "A natural antibacterial remedy using honey and cinnamon to help soothe inflammation, reduce acne-causing bacteria, and promote healing.",
+  "category": "Skin Care",
+  "ingredients": "<ul><li><p>1 tablespoon raw honey (preferably organic or Manuka)</p></li><li><p>1/2 teaspoon ground cinnamon (fresh and finely ground)</p></li></ul>",
+  "brandName": "",
+  "instructions": "<ul><li><p>Clean your face with a gentle cleanser and pat dry.</p></li><li><p>Apply the paste to acne-prone areas using a cotton swab or clean fingers.</p></li><li><p>Leave it on for 10–15 minutes.</p></li><li><p>Rinse off with lukewarm water.</p></li><li><p>Use 1–2 times per week.</p></li></ul>",
+  "content": "<p><strong>What is this Remedy?</strong><br>Honey &amp; cinnamon paste is a traditional skincare remedy aimed at reducing acne. Both ingredients have natural antibacterial and anti-inflammatory properties that can help cleanse the skin and promote healing.</p><p><strong>How Does It Work?</strong></p><ul><li><p><strong>Honey</strong> acts as a humectant and antimicrobial agent, drawing moisture into the skin while killing bacteria.</p></li><li><p><strong>Cinnamon</strong> contains cinnamaldehyde, which helps reduce inflammation and also fights acne-causing microbes.</p></li></ul><p><strong>Pros:</strong></p><ul><li><p>Natural and chemical-free</p></li><li><p>Inexpensive and easy to prepare at home</p></li><li><p>Antibacterial and soothing properties</p></li></ul><p><strong>Cons:</strong></p><ul><li><p>May cause irritation for sensitive skin</p></li><li><p>Cinnamon may create a mild burning sensation</p></li><li><p>Patch test is highly recommended before full application</p></li></ul><p><strong>Conclusion:</strong><br>Honey &amp; Cinnamon Paste is a safe and natural option for managing mild acne. While not a cure, it can support a healthy skincare routine when used properly. Always test for skin sensitivity first.</p>",
+  "media": {
+    "type": "image/jpeg",
+    "source": "https://res.cloudinary.com/dtupoan8j/image/upload/v1750587665/uploads/1750587664588-download.jpg"
+  },
+  "sideEffects": "",
+  "preparationTime": "15–30 minutes to prepare",
+  "aiConfidenceScore": 0,
+  "isAIGenerated": false,
+  "moderationStatus": "pending",
+  "scientificReferences": [],
+  "geographicRestrictions": [],
+  "type": "community",
+  "createdBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "viewCount": 0,
+  "equipments": "<ul><li><p>Small mixing bowl</p></li><li><p>Measuring spoons</p></li><li><p>Clean spoon or spatula</p></li><li><p>Cotton swab or clean fingers</p></li><li><p>Mirror (optional)</p></li></ul>",
+  "howToTakeIt": "",
+  "dosageAndUsage": "",
+  "storageInstructions": "",
+  "averageRating": 0,
+  "ailments": [
+    {
+      "$oid": "6855bf42cc59247e7ce3e40d"
+    },
+    {
+      "$oid": "6856bac0cf7b86b3d0cf7741"
+    }
+  ],
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-06-22T10:23:42.639Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-22T10:23:42.639Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6857f790f25befb8b6681f71"
+  },
+  "name": "Tea for Nausea",
+  "description": "A soothing herbal tea made from fresh ginger to relieve nausea and motion sickness.\nContent: Ginger has natural anti-nausea properties and can help calm the stomach. Drinking it warm helps ease digestion and provides comfort.",
+  "category": "Digestive",
+  "ingredients": "<ul><li><p>1 teaspoon freshly grated ginger</p></li><li><p>1 cup boiling water</p></li><li><p>Optional: honey or lemon for taste</p></li></ul>",
+  "brandName": "",
+  "instructions": "<ol><li><p>Add grated ginger to a cup of boiling water.</p></li><li><p>Cover and let steep for 5–10 minutes.</p></li><li><p>Strain the tea into a mug, add honey or lemon if desired, and sip slowly.</p></li></ol>",
+  "content": "<p>Ginger tea has been used for centuries across various cultures as a natural way to soothe the digestive system and reduce feelings of nausea. Whether it’s motion sickness, morning sickness during pregnancy, or nausea due to indigestion, ginger offers gentle yet effective relief for many people. The main active compounds in ginger, called gingerols and shogaols, have anti-inflammatory and anti-nausea properties that help relax the gastrointestinal muscles and improve bile flow, aiding digestion and preventing bloating. Many traditional healers and modern herbal practitioners recommend ginger tea as a safe alternative to over-the-counter nausea medications, which can sometimes have side effects or interactions.</p><p>To prepare ginger tea, it’s best to use fresh ginger root rather than powdered forms, as the fresh root contains higher concentrations of the beneficial compounds. Fresh ginger has a warm, spicy flavor that not only helps settle the stomach but also stimulates saliva and digestive enzyme production, which further aids in breaking down food efficiently. Drinking a cup of warm ginger tea can also provide mild hydration and comfort, especially during cold weather or when you’re feeling under the weather. Some people add honey and lemon for extra soothing effects and to enhance the taste, making the tea more palatable, especially for children or those sensitive to strong flavors.</p><p>Apart from its benefits for nausea, ginger tea is known to support overall immune health. It can help fight minor infections and is often combined with other herbs like peppermint or chamomile for additional calming and digestive benefits. However, like any herbal remedy, moderation is key. Excessive consumption of ginger can sometimes lead to mild heartburn or mouth irritation in sensitive individuals. It’s always a good practice to consult a qualified practitioner if you have underlying conditions or are pregnant, although ginger is widely considered safe for most people when used responsibly.</p><p>Incorporating ginger tea into your routine is simple and rewarding. Keeping fresh ginger at home allows you to prepare this tea whenever nausea strikes or simply as a daily digestive tonic. This natural remedy not only addresses the discomfort of nausea but also promotes a healthy gut, which is essential for overall well-being. With its pleasant taste and proven benefits, ginger tea remains a trusted companion for anyone seeking gentle, plant-based support for stomach troubles.</p>",
+  "media": {
+    "type": "image/jpeg",
+    "source": "https://res.cloudinary.com/dtupoan8j/image/upload/v1750595390/uploads/1750595388312-download.jpg"
+  },
+  "sideEffects": "",
+  "preparationTime": "10–15 minutes to prepare",
+  "aiConfidenceScore": 0,
+  "isAIGenerated": false,
+  "moderationStatus": "pending",
+  "scientificReferences": [],
+  "geographicRestrictions": [],
+  "type": "alternative",
+  "createdBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "viewCount": 0,
+  "equipments": "<ul><li><p>Mug</p></li><li><p>tea </p></li><li><p>strainer</p></li><li><p> kettle</p></li><li><p> spoon.</p></li></ul>",
+  "howToTakeIt": "",
+  "dosageAndUsage": "",
+  "storageInstructions": "",
+  "averageRating": 0,
+  "ailments": [
+    {
+      "$oid": "6855bf42cc59247e7ce3e40d"
+    }
+  ],
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-06-22T12:31:12.072Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-22T12:31:12.072Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685811539eb1168b0eeb526a"
+  },
+  "name": "Paracetamol 500mg Tablets",
+  "description": " Common over-the-counter medication to relieve mild to moderate pain and reduce fever.",
+  "category": "Pain Relief",
+  "ingredients": "",
+  "brandName": "<ol><li><p>Panadol</p></li><li><p>Tylenol</p></li><li><p>Calpol</p></li></ol>",
+  "instructions": "",
+  "content": "<p>Paracetamol, also known as acetaminophen in some countries, is one of the most widely used medicines for pain and fever management. It is commonly prescribed or purchased over-the-counter to help relieve headaches, muscle aches, back pain, toothaches, menstrual cramps, and to lower high body temperature due to infections or viral illnesses. Paracetamol works by blocking the production of certain chemical messengers in the brain that signal pain and regulate temperature, providing quick and effective relief for most people when used correctly. Unlike nonsteroidal anti-inflammatory drugs (NSAIDs) such as ibuprofen or aspirin, paracetamol does not irritate the stomach lining and is generally safe for individuals who have sensitive stomachs or are prone to ulcers.</p><p>While paracetamol is considered safe when used within the recommended dose, it can be very harmful if taken in large quantities. Overdosing can cause severe liver damage, which may require medical intervention or even liver transplantation in extreme cases. Therefore, it is essential to follow the dosage instructions provided by your healthcare professional or as indicated on the packaging. Paracetamol is often included in combination cold and flu medicines, so it’s important not to accidentally take more than one product containing paracetamol at the same time. Patients with existing liver conditions, chronic alcohol consumption, or those taking other medicines that affect the liver should consult their doctor before use.</p><p>Paracetamol is generally well tolerated, with very few side effects when taken at the correct dose. However, allergic reactions, though rare, can occur and may present as rash, swelling, or difficulty breathing. If you notice any unusual symptoms after taking paracetamol, seek medical help immediately. In summary, paracetamol remains an essential household medicine for managing common pains and fevers. Used responsibly, it is a reliable option for quick symptom relief.<br></p>",
+  "media": {
+    "type": "image/jpeg",
+    "source": "https://res.cloudinary.com/dtupoan8j/image/upload/v1750601920/uploads/1750601918872-download.jpg"
+  },
+  "sideEffects": "<p>Rare but may include allergic rash, liver damage (in overdose), or mild stomach upset.</p>",
+  "preparationTime": "15–30 minutes to prepare",
+  "aiConfidenceScore": 0,
+  "isAIGenerated": false,
+  "moderationStatus": "pending",
+  "scientificReferences": [],
+  "geographicRestrictions": [],
+  "type": "pharmaceutical",
+  "createdBy": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "viewCount": 0,
+  "equipments": "<p>Drinking water, pill box or blister pack.</p>",
+  "howToTakeIt": "<p>Swallow tablet whole with water. Do not crush or chew unless advised by your doctor. Take with or without food.</p>",
+  "dosageAndUsage": "<p>Adults: 500mg to 1000mg every 4–6 hours as needed, maximum 4 grams per day. Not recommended for children under 6 without medical advice.</p>",
+  "storageInstructions": "<p>Store at room temperature below 25°C. Keep away from moisture and direct sunlight. Keep out of reach of children.</p>",
+  "averageRating": 0,
+  "ailments": [
+    {
+      "$oid": "6856bac0cf7b86b3d0cf7741"
+    },
+    {
+      "$oid": "6855bf42cc59247e7ce3e40d"
+    }
+  ],
+  "isActive": true,
+  "createdAt": {
+    "$date": "2025-06-22T14:21:07.870Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-22T14:21:07.870Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,37 @@
+[{
+  "_id": {
+    "$oid": "68586e143ac0c6e314d48d0b"
+  },
+  "userId": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5150"
+  },
+  "startDate": {
+    "$date": "2025-06-22T20:56:52.197Z"
+  },
+  "endDate": {
+    "$date": "2026-06-22T20:56:52.197Z"
+  },
+  "autoRenew": false,
+  "paymentStatus": "completed",
+  "features": [
+    "Access 3 Remedies per Ailment",
+    "Rate & Review Remedies",
+    "Save Favorite Remedies"
+  ],
+  "monthlyPrice": 0,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-22T20:56:52.197Z"
+  },
+  "duration": 365,
+  "createdAt": {
+    "$date": "2025-06-22T20:56:52.218Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-22T20:56:52.218Z"
+  },
+  "__v": 0
+}]

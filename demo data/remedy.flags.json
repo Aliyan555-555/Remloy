@@ -2,24 +2,24 @@
   "_id": {
     "$oid": "683ade73260cab55348808ef"
   },
-  "contentId": "6840a92b50deee48a2fa8a26",
+  "contentId": "68475afa7857fc73d55a7a7d",
   "contentType": "Remedy",
   "flaggedBy": {
     "$oid": "683815b10214394db446fdb3"
   },
   "reason": "Inaccurate dosage information",
   "note": "This remedy suggests quantities that might be unsafe for children.",
-  "status": "dismissed",
+  "status": "resolved",
   "createdAt": {
     "$date": "2025-05-31T10:48:19.644Z"
   },
   "updatedAt": {
-    "$date": "2025-06-05T19:36:01.406Z"
+    "$date": "2025-06-16T17:42:57.551Z"
   },
   "__v": 0,
-  "resolutionNote": "fla",
+  "resolutionNote": "",
   "resolvedAt": {
-    "$date": "2025-06-05T19:36:01.405Z"
+    "$date": "2025-06-16T17:42:57.537Z"
   },
   "resolvedBy": {
     "$oid": "6838cb831d984b618341af13"
