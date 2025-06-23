@@ -10,6 +10,7 @@ const FlowGuard = ({ children }) => {
   const { isAuthenticated, user } = useAuth();
   const location = useLocation();
 
+  console.log("🚀 ~ FlowGuard ~ flowStatus:", flowStatus);
   const currentPath = location.pathname;
   const role = user?.accessLevel;
 

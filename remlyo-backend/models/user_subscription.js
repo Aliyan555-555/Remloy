@@ -50,6 +50,23 @@ const UserSubscriptionSchema = new mongoose.Schema(
       type: Number,
       default: 0, // 0 for lifetime
     },
+    status: {
+      type: String,
+      enum: ["active", "expired", "canceled"],
+      default: "active"
+    },
+    accessRemediesWithAilments: [
+      {
+        ailmentId: { type: mongoose.Schema.Types.ObjectId, ref: "Ailment" },
+        remedies: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Remedy"
+          }
+        ]
+
+      }
+    ],
     canceledAt: {
       type: Date,
     },

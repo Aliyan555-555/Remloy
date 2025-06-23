@@ -1,6 +1,7 @@
 import UserSubscription from "../models/user_subscription.js";
 import PricingPlan from "../models/pricing_plan.model.js";
 import User from "../models/user.model.js";
+import mongoose from "mongoose";
 
 // Create a new subscription
 const createSubscription = async (req, res) => {
@@ -239,9 +240,8 @@ const checkSubscriptionStatus = async (req, res) => {
 
     const subscription = await UserSubscription.findOne({
       userId,
-      status: "active",
       endDate: { $gt: new Date() },
-    }).populate("planId");
+    }).populate("plan", "name type price");
 
     res.status(200).json({
       success: true,
@@ -307,8 +307,8 @@ const subscribeFreePlan = async (req, res) => {
         freePlan.type === "month"
           ? 30
           : new Date(new Date().getFullYear(), 1, 29).getDate() === 29
-          ? 366
-          : 365,
+            ? 366
+            : 365,
     });
     await User.findByIdAndUpdate(req.user.id, {
       activeSubscription: subscription._id,
@@ -365,6 +365,9 @@ const checkInSuccess = async (req, res) => {
     const { id: planId } = req.params;
     const { id: userId } = req.user;
 
+
+
+
     const now = new Date();
     const activeSubscription = await UserSubscription.findOne({
       userId,
@@ -372,7 +375,7 @@ const checkInSuccess = async (req, res) => {
       endDate: { $gt: now },
       canceledAt: { $exists: false },
       paymentStatus: "completed",
-    });
+    }).populate("plan", "name price type");
 
     return res.status(200).json({
       success: true,

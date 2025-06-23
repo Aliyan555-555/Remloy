@@ -7,6 +7,7 @@ import Button from "../components/common/Button";
 import { getRemedyById } from "../api/remediesApi";
 import { formatDate } from "../utils";
 import HtmlRenderer from "../components/common/HtmlRenderer";
+import { useAuth } from "../contexts/AuthContext";
 
 const CommunityRemedyDetail = () => {
   const { remedyId } = useParams();
@@ -42,12 +43,13 @@ const CommunityRemedyDetail = () => {
   const [sortOption, setSortOption] = useState("newest");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [showAIInsightPopup, setShowAIInsightPopup] = useState(false);
+  const { authToken } = useAuth();
 
   // Fetch remedy details
   const fetchRemedyDetails = async () => {
     setLoading(true);
     // Simulating API call
-    const res = await getRemedyById(remedyId);
+    const res = await getRemedyById(authToken,remedyId);
     if (res && res.success) {
       setRemedy(res.remedy);
       setLoading(false);

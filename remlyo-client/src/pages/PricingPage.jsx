@@ -29,7 +29,7 @@ const PricingPage = () => {
   const handleSubscribe = async (id) => {
     try {
       setLoading(id);
-      await preprepareForSubscription(authToken, id);
+      await preprepareForSubscription(authToken, id, navigate);
     } finally {
       setLoading(false);
     }

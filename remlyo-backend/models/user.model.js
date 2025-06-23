@@ -85,7 +85,13 @@ const userSchema = new mongoose.Schema(
     warningAt: {
       type: Date,
     },
-
+    unlockedRemedies: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Remedy"
+      }
+    ],
+  
     emailVerificationToken: String,
     emailVerificationExpires: Date,
     emailVerificationRequestCount: {
