@@ -8,51 +8,58 @@ const UserSubscriptionSchema = new mongoose.Schema(
       required: true,
     },
     plan: {
-     type:mongoose.Schema.Types.ObjectId,
-     ref:"PricingPlan"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "PricingPlan",
     },
-    startDate: { 
-      type: Date, 
+    startDate: {
+      type: Date,
       default: Date.now,
     },
-    endDate: { 
+    endDate: {
       type: Date,
       required: true,
     },
-    autoRenew: { 
-      type: Boolean, 
-      default: false 
+    autoRenew: {
+      type: Boolean,
+      default: false,
     },
-    paymentStatus: { 
-      type: String, 
-      enum: ['pending', 'completed', 'failed'],// maybe update this in future
-      default: 'pending',
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "completed", "failed"], // maybe update this in future
+      default: "pending",
     },
     features: {
       type: [String],
       default: [],
     },
-    monthlyPrice: { 
-      type: Number, 
+    monthlyPrice: {
+      type: Number,
+      default: 0,
       required: true,
     },
-    billingCycle: { 
-      type: String, 
-      enum: ['monthly', 'yearly'],// maybe update this in future
+    billingCycle: {
+      type: String,
+      enum: ["monthly", "yearly"], // maybe update this in future
       required: true,
     },
-    nextBillingDate: { 
+    nextBillingDate: {
       type: Date,
       required: true,
     },
-    
-    canceledAt: { 
-      type: Date 
+    duration: {
+      type: Number,
+      default: 0, // 0 for lifetime
+    },
+    canceledAt: {
+      type: Date,
     },
   },
   { timestamps: true }
 );
 
-const UserSubscription = mongoose.model("UserSubscription", UserSubscriptionSchema);
+const UserSubscription = mongoose.model(
+  "UserSubscription",
+  UserSubscriptionSchema
+);
 
 export default UserSubscription;

@@ -150,6 +150,8 @@ const createRemedy = async (token, remedyData) => {
   }
 };
 
+
+
 export {
   createRemedy,
   getAllUsers,

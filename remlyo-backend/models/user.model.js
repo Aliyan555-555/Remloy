@@ -23,12 +23,10 @@ const userSchema = new mongoose.Schema(
     },
     accessLevel: {
       type: String,
-      enum: ["user", "admin","moderator","writer"], // maybe update this in future
+      enum: ["user", "admin", "moderator", "writer"], // maybe update this in future
       default: "user",
     },
-    futureAccessLevel:{
-
-    },
+    futureAccessLevel: {},
     geographicRegion: {
       type: String,
       default: "global",
@@ -57,7 +55,10 @@ const userSchema = new mongoose.Schema(
     },
 
     // for email verification
-
+    activeSubscription: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserSubscription",
+    },
     status: {
       type: String,
       enum: ["active", "suspended", "warning"],

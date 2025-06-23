@@ -362,8 +362,6 @@ const checkSlugUniqueness = async (req, res) => {
 };
 
 
-
-
 const generateSlug = async (req, res) => {
   try {
     const { title } = req.body;
@@ -377,7 +375,7 @@ const generateSlug = async (req, res) => {
     } else {
       // Generate random slug if no title provided
       const randomString = Math.random().toString(36).substring(2, 8);
-      slug = `article-${randomString}`;
+      slug = `${randomString}`;
     }
 
     // Check if slug exists and append number if needed

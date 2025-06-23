@@ -3,7 +3,6 @@ import { useAuth } from "./AuthContext";
 import { UserFlowStatus } from "../constants";
 import { checkHealthProfile, checkSubscription } from "../api/userApi";
 
-
 const UserFlowContext = createContext();
 
 export const UserFlowProvider = ({ children }) => {
@@ -12,68 +11,51 @@ export const UserFlowProvider = ({ children }) => {
   const [loading, setLoading] = useState(authLoading);
 
   const checkUserFlow = async () => {
-    if (!loading && !isAuthenticated) {
-      setFlowStatus(UserFlowStatus.LOGGED_OUT);
-      setLoading(false);
-      return;
-    }
-  
-    if (user && !user.emailVerified) {
-      setFlowStatus(UserFlowStatus.EMAIL_UNVERIFIED);
-      setLoading(false);
-      return;
-    }
-  
+    setLoading(true);
     try {
-      const healthProfileRes = await checkHealthProfile(authToken);
-      
-      // If profile check is successful, set status to complete
-      if (healthProfileRes && healthProfileRes.success) {
-        setFlowStatus(UserFlowStatus.COMPLETE);
-        setLoading(false);
+      if (!isAuthenticated) {
+        setFlowStatus(UserFlowStatus.LOGGED_OUT);
         return;
       }
 
-      // Only set profile incomplete if the check explicitly failed
-      if (healthProfileRes && !healthProfileRes.success) {
-        setFlowStatus(UserFlowStatus.PROFILE_INCOMPLETE);
-        setLoading(false);
+      if (user && !user.emailVerified) {
+        setFlowStatus(UserFlowStatus.EMAIL_UNVERIFIED);
         return;
       }
-  
-      // Uncomment and expand this if you want to include subscription
-      // const subscriptionRes = await checkSubscription(authToken);
-      // if (!subscriptionRes.data.hasActiveSubscription) {
-      //   setFlowStatus(UserFlowStatus.SUBSCRIPTION_REQUIRED);
-      //   setLoading(false);
-      //   return;
-      // }
-  
+
+      // Check health profile
+      const healthProfileRes = await checkHealthProfile(authToken);
+      if (!healthProfileRes || !healthProfileRes.success) {
+        setFlowStatus(UserFlowStatus.PROFILE_INCOMPLETE);
+        return;
+      }
+
+      // Check subscription
+      const subscriptionRes = await checkSubscription(authToken);
+      if (!subscriptionRes?.data?.hasActiveSubscription) {
+        setFlowStatus(UserFlowStatus.SUBSCRIPTION_REQUIRED);
+        return;
+      }
+
       setFlowStatus(UserFlowStatus.COMPLETE);
     } catch (error) {
       console.error("Error checking user flow:", error);
-      // Don't set profile incomplete on error, keep previous status
     } finally {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
-    if (!loading && isAuthenticated && authToken) {
+    if (isAuthenticated && authToken) {
       checkUserFlow();
-    } else if (!loading && !isAuthenticated) {
-      // Optionally handle the logged out state if needed here,
-      // though checkUserFlow also handles it internally
+    } else if (!isAuthenticated) {
       setFlowStatus(UserFlowStatus.LOGGED_OUT);
       setLoading(false);
     }
-
-    return setLoading(false)
-  }, [location.pathname]);
+  }, [isAuthenticated, authToken]);
 
   return (
-    <UserFlowContext.Provider value={{ flowStatus, loading, checkUserFlow,setFlowStatus }}>
+    <UserFlowContext.Provider value={{ flowStatus, loading, checkUserFlow, setFlowStatus }}>
       {children}
     </UserFlowContext.Provider>
   );

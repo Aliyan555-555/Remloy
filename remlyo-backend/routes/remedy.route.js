@@ -7,6 +7,7 @@ import {
   getRemedyById,
   updateRemedy,
   createComment,
+  getRemediesByAilmentId,
 } from "../controllers/remedy.controller.js";
 import auth from "../middleware/auth.middleware.js";
 import adminMiddleware from "./../middleware/admin.middleware.js";
@@ -14,6 +15,8 @@ import adminMiddleware from "./../middleware/admin.middleware.js";
 const RemedyRouter = express.Router();
 // create remedy route
 RemedyRouter.post("/create", auth, createRemedy);
+// get remedies by ailment and type
+RemedyRouter.get('/ailment/:id',getRemediesByAilmentId);
 // get all remedy
 RemedyRouter.get("/", getAllRemedies);
 // get remedy by id

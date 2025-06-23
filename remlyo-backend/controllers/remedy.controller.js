@@ -352,6 +352,56 @@ const createComment = async (req, res) => {
   }
 };
 
+const getRemediesByAilmentId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { type, page = 1, limit = 10, sort } = req.query;
+
+    // Build query
+    const query = {
+      ailments: id,
+      isActive: true,
+    };
+    if (type) query.type = type;
+
+    // Determine sort option
+    let sortOption = { createdAt: -1 }; // Default: newest
+    if (sort === "rating") {
+      sortOption = { averageRating: -1 };
+    }
+
+    // Get total count for pagination
+    const total = await Remedy.countDocuments(query);
+
+    // Paginate remedies
+    const remedies = await Remedy.find(query)
+      .populate({
+        path: "createdBy",
+        select: "username profileImage",
+      })
+      .sort(sortOption)
+      .skip((page - 1) * limit)
+      .limit(Number(limit));
+
+    res.status(200).json({
+      success: true,
+      remedies,
+      pagination: {
+        total,
+        page: Number(page),
+        pages: Math.ceil(total / limit),
+        limit: Number(limit),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch remedies by ailment ID",
+      error: error.message,
+    });
+  }
+};
+
 export {
   flagRemedy,
   createRemedy,
@@ -360,4 +410,5 @@ export {
   getRemedyById,
   updateRemedy,
   deleteRemedy,
+  getRemediesByAilmentId,
 };

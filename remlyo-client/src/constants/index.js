@@ -36,8 +36,54 @@ const TABS = {
   INGREDIENTS: "ingredients",
 };
 
+const AilmentCategories = [
+  "Digestive Health",
+  "Mental Health",
+  "Respiratory Health",
+  "Skin & Dermatology",
+  "Cardiovascular Health",
+  "Women's Health",
+  "Men's Health",
+  "Immune System",
+  "Muscle & Joint",
+  "Sleep & Energy",
+  "Hair & Scalp",
+  "Allergies & Sensitivities",
+  "Urinary & Kidney",
+  "Endocrine & Hormones",
+  "Oral & Dental",
+  "Liver & Detox",
+  "Eye & Vision",
+  "Ear, Nose & Throat",
+  "Neurological",
+  "General Wellness",
+  "Neurological Health",
+  "Skin Health",
+  "Immune Health",
+  "Reproductive Health",
+  "Oral Health",
+];
+
+
+const AilmentInitialState = {
+  name: "",
+  description: "",
+  category: "",
+  slug:"",
+  symptoms: [],
+  causesAndRisks: [],
+  preventionTips: [],
+  severity: "",
+  isCommon: false,
+  isContagious: false,
+  requiresMedicalAttention: false,
+};
+
+const AilmentSeverityOptions = ["mild", "moderate", "severe"];
 
 export {
+  AilmentInitialState,
+  AilmentSeverityOptions,
   TABS,
   MAX_FILE_SIZE,
   LS_KEYS,
@@ -45,4 +91,5 @@ export {
   ALLOWED_FILE_TYPES,
   CATEGORIES,
   REMEDY_TYPES,
+  AilmentCategories,
 };

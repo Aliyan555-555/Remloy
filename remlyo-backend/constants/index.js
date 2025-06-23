@@ -2,7 +2,7 @@
 const AUTH_CONSTANTS = {
   MAX_RESET_REQUESTS: 5,
   WINDOW_MS: 60 * 60 * 1000, // 1 hour
-  TOKEN_EXPIRY: 30 * 60 * 1000, // 30 minutes
+  TOKEN_EXPIRY: 7 * 24 * 60 * 60 * 1000, // 7 days
   COOKIE_MAX_AGE: 7 * 24 * 60 * 60 * 1000, // 7 days
   PAGINATION: {
     DEFAULT_LIMIT: 10,
@@ -41,7 +41,7 @@ const SUCCESS_MESSAGES = {
   USER_FETCHED: "Successfully fetched user",
 };
 
-const AlimentCategories = [
+const AilmentCategories = [
   "Digestive Health",
   "Mental Health",
   "Respiratory Health",
@@ -69,4 +69,4 @@ const AlimentCategories = [
   "Oral Health",
 ];
 
-export { AlimentCategories, SUCCESS_MESSAGES, ERROR_MESSAGES, AUTH_CONSTANTS };
+export { AilmentCategories, SUCCESS_MESSAGES, ERROR_MESSAGES, AUTH_CONSTANTS };

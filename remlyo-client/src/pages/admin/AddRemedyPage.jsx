@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import Button from "../../components/common/Button";
@@ -7,6 +7,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import { createRemedy } from "../../api/adminApi";
 import TextEditor from "../../components/common/TextEditor";
 import { CATEGORIES, MAX_FILE_SIZE,REMEDY_TYPES } from "../../constants";
+import Select from "react-select";
+import { fetchAilments } from "../../api/ailmentsApi";
 
 
 
@@ -29,6 +31,8 @@ const AddRemedyPage = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
   const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [ailmentOptions, setAilmentOptions] = useState([]);
+  const [ailmentsLoading, setAilmentsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -50,9 +54,28 @@ const AddRemedyPage = () => {
     storageInstructions: "",
     brandName: "",
     practitionerName: "",
+    ailments: [],
   });
 
   const [errors, setErrors] = useState({});
+
+  // Fetch ailments on mount
+  useEffect(() => {
+    setAilmentsLoading(true);
+    fetchAilments(authToken)
+      .then((res) => {
+        if (res.success) {
+          setAilmentOptions(
+            res.ailments.map((a) => ({
+              value: a._id,
+              label: a.name,
+            }))
+          );
+        }
+      })
+      .finally(() => setAilmentsLoading(false));
+  }, [authToken]);
+
   const handleChange = useCallback(
     (e) => {
       const { name, value } = e.target;
@@ -103,6 +126,20 @@ const AddRemedyPage = () => {
     }
   }, [remedyType, activeTab, navigate]);
 
+  // New handler for ailments select
+  const handleAilmentsChange = (selected) => {
+    setFormData((prev) => ({
+      ...prev,
+      ailments: selected ? selected.map((s) => s.value) : [],
+    }));
+    if (errors.ailments) {
+      setErrors((prev) => ({
+        ...prev,
+        ailments: null,
+      }));
+    }
+  };
+
   // Validation
   const validateForm = useCallback(() => {
     const newErrors = {};
@@ -149,6 +186,10 @@ const AddRemedyPage = () => {
         newErrors.references =
           "References are required when side effects are provided";
       }
+    }
+
+    if (!formData.ailments || formData.ailments.length === 0) {
+      newErrors.ailments = "Please select at least one ailment";
     }
 
     setErrors(newErrors);
@@ -417,6 +458,25 @@ const AddRemedyPage = () => {
           minHeight="100px"
           name="content"
         />
+      </div>
+
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Related Ailments <span className="text-red-500">*</span>
+        </label>
+        <Select
+          isMulti
+          isLoading={ailmentsLoading}
+          options={ailmentOptions}
+          value={ailmentOptions.filter((opt) =>
+            formData.ailments.includes(opt.value)
+          )}
+          onChange={handleAilmentsChange}
+          placeholder="Select related ailments..."
+        />
+        {errors.ailments && (
+          <p className="text-red-500 text-xs mt-1">{errors.ailments}</p>
+        )}
       </div>
     </div>
   );

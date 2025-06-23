@@ -71,7 +71,7 @@ const FlowGuard = ({ children }) => {
   const redirectMap = {
     [UserFlowStatus.EMAIL_UNVERIFIED]: "/verify-email",
     [UserFlowStatus.PROFILE_INCOMPLETE]: "/health-profile",
-    [UserFlowStatus.SUBSCRIPTION_REQUIRED]: "/subscription",
+    [UserFlowStatus.SUBSCRIPTION_REQUIRED]: "/pricing",
     [UserFlowStatus.LOGGED_OUT]: "/signin",
   };
 

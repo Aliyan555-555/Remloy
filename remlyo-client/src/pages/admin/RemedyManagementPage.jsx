@@ -65,8 +65,7 @@ const RemedyManagementPage = () => {
       }
     };
   useEffect(() => {
-   
-
+  
     fetchRemedies();
   }, [currentPage, searchQuery, selectedCategory]);
 
@@ -284,6 +283,8 @@ const RemedyManagementPage = () => {
       );
     }
   };
+
+
 
   return (
     <DashboardLayout pageTitle="Remedy Management" user={user}>

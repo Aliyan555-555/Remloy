@@ -11,48 +11,46 @@ import CommunityRemediesTab from "../components/ailment/CommunityRemediesTab";
 import AlternativeRemediesTab from "../components/ailment/AlternativeRemediesTab";
 import PharmaceuticalRemediesTab from "../components/ailment/PharmaceuticalRemediesTab";
 import AIRemediesTab from "../components/ailment/AIRemediesTab";
+import { useAuth } from "../contexts/AuthContext";
+import { getAilmentBySlug } from "./../api/ailmentsApi";
 
 const AilmentDetailPage = () => {
   const { ailmentId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  
+  const { authToken } = useAuth();
+
   // Initialize state
   const [activeTab, setActiveTab] = useState("community");
   const [ailmentData, setAilmentData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [sortOption, setSortOption] = useState("high to low rating");
+  const [sortOption, setSortOption] = useState("newest");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
 
   // Extract tab from URL or set default
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const tabParam = searchParams.get("tab");
-    if (tabParam && ["community", "alternative", "pharmaceutical", "ai"].includes(tabParam)) {
+    if (
+      tabParam &&
+      ["community", "alternative", "pharmaceutical", "ai"].includes(tabParam)
+    ) {
       setActiveTab(tabParam);
     }
   }, [location.search]);
 
+  const fetchAilment = async () => {
+    const res = await getAilmentBySlug(authToken, ailmentId, activeTab);
+    if (res.success) {
+      setAilmentData(res.ailment);
+      setIsLoading(false);
+    }
+  };
+
   // Fetch ailment data based on ailmentId
   useEffect(() => {
     // Simulating API call
-    setIsLoading(true);
-    setTimeout(() => {
-      // Mock data for demonstration
-      const data = {
-        id: ailmentId,
-        name: "Migraine Headache",
-        description: "A migraine is a severe and often debilitating headache disorder characterized by recurring attacks of intense pain, typically on one side of the head. These episodes are often accompanied by symptoms such as nausea, vomiting, and heightened sensitivity to light and sound. Migraines can last for several hours to days, significantly impacting daily activities and quality of life.",
-        remedyCounts: {
-          community: 113,
-          alternative: 39,
-          pharmaceutical: 35,
-          ai: 111
-        }
-      };
-      setAilmentData(data);
-      setIsLoading(false);
-    }, 300);
+    fetchAilment();
   }, [ailmentId]);
 
   // Handle tab change
@@ -61,7 +59,9 @@ const AilmentDetailPage = () => {
     // Update URL with tab parameter
     const searchParams = new URLSearchParams(location.search);
     searchParams.set("tab", tab);
-    navigate(`/ailments/${ailmentId}?${searchParams.toString()}`, { replace: true });
+    navigate(`/ailments/${ailmentId}?${searchParams.toString()}`, {
+      replace: true,
+    });
   };
 
   // Handle sort option change
@@ -105,7 +105,9 @@ const AilmentDetailPage = () => {
         <div className="container mx-auto px-4">
           {/* Ailment Title and Description - CENTERED */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4">{ailmentData.name}</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+              {ailmentData.name}
+            </h1>
             <p className="text-gray-600 max-w-4xl mx-auto">
               {ailmentData.description}
             </p>
@@ -196,22 +198,29 @@ const AilmentDetailPage = () => {
 
               {isSortDropdownOpen && (
                 <div className="absolute right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 w-48">
-                  <ul className="py-1">
+                  <ul className="">
                     <li
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                      onClick={() => handleSortChange("high to low rating")}
-                    >
-                      High to low rating
-                    </li>
-                    <li
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                      className={`${
+                        sortOption === "newest" && "bg-gray-200"
+                      } px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm`}
                       onClick={() => handleSortChange("newest")}
                     >
                       Newest
                     </li>
                     <li
-                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                      onClick={() => handleSortChange("most effective")}
+                      className={`${
+                        sortOption === "rating" && "bg-gray-200"
+                      } px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm`}
+                      onClick={() => handleSortChange("rating")}
+                    >
+                      High to low rating
+                    </li>
+
+                    <li
+                      className={`${
+                        sortOption === "effective" && "bg-gray-200"
+                      } px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm`}
+                      onClick={() => handleSortChange("effective")}
                     >
                       Most effective
                     </li>
@@ -240,7 +249,8 @@ const AilmentDetailPage = () => {
                 </div>
                 <div className="ml-3">
                   <p className="text-sm text-yellow-700">
-                    Always consult with a healthcare professional before starting any medication
+                    Always consult with a healthcare professional before
+                    starting any medication
                   </p>
                 </div>
               </div>
@@ -250,31 +260,31 @@ const AilmentDetailPage = () => {
           {/* Content Based on Active Tab */}
           <div>
             {activeTab === "community" && (
-              <CommunityRemediesTab 
-                ailmentId={ailmentId} 
-                count={ailmentData.remedyCounts.community}
+              <CommunityRemediesTab
+                ailmentId={ailmentData._id}
                 sortOption={sortOption}
+                activeTab={activeTab}
               />
             )}
             {activeTab === "alternative" && (
-              <AlternativeRemediesTab 
-                ailmentId={ailmentId} 
-                count={ailmentData.remedyCounts.alternative}
+              <AlternativeRemediesTab
+                ailmentId={ailmentData._id}
                 sortOption={sortOption}
+                activeTab={activeTab}
               />
             )}
             {activeTab === "pharmaceutical" && (
-              <PharmaceuticalRemediesTab 
-                ailmentId={ailmentId} 
-                count={ailmentData.remedyCounts.pharmaceutical}
+              <PharmaceuticalRemediesTab
+                ailmentId={ailmentData._id}
                 sortOption={sortOption}
+                activeTab={activeTab}
               />
             )}
             {activeTab === "ai" && (
-              <AIRemediesTab 
-                ailmentId={ailmentId} 
-                count={ailmentData.remedyCounts.ai}
+              <AIRemediesTab
+                ailmentId={ailmentData._id}
                 sortOption={sortOption}
+                activeTab={activeTab}
               />
             )}
           </div>

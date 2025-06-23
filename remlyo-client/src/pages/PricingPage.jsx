@@ -5,26 +5,33 @@ import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
 import { getAllPlans } from "../api/pricingApi";
+import { useAuth } from "../contexts/AuthContext";
+import { preprepareForSubscription } from "../api/subscriptionApi";
 
 const PricingPage = () => {
   const [billingPeriod, setBillingPeriod] = useState("monthly");
   const navigate = useNavigate();
+  const [isFreePlanUsed, setIsFreePlanUsed] = useState(false);
   const [plans, setPlans] = useState([]);
-
+  const { authToken } = useAuth();
+  const [loading, setLoading] = useState(null);
+  //  const { authToken } = useAuth();
   const fetchPlans = async () => {
-    const res = await getAllPlans();
+    const res = await getAllPlans(authToken);
+
     if (res.success) {
       setPlans(res.plans);
+      setIsFreePlanUsed(res.user.isFreePlanUsed);
     }
   };
 
   // Handle subscription purchase
-  const handleSubscribe = (type) => {
-    // Navigate to checkout page with the appropriate plan type
-    if (type === "premium") {
-      navigate("/checkout/premium");
-    } else if (type === "remedy") {
-      navigate("/checkout/remedy");
+  const handleSubscribe = async (id) => {
+    try {
+      setLoading(id);
+      await preprepareForSubscription(authToken, id);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,10 +89,16 @@ const PricingPage = () => {
                   <Button
                     variant="contained"
                     color="brand"
+                    className="disabled:bg-gray-500 "
                     fullWidth
-                    onClick={() => handleSubscribe("premium")}
+                    disabled={p.originalPrice == 0 && isFreePlanUsed}
+                    onClick={() => handleSubscribe(p._id)}
                   >
-                    Subscribe Now
+                    {p._id === loading
+                      ? "Loading..."
+                      : p.originalPrice === 0 && isFreePlanUsed
+                      ? "Already Used"
+                      : "Subscribe Now"}
                   </Button>
                 </div>
               </div>
@@ -169,7 +182,9 @@ const PricingPage = () => {
                     <span className="text-3xl font-bold text-gray-900">
                       ${p.price}
                     </span>
-                    <span className="text-gray-600 ml-1">/Top {p.remediesPerAilment} remedies</span>
+                    <span className="text-gray-600 ml-1">
+                      /Top {p.remediesPerAilment} remedies
+                    </span>
                   </div>
 
                   <ul className="space-y-4 mb-8">

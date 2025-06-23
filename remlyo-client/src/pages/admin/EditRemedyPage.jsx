@@ -8,24 +8,21 @@ import TextEditor from "../../components/common/TextEditor";
 import { getRemedyById, updateRemedy } from "../../api/remediesApi";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import { CATEGORIES, MAX_FILE_SIZE, REMEDY_TYPES, TABS } from "../../constants";
-
-
-
-
-
+import { fetchAilments } from "../../api/ailmentsApi";
+import Select from "react-select";
 const EditRemedy = () => {
   const { user, authToken } = useAuth();
   const navigate = useNavigate();
   const [initialLoading, setInitialLoading] = useState(true);
   const { remedyId } = useParams();
-
   const [activeTab, setActiveTab] = useState(TABS.GENERAL);
   const [remedyType, setRemedyType] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
-
+  const [ailmentOptions, setAilmentOptions] = useState([]);
+  const [ailmentsLoading, setAilmentsLoading] = useState(false);
   const [formData, setFormData] = useState(null);
 
   const [errors, setErrors] = useState({});
@@ -63,6 +60,22 @@ const EditRemedy = () => {
     }
   };
 
+  useEffect(() => {
+    setAilmentsLoading(true);
+    fetchAilments(authToken)
+      .then((res) => {
+        if (res.success) {
+          setAilmentOptions(
+            res.ailments.map((a) => ({
+              value: a._id,
+              label: a.name,
+            }))
+          );
+        }
+      })
+      .finally(() => setAilmentsLoading(false));
+  }, [authToken]);
+
   const handleSelectRemedyType = (type) => {
     setRemedyType(type);
   };
@@ -84,6 +97,19 @@ const EditRemedy = () => {
     }
   };
 
+   // New handler for ailments select
+   const handleAilmentsChange = (selected) => {
+    setFormData((prev) => ({
+      ...prev,
+      ailments: selected ? selected.map((s) => s.value) : [],
+    }));
+    if (errors.ailments) {
+      setErrors((prev) => ({
+        ...prev,
+        ailments: null,
+      }));
+    }
+  };
   // Validation
   const validateForm = () => {
     const newErrors = {};
@@ -345,6 +371,24 @@ const EditRemedy = () => {
           minHeight="100px"
           name="content"
         />
+      </div>
+      <div className="mb-6">
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Related Ailments <span className="text-red-500">*</span>
+        </label>
+        <Select
+          isMulti
+          isLoading={ailmentsLoading}
+          options={ailmentOptions}
+          value={ailmentOptions.filter((opt) =>
+            formData.ailments.includes(opt.value)
+          )}
+          onChange={handleAilmentsChange}
+          placeholder="Select related ailments..."
+        />
+        {errors.ailments && (
+          <p className="text-red-500 text-xs mt-1">{errors.ailments}</p>
+        )}
       </div>
     </div>
   );
@@ -622,7 +666,7 @@ const EditRemedy = () => {
             Back
           </Button>
         </div>
-        <p className="text-gray-600">Add a new remedy to the platform</p>
+        <p className="text-gray-600">Edit a remedy to the platform</p>
       </div>
 
       {error && (

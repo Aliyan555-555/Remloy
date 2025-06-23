@@ -54,6 +54,10 @@ import WriterAddArticlePage from "./pages/writer/WriterAddArticlePage";
 import WriterEditArticlePage from "./pages/writer/WriterEditArticlePage";
 import ArticlesPage from "./pages/ArticlesPage";
 import SingleArticlePage from "./pages/SingleArticlePage";
+import AilmentManagementPage from "./pages/admin/AilmentManagementPage";
+import AddAilmentPage from "./pages/admin/AddAilmentPage";
+import EditAilmentPage from "./pages/admin/EditAilmentPage";
+import PaymentSuccessPage from "./pages/PaymentSuccessPage";
 function App() {
   return (
     <AuthProvider>
@@ -63,12 +67,43 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/ailments" element={<AilmentsPage />} />
           <Route path="/ailments/:ailmentId" element={<AilmentDetailPage />} />
-          <Route path="/remedies" element={<RemediesPage />} />
-          <Route path="/articles" element={<ArticlesPage/>} />
-          <Route path="/articles/:slug" element={<SingleArticlePage/>} />
+          <Route
+            path="/remedies"
+            element={
+              <FlowGuard>
+                <RemediesPage />
+              </FlowGuard>
+            }
+          />
+          <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/articles/:slug" element={<SingleArticlePage />} />
 
           {/* Checkout Routes */}
-          <Route path="/checkout/:planType" element={<CheckoutPage />} />
+          <Route
+            path="/checkout/:planId"
+            element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/checkout/:planId/success"
+            element={
+              <ProtectedRoute>
+                <PaymentSuccessPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/checkout/:planId/failed"
+            element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/refund-policy" element={<RefundPolicyPage />} />
           {/* Moderator routes */}
           <Route
@@ -157,6 +192,30 @@ function App() {
               </AdminRoute>
             }
           />
+          <Route
+            path="/admin/ailments"
+            element={
+              <AdminRoute>
+                <AilmentManagementPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/ailments/add"
+            element={
+              <AdminRoute>
+                <AddAilmentPage />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/ailments/:ailmentId/edit"
+            element={
+              <AdminRoute>
+                <EditAilmentPage />
+              </AdminRoute>
+            }
+          />
 
           <Route
             path="/admin/remedies/add"
@@ -222,29 +281,66 @@ function App() {
           {/* Remedy Detail Routes - Type based */}
           <Route
             path="/remedies/community/:remedyId"
-            element={<CommunityRemedyDetail />}
+            element={
+              <FlowGuard>
+                <CommunityRemedyDetail />
+              </FlowGuard>
+            }
           />
           <Route
             path="/remedies/alternative/:remedyId"
-            element={<AlternativeRemedyDetail />}
+            element={
+              <FlowGuard>
+                <AlternativeRemedyDetail />
+              </FlowGuard>
+            }
           />
           <Route
             path="/remedies/pharmaceutical/:remedyId"
-            element={<PharmaceuticalRemedyDetail />}
+            element={
+              <FlowGuard>
+                <PharmaceuticalRemedyDetail />
+              </FlowGuard>
+            }
           />
-          <Route path="/remedies/ai/:remedyId" element={<AIRemedyDetail />} />
+          <Route
+            path="/remedies/ai/:remedyId"
+            element={
+              <FlowGuard>
+                <AIRemedyDetail />
+              </FlowGuard>
+            }
+          />
 
           {/* Generic remedy route that will dispatch to the correct type */}
           <Route
             path="/remedies/:remedyId"
-            element={<CommunityRemedyDetail />}
+            element={
+              <FlowGuard>
+                <CommunityRemedyDetail />
+              </FlowGuard>
+            }
           />
 
           {/* AI Insight Route */}
-          <Route path="/ai-insight/:remedyId" element={<AIInsightPage />} />
+          <Route
+            path="/ai-insight/:remedyId"
+            element={
+              <FlowGuard>
+                <AIInsightPage />
+              </FlowGuard>
+            }
+          />
 
           {/* Other Public Routes */}
-          <Route path="/pricing" element={<PricingPage />} />
+          <Route
+            path="/pricing"
+            element={
+              <ProtectedRoute>
+                <PricingPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsConditionsPage />} />

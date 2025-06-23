@@ -1,15 +1,13 @@
 import API from "../services/api";
+import { getAuthHeaders } from "../utils";
 
 const generateHealthProfileQuestions = async (healthData, token) => {
   try {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
     const { data } = await API.post(
       "/api/v1/user/health-profile/generate",
       healthData,
       {
-        headers,
+        headers: getAuthHeaders(token),
       }
     );
     return data;
@@ -19,13 +17,10 @@ const generateHealthProfileQuestions = async (healthData, token) => {
 };
 const healthProfile = async (healthProfileData, token) => {
   try {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
     const { data } = await API.post(
       "/api/v1/user/health-profile",
       healthProfileData,
-      { headers }
+      { headers: getAuthHeaders(token) }
     );
     return data;
   } catch (error) {
@@ -35,18 +30,24 @@ const healthProfile = async (healthProfileData, token) => {
 
 const checkHealthProfile = async (token) => {
   try {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
     const { data } = await API.get("/api/v1/user/health-profile/status", {
-      headers,
+      headers: getAuthHeaders(token),
     });
     return data;
   } catch (error) {
     return error.response.data;
   }
 };
-const checkSubscription = async () => {};
+const checkSubscription = async (token) => {
+  try {
+    const { data } = await API.get("/api/v1/subscription/status", {
+      headers: getAuthHeaders(token),
+    });
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
 
 export {
   generateHealthProfileQuestions,

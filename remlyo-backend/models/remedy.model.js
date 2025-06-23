@@ -33,8 +33,8 @@ const RemedySchema = new mongoose.Schema(
     preparationMethod: {
       type: String,
     },
-    brandName:{
-      type:String,
+    brandName: {
+      type: String,
     },
     instructions: {
       type: String,
@@ -113,6 +113,12 @@ const RemedySchema = new mongoose.Schema(
       min: 0,
       max: 5,
     },
+    ailments:[
+      {
+       type:mongoose.Schema.Types.ObjectId,
+       ref:"Ailment"
+      }
+    ],
     isActive: {
       type: Boolean,
       default: true,

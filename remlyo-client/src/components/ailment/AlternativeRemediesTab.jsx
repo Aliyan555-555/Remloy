@@ -2,143 +2,38 @@
 import React, { useState, useEffect } from "react";
 import Pagination from "../common/Pagination";
 import Button from "../common/Button";
+import { getRemediesByAilmentAndType } from "../../api/remediesApi";
 
-const AlternativeRemediesTab = ({ ailmentId, count, sortOption }) => {
+const AlternativeRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const [remedies, setRemedies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalRemediesCount, setTotalRemediesCount] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
-
-  // Fetch alternative remedies based on ailmentId, page, and sortOption
-  useEffect(() => {
-    const fetchRemedies = async () => {
+  //
+  // Fetch community remedies based on ailmentId, page and sortOption
+  const fetchRemedies = async () => {
+    try {
       setLoading(true);
-      // Simulating API call
-      setTimeout(() => {
-        // Mock data for demonstration
-        const mockRemedies = [
-          {
-            id: "a1",
-            name: "Acupuncture Treatment",
-            category: "Traditional Chinese Medicine",
-            practitioner: {
-              name: "Healthy Ryan",
-              avatar: "/images/practitioners/avatar.png",
-            },
-            description:
-              "Traditional Chinese Medicine technique using needles...",
-            image: "/images/remedies/acupuncture.jpg",
-            rating: 5,
-            reviewCount: 128,
-            successRate: 85,
-            requirements: [
-              { name: "Professional Administration", value: true },
-              { name: "Multiple Session", value: true },
-            ],
-          },
-          {
-            id: "a2",
-            name: "Aromatherapy with Lavender",
-            category: "Aromatherapy",
-            practitioner: {
-              name: "Michael Chen",
-              avatar: "/images/practitioners/avatar.png",
-            },
-            description:
-              "Essential oil therapy using pure lavender oil & Powder...",
-            image: "/images/remedies/aromatherapy.jpg",
-            rating: 5,
-            reviewCount: 128,
-            successRate: 78,
-            requirements: [
-              { name: "Pure Essential Oils", value: true },
-              { name: "Diffuser", value: true },
-            ],
-          },
-          {
-            id: "a3",
-            name: "Acupuncture Treatment",
-            category: "Traditional Chinese Medicine",
-            practitioner: {
-              name: "Healthy Ryan",
-              avatar: "/images/practitioners/avatar.png",
-            },
-            description:
-              "Traditional Chinese Medicine technique using needles...",
-            image: "/images/remedies/acupuncture.jpg",
-            rating: 5,
-            reviewCount: 128,
-            successRate: 85,
-            requirements: [
-              { name: "Professional Administration", value: true },
-              { name: "Multiple Session", value: true },
-            ],
-          },
-          {
-            id: "a4",
-            name: "Aromatherapy with Lavender",
-            category: "Aromatherapy",
-            practitioner: {
-              name: "Michael Chen",
-              avatar: "/images/practitioners/avatar.png",
-            },
-            description:
-              "Essential oil therapy using pure lavender oil & Powder...",
-            image: "/images/remedies/aromatherapy.jpg",
-            rating: 5,
-            reviewCount: 128,
-            successRate: 78,
-            requirements: [
-              { name: "Pure Essential Oils", value: true },
-              { name: "Diffuser", value: true },
-            ],
-          },
-          {
-            id: "a5",
-            name: "Acupuncture Treatment",
-            category: "Traditional Chinese Medicine",
-            practitioner: {
-              name: "Healthy Ryan",
-              avatar: "/images/practitioners/avatar.png",
-            },
-            description:
-              "Traditional Chinese Medicine technique using needles...",
-            image: "/images/remedies/acupuncture.jpg",
-            rating: 5,
-            reviewCount: 128,
-            successRate: 85,
-            requirements: [
-              { name: "Professional Administration", value: true },
-              { name: "Multiple Session", value: true },
-            ],
-          },
-          {
-            id: "a6",
-            name: "Aromatherapy with Lavender",
-            category: "Aromatherapy",
-            practitioner: {
-              name: "Michael Chen",
-              avatar: "/images/practitioners/avatar.png",
-            },
-            description:
-              "Essential oil therapy using pure lavender oil & Powder...",
-            image: "/images/remedies/aromatherapy.jpg",
-            rating: 5,
-            reviewCount: 128,
-            successRate: 78,
-            requirements: [
-              { name: "Pure Essential Oils", value: true },
-              { name: "Diffuser", value: true },
-            ],
-          },
-        ];
+      const res = await getRemediesByAilmentAndType(
+        ailmentId,
+        activeTab,
+        currentPage,
+        sortOption,
+      );
+      if (res.success) {
+        setRemedies(res.remedies);
+        setTotalPages(res.pagination.pages);
+        setTotalRemediesCount(res.pagination.total);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        setRemedies(mockRemedies);
-        setTotalPages(4); // Mock total pages
-        setLoading(false);
-      }, 500);
-    };
-
+  useEffect(() => {
     fetchRemedies();
   }, [ailmentId, currentPage, sortOption]);
 
@@ -201,54 +96,58 @@ const AlternativeRemediesTab = ({ ailmentId, count, sortOption }) => {
       </div>
 
       <p className="text-gray-600 mb-6">
-        Showing {count} Alternative Remedies for Migraine Headache
+        Showing {totalRemediesCount} Alternative Remedies for Migraine Headache
       </p>
 
       {/* Remedies Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-        {remedies.map((remedy) => (
-          <div
-            key={remedy.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
-          >
-            {/* Success Rate Badge */}
-            <div className="relative">
-              <img
-                src={remedy.image}
-                alt={remedy.name}
-                className="w-full h-48 object-cover"
-                onError={handleImageError}
-              />
-              <div className="absolute top-3 right-3 bg-green-700 text-white px-3 py-1 rounded-full text-xs font-medium">
-                {remedy.successRate}% Success Rate
-              </div>
-            </div>
-
-            <div className="p-5">
-              {/* Practitioner Info */}
-              <div className="flex items-center mb-3">
-                <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
-                  <img
-                    src={remedy.practitioner.avatar}
-                    alt={remedy.practitioner.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://via.placeholder.com/32x32?text=P";
-                    }}
-                  />
+      {remedies.length ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+          {remedies.map((remedy) => (
+            <div
+              key={remedy._id}
+              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+            >
+              {/* Success Rate Badge */}
+              <div className="relative">
+                <img
+                  src={remedy.media.source}
+                  alt={remedy.name}
+                  className="w-full h-48 object-cover"
+                  onError={handleImageError}
+                />
+                <div className="absolute top-3 right-3 bg-green-700 text-white px-3 py-1 rounded-full text-xs font-medium">
+                  {remedy.successRate || 0}% Success Rate
                 </div>
-                <span className="text-sm text-gray-700">
-                  {remedy.practitioner.name}
-                </span>
               </div>
 
-              <h3 className="text-lg font-semibold mb-1">{remedy.name}</h3>
-              <p className="text-sm text-gray-500 mb-3">{remedy.category}</p>
-              <p className="text-gray-600 text-sm mb-3">{remedy.description}</p>
+              <div className="p-5">
+                {/* Practitioner Info */}
+                <div className="flex items-center mb-3">
+                  <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
+                    <img
+                      src={remedy.createdBy.profileImage}
+                      alt={remedy.createdBy.username}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src =
+                          "https://via.placeholder.com/32x32?text=P";
+                      }}
+                    />
+                  </div>
+                  <span className="text-sm text-gray-700">
+                    {remedy.createdBy.name}
+                  </span>
+                </div>
 
-              {/* Requirements */}
-              <div className="mb-4">
+                <h3 className="text-lg font-semibold mb-1">{remedy.name}</h3>
+                <p className="text-sm text-gray-500 mb-3">{remedy.category}</p>
+                <p className="text-gray-600 text-sm mb-3">
+                  {remedy.description}
+                </p>
+
+                {/* Requirements */}
+                {/* <div className="mb-4">
                 <p className="text-sm font-medium text-gray-700 mb-2">
                   Requirements:
                 </p>
@@ -262,70 +161,74 @@ const AlternativeRemediesTab = ({ ailmentId, count, sortOption }) => {
                     </span>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
-              <div className="flex items-center mb-4">
-                <div className="flex mr-2">{renderStars(remedy.rating)}</div>
-                <span className="text-gray-600 text-sm">
-                  ({remedy.reviewCount})
-                </span>
-              </div>
+                <div className="flex items-center mb-4">
+                  <div className="flex mr-2">
+                    {renderStars(remedy.averageRating)}
+                  </div>
+                  <span className="text-gray-600 text-sm">
+                    ({remedy.viewCount})
+                  </span>
+                </div>
 
-              <div className="flex justify-between items-center">
-                <Button
-                  variant="readMore"
-                  to={`/remedies/alternative/${remedy.id}`}
-                  state={{ from: `/ailments/${ailmentId}` }} 
-                  size="small"
-                >
-                  View Details
-                </Button>
-
-                <button
-                  className="text-gray-400 hover:text-brand-green transition-colors"
-                  aria-label="Save remedy"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                <div className="flex justify-between items-center">
+                  <Button
+                    variant="readMore"
+                    to={`/remedies/alternative/${remedy._id}`}
+                    state={{ from: `/ailments/${ailmentId}` }}
+                    size="small"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                    />
-                  </svg>
-                </button>
+                    View Details
+                  </Button>
 
-                <button
-                  className="text-gray-400 hover:text-brand-green transition-colors"
-                  aria-label="Share remedy"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                  <button
+                    className="text-gray-400 hover:text-brand-green transition-colors"
+                    aria-label="Save remedy"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                    />
-                  </svg>
-                </button>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                      />
+                    </svg>
+                  </button>
+
+                  <button
+                    className="text-gray-400 hover:text-brand-green transition-colors"
+                    aria-label="Share remedy"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-
+          ))}
+        </div>
+      ) : (
+        <div className="text-center mt-10">No Remedies Available</div>
+      )}
       {/* Pagination */}
       <Pagination
         currentPage={currentPage}

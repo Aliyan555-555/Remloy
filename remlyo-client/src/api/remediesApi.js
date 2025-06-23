@@ -23,20 +23,41 @@ const getAllRemedies = async ({ page = 1, limit = 10, search = "" } = {}) => {
 
 const getRemedyById = async (id) => {
   try {
-    const res = await API.get(`/api/v1/remedy/${id}`);
-    return res.data;
+    const { data } = await API.get(`/api/v1/remedy/${id}`);
+    return data;
   } catch (error) {
     return error.response.data;
   }
 };
-
 
 const updateRemedy = async (token, id, remedyData) => {
   try {
-    const res = await API.put(`/api/v1/remedy/${id}`, remedyData, { headers: getAuthHeaders(token) });
-    return res.data;
+    const { data } = await API.put(`/api/v1/remedy/${id}`, remedyData, {
+      headers: getAuthHeaders(token),
+    });
+    return data;
   } catch (error) {
     return error.response.data;
   }
 };
-export { getAllRemedies, getRemedyById, updateRemedy };
+
+const getRemediesByAilmentAndType = async (ailmentId, type, currentPage,sort) => {
+  try {
+    const { data } = await API.get(`/api/v1/remedy/ailment/${ailmentId}`, {
+      params: {
+        type,
+        sort,
+        page: currentPage,
+      },
+    });
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+export {
+  getAllRemedies,
+  getRemedyById,
+  updateRemedy,
+  getRemediesByAilmentAndType,
+};

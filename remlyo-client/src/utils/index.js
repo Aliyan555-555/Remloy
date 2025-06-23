@@ -11,7 +11,6 @@ function formatDate(inputDate) {
   return date.toLocaleDateString("en-US", options);
 }
 
-
 /**
  * Helper to build auth headers
  * @param {string} token
@@ -20,7 +19,6 @@ function formatDate(inputDate) {
 const getAuthHeaders = (token) => ({
   Authorization: `Bearer ${token}`,
 });
-
 
 /**
  * Handles API errors and returns a consistent error object
@@ -35,8 +33,4 @@ const handleApiError = (error, defaultMessage) =>
     error: error?.message || "Network error",
   };
 
-export {
-  handleApiError,
-  formatDate,
-  getAuthHeaders
-};
+export { handleApiError, formatDate, getAuthHeaders };

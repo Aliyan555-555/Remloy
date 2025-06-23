@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { AlimentCategories } from "../constants";
+import { AilmentCategories } from "../constants/index.js";
 
 const AilmentSchema = new mongoose.Schema(
   {
@@ -11,15 +11,18 @@ const AilmentSchema = new mongoose.Schema(
       minlength: 3, // Minimum length for the ailment name
       maxlength: 100, // Maximum length for the ailment name
     },
+    slug:{
+      type:String,
+      unique:true,
+      required:true,
+    },
     description: {
       type: String,
       required: true,
-      minlength: 10, // Minimum length for the description
-      maxlength: 1000, // Maximum length for the description
     },
     category: {
       type: String,
-      enum: AlimentCategories,
+      enum: AilmentCategories,
       required: true,
     },
     symptoms: {
@@ -53,6 +56,10 @@ const AilmentSchema = new mongoose.Schema(
     severity: {
       type: String,
       enum: ["mild", "moderate", "severe"], // Example severity levels
+    },
+    isCommon:{
+      type:Boolean,
+      default:false,
     },
     isContagious: {
       type: Boolean,

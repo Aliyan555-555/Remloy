@@ -197,111 +197,117 @@ const AIRemediesTab = ({ ailmentId, count, sortOption }) => {
       </div>
 
       {/* Remedies Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-        {remedies.map((remedy) => (
-          <div
-            key={remedy.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
-          >
-            <div className="p-6">
-              {/* AI Confidence Badge */}
-              <div className="flex justify-between items-start mb-4">
-                <div className="bg-green-100 text-xs text-green-800 px-2 py-1 rounded-full">
-                  {remedy.category}
+      {remedies.length ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          {remedies.map((remedy) => (
+            <div
+              key={remedy.id}
+              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div className="p-6">
+                {/* AI Confidence Badge */}
+                <div className="flex justify-between items-start mb-4">
+                  <div className="bg-green-100 text-xs text-green-800 px-2 py-1 rounded-full">
+                    {remedy.category}
+                  </div>
+                  <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">
+                    AI Confidence: {remedy.confidence}%
+                  </div>
                 </div>
-                <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">
-                  AI Confidence: {remedy.confidence}%
+
+                <h3 className="text-xl font-semibold mb-2">{remedy.name}</h3>
+                <p className="text-gray-600 text-sm mb-6">
+                  {remedy.description}
+                </p>
+
+                {/* Statistics */}
+                <div className="grid grid-cols-3 gap-4 mb-6">
+                  <div className="text-center">
+                    <p className="text-2xl font-semibold text-brand-green">
+                      {remedy.successRate}%
+                    </p>
+                    <p className="text-xs text-gray-500">Success Rate</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-semibold text-brand-green">
+                      {remedy.userFeedback}
+                    </p>
+                    <p className="text-xs text-gray-500">User Feedback</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-semibold text-brand-green">
+                      {remedy.positiveOutcomes}
+                    </p>
+                    <p className="text-xs text-gray-500">Positive Outcomes</p>
+                  </div>
                 </div>
-              </div>
 
-              <h3 className="text-xl font-semibold mb-2">{remedy.name}</h3>
-              <p className="text-gray-600 text-sm mb-6">{remedy.description}</p>
-
-              {/* Statistics */}
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="text-center">
-                  <p className="text-2xl font-semibold text-brand-green">
-                    {remedy.successRate}%
-                  </p>
-                  <p className="text-xs text-gray-500">Success Rate</p>
+                <div className="flex items-center mb-4">
+                  <div className="flex mr-2">{renderStars(remedy.rating)}</div>
+                  <span className="text-gray-600 text-sm">
+                    ({remedy.reviewCount})
+                  </span>
                 </div>
-                <div className="text-center">
-                  <p className="text-2xl font-semibold text-brand-green">
-                    {remedy.userFeedback}
-                  </p>
-                  <p className="text-xs text-gray-500">User Feedback</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl font-semibold text-brand-green">
-                    {remedy.positiveOutcomes}
-                  </p>
-                  <p className="text-xs text-gray-500">Positive Outcomes</p>
-                </div>
-              </div>
 
-              <div className="flex items-center mb-4">
-                <div className="flex mr-2">{renderStars(remedy.rating)}</div>
-                <span className="text-gray-600 text-sm">
-                  ({remedy.reviewCount})
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <Button
-                  variant="readMore"
-                  to={`/remedies/ai/${remedy.id}`}
-                  state={{ from: `/ailments/${ailmentId}` }}
-                  size="small"
-                >
-                  View Details
-                </Button>
-
-                <div className="flex space-x-3">
-                  <button
-                    className="text-gray-400 hover:text-brand-green transition-colors"
-                    aria-label="Save remedy"
+                <div className="flex justify-between items-center">
+                  <Button
+                    variant="readMore"
+                    to={`/remedies/ai/${remedy.id}`}
+                    state={{ from: `/ailments/${ailmentId}` }}
+                    size="small"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                      />
-                    </svg>
-                  </button>
+                    View Details
+                  </Button>
 
-                  <button
-                    className="text-gray-400 hover:text-brand-green transition-colors"
-                    aria-label="Share remedy"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                  <div className="flex space-x-3">
+                    <button
+                      className="text-gray-400 hover:text-brand-green transition-colors"
+                      aria-label="Save remedy"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      className="text-gray-400 hover:text-brand-green transition-colors"
+                      aria-label="Share remedy"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center mt-10">No Remedies Available</div>
+      )}
 
       {/* Pagination */}
       <Pagination
