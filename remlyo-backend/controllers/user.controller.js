@@ -1,6 +1,7 @@
 import UserProfile from "../models/user_profile.model.js";
 import generateHealthQuestions from "../services/healthQuestion.service.js";
 import { userHealthProfileValidation } from "../validations/user.validations.js";
+import User from './../models/user.model.js';
 
 const userHealthProfile = async (req, res) => {
   try {
@@ -21,10 +22,10 @@ const userHealthProfile = async (req, res) => {
 
     const updatedProfile = existingProfile
       ? await UserProfile.findOneAndUpdate(
-          { userId },
-          { $set: { ...profileData, lastUpdated: new Date() } },
-          { new: true, runValidators: true }
-        )
+        { userId },
+        { $set: { ...profileData, lastUpdated: new Date() } },
+        { new: true, runValidators: true }
+      )
       : await UserProfile.create({ userId, ...profileData });
 
     return res.status(200).json({
@@ -103,8 +104,62 @@ const healthProfileStatus = async (req, res) => {
   }
 };
 
+const saveRemedy = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const type = req.query.type || "favorite";
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        message: "Remedy ID is required",
+        success: false,
+      });
+    }
+
+    const userData = await User.findById(userId);
+
+    if (!userData) {
+      return res.status(404).json({
+        message: "User not found",
+        success: false,
+      });
+    }
+
+    // Prevent duplicate saves
+    const alreadySaved = userData.saveRemedies.some(
+      (item) => item.remedy.toString() === id && item.type === type
+    );
+    if (alreadySaved) {
+      return res.status(409).json({
+        message: "Remedy already saved with this type",
+        success: false,
+      });
+    }
+
+    userData.saveRemedies.push({
+      type,
+      remedy: id,
+    });
+    await userData.save();
+
+    return res.status(200).json({
+      message: "Remedy saved successfully",
+      success: true,
+      data: userData.saveRemedies,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong",
+      success: false,
+      error: error.message,
+    });
+  }
+}
+
 export {
   userHealthProfile,
   getUserHealthQuestionBaseOnHealthProfile,
   healthProfileStatus,
+  saveRemedy,
 };

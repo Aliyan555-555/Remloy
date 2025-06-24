@@ -4,6 +4,8 @@ import Pagination from "../common/Pagination";
 import Button from "../common/Button";
 import { getRemediesByAilmentAndType } from "../../api/remediesApi";
 import { useAuth } from "../../contexts/AuthContext";
+import { saveRemedy } from "./../../api/userApi";
+import { useNavigate } from "react-router-dom";
 
 const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const [remedies, setRemedies] = useState([]);
@@ -11,8 +13,9 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRemediesCount, setTotalRemediesCount] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
+  const navigate = useNavigate();
 
-  const {user} = useAuth();
+  const { authToken, isAuthenticated } = useAuth();
   //
   // Fetch community remedies based on ailmentId, page and sortOption
   const fetchRemedies = async () => {
@@ -22,7 +25,7 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
         ailmentId,
         activeTab,
         currentPage,
-        sortOption,
+        sortOption
       );
       if (res.success) {
         setRemedies(res.remedies);
@@ -43,6 +46,15 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
     window.scrollTo(0, 0);
+  };
+
+  const handleSaveRemedy = async (id) => {
+    if (!isAuthenticated) {
+      navigate("/signin");
+      return;
+    }
+    const res = await saveRemedy(authToken, id, "save");
+    console.log(res);
   };
 
   // Function to render star ratings
@@ -132,6 +144,7 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
                   <button
                     className="text-gray-400 hover:text-brand-green transition-colors"
                     aria-label="Save remedy"
+                    onClick={() => handleSaveRemedy(remedy._id)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

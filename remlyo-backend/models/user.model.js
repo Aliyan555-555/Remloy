@@ -89,7 +89,7 @@ const userSchema = new mongoose.Schema(
       {
         type: {
           type: String,
-          enum: ["to-try", "favorite"],
+          enum: ["to-try", "favorite","save"],
           default: "favorite",
         },
         remedy: {

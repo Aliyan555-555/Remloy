@@ -49,9 +49,24 @@ const checkSubscription = async (token) => {
   }
 };
 
+
+const saveRemedy = async (token, id, type) => {
+  try {
+    const { data } = await API.post(`/api/v1/user/remedy/save/${id}`, {}, {
+      headers: getAuthHeaders(token),
+      params: {
+        type
+      }
+    });
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+}
 export {
   generateHealthProfileQuestions,
   healthProfile,
+  saveRemedy,
   checkHealthProfile,
   checkSubscription,
 };

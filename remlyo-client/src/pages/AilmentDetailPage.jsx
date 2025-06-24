@@ -68,6 +68,8 @@ const AilmentDetailPage = () => {
     setIsSortDropdownOpen(false);
   };
 
+  
+
   // Render loading state
   if (isLoading) {
     return (
