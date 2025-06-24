@@ -1,7 +1,7 @@
 import UserProfile from "../models/user_profile.model.js";
 import generateHealthQuestions from "../services/healthQuestion.service.js";
 import { userHealthProfileValidation } from "../validations/user.validations.js";
-import User from './../models/user.model.js';
+import User from "./../models/user.model.js";
 
 const userHealthProfile = async (req, res) => {
   try {
@@ -22,10 +22,10 @@ const userHealthProfile = async (req, res) => {
 
     const updatedProfile = existingProfile
       ? await UserProfile.findOneAndUpdate(
-        { userId },
-        { $set: { ...profileData, lastUpdated: new Date() } },
-        { new: true, runValidators: true }
-      )
+          { userId },
+          { $set: { ...profileData, lastUpdated: new Date() } },
+          { new: true, runValidators: true }
+        )
       : await UserProfile.create({ userId, ...profileData });
 
     return res.status(200).json({
@@ -87,13 +87,11 @@ const healthProfileStatus = async (req, res) => {
       });
     }
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "profile exist",
-        profile: userProfileExist,
-      });
+    res.status(200).json({
+      success: true,
+      message: "profile exist",
+      profile: userProfileExist,
+    });
   } catch (error) {
     console.error("Error checking health profile:", error);
     return res.status(500).json({
@@ -126,27 +124,35 @@ const saveRemedy = async (req, res) => {
       });
     }
 
-    // Prevent duplicate saves
-    const alreadySaved = userData.saveRemedies.some(
+    // Check if already saved
+    const index = userData.saveRemedies.findIndex(
       (item) => item.remedy.toString() === id && item.type === type
     );
-    if (alreadySaved) {
-      return res.status(409).json({
-        message: "Remedy already saved with this type",
-        success: false,
+    if (index !== -1) {
+      // If already saved, remove it (toggle off)
+      userData.saveRemedies.splice(index, 1);
+      await userData.save();
+      return res.status(200).json({
+        message: "Remedy removed successfully",
+        success: true,
+        data: userData.saveRemedies,
       });
     }
 
+    // If not saved, add it
     userData.saveRemedies.push({
       type,
       remedy: id,
     });
     await userData.save();
+    const populatedUser = await User.findById(userId).populate(
+      "saveRemedies.remedy"
+    );
 
     return res.status(200).json({
       message: "Remedy saved successfully",
       success: true,
-      data: userData.saveRemedies,
+      data: populatedUser.saveRemedies,
     });
   } catch (error) {
     res.status(500).json({
@@ -155,7 +161,7 @@ const saveRemedy = async (req, res) => {
       error: error.message,
     });
   }
-}
+};
 
 export {
   userHealthProfile,

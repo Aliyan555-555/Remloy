@@ -123,12 +123,17 @@ const login = async (req, res) => {
     await createSession(user, token, req);
 
     if (user?.activeSubscription) {
-      await user.populate({
-        path: "activeSubscription",
-        populate: {
-          path: "plan",
+      await user.populate([
+        {
+          path: "activeSubscription",
+          populate: {
+            path: "plan",
+          },
         },
-      });
+        {
+          path: "saveRemedies.remedy",
+        },
+      ]);
     }
 
     // Get redirect path and prepare response
@@ -758,6 +763,8 @@ const refreshUser = async (req, res) => {
         path: "plan",
       },
     });
+
+    await user.populate("saveRemedies.remedy");
 
     res.status(200).json({
       message: "User data refreshed successfully",

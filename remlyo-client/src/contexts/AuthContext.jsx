@@ -173,7 +173,7 @@ export const AuthProvider = ({ children }) => {
 
   const refresh = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const res = await refreshUser(authToken);
       if (res.success) {
         setUser(res.user);
@@ -183,10 +183,16 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const refreshSave = (saveList) => {
+    const data = { ...user, saveRemedies: saveList };
+    setUser(data);
+    localStorage.setItem(LS_KEYS.USER, JSON.stringify(data));
+  };
 
   return (
     <AuthContext.Provider
       value={{
+        refreshSave,
         refresh,
         isAuthenticated,
         verifyEmailToken,

@@ -31,28 +31,6 @@ const UserDashboardPage = () => {
     },
   ];
 
-  // Mock saved remedies data
-  const savedRemedies = [
-    {
-      id: 1,
-      title: "Turmeric Tea",
-      image: "/images/remedies/turmeric-tea.jpg",
-      rating: 4.5,
-    },
-    {
-      id: 2,
-      title: "Herbal Mix",
-      image: "/images/remedies/herbal-mix.jpg",
-      rating: 4.9,
-    },
-    {
-      id: 3,
-      title: "Turmeric Tea",
-      image: "/images/remedies/turmeric-tea.jpg",
-      rating: 4.5,
-    },
-  ];
-
   return (
     <DashboardLayout pageTitle="Dashboard" user={user} isPremiumUser={false}>
       {/* Stats Cards */}
@@ -86,11 +64,14 @@ const UserDashboardPage = () => {
               </div>
               {user?.activeSubscription &&
                 user.activeSubscription.plan &&
-                Array.isArray(user.activeSubscription.accessRemediesWithAilments) &&
+                Array.isArray(
+                  user.activeSubscription.accessRemediesWithAilments
+                ) &&
                 user.activeSubscription.accessRemediesWithAilments.some(
                   (a) =>
                     Array.isArray(a.remedies) &&
-                    a.remedies.length >= user.activeSubscription.plan.remediesPerAilment
+                    a.remedies.length >=
+                      user.activeSubscription.plan.remediesPerAilment
                 ) && (
                   <p className="text-xs text-red-500">
                     You've reached your free limit for some ailment.
@@ -308,30 +289,32 @@ const UserDashboardPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {savedRemedies.map((remedy) => (
+          {user.saveRemedies.map((remedy) => (
             <div
-              key={remedy.id}
+              key={remedy.remedy._id}
               className="bg-white rounded-lg shadow-md overflow-hidden"
             >
               <img
-                src={remedy.image}
-                alt={remedy.title}
+                src={remedy.remedy.media.source}
+                alt={remedy.remedy.title}
                 className="w-full h-48 object-cover"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = `https://via.placeholder.com/300x200?text=${remedy.title.replace(
-                    /\s+/g,
-                    "+"
-                  )}`;
+                  e.target.src = remedy.remedy.media.source;
                 }}
               />
               <div className="p-4">
-                <h3 className="text-lg font-semibold">{remedy.title}</h3>
+                <h3 className="text-lg font-semibold">{remedy.remedy.title}</h3>
                 <div className="flex items-center mt-2 mb-3">
                   <span className="text-gray-700 mr-1">Rating :</span>
-                  <span className="font-medium">{remedy.rating}/5</span>
+                  <span className="font-medium">
+                    {remedy.remedy.averageRating}/5
+                  </span>
                 </div>
-                <Button variant="readMore" to={`/remedies/${remedy.id}`}>
+                <Button
+                  variant="readMore"
+                  to={`/remedies/${remedy.remedy._id}`}
+                >
                   Read More
                 </Button>
               </div>

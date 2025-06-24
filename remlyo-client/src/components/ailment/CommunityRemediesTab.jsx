@@ -6,6 +6,7 @@ import { getRemediesByAilmentAndType } from "../../api/remediesApi";
 import { useAuth } from "../../contexts/AuthContext";
 import { saveRemedy } from "./../../api/userApi";
 import { useNavigate } from "react-router-dom";
+import { refreshUser } from "../../api/authApi";
 
 const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const [remedies, setRemedies] = useState([]);
@@ -15,7 +16,7 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
-  const { authToken, isAuthenticated } = useAuth();
+  const { authToken, user, isAuthenticated, refreshSave } = useAuth();
   //
   // Fetch community remedies based on ailmentId, page and sortOption
   const fetchRemedies = async () => {
@@ -54,7 +55,9 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
       return;
     }
     const res = await saveRemedy(authToken, id, "save");
-    console.log(res);
+    if (res.success) {
+      refreshSave(res.data);
+    }
   };
 
   // Function to render star ratings
@@ -103,88 +106,95 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
       {/* Remedies Grid */}
       {remedies.length ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-          {remedies.map((remedy) => (
-            <div
-              key={remedy._id}
-              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="relative">
-                <img
-                  src={remedy.media.source}
-                  alt={remedy.name}
-                  className="w-full h-48 object-cover"
-                  onError={handleImageError}
-                />
-              </div>
-              <div className="p-5">
-                <h3 className="text-lg font-semibold mb-2">{remedy.name}</h3>
-                <p className="text-gray-600 text-sm mb-3">
-                  {remedy.description}
-                </p>
+          {remedies.map((remedy) => {
+            const isSave = user
+              ? user.saveRemedies.find((s) => s.remedy._id == remedy._id)
+              : false;
+            return (
+              <div
+                key={remedy._id}
+                className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+              >
+                <div className="relative">
+                  <img
+                    src={remedy.media.source}
+                    alt={remedy.name}
+                    className="w-full h-48 object-cover"
+                    onError={handleImageError}
+                  />
+                </div>
+                <div className="p-5">
+                  <h3 className="text-lg font-semibold mb-2">{remedy.name}</h3>
+                  <p className="text-gray-600 text-sm mb-3">
+                    {remedy.description}
+                  </p>
 
-                <div className="flex items-center mb-4">
-                  <div className="flex mr-2">
-                    {renderStars(remedy.averageRating)}
+                  <div className="flex items-center mb-4">
+                    <div className="flex mr-2">
+                      {renderStars(remedy.averageRating)}
+                    </div>
+                    <span className="text-gray-600 text-sm">
+                      ({remedy.viewCount})
+                    </span>
                   </div>
-                  <span className="text-gray-600 text-sm">
-                    ({remedy.viewCount})
-                  </span>
-                </div>
 
-                <div className="flex justify-between items-center">
-                  <Button
-                    variant="readMore"
-                    to={`/remedies/community/${remedy._id}?id=${ailmentId}`}
-                    state={{ from: `/ailments/${ailmentId}` }}
-                    size="small"
-                  >
-                    View Details
-                  </Button>
-
-                  <button
-                    className="text-gray-400 hover:text-brand-green transition-colors"
-                    aria-label="Save remedy"
-                    onClick={() => handleSaveRemedy(remedy._id)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                  <div className="flex justify-between items-center">
+                    <Button
+                      variant="readMore"
+                      to={`/remedies/community/${remedy._id}?id=${ailmentId}`}
+                      state={{ from: `/ailments/${ailmentId}` }}
+                      size="small"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                      />
-                    </svg>
-                  </button>
+                      View Details
+                    </Button>
 
-                  <button
-                    className="text-gray-400 hover:text-brand-green transition-colors"
-                    aria-label="Share remedy"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                    <button
+                      className={`${
+                        isSave ? "text-brand-green" : "text-gray-400"
+                      } hover:text-brand-green border-none transition-colors`}
+                      aria-label="Save remedy"
+                      onClick={() => handleSaveRemedy(remedy._id)}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill={isSave ? "#2f6a50" : "none"}
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      className="text-gray-400 hover:text-brand-green transition-colors"
+                      aria-label="Share remedy"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className="text-center mt-10">No Remedies Available</div>
