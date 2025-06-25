@@ -48,7 +48,10 @@ const PricingPage = () => {
           {plans
             .filter((p) => p.type == "monthly")
             .map((p) => (
-              <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+              <div
+                key={p._id}
+                className="border border-gray-200 rounded-lg overflow-hidden bg-white"
+              >
                 {p.isPopular && (
                   <div className="bg-brand-green text-white text-center py-1 font-medium text-sm uppercase">
                     POPULAR
@@ -67,7 +70,7 @@ const PricingPage = () => {
 
                   <ul className="space-y-4 mb-8">
                     {p.features.map((feature) => (
-                      <li className="flex items-start">
+                      <li key={feature} className="flex items-start">
                         <svg
                           className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
                           fill="none"
@@ -111,7 +114,10 @@ const PricingPage = () => {
           {plans
             .filter((p) => p.type == "yearly")
             .map((p) => (
-              <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+              <div
+                key={p._id}
+                className="border border-gray-200 rounded-lg overflow-hidden bg-white"
+              >
                 {p.isPopular && (
                   <div className="bg-brand-green text-white text-center py-1 font-medium text-sm uppercase">
                     POPULAR
@@ -152,10 +158,16 @@ const PricingPage = () => {
                   <Button
                     variant="contained"
                     color="brand"
+                    className="disabled:bg-gray-500 "
                     fullWidth
-                    onClick={() => handleSubscribe("premium")}
+                    disabled={p.originalPrice == 0 && isFreePlanUsed}
+                    onClick={() => handleSubscribe(p._id)}
                   >
-                    Subscribe Now
+                    {p._id === loading
+                      ? "Loading..."
+                      : p.originalPrice === 0 && isFreePlanUsed
+                      ? "Already Used"
+                      : "Subscribe Now"}
                   </Button>
                 </div>
               </div>
@@ -164,11 +176,11 @@ const PricingPage = () => {
       );
     } else if (billingPeriod === "payPerRemedy") {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div  className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {plans
             .filter((p) => p.type == "one-time")
             .map((p) => (
-              <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+              <div key={p._id} className="border border-gray-200 rounded-lg overflow-hidden bg-white">
                 {p.isPopular && (
                   <div className="bg-brand-green text-white text-center py-1 font-medium text-sm uppercase">
                     POPULAR

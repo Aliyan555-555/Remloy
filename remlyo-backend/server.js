@@ -18,6 +18,7 @@ import ArticleRouter from "./routes/article.route.js";
 import PlanRouter from "./routes/plan.route.js";
 import AilmentRouter from "./routes/ailment.route.js";
 import SubscriptionRouter from "./routes/subscription.route.js";
+import PaymentRouter from "./routes/payment.route.js";
 
 const app = express();
 
@@ -56,6 +57,10 @@ app.use("/api/v1/pricing", PlanRouter);
 app.use("/api/v1/ailments", AilmentRouter);
 // subscription Routes
 app.use("/api/v1/subscription", auth, SubscriptionRouter);
+// payment routes 
+app.use("/api/v1/payment",auth,PaymentRouter);
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

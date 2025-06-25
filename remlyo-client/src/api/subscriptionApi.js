@@ -28,8 +28,11 @@ const preprepareForSubscription = async (token, id, navigate) => {
     if (data.success) {
       if (data.isFreePlan) {
         await subscribeFreePlan(token, id, navigate);
-        // console.log("object");
         return;
+      }
+
+      if (data.success){
+        navigate(data.redirectUrl)
       }
 
       return data;

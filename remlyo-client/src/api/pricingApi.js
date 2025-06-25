@@ -12,4 +12,13 @@ const getAllPlans = async (token) => {
   }
 };
 
-export { getAllPlans };
+const getPlan = async (id) => {
+  try {
+    const { data } = await API.get(`/api/v1/pricing/${id}`);
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+}
+
+export { getAllPlans, getPlan };

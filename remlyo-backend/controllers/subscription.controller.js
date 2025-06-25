@@ -347,7 +347,7 @@ const preSubscriptionStep = async (req, res) => {
     });
     const isPlanActive = !!activePlanData;
     // Build redirect URL
-    const redirectUrl = `/subscription/checkout/${planId}`;
+    const redirectUrl = `/checkout/${planId}`;
     res.status(200).json({
       success: true,
       redirectUrl,
