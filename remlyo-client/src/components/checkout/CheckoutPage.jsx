@@ -10,17 +10,15 @@ import { getPlan } from "../../api/pricingApi";
 import LoadingSpinner from "../common/LoadingSpinner";
 import { createPaymentInstance } from "../../api/paymentApi";
 import { useAuth } from "../../contexts/AuthContext";
-
+import { subscribeFreePlan } from "../../api/subscriptionApi";
 const CheckoutPage = () => {
   const { planId } = useParams();
   const navigate = useNavigate();
   const [initialLoading, setInitialLoading] = useState(true);
 
-  // State for form fields
+  
   const [email, setEmail] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardExpiry, setCardExpiry] = useState("");
-  const [cardCvc, setCardCvc] = useState("");
+ 
   const [nameOnCard, setNameOnCard] = useState("");
   const [country, setCountry] = useState("United States of America");
   const [addressLine1, setAddressLine1] = useState("");
@@ -90,7 +88,8 @@ const CheckoutPage = () => {
         planId: planDetails._id,
       });
 
-      if (!res.success) throw new Error(res.message || "Payment creation failed");
+      if (!res.success)
+        throw new Error(res.message || "Payment creation failed");
 
       // 2. Confirm card payment
       const cardElement = elements.getElement(CardElement);
@@ -107,7 +106,7 @@ const CheckoutPage = () => {
                 line2: addressLine2,
                 postal_code: postalCode,
                 city,
-                country:"US",
+                country: "US",
               },
               phone: phoneNumber,
             },
@@ -118,8 +117,12 @@ const CheckoutPage = () => {
       if (error) throw error;
 
       if (paymentIntent.status === "succeeded") {
-        setPaymentSuccess(true);
-        // Optionally: redirect to receipt/dashboard
+        await subscribeFreePlan(
+          authToken,
+          planDetails._id,
+          paymentIntent,
+          navigate
+        );
       } else {
         setPaymentError("Payment was not successful. Please try again.");
       }
@@ -146,7 +149,7 @@ const CheckoutPage = () => {
   const handleRetryPayment = () => {
     setPaymentError(false);
   };
- useEffect(() => {
+  useEffect(() => {
     fetchPlan();
   }, []);
 
@@ -288,7 +291,6 @@ const CheckoutPage = () => {
     );
   }
 
- 
   if (initialLoading) {
     console.log(planDetails);
     return <LoadingSpinner />;
@@ -441,12 +443,10 @@ const CheckoutPage = () => {
                 </div>
 
                 <div className="mb-6">
-                  <h2 className="text-lg font-medium text-gray-700 mb-3">
+                  <h2 className="text-lg  font-medium text-gray-700 mb-4">
                     Card Information
                   </h2>
-                  <CardElement
-                    options={{ style: { base: { fontSize: "16px" } } }}
-                  />
+                  <CardElement className="w-full p-4 border border-gray-300 rounded-md" />
                 </div>
 
                 <div className="mb-6">

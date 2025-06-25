@@ -12,7 +12,6 @@ const PaymentMethodSchema = new mongoose.Schema({
     },
     provider: {
         type: String,
-        enum: ['Visa', 'MasterCard', 'American Express', 'Discover'],// maybe update this in future
         required: true,
     },
     lastFourDigits: {

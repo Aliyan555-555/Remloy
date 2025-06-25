@@ -44,6 +44,8 @@ const createPaymentIntent = async (req, res) => {
             description: `Remlyo ${plan.name} plan purchase for ${req.user?.email || "guest"}`,
         });
 
+        console.log(paymentIntent)
+
         res.json({ clientSecret: paymentIntent.client_secret, success: true });
     } catch (err) {
         console.error("[PaymentIntent Error]", err);

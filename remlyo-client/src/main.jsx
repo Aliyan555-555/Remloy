@@ -9,7 +9,9 @@ import "./index.css";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe("pk_test_51NJglhSCXraiuyfDFN2qgQXZ7Yr5Ys9g9C52mSqyH1MmozWsGB57PmFbl4WQEV2Q8rdbbLEyePK7YmOIwnYexH6i000p8WHyUK");
+const stripePromise = loadStripe(
+  "pk_test_51RdyBFQ2l1oorLYrozyhfQZ1m2nI80YEUU4d910z0bwOIdyhOY0pyDQInYtYJbYHXJcJxLFzWaHISuUGRW56aWeq00qdShyWiG"
+);
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(

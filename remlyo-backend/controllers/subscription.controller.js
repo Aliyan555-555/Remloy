@@ -2,6 +2,9 @@ import UserSubscription from "../models/user_subscription.js";
 import PricingPlan from "../models/pricing_plan.model.js";
 import User from "../models/user.model.js";
 import mongoose from "mongoose";
+import stripe from "./../config/stripe.config.js";
+import PaymentHistory from "./../models/payment_history.model.js";
+import PaymentMethod from "./../models/payment_method.model.js";
 
 // Create a new subscription
 const createSubscription = async (req, res) => {
@@ -259,63 +262,123 @@ const checkSubscriptionStatus = async (req, res) => {
   }
 };
 
-const subscribeFreePlan = async (req, res) => {
+// Unified subscription handler for both free and paid plans
+const subscribePlan = async (req, res) => {
   try {
     const { id } = req.params;
-    if (!req.user || !req.user.id) {
-      return res.status(401).json({ success: false, error: "Unauthorized" });
+    const paymentIntent = req.body; // For paid plans
+    const userId = req.user.id;
+
+    // Find the plan
+    const plan = await PricingPlan.findById(id);
+    if (!plan) {
+      return res.status(404).json({ success: false, error: "Plan not found" });
     }
-    // Find the Free plan
-    const freePlan = await PricingPlan.findById(id);
-    if (!freePlan) {
-      return res
-        .status(404)
-        .json({ success: false, error: "Free plan not found" });
-    }
-    // Check if user already has a free plan subscription
+
+    // Check if user already has an active subscription to this plan
     const existing = await UserSubscription.findOne({
-      userId: req.user.id,
+      userId,
       plan: id,
+      endDate: { $gt: new Date() },
+      canceledAt: { $exists: false },
     });
     if (existing) {
       return res.status(400).json({
         success: false,
-        error: "User already subscribed to Free plan",
+        error: "User already has an active subscription to this plan",
       });
     }
-    // Set subscription dates (1 month by default for free plan)
+
+    // Set subscription dates
     const startDate = new Date();
     const endDate = new Date();
-    if (freePlan.type === "month") {
+    let duration = 30;
+    if (plan.type === "month") {
       endDate.setMonth(endDate.getMonth() + 1);
+      duration = 30;
     } else {
       endDate.setMonth(endDate.getMonth() + 12);
+      // Leap year check for annual
+      duration =
+        new Date(new Date().getFullYear(), 1, 29).getDate() === 29 ? 366 : 365;
     }
-    // Create subscription
+
+    // Free plan logic
+    if (plan.price === 0 && plan.originalPrice === 0) {
+      const subscription = await UserSubscription.create({
+        userId,
+        plan: plan._id,
+        startDate,
+        endDate,
+        autoRenew: false,
+        paymentStatus: "completed",
+        features: plan.features,
+        monthlyPrice: 0,
+        billingCycle: plan.type,
+        nextBillingDate: endDate,
+        duration,
+      });
+      await User.findByIdAndUpdate(userId, {
+        activeSubscription: subscription._id,
+      });
+      return res.status(201).json({
+        success: true,
+        message: "Subscribed to Free plan successfully",
+        data: subscription,
+        status: "completed",
+      });
+    }
+
+    // Paid plan logic
+    // Validate paymentIntentId (should be provided for paid plans)
+    if (!paymentIntent) {
+      return res.status(400).json({
+        success: false,
+        error: "Payment information is required for paid plans",
+      });
+    }
+    const paymentMethodId = paymentIntent.payment_method;
+    const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
     const subscription = await UserSubscription.create({
-      userId: req.user.id,
-      plan: freePlan._id,
+      userId,
+      plan: plan._id,
       startDate,
       endDate,
-      autoRenew: false,
+      autoRenew: true,
       paymentStatus: "completed",
-      features: freePlan.features,
-      monthlyPrice: 0,
-      billingCycle: freePlan.type,
+      features: plan.features,
+      monthlyPrice: plan.price,
+      billingCycle: plan.type,
       nextBillingDate: endDate,
-      duration:
-        freePlan.type === "month"
-          ? 30
-          : new Date(new Date().getFullYear(), 1, 29).getDate() === 29
-            ? 366
-            : 365,
+      duration,
     });
-    await User.findByIdAndUpdate(req.user.id, {
+    await User.findByIdAndUpdate(userId, {
       activeSubscription: subscription._id,
     });
-    res.status(201).json({
+
+   
+    const newPaymentMethod = await PaymentMethod.create({
+      userId,
+      tokenizedCard: paymentMethod.id,
+      provider: paymentMethod.card.brand,
+      lastFourDigits: paymentMethod.card.last4,
+      expiryDate: new Date(`${paymentMethod.card.exp_year}-${paymentMethod.card.exp_month}-01`),
+      billingAddress: paymentMethod.billing_details.address?.line1 || 'N/A',
+      cardholderName: paymentMethod.billing_details.name,
+      isDefault: false,
+    });
+
+    await PaymentHistory.create({
+      userId,
+      subscriptionId: subscription._id,
+      amount: plan.price,
+      currency: plan.currency,
+      transactionId: paymentMethodId,
+      paymentMethod:newPaymentMethod._id
+    });
+    return res.status(201).json({
       success: true,
-      message: "Subscribed to Free plan successfully",
+      message: "Subscribed to paid plan successfully",
       data: subscription,
     });
   } catch (error) {
@@ -365,9 +428,6 @@ const checkInSuccess = async (req, res) => {
     const { id: planId } = req.params;
     const { id: userId } = req.user;
 
-
-
-
     const now = new Date();
     const activeSubscription = await UserSubscription.findOne({
       userId,
@@ -390,7 +450,7 @@ const checkInSuccess = async (req, res) => {
 };
 
 export {
-  subscribeFreePlan,
+  subscribePlan,
   preSubscriptionStep,
   createSubscription,
   getActiveSubscription,

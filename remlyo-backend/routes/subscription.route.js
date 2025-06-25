@@ -4,7 +4,7 @@ import {
   checkInSuccess,
   checkSubscriptionStatus,
   preSubscriptionStep,
-  subscribeFreePlan,
+  subscribePlan,
 } from "../controllers/subscription.controller.js";
 
 const SubscriptionRouter = express.Router();
@@ -14,12 +14,13 @@ SubscriptionRouter.get(
   subscriptionMiddleware,
   checkSubscriptionStatus
 );
-// create subscription
-SubscriptionRouter.post("/plan/:id", subscribeFreePlan);
+// Unified create subscription (free or paid)
+SubscriptionRouter.post("/plan/:id", subscribePlan);
 // pre for subscription
 SubscriptionRouter.get("/pre/:id", preSubscriptionStep);
-//
+// re check subscription
 SubscriptionRouter.get("/re-check/:id", checkInSuccess);
+// 
 
 
 export default SubscriptionRouter;

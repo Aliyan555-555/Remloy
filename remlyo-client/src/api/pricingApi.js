@@ -19,6 +19,28 @@ const getPlan = async (id) => {
   } catch (error) {
     return error.response.data;
   }
-}
+};
 
-export { getAllPlans, getPlan };
+const getPlanStats = async (token) => {
+  try {
+    const res = await API.get("/api/v1/pricing/stats/overview", {
+      headers: getAuthHeaders(token),
+    });
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+const checkPlanEligibility = async (planId, token) => {
+  try {
+    const res = await API.get(`/api/v1/pricing/${planId}/eligibility`, {
+      headers: getAuthHeaders(token),
+    });
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export { getAllPlans, getPlan, getPlanStats, checkPlanEligibility };

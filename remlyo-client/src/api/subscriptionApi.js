@@ -1,11 +1,11 @@
 import API from "../services/api";
 import { getAuthHeaders } from "../utils";
 
-const subscribeFreePlan = async (token, id, navigate) => {
+const subscribeFreePlan = async (token, id, paymentIntent, navigate) => {
   try {
     const { data } = await API.post(
       `/api/v1/subscription/plan/${id}`,
-      {},
+      paymentIntent,
       {
         headers: getAuthHeaders(token),
       }
@@ -31,8 +31,8 @@ const preprepareForSubscription = async (token, id, navigate) => {
         return;
       }
 
-      if (data.success){
-        navigate(data.redirectUrl)
+      if (data.success) {
+        navigate(data.redirectUrl);
       }
 
       return data;
@@ -52,4 +52,5 @@ const reCheckInSuccess = async (token, id) => {
     return error.response.data;
   }
 };
+
 export { subscribeFreePlan, preprepareForSubscription, reCheckInSuccess };

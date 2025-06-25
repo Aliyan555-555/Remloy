@@ -61,20 +61,24 @@ const PaymentSuccessPage = () => {
             features.
           </p>
         </div>
-        <div className="flex gap-5 !mt-6">
-          <Button
-            onClick={() => navigate("/dashboard")}
-            className="text-nowrap rounded-md !text-[#2E604A] !bg-white border-2 border-[#2E604A]"
-          >
-            Go to Dashboard
-          </Button>
-          <Button
-            onClick={() => navigate("/remedies")}
-            className="text-nowrap rounded-md bg-[#2E604A] "
-          >
-            View Remedies
-          </Button>
-        </div>
+        <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+              <Button
+                variant="outlined"
+                color="brand"
+                fullWidth
+                onClick={() => navigate("/")}
+              >
+                Go to Dashboard
+              </Button>
+              <Button
+                variant="contained"
+                color="brand"
+                fullWidth
+                onClick={() => navigate("/remedies")}
+              >
+                View Remedies
+              </Button>
+            </div>
       </div>
     </div>
   );

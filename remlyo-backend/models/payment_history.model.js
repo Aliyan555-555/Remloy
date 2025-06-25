@@ -1,46 +1,46 @@
 import mongoose from "mongoose";
 
-const PaymentHistorySchema = new mongoose.Schema({
+const PaymentHistorySchema = new mongoose.Schema(
+  {
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     subscriptionId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "UserSubscription",
-        required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserSubscription",
+      required: true,
     },
     amount: {
-        type: Number,
-        required: true, 
+      type: Number,
+      required: true,
     },
     currency: {
-        type: String,
-        required: true, // Currency code (e.g., 'USD', 'EUR')
+      type: String,
+      required: true, // Currency code (e.g., 'USD', 'EUR')
     },
     status: {
-        type: String,
-        enum: ['pending', 'completed', 'failed'],// maybe update this in future
-        default: 'pending',
+      type: String,
+      enum: ["pending", "completed", "failed"], // maybe update this in future
+      default: "pending",
     },
     paymentMethod: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "PaymentMethod", 
-        required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "PaymentMethod",
+      required: true,
     },
     processedAt: {
-        type: Date,
-        default: Date.now, 
+      type: Date,
+      default: Date.now,
     },
     transactionId: {
-        type: String,
-        required: true, 
+      type: String,
+      required: true,
     },
-    receiptUrl: {
-        type: String, 
-    },
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
 const PaymentHistory = mongoose.model("PaymentHistory", PaymentHistorySchema);
 
