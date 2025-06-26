@@ -75,6 +75,7 @@ const PaymentSuccessPage = () => {
                 variant="contained"
                 color="brand"
                 fullWidth
+                className="!text-nowrap"
                 onClick={() => navigate("/remedies")}
               >
                 View Remedies

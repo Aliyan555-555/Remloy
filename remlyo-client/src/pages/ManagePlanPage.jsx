@@ -1,55 +1,92 @@
 // src/pages/ManagePlanPage.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../components/common/Button";
 import { useAuth } from "../contexts/AuthContext";
 import DashboardLayout from "../components/layout/DashboardLayout";
+import { getPaymentHistory, getPaymentMethods } from "../api/userApi";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import Pagination from "./../components/common/Pagination";
+import { formatDate } from "../utils";
+import Modal from "../components/common/Modal";
+import FormInput from "../components/form/FormInput";
+import FormSelect from "../components/form/FormSelect";
+import StripeCardModal from "../components/stripe/StripeCardMode";
 
 const ManagePlanPage = () => {
-  const { user } = useAuth();
+  const { user, authToken } = useAuth();
+  const [paymentHistoryLoading, setPaymentHistoryLoading] = useState(true);
+  const [paymentHistory, setPaymentHistory] = useState([]);
+  const [paymentHistoryCurrentPage, setPaymentHistoryCurrentPage] = useState(1);
+  const [paymentHistoryTotalPages, setPaymentHistoryTotalPages] = useState(0);
+  const [paymentMethods, setPaymentMethods] = useState([]);
+  const [paymentMethodLoading, setPaymentMethodLoading] = useState(true);
+  const [showAddCardModal, setShowAddCardModal] = useState(false);
+  const [newCard, setNewCard] = useState({
+    number: "",
+    expiryDate: "",
+    provider: "visa",
+    isDefault: false,
+  });
+  const [addingCard, setAddingCard] = useState(false);
 
-  // Mock payment history data
-  const paymentHistory = [
-    { date: "Jan 15, 2024", type: "Premium", amount: "$ 19.99" },
-    { date: "Feb 15, 2024", type: "Premium", amount: "$ 19.99" },
-    { date: "Mar 15, 2024", type: "Premium", amount: "$ 19.99" },
-    { date: "Apr 15, 2024", type: "Premium", amount: "$ 19.99" },
-  ];
+  const fetchHistory = async () => {
+    try {
+      const res = await getPaymentHistory(
+        authToken,
+        paymentHistoryCurrentPage,
+        5
+      );
+      if (res.success) {
+        setPaymentHistory(res.history);
+        setPaymentHistoryTotalPages(res.pagination.pages);
+      }
+    } finally {
+      setPaymentHistoryLoading(false);
+    }
+  };
 
-  // Mock payment methods
-  const paymentMethods = [
-    {
-      id: 1,
-      type: "PayPal",
-      number: "**** **** **** 4242",
-      expires: "12/25",
-      isPrimary: true,
-    },
-    {
-      id: 2,
-      type: "Visa",
-      number: "**** **** **** 4242",
-      expires: "12/25",
-      isPrimary: false,
-    },
-    {
-      id: 3,
-      type: "Amazon",
-      number: "**** **** **** 4242",
-      expires: "12/25",
-      isPrimary: false,
-    },
-    {
-      id: 4,
-      type: "Google Pay",
-      number: "**** **** **** 4242",
-      expires: "12/25",
-      isPrimary: false,
-    },
-  ];
+  const fetchPaymentMethods = async () => {
+    try {
+      const res = await getPaymentMethods(authToken);
+      if (res.success) {
+        setPaymentMethods(res.methods);
+      }
+    } finally {
+      setPaymentMethodLoading(false);
+    }
+  };
 
+  const handleAddCardChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setNewCard((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+
+  const handleAddCardSubmit = async (e) => {
+    e.preventDefault();
+    setAddingCard(true);
+    // TODO: Call API to add card here
+    // For now, just close modal and reset
+    setTimeout(() => {
+      setAddingCard(false);
+      setShowAddCardModal(false);
+      setNewCard({ number: "", expiryDate: "", provider: "visa", isDefault: false });
+      // Optionally, refresh payment methods
+      fetchPaymentMethods();
+    }, 1000);
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, [paymentHistoryCurrentPage]);
+  useEffect(() => {
+    fetchPaymentMethods();
+  }, []);
   return (
-    <DashboardLayout 
-      pageTitle="Manage Plan & Billing" 
+    <DashboardLayout
+      pageTitle="Manage Plan & Billing"
       user={user}
       isPremiumUser={true}
     >
@@ -64,43 +101,59 @@ const ManagePlanPage = () => {
               Manage billing information and view receipt
             </p>
 
-            <div className="overflow-x-auto">
-              <table className="min-w-full bg-white">
-                <thead>
-                  <tr className="text-left text-gray-700">
-                    <th className="py-3 px-4 font-medium">Date</th>
-                    <th className="py-3 px-4 font-medium">Type</th>
-                    <th className="py-3 px-4 font-medium">Amount</th>
-                    <th className="py-3 px-4 font-medium">Receipt</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paymentHistory.map((payment, index) => (
-                    <tr key={index} className="border-t border-gray-200">
-                      <td className="py-3 px-4">{payment.date}</td>
-                      <td className="py-3 px-4">{payment.type}</td>
-                      <td className="py-3 px-4">{payment.amount}</td>
-                      <td className="py-3 px-4">
-                        <Button
-                          variant="outlined"
-                          color="default"
-                          size="small"
-                          className="text-sm"
-                        >
-                          Download
-                        </Button>
-                      </td>
+            {paymentHistoryLoading ? (
+              <LoadingSpinner />
+            ) : paymentHistory.length ? (
+              <div className="overflow-x-auto">
+                <table className="min-w-full bg-white">
+                  <thead>
+                    <tr className="text-left text-gray-700">
+                      <th className="py-3 px-4 font-medium">Date</th>
+                      <th className="py-3 px-4 font-medium">Type</th>
+                      <th className="py-3 px-4 font-medium">Amount</th>
+                      <th className="py-3 px-4 font-medium">Receipt</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="mt-4">
+                  </thead>
+                  <tbody>
+                    {paymentHistory.map((payment, index) => (
+                      <tr key={index} className="border-t border-gray-200">
+                        <td className="py-3 px-4">
+                          {formatDate(payment.createdAt)}
+                        </td>
+                        <td className="py-3 px-4">
+                          {payment.subscriptionId.plan.name}
+                        </td>
+                        <td className="py-3 px-4">{payment.amount}</td>
+                        <td className="py-3 px-4">
+                          <Button
+                            variant="outlined"
+                            color="default"
+                            size="small"
+                            className="text-sm"
+                          >
+                            Download
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <Pagination
+                  currentPage={paymentHistoryCurrentPage}
+                  totalPages={paymentHistoryTotalPages}
+                  onPageChange={(page) => setPaymentHistoryCurrentPage(page)}
+                />
+              </div>
+            ) : (
+              <div className="text-center my-10 text-gray-800 py-10 border border-gray-300 rounded-lg">
+                No history found
+              </div>
+            )}
+            {/* <div className="mt-4">
               <Button variant="text" color="brand" className="text-sm">
                 Load More
               </Button>
-            </div>
+            </div> */}
           </div>
 
           {/* Payment Method Section */}
@@ -115,6 +168,7 @@ const ManagePlanPage = () => {
                 variant="outlined"
                 color="brand"
                 className="flex items-center"
+                onClick={() => setShowAddCardModal(true)}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -137,35 +191,21 @@ const ManagePlanPage = () => {
             <div className="space-y-4">
               {paymentMethods.map((method) => (
                 <div
-                  key={method.id}
+                  key={method._id}
                   className="border border-gray-200 rounded-lg p-4 flex items-center"
                 >
                   <div className="flex-shrink-0 mr-4 w-16 h-12 flex items-center justify-center">
-                    {method.type === "PayPal" && (
+                    {method.provider === "paypal" && (
                       <img
                         src="https://cdn-icons-png.flaticon.com/512/196/196566.png"
                         alt="PayPal"
                         className="h-8"
                       />
                     )}
-                    {method.type === "Visa" && (
+                    {method.provider === "visa" && (
                       <img
                         src="https://cdn-icons-png.flaticon.com/512/196/196578.png"
                         alt="Visa"
-                        className="h-8"
-                      />
-                    )}
-                    {method.type === "Amazon" && (
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/5968/5968217.png"
-                        alt="Amazon"
-                        className="h-8"
-                      />
-                    )}
-                    {method.type === "Google Pay" && (
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/6124/6124998.png"
-                        alt="Google Pay"
                         className="h-8"
                       />
                     )}
@@ -173,9 +213,9 @@ const ManagePlanPage = () => {
                   <div className="flex-grow">
                     <div className="text-gray-700">{method.number}</div>
                     <div className="text-sm text-gray-500">
-                      Expires {method.expires}
+                      Expires {formatDate(method.expiryDate)}
                     </div>
-                    {method.isPrimary && (
+                    {method.isDefault && (
                       <div className="mt-1">
                         <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
                           Primary Payment Method
@@ -211,9 +251,16 @@ const ManagePlanPage = () => {
         <div className="lg:col-span-1">
           <div className="bg-brand-green text-white rounded-lg p-6">
             <h2 className="text-xl font-bold mb-2">Current Plan</h2>
-            <div className="text-3xl font-bold mb-4">Premium</div>
-            <p className="mb-1">Next charge: $9.99/month</p>
-            <p className="mb-6">on Mar 15, 2025.</p>
+            <div className="text-3xl font-bold mb-4">
+              {user.activeSubscription.plan.name}
+            </div>
+            <p className="mb-1">
+              Next charge: ${user.activeSubscription.plan.price}/
+              {user.activeSubscription.plan.type}
+            </p>
+            <p className="mb-6">
+              on {formatDate(user.activeSubscription.createdAt)}
+            </p>
 
             <Button
               variant="outlined"
@@ -233,12 +280,18 @@ const ManagePlanPage = () => {
               Cancel Subscription
             </Button>
             <p className="text-sm text-gray-500 text-center">
-              Canceling will stop future charges. Your access will remain
-              active until March 15, 2025
+              Canceling will stop future charges. Your access will remain active
+              until March 15, 2025
             </p>
           </div>
         </div>
       </div>
+
+      <StripeCardModal
+        isOpen={showAddCardModal}
+        onClose={() => setShowAddCardModal(false)}
+        onCardAdded={fetchPaymentMethods}
+      />
     </DashboardLayout>
   );
 };

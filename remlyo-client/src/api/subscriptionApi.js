@@ -1,13 +1,16 @@
 import API from "../services/api";
 import { getAuthHeaders } from "../utils";
 
-const subscribeFreePlan = async (token, id, paymentIntent, navigate) => {
+const subscribeFreePlan = async (token, id, paymentIntent, navigate, force) => {
   try {
     const { data } = await API.post(
       `/api/v1/subscription/plan/${id}`,
       paymentIntent,
       {
         headers: getAuthHeaders(token),
+        params: force && {
+          force,
+        },
       }
     );
     if (data.success) {

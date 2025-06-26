@@ -268,6 +268,7 @@ const subscribePlan = async (req, res) => {
     const { id } = req.params;
     const paymentIntent = req.body; // For paid plans
     const userId = req.user.id;
+    const force = Boolean(req.query.force)
 
     // Find the plan
     const plan = await PricingPlan.findById(id);
@@ -282,9 +283,10 @@ const subscribePlan = async (req, res) => {
       endDate: { $gt: new Date() },
       canceledAt: { $exists: false },
     });
-    if (existing) {
+    if (!force && existing) {
       return res.status(400).json({
         success: false,
+        confirmation:true,
         error: "User already has an active subscription to this plan",
       });
     }
@@ -374,7 +376,8 @@ const subscribePlan = async (req, res) => {
       amount: plan.price,
       currency: plan.currency,
       transactionId: paymentMethodId,
-      paymentMethod:newPaymentMethod._id
+      paymentMethod:newPaymentMethod._id,
+      status:"completed"
     });
     return res.status(201).json({
       success: true,

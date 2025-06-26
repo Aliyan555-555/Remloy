@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import PricingPlan from "../models/pricing_plan.model.js";
 import UserSubscription from "../models/user_subscription.js";
 
@@ -25,7 +26,7 @@ const getAllPlans = async (req, res) => {
       // Check if user has ever used any free plan
       const hasUsedFreePlan = await UserSubscription.exists({
         userId: req.user.id,
-        plan: { $in: freePlans.map(plan => plan._id) }
+        plan: { $in: freePlans.map(plan => new mongoose.Types.ObjectId(plan._id)) }
       });
       
       // Get user's subscription history for all plans

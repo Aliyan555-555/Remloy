@@ -9,8 +9,9 @@ const SavedRemediesPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Check if user is premium
-  const isPremiumUser = user?.subscriptionType === "premium";
+  // Defensive checks for user and subscription
+  const plan = user?.activeSubscription?.plan || {};
+  const isFree = plan.price === 0;
 
   const [activeFilter, setActiveFilter] = useState("all");
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
@@ -136,8 +137,8 @@ const SavedRemediesPage = () => {
   };
 
   return (
-    <DashboardLayout 
-      pageTitle="My Saved Remedies" 
+    <DashboardLayout
+      pageTitle="My Saved Remedies"
       user={user}
       isPremiumUser={isPremiumUser}
     >
@@ -156,8 +157,7 @@ const SavedRemediesPage = () => {
             color="brand"
             onClick={() => setActiveFilter("toTry")}
           >
-            To Try (
-            {savedRemedies.filter((r) => r.status === "toTry").length})
+            To Try ({savedRemedies.filter((r) => r.status === "toTry").length})
           </Button>
           <Button
             variant={activeFilter === "favorite" ? "contained" : "outlined"}
@@ -238,9 +238,7 @@ const SavedRemediesPage = () => {
                         type="checkbox"
                         id="community-remedies"
                         checked={filters.communityRemedies}
-                        onChange={() =>
-                          handleFilterChange("communityRemedies")
-                        }
+                        onChange={() => handleFilterChange("communityRemedies")}
                         className="mr-2"
                       />
                       <label htmlFor="community-remedies">

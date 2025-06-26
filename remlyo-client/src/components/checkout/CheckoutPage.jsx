@@ -1,5 +1,5 @@
 // src/components/checkout/CheckoutPage.jsx
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
@@ -16,6 +16,7 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import { createPaymentInstance } from "../../api/paymentApi";
 import { useAuth } from "../../contexts/AuthContext";
 import { subscribeFreePlan } from "../../api/subscriptionApi";
+import { ConfirmModal } from "./../common/Modal";
 const CheckoutPage = () => {
   const { planId } = useParams();
   const navigate = useNavigate();
@@ -42,6 +43,70 @@ const CheckoutPage = () => {
   const elements = useElements();
   const { authToken, user } = useAuth();
 
+  const [emailValid, setEmailValid] = useState(false);
+  const [nameValid, setNameValid] = useState(false);
+  const [address1Valid, setAddress1Valid] = useState(false);
+  const [postalCodeValid, setPostalCodeValid] = useState(false);
+  const [cityValid, setCityValid] = useState(false);
+  const [cardComplete, setCardComplete] = useState(false);
+  const [formValid, setFormValid] = useState(false);
+  const [confirmationModel, setConfirmationModel] = useState(false);
+  const [pendingPaymentIntent, setPendingPaymentIntent] = useState(null);
+
+  // Validation functions
+  const validateEmail = (value) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  };
+  const validateRequired = (value) => value.trim().length > 0;
+
+  // Handlers for input changes with validation
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailValid(validateEmail(e.target.value));
+  };
+  const handleNameChange = (e) => {
+    setNameOnCard(e.target.value);
+    setNameValid(validateRequired(e.target.value));
+  };
+  const handleAddress1Change = (e) => {
+    setAddressLine1(e.target.value);
+    setAddress1Valid(validateRequired(e.target.value));
+  };
+  const handlePostalCodeChange = (e) => {
+    setPostalCode(e.target.value);
+    setPostalCodeValid(validateRequired(e.target.value));
+  };
+  const handleCityChange = (e) => {
+    setCity(e.target.value);
+    setCityValid(validateRequired(e.target.value));
+  };
+
+  // CardElement onChange handler
+  const handleCardChange = (event) => {
+    setCardComplete(event.complete);
+  };
+
+  // Update form validity
+  useEffect(() => {
+    setFormValid(
+      emailValid &&
+        nameValid &&
+        address1Valid &&
+        postalCodeValid &&
+        cityValid &&
+        cardComplete &&
+        !paymentProcessing
+    );
+  }, [
+    emailValid,
+    nameValid,
+    address1Valid,
+    postalCodeValid,
+    cityValid,
+    cardComplete,
+    paymentProcessing,
+  ]);
+
   const fetchPlan = async () => {
     try {
       const res = await getPlan(planId);
@@ -57,65 +122,112 @@ const CheckoutPage = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e) => {
+      if (e) e.preventDefault();
+      setPaymentProcessing(true);
+      setPaymentError(false);
+
+      if (!stripe || !elements) {
+        setPaymentError("Stripe is not loaded. Please try again.");
+        setPaymentProcessing(false);
+        return;
+      }
+
+      try {
+        // 1. Create PaymentIntent on backend
+        const res = await createPaymentInstance(authToken, {
+          planId: planDetails._id,
+        });
+
+        if (!res.success)
+          throw new Error(res.message || "Payment creation failed");
+
+        // 2. Confirm card payment
+        const cardElement = elements.getElement(CardElement);
+        const { error, paymentIntent } = await stripe.confirmCardPayment(
+          res.clientSecret,
+          {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                email,
+                name: nameOnCard,
+                address: {
+                  line1: addressLine1,
+                  line2: addressLine2,
+                  postal_code: postalCode,
+                  city,
+                  country: "US",
+                },
+                phone: phoneNumber,
+              },
+            },
+          }
+        );
+
+        if (error) throw error;
+
+        if (paymentIntent.status === "succeeded") {
+          const subscribeRes = await subscribeFreePlan(
+            authToken,
+            planDetails._id,
+            paymentIntent,
+            navigate,
+            false
+          );
+          if (!subscribeRes.success && subscribeRes.confirmation) {
+            setPendingPaymentIntent(paymentIntent);
+            setConfirmationModel(true);
+          }
+        } else {
+          setPaymentError("Payment was not successful. Please try again.");
+        }
+      } catch (err) {
+        setPaymentError(err.message || "Payment failed. Please try again.");
+      } finally {
+        setPaymentProcessing(false);
+      }
+    },
+    [
+      stripe,
+      elements,
+      authToken,
+      planDetails,
+      email,
+      nameOnCard,
+      addressLine1,
+      addressLine2,
+      postalCode,
+      city,
+      phoneNumber,
+      navigate,
+    ]
+  );
+
+  // Handler for confirming force purchase
+  const handleForceConfirm = async () => {
+    setConfirmationModel(false);
     setPaymentProcessing(true);
     setPaymentError(false);
-
-    if (!stripe || !elements) {
-      setPaymentError("Stripe is not loaded. Please try again.");
-      setPaymentProcessing(false);
-      return;
-    }
-
     try {
-      // 1. Create PaymentIntent on backend
-      const res = await createPaymentInstance(authToken, {
-        planId: planDetails._id,
-      });
-
-      if (!res.success)
-        throw new Error(res.message || "Payment creation failed");
-
-      // 2. Confirm card payment
-      const cardElement = elements.getElement(CardElement);
-      const { error, paymentIntent } = await stripe.confirmCardPayment(
-        res.clientSecret,
-        {
-          payment_method: {
-            card: cardElement,
-            billing_details: {
-              email,
-              name: nameOnCard,
-              address: {
-                line1: addressLine1,
-                line2: addressLine2,
-                postal_code: postalCode,
-                city,
-                country: "US",
-              },
-              phone: phoneNumber,
-            },
-          },
-        }
+      const subscribeRes = await subscribeFreePlan(
+        authToken,
+        planDetails._id,
+        pendingPaymentIntent,
+        navigate,
+        true
       );
-
-      if (error) throw error;
-
-      if (paymentIntent.status === "succeeded") {
-        await subscribeFreePlan(
-          authToken,
-          planDetails._id,
-          paymentIntent,
-          navigate
+      if (!subscribeRes.success) {
+        setPaymentError(
+          subscribeRes.message || "Payment failed. Please try again."
         );
-      } else {
-        setPaymentError("Payment was not successful. Please try again.");
       }
     } catch (err) {
       setPaymentError(err.message || "Payment failed. Please try again.");
     } finally {
       setPaymentProcessing(false);
+      setPendingPaymentIntent(null);
     }
   };
 
@@ -301,7 +413,6 @@ const CheckoutPage = () => {
   }
 
   if (initialLoading) {
-    console.log(planDetails);
     return <LoadingSpinner />;
   }
   return (
@@ -448,20 +559,37 @@ const CheckoutPage = () => {
                   <input
                     type="email"
                     id="email"
-                    className="w-full p-3 border border-gray-300 rounded-md"
+                    className={`w-full p-3 border ${
+                      emailValid || email === ""
+                        ? "border-gray-300"
+                        : "border-red-500"
+                    } rounded-md`}
                     placeholder="example@gmail.com"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleEmailChange}
                     required
                     disabled={paymentProcessing}
                   />
+                  {!emailValid && email !== "" && (
+                    <span className="text-xs text-red-500">
+                      Enter a valid email.
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-6">
                   <h2 className="text-lg  font-medium text-gray-700 mb-4">
                     Card Information
                   </h2>
-                  <CardElement className="w-full p-4 border border-gray-300 rounded-md" />
+                  <CardElement
+                    className="w-full p-4 border border-gray-300 rounded-md"
+                    onChange={handleCardChange}
+                  />
+                  {!cardComplete && (
+                    <span className="text-xs text-red-500">
+                      Enter complete card details.
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-6">
@@ -474,12 +602,21 @@ const CheckoutPage = () => {
                   <input
                     type="text"
                     id="nameOnCard"
-                    className="w-full p-3 border border-gray-300 rounded-md"
+                    className={`w-full p-3 border ${
+                      nameValid || nameOnCard === ""
+                        ? "border-gray-300"
+                        : "border-red-500"
+                    } rounded-md`}
                     value={nameOnCard}
-                    onChange={(e) => setNameOnCard(e.target.value)}
+                    onChange={handleNameChange}
                     required
                     disabled={paymentProcessing}
                   />
+                  {!nameValid && nameOnCard !== "" && (
+                    <span className="text-xs text-red-500">
+                      Name is required.
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-6">
@@ -503,13 +640,22 @@ const CheckoutPage = () => {
                   <div className="mb-3">
                     <input
                       type="text"
-                      className="w-full p-3 border border-gray-300 rounded-md"
+                      className={`w-full p-3 border ${
+                        address1Valid || addressLine1 === ""
+                          ? "border-gray-300"
+                          : "border-red-500"
+                      } rounded-md`}
                       placeholder="Address Line 1"
                       value={addressLine1}
-                      onChange={(e) => setAddressLine1(e.target.value)}
+                      onChange={handleAddress1Change}
                       required
                       disabled={paymentProcessing}
                     />
+                    {!address1Valid && addressLine1 !== "" && (
+                      <span className="text-xs text-red-500">
+                        Address is required.
+                      </span>
+                    )}
                   </div>
                   <div className="mb-3">
                     <input
@@ -524,23 +670,41 @@ const CheckoutPage = () => {
                   <div className="flex space-x-3">
                     <input
                       type="text"
-                      className="w-1/2 p-3 border border-gray-300 rounded-md"
+                      className={`w-1/2 p-3 border ${
+                        postalCodeValid || postalCode === ""
+                          ? "border-gray-300"
+                          : "border-red-500"
+                      } rounded-md`}
                       placeholder="Postal Code"
                       value={postalCode}
-                      onChange={(e) => setPostalCode(e.target.value)}
+                      onChange={handlePostalCodeChange}
                       required
                       disabled={paymentProcessing}
                     />
                     <input
                       type="text"
-                      className="w-1/2 p-3 border border-gray-300 rounded-md"
+                      className={`w-1/2 p-3 border ${
+                        cityValid || city === ""
+                          ? "border-gray-300"
+                          : "border-red-500"
+                      } rounded-md`}
                       placeholder="City"
                       value={city}
-                      onChange={(e) => setCity(e.target.value)}
+                      onChange={handleCityChange}
                       required
                       disabled={paymentProcessing}
                     />
                   </div>
+                  {!postalCodeValid && postalCode !== "" && (
+                    <span className="text-xs text-red-500">
+                      Postal code is required.
+                    </span>
+                  )}
+                  {!cityValid && city !== "" && (
+                    <span className="text-xs text-red-500 ml-4">
+                      City is required.
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-6">
@@ -597,9 +761,11 @@ const CheckoutPage = () => {
                   color="brand"
                   fullWidth
                   type="submit"
-                  disabled={paymentProcessing}
+                  disabled={!formValid}
                   className={
-                    paymentProcessing ? "opacity-75 cursor-not-allowed" : ""
+                    paymentProcessing || !formValid
+                      ? "opacity-75 cursor-not-allowed"
+                      : ""
                   }
                 >
                   {paymentProcessing ? "Processing..." : "Complete Purchase"}
@@ -614,6 +780,16 @@ const CheckoutPage = () => {
             </div>
           </div>
         </div>
+        <ConfirmModal
+          isOpen={confirmationModel}
+          onClose={() => setConfirmationModel(false)}
+          title="Are you Sure"
+          message={
+            "This plan is already active. Are you sure you want to purchase again?"
+          }
+          cancelText="No"
+          onConfirm={handleForceConfirm}
+        />
       </main>
 
       <Footer />

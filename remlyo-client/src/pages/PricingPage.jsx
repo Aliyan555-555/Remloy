@@ -7,6 +7,7 @@ import Button from "../components/common/Button";
 import { getAllPlans } from "../api/pricingApi";
 import { useAuth } from "../contexts/AuthContext";
 import { preprepareForSubscription } from "../api/subscriptionApi";
+import LoadingSpinner from "./../components/common/LoadingSpinner";
 
 const PricingPage = () => {
   const [billingPeriod, setBillingPeriod] = useState("monthly");
@@ -14,14 +15,17 @@ const PricingPage = () => {
   const [isFreePlanUsed, setIsFreePlanUsed] = useState(false);
   const [plans, setPlans] = useState([]);
   const { authToken } = useAuth();
-  const [loading, setLoading] = useState(null);
-  //  const { authToken } = useAuth();
+  const [loading, setLoading] = useState(true);
   const fetchPlans = async () => {
-    const res = await getAllPlans(authToken);
+    try {
+      const res = await getAllPlans(authToken);
 
-    if (res.success) {
-      setPlans(res.plans);
-      setIsFreePlanUsed(res.user.isFreePlanUsed);
+      if (res.success) {
+        setPlans(res.plans);
+        setIsFreePlanUsed(res.user.hasUsedFreePlan);
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -176,11 +180,14 @@ const PricingPage = () => {
       );
     } else if (billingPeriod === "payPerRemedy") {
       return (
-        <div  className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {plans
             .filter((p) => p.type == "one-time")
             .map((p) => (
-              <div key={p._id} className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+              <div
+                key={p._id}
+                className="border border-gray-200 rounded-lg overflow-hidden bg-white"
+              >
                 {p.isPopular && (
                   <div className="bg-brand-green text-white text-center py-1 font-medium text-sm uppercase">
                     POPULAR
@@ -266,6 +273,10 @@ const PricingPage = () => {
   useEffect(() => {
     fetchPlans();
   }, []);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col">

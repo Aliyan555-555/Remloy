@@ -49,24 +49,56 @@ const checkSubscription = async (token) => {
   }
 };
 
-
 const saveRemedy = async (token, id, type) => {
   try {
-    const { data } = await API.post(`/api/v1/user/remedy/save/${id}`, {}, {
+    const { data } = await API.post(
+      `/api/v1/user/remedy/save/${id}`,
+      {},
+      {
+        headers: getAuthHeaders(token),
+        params: {
+          type,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+const getPaymentHistory = async (token, page, limit) => {
+  try {
+    const { data } = await API.get("/api/v1/user/payment/history", {
       headers: getAuthHeaders(token),
       params: {
-        type
-      }
+        page,
+        limit,
+      },
     });
     return data;
   } catch (error) {
     return error.response.data;
   }
-}
+};
+
+const getPaymentMethods = async (token) => {
+  try {
+    const { data } = await API.get("/api/v1/user/payment/methods", {
+      headers: getAuthHeaders(token),
+    });
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export {
+  getPaymentHistory,
   generateHealthProfileQuestions,
   healthProfile,
   saveRemedy,
+  getPaymentMethods,
   checkHealthProfile,
   checkSubscription,
 };

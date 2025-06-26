@@ -2,6 +2,9 @@ import UserProfile from "../models/user_profile.model.js";
 import generateHealthQuestions from "../services/healthQuestion.service.js";
 import { userHealthProfileValidation } from "../validations/user.validations.js";
 import User from "./../models/user.model.js";
+import PaymentHistory from "../models/payment_history.model.js";
+import PaymentMethod from "../models/payment_method.model.js";
+import UserSubscription from "../models/user_subscription.js";
 
 const userHealthProfile = async (req, res) => {
   try {
@@ -163,9 +166,73 @@ const saveRemedy = async (req, res) => {
   }
 };
 
+const getPaymentHistory = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { page = 1, limit = 10 } = req.query;
+
+    const query = { userId };
+    const total = await PaymentHistory.countDocuments(query);
+    const history = await PaymentHistory.find(query)
+      .populate({
+        path: "subscriptionId",
+        model: UserSubscription,
+        select: "plan startDate endDate status paymentStatus monthlyPrice billingCycle",
+        populate: { path: "plan", select: "name price type" }
+      })
+      .populate({
+        path: "paymentMethod",
+        model: PaymentMethod,
+        select: "provider lastFourDigits cardholderName expiryDate"
+      })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit));
+
+    return res.status(200).json({
+      success: true,
+      message: "Payment history fetched successfully",
+      history: history,
+      pagination: {
+        total,
+        page: parseInt(page),
+        pages: Math.ceil(total / limit),
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching payment history:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch payment history",
+      error: error.message,
+    });
+  }
+};
+
+const getPaymentMethods= async (req,res) => {
+  try {
+    const userId = req.user.id;
+    const methods = await PaymentMethod.find({ userId }).select("provider lastFourDigits cardholderName expiryDate isDefault billingAddress addedAt").sort({ isDefault: -1, addedAt: -1 });
+    return res.status(200).json({
+      success: true,
+      message: "Payment methods fetched successfully",
+      methods
+    });
+  } catch (error) {
+    console.error("Error fetching payment methods:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch payment methods",
+      error: error.message
+    });
+  }
+}
+
 export {
   userHealthProfile,
   getUserHealthQuestionBaseOnHealthProfile,
   healthProfileStatus,
   saveRemedy,
+  getPaymentHistory,
+  getPaymentMethods,
 };
