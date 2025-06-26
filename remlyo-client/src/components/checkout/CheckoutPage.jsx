@@ -4,7 +4,12 @@ import { useNavigate, useParams, Link as RouterLink } from "react-router-dom";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
 import Button from "../common/Button";
-import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import {
+  useStripe,
+  useElements,
+  CardElement,
+  PaymentRequestButtonElement,
+} from "@stripe/react-stripe-js";
 import { COUNTRIES } from "../../constants";
 import { getPlan } from "../../api/pricingApi";
 import LoadingSpinner from "../common/LoadingSpinner";
@@ -16,9 +21,8 @@ const CheckoutPage = () => {
   const navigate = useNavigate();
   const [initialLoading, setInitialLoading] = useState(true);
 
-  
   const [email, setEmail] = useState("");
- 
+
   const [nameOnCard, setNameOnCard] = useState("");
   const [country, setCountry] = useState("United States of America");
   const [addressLine1, setAddressLine1] = useState("");
@@ -32,6 +36,7 @@ const CheckoutPage = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("card"); // 'card' or 'link'
   const [planDetails, setPlanDetails] = useState(null);
+  const [paymentRequest, setPaymentRequest] = useState(null);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -51,26 +56,7 @@ const CheckoutPage = () => {
       setInitialLoading(false);
     }
   };
-  // const getPlanDetails = () => {
-  //   // if (planDetails.name === "premium") {
-  //   //   return {
-  //   //     title: "Subscribe to Remlyo Premium",
-  //   //     price: "$99.00",
-  //   //     period: "/year",
-  //   //     subtitle: "Save 20% when you pay yearly!",
-  //   //   };
-  //   // } else {
-  //   //   return {
-  //   //     title: "Subscribe to Remlyo Pay per Remedy",
-  //   //     price: "$4.99",
-  //   //     period: "/One-Time Remedy Purchase - Top 10 Remedies",
-  //   //     subtitle:
-  //   //       "Select an ailment to unlock its top remedies, with access to ten remedies via a one-time purchase.",
-  //   //   };
-  //   // }
-  // };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setPaymentProcessing(true);
@@ -153,79 +139,102 @@ const CheckoutPage = () => {
     fetchPlan();
   }, []);
 
+  useEffect(() => {
+    if (stripe) {
+      const pr = stripe.paymentRequest({
+        country: "US",
+        currency: "usd",
+        total: {
+          label: "Demo total",
+          amount: 109,
+        },
+        requestPayerName: true,
+        requestPayerEmail: true,
+      });
+
+      // Check the availability of the Payment Request API.
+      pr.canMakePayment().then((result) => {
+        console.log(pr);
+        if (result) {
+          setPaymentRequest(pr);
+        }
+      });
+    }
+  }, [stripe]);
+
   // Success state
-  if (paymentSuccess) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        {/* AI Banner */}
-        <div className="bg-brand-green text-white py-2 text-center">
-          <div className="container mx-auto px-4">
-            <span>🌿 AI-Powered Remedy Recommendations Available!</span>
-          </div>
-        </div>
+  // if (paymentSuccess) {
+  //   return (
+  //     <div className="min-h-screen flex flex-col">
+  //       {/* AI Banner */}
+  //       <div className="bg-brand-green text-white py-2 text-center">
+  //         <div className="container mx-auto px-4">
+  //           <span>🌿 AI-Powered Remedy Recommendations Available!</span>
+  //         </div>
+  //       </div>
 
-        {/* Navigation */}
-        <Navbar />
+  //       {/* Navigation */}
+  //       <Navbar />
 
-        {/* Payment Success */}
-        <div className="flex-grow flex items-center justify-center p-4">
-          <div className="text-center max-w-md w-full border border-gray-200 rounded-lg p-8 shadow-sm">
-            <div className="w-16 h-16 bg-green-500 rounded-full mx-auto flex items-center justify-center mb-6">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </div>
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-              Payment Successful
-            </h2>
-            <p className="text-gray-600 mb-6">
-              {planDetails.name === "premium"
-                ? "You've successfully subscribed to the Premium Plan ($9.99/month)."
-                : "You've successfully purchased access to top 10 remedies for your ailment."}
-            </p>
-            <p className="text-gray-600 mb-6">
-              We've emailed your receipt and plan details for your records.
-            </p>
-            <p className="text-gray-600 mb-6">
-              You now have full access to personalized remedies and premium
-              features.
-            </p>
-            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-              <Button
-                variant="outlined"
-                color="brand"
-                fullWidth
-                onClick={() => navigate("/")}
-              >
-                Go to Dashboard
-              </Button>
-              <Button
-                variant="contained"
-                color="brand"
-                fullWidth
-                onClick={() => navigate("/remedies")}
-              >
-                View Remedies
-              </Button>
-            </div>
-          </div>
-        </div>
+  //       {/* Payment Success */}
+  //       <div className="flex-grow flex items-center justify-center p-4">
+  //         <div className="text-center max-w-md w-full border border-gray-200 rounded-lg p-8 shadow-sm">
+  //           <div className="w-16 h-16 bg-green-500 rounded-full mx-auto flex items-center justify-center mb-6">
+  //             <svg
+  //               xmlns="http://www.w3.org/2000/svg"
+  //               className="h-10 w-10 text-white"
+  //               fill="none"
+  //               viewBox="0 0 24 24"
+  //               stroke="currentColor"
+  //             >
+  //               <path
+  //                 strokeLinecap="round"
+  //                 strokeLinejoin="round"
+  //                 strokeWidth={2}
+  //                 d="M5 13l4 4L19 7"
+  //               />
+  //             </svg>
+  //           </div>
+  //           <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+  //             Payment Successful
+  //           </h2>
+  //           <p className="text-gray-600 mb-6">
+  //             {planDetails.name === "premium"
+  //               ? "You've successfully subscribed to the Premium Plan ($9.99/month)."
+  //               : "You've successfully purchased access to top 10 remedies for your ailment."}
+  //           </p>
+  //           <p className="text-gray-600 mb-6">
+  //             We've emailed your receipt and plan details for your records.
+  //           </p>
+  //           <p className="text-gray-600 mb-6">
+  //             You now have full access to personalized remedies and premium
+  //             features.
+  //           </p>
+  //           <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+  //             <Button
+  //               variant="outlined"
+  //               color="brand"
+  //               fullWidth
+  //               onClick={() => navigate("/")}
+  //             >
+  //               Go to Dashboard
+  //             </Button>
+  //             <Button
+  //               variant="contained"
+  //               color="brand"
+  //               fullWidth
+  //               onClick={() => navigate("/remedies")}
+  //             >
+  //               View Remedies
+  //             </Button>
+  //           </div>
+  //         </div>
+  //       </div>
 
-        <Footer />
-      </div>
-    );
-  }
+  //       <Footer />
+  //     </div>
+  //   );
+  // }
 
   // Error state
   if (paymentError) {
@@ -387,7 +396,7 @@ const CheckoutPage = () => {
             {/* Right Column (Payment Form) */}
             <div className="w-full md:w-3/5">
               {/* Pay with Link button */}
-              <Button
+              {/* <Button
                 variant="contained"
                 color="brand"
                 fullWidth
@@ -410,16 +419,22 @@ const CheckoutPage = () => {
                     />
                   </svg>
                 </div>
-              </Button>
+              </Button> */}
+
+              {paymentRequest && (
+                <PaymentRequestButtonElement options={{ paymentRequest }} />
+              )}
 
               {/* Divider */}
-              <div className="flex items-center my-6">
-                <div className="flex-grow border-t border-gray-300"></div>
-                <span className="flex-shrink-0 mx-4 text-gray-600">
-                  Or pay with card
-                </span>
-                <div className="flex-grow border-t border-gray-300"></div>
-              </div>
+              {paymentRequest && (
+                <div className="flex items-center my-6">
+                  <div className="flex-grow border-t border-gray-300"></div>
+                  <span className="flex-shrink-0 mx-4 text-gray-600">
+                    Or pay with card
+                  </span>
+                  <div className="flex-grow border-t border-gray-300"></div>
+                </div>
+              )}
 
               {/* Card Payment Form */}
               <form onSubmit={handleSubmit}>

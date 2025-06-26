@@ -1,6 +1,11 @@
 // src/pages/CommunityRemedyDetail.jsx
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  useParams,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
@@ -8,6 +13,7 @@ import { getRemedyById } from "../api/remediesApi";
 import { formatDate } from "../utils";
 import HtmlRenderer from "../components/common/HtmlRenderer";
 import { useAuth } from "../contexts/AuthContext";
+import { saveRemedy } from "../api/userApi";
 
 const CommunityRemedyDetail = () => {
   const { remedyId } = useParams();
@@ -45,16 +51,18 @@ const CommunityRemedyDetail = () => {
   const [sortOption, setSortOption] = useState("newest");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [showAIInsightPopup, setShowAIInsightPopup] = useState(false);
-  const { authToken, refresh } = useAuth();
+  const { authToken, refresh, refreshSave, user } = useAuth();
   const [accessDenied, setAccessDenied] = useState(false);
   const [accessDeniedMessage, setAccessDeniedMessage] = useState("");
+  const [isTry, setIsTry] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   // Fetch remedy details
   const fetchRemedyDetails = async () => {
     try {
       setLoading(true);
       // Simulating API call
-      const res = await getRemedyById(authToken, remedyId,ailmentId);
+      const res = await getRemedyById(authToken, remedyId, ailmentId);
       console.log(res);
       if (res && res.success) {
         setRemedy(res.remedy);
@@ -176,6 +184,13 @@ const CommunityRemedyDetail = () => {
       </div>
     );
   }
+
+  const handleAddInTry = async () => {
+    const res = await saveRemedy(authToken, remedyId, "to-try");
+    if (res.success) {
+      refreshSave(res.data);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -309,8 +324,9 @@ const CommunityRemedyDetail = () => {
               <Button
                 variant="outlined"
                 color="brand"
+                onClick={handleAddInTry}
                 size="small"
-                className="flex items-center"
+                className={`${isTry && "bg-brand-green"} flex items-center`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

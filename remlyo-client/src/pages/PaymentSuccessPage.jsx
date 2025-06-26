@@ -61,11 +61,12 @@ const PaymentSuccessPage = () => {
             features.
           </p>
         </div>
-        <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+        <div className="flex mt-5 flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
               <Button
                 variant="outlined"
                 color="brand"
                 fullWidth
+                className="text-nowrap"
                 onClick={() => navigate("/")}
               >
                 Go to Dashboard

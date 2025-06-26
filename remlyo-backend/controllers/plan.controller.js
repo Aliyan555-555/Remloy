@@ -18,8 +18,8 @@ const getAllPlans = async (req, res) => {
       // Check user's current active subscription
       const currentSubscription = await UserSubscription.findOne({
         userId: req.user.id,
-        status: "active",
-        endDate: { $gte: new Date() }
+        // status: "active",
+        // endDate: { $gte: new Date() }
       }).populate('plan');
       
       // Check if user has ever used any free plan
