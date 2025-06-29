@@ -4,10 +4,16 @@ import { remedyValidation } from "../validations/remedy.validation.js";
 import ModerationStatus from "./../models/moderation_status.model.js";
 import Flag from "../models/flag.model.js";
 import Comment from "../models/comment.model.js";
+import generateAiFeedback from "./../services/aiFeedback.service.js";
 import {
   createCommentValidation,
   moderateCommentValidation,
 } from "../validations/comment.validation.js";
+import Review from "../models/review.model.js";
+import generateRemedy from "../services/generateRemedy.service.js";
+import AiFeedback from "../models/ai_feedback.model.js";
+import User from "../models/user.model.js";
+import UserProfile from "../models/user_profile.model.js";
 
 const createRemedy = async (req, res) => {
   try {
@@ -114,9 +120,59 @@ const getRemedyById = async (req, res) => {
         .json({ message: "Remedy not found or deleted", success: false });
     }
 
+    let ratings = {};
+
+    // 👉 If it's an AI-generated remedy, calculate extra data
+    if (remedy.type === "ai") {
+      const stats = await Review.aggregate([
+        {
+          $match: {
+            remedyId: remedy._id,
+            // moderationStatus: "approved",
+          },
+        },
+        {
+          $facet: {
+            total: [{ $count: "count" }],
+            positive: [
+              { $match: { overallRating: { $gte: 4 } } },
+              { $count: "count" },
+            ],
+            averages: [
+              {
+                $group: {
+                  _id: null,
+                  effectivenessAvg: { $avg: "$effectivenessRating" },
+                  easeOfUseAvg: { $avg: "$easeOfUseRating" },
+                  sideEffectsAvg: { $avg: "$sideEffectsRating" },
+                  overallAvg: { $avg: "$overallRating" },
+                },
+              },
+            ],
+          },
+        },
+      ]);
+
+      const total = stats[0].total[0]?.count || 0;
+      const positive = stats[0].positive[0]?.count || 0;
+      const avg = stats[0].averages[0] || {};
+
+      ratings = {
+        successRate: total > 0 ? Math.round((positive / total) * 100) : 0,
+        totalReviews: total,
+        positiveOutcomes: positive,
+        averageRatings: {
+          effectiveness: avg.effectivenessAvg || 0,
+          easeOfUse: avg.easeOfUseAvg || 0,
+          sideEffects: avg.sideEffectsAvg || 0,
+          overall: avg.overallAvg || 0,
+        },
+      };
+    }
+
     res.status(200).json({
       message: "Successfully fetched remedy",
-      remedy,
+      remedy: { ...remedy._doc, ratings },
       success: true,
     });
   } catch (error) {
@@ -374,7 +430,7 @@ const getRemediesByAilmentId = async (req, res) => {
     const total = await Remedy.countDocuments(query);
 
     // Paginate remedies
-    const remedies = await Remedy.find(query)
+    let remedies = await Remedy.find(query)
       .populate({
         path: "createdBy",
         select: "username profileImage",
@@ -402,13 +458,144 @@ const getRemediesByAilmentId = async (req, res) => {
   }
 };
 
+const getAIfeedback = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { id: remedyId } = req.params;
+
+    // Validate remedy ID
+    if (!mongoose.Types.ObjectId.isValid(remedyId)) {
+      return res.status(400).json({
+        message: "Invalid remedy ID",
+        success: false,
+      });
+    }
+
+    const userProfile = await UserProfile.findOne({ userId });
+
+    // Check if remedy exists and is active
+    const remedy = await Remedy.findById(remedyId);
+    if (!remedy || !remedy.isActive) {
+      return res.status(404).json({
+        message: "Remedy not found or inactive",
+        success: false,
+      });
+    }
+
+    // Check if feedback already exists for this remedy and user
+    const existingFeedback = await AiFeedback.findOne({
+      remedyId,
+      userId,
+    }).sort({ createdAt: -1 });
+
+    // Check if existing feedback exists and profile version matches
+    if (existingFeedback && existingFeedback.profileVersion === userProfile.__v) {
+      return res.status(200).json({
+        message: "AI feedback already exists",
+        success: true,
+        feedback: existingFeedback.feedbackText,
+        feedbackData: existingFeedback,
+      });
+    }
+
+    // Generate new AI feedback (either no existing feedback or profile version mismatch)
+    const feedbackData = await generateAiFeedback(remedyId, userId);
+
+    // Create new feedback record based on remedy type
+    let newFeedback;
+
+    if (remedy.type === "ai") {
+      // For AI remedies, use the full structured feedback
+      newFeedback = await AiFeedback.create({
+        remedyId,
+        userId,
+        profileVersion: userProfile.__v,
+        ...feedbackData,
+      });
+    } else {
+      // For non-AI remedies, use simple text feedback
+      newFeedback = await AiFeedback.create({
+        remedyId,
+        userId,
+        profileVersion: userProfile.__v,
+        feedbackText: feedbackData,
+      });
+    }
+
+    return res.status(200).json({
+      message: "AI feedback generated successfully",
+      success: true,
+      feedback: newFeedback.feedbackText,
+      feedbackData: newFeedback,
+    });
+  } catch (error) {
+    console.error("Error generating AI feedback:", error);
+
+    // Handle specific error cases
+    if (error.message === "User profile not found") {
+      return res.status(404).json({
+        message:
+          "User profile not found. Please complete your health profile first.",
+        success: false,
+      });
+    }
+
+    if (error.message === "Remedy not found") {
+      return res.status(404).json({
+        message: "Remedy not found",
+        success: false,
+      });
+    }
+
+    if (error.message === "AI response did not contain valid JSON block") {
+      return res.status(500).json({
+        message: "Failed to generate AI feedback. Please try again later.",
+        success: false,
+      });
+    }
+
+    return res.status(500).json({
+      message: "Failed to generate AI feedback",
+      error: error.message,
+      success: false,
+    });
+  }
+};
+
+const generateAIRemedy = async (req, res) => {
+  try {
+    const ailmentId = req.params.id;
+    const userId = req.user.id;
+    const symptoms = req.body.symptoms;
+
+    // Generate remedy object using AI
+    const remedyData = await generateRemedy(userId, ailmentId, symptoms);
+
+    // Save the generated remedy to the database
+    const newRemedy = await Remedy.create(remedyData);
+
+    res.status(201).json({
+      message: "AI-generated remedy created successfully.",
+      success: true,
+      remedy: newRemedy,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || "Failed to generate AI remedy.",
+      success: false,
+    });
+  }
+};
+
 export {
   flagRemedy,
   createRemedy,
+  getAIfeedback,
   getAllRemedies,
   createComment,
   getRemedyById,
   updateRemedy,
   deleteRemedy,
   getRemediesByAilmentId,
+  generateAIRemedy,
 };

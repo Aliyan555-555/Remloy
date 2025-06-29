@@ -3,6 +3,7 @@ import subscriptionMiddleware from "./../middleware/subscription.middleware.js";
 import {
   checkInSuccess,
   checkSubscriptionStatus,
+  generateRecipe,
   preSubscriptionStep,
   subscribePlan,
 } from "../controllers/subscription.controller.js";
@@ -20,7 +21,7 @@ SubscriptionRouter.post("/plan/:id", subscribePlan);
 SubscriptionRouter.get("/pre/:id", preSubscriptionStep);
 // re check subscription
 SubscriptionRouter.get("/re-check/:id", checkInSuccess);
-// 
-
+// generate receipt
+SubscriptionRouter.get("/download/receipt/:id", generateRecipe);
 
 export default SubscriptionRouter;

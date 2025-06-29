@@ -5,6 +5,8 @@ import { auth } from "../config/firebase";
 import { signOut } from "firebase/auth";
 import { LS_KEYS } from "../constants";
 import { refreshUser } from "../api/authApi";
+import { saveRemedy } from "../api/userApi";
+import { getAuthHeaders } from "../utils";
 
 const AuthContext = createContext(null);
 
@@ -12,39 +14,37 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(null);
   const [user, setUser] = useState(null);
-  const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const storedToken = localStorage.getItem(LS_KEYS.AUTH_TOKEN);
-        const storedUser = localStorage.getItem(LS_KEYS.USER);
+  const checkAuth = async () => {
+    // setLoading(true);
+    try {
+      const storedToken = localStorage.getItem(LS_KEYS.AUTH_TOKEN);
+      const storedUser = localStorage.getItem(LS_KEYS.USER);
 
-        if (storedToken && storedUser) {
-          setAuthToken(storedToken);
-          setUser(JSON.parse(storedUser));
-          setIsAuthenticated(true);
+      if (storedToken && storedUser) {
+        setAuthToken(storedToken);
+        setUser(JSON.parse(storedUser));
+        setIsAuthenticated(true);
 
-          try {
-            await API.get("/api/v1/auth/verify", {
-              headers: { Authorization: `Bearer ${storedToken}` },
-            });
-          } catch (err) {
-            handleLogout();
-          }
+        try {
+          await API.get("/api/v1/auth/verify", {
+            headers: getAuthHeaders(storedToken),
+          });
+        } catch (err) {
+          handleLogout();
         }
-      } catch (error) {
-        console.error("Auth verification failed", error);
-        handleLogout();
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error("Auth verification failed", error);
+      handleLogout();
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    checkAuth();
-  }, []);
+ 
 
   const signup = async (userData) => {
     setLoading(true);
@@ -173,26 +173,49 @@ export const AuthProvider = ({ children }) => {
 
   const refresh = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const res = await refreshUser(authToken);
       if (res.success) {
         setUser(res.user);
         localStorage.setItem(LS_KEYS.USER, JSON.stringify(res.user));
       }
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
-  const refreshSave = (saveList) => {
-    const data = { ...user, saveRemedies: saveList };
-    setUser(data);
-    localStorage.setItem(LS_KEYS.USER, JSON.stringify(data));
+  const addOrRemoveSavedRemedies = async (remedyId, type) => {
+    const res = await saveRemedy(authToken, remedyId, type);
+    if (res.success) {
+      let newSaveRemedies;
+      if (res.isAdded) {
+        // Remove any existing entry for this remedy (regardless of type)
+        newSaveRemedies = (user.saveRemedies || []).filter(
+          (s) => s.remedy._id !== remedyId && s.type !== type
+        );
+        // Add the new one
+        newSaveRemedies.push(res.data);
+      } else {
+        // Remove this type for this remedy
+        newSaveRemedies = (user.saveRemedies || []).filter(
+          (s) => !(s.type === type && s.remedy._id === remedyId)
+        );
+      }
+      // Update user context and localStorage
+      const updatedUser = { ...user, saveRemedies: newSaveRemedies };
+      setUser(updatedUser);
+      localStorage.setItem(LS_KEYS.USER, JSON.stringify(updatedUser));
+      return res.isAdded;
+    }
+    return false;
   };
 
+  useEffect(() => {
+    checkAuth();
+  }, []);
   return (
     <AuthContext.Provider
       value={{
-        refreshSave,
+        addOrRemoveSavedRemedies,
         refresh,
         isAuthenticated,
         verifyEmailToken,

@@ -6,7 +6,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   color: #333;
   background-color: #fff;
 }
@@ -23,7 +24,7 @@ body {
 
 /* Button styles - matching the design */
 .btn-explore {
-  background-color: #2F6A50;
+  background-color: #2f6a50;
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 0.375rem;
@@ -37,7 +38,7 @@ body {
 }
 
 .btn-read-more {
-  background-color: #2F6A50;
+  background-color: #2f6a50;
   color: white;
   padding: 0.25rem 1rem;
   border-radius: 0.375rem;
@@ -51,9 +52,12 @@ body {
 }
 
 /* Custom focus styles */
-input:focus, button:focus {
+input:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(47, 106, 80, 0.3);
+}
+textarea:focus {
+  outline: none;
 }
 
 /* Custom responsive styles */
@@ -75,7 +79,7 @@ input:focus, button:focus {
 
 /* Hero Banner styling */
 .hero-banner {
-  background-image: url('/images/hero-banner.png');
+  background-image: url("/images/hero-banner.png");
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -85,7 +89,7 @@ input:focus, button:focus {
 
 /* Button styling exactly matching the design */
 .explore-btn {
-  background-color: #2F6A50;
+  background-color: #2f6a50;
   color: white;
   font-weight: 500;
   padding: 0.75rem 2rem;
@@ -109,7 +113,7 @@ input:focus, button:focus {
 }
 
 .read-more-btn {
-  background-color: #2F6A50;
+  background-color: #2f6a50;
   color: white;
   font-size: 0.875rem;
   padding: 0.375rem 1rem;
@@ -127,11 +131,11 @@ input:focus, button:focus {
 }
 
 /* Override any button styles that might be interfering */
-button.explore-btn, button.read-more-btn {
+button.explore-btn,
+button.read-more-btn {
   border-radius: 0.5rem !important;
   text-align: center;
 }
-
 
 /* Button styling */
 button {
@@ -140,7 +144,7 @@ button {
 }
 
 .bg-brand-green {
-  background-color: #2F6A50;
+  background-color: #2f6a50;
 }
 
 .bg-brand-green:hover {

@@ -93,8 +93,27 @@ const getPaymentMethods = async (token) => {
   }
 };
 
+const deleteSaveRemedy = async (token, id, type) => {
+  try {
+    const { data } = await API.patch(
+      `/api/v1/user/remedy/delete/${id}`,
+      undefined,
+      {
+        headers: getAuthHeaders(token),
+        params: {
+          type,
+        },
+      }
+    );
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export {
   getPaymentHistory,
+  deleteSaveRemedy,
   generateHealthProfileQuestions,
   healthProfile,
   saveRemedy,

@@ -67,9 +67,42 @@ const getRemediesByAilmentAndType = async (
     return error.response.data;
   }
 };
+
+const getAIfeedback = async (token, id) => {
+  try {
+    const { data } = await API.get(`/api/v1/remedy/ai/feedback/${id}`, {
+      headers: getAuthHeaders(token),
+    });
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+/**
+ * Generate an AI remedy based on symptoms
+ * @param {string} token - Authentication token
+ * @param {string} symptoms - User's symptoms description
+ * @returns {Promise<Object>} Generated remedy or error
+ */
+const generateAIRemedy = async (token, ailmentId, symptoms) => {
+  try {
+    const { data } = await API.post(
+      `/api/v1/remedy/ai/ailment/${ailmentId}/remedy`,
+      { symptoms },
+      { headers: getAuthHeaders(token) }
+    );
+    return data;
+  } catch (error) {
+    return handleApiError(error, "Failed to generate AI remedy");
+  }
+};
+
 export {
   getAllRemedies,
   getRemedyById,
+  getAIfeedback,
   updateRemedy,
   getRemediesByAilmentAndType,
+  generateAIRemedy,
 };

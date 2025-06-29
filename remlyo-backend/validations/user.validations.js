@@ -19,7 +19,7 @@ const userHealthProfileValidation = Joi.object({
   ethnicity: Joi.string(),
   birthplace: Joi.string(),
   diet: Joi.string(),
-  aiGeneratedFields: Joi.object(),
+  aiQuestionUserAnswers: Joi.array(),
 });
 
-export { userHealthProfileValidation };
+export default userHealthProfileValidation;

@@ -14,6 +14,7 @@ const Button = ({
   color = "brand",
   fullWidth = false,
   disabled = false,
+  title=""
 }) => {
   // Base button styles
   let buttonClass =
@@ -95,7 +96,7 @@ const Button = ({
 
   // Otherwise render as button
   return (
-    <button disabled={disabled} type={type} className={allClasses} onClick={onClick}>
+    <button title={title} disabled={disabled} type={type} className={allClasses} onClick={onClick}>
       {children}
     </button>
   );

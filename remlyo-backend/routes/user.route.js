@@ -1,4 +1,5 @@
 import express from "express";
+import validator from "./../validations/validator.js";
 import {
   healthProfileStatus,
   getUserHealthQuestionBaseOnHealthProfile,
@@ -6,7 +7,9 @@ import {
   saveRemedy,
   getPaymentHistory,
   getPaymentMethods,
+  deleteSavedRemedy,
 } from "../controllers/user.controller.js";
+import userHealthProfileValidation from "../validations/user.validations.js";
 
 const userRouter = express.Router();
 
@@ -15,14 +18,24 @@ userRouter.post(
   getUserHealthQuestionBaseOnHealthProfile
 );
 //
-userRouter.post("/health-profile", userHealthProfile);
+userRouter.post(
+  "/health-profile",
+  validator(userHealthProfileValidation),
+  userHealthProfile
+);
 // checking heath profile status
-userRouter.get("/health-profile/status", healthProfileStatus);
+userRouter.get(
+  "/health-profile/status",
+  validator(userHealthProfileValidation),
+  healthProfileStatus
+);
 // save remedies route
 userRouter.post("/remedy/save/:id", saveRemedy);
+// delete save remedies Route
+userRouter.patch("/remedy/delete/:id", deleteSavedRemedy);
 //get payment history
 userRouter.get("/payment/history", getPaymentHistory);
-// get payment methods 
-userRouter.get('/payment/methods',getPaymentMethods)
+// get payment methods
+userRouter.get("/payment/methods", getPaymentMethods);
 
 export default userRouter;

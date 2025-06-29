@@ -4,9 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import { useAuth } from "../contexts/AuthContext";
 import DashboardLayout from "../components/layout/DashboardLayout";
+import { deleteSaveRemedy } from "../api/userApi";
 
 const SavedRemediesPage = () => {
-  const { user } = useAuth();
+  const { user, authToken, refreshSave } = useAuth();
   const navigate = useNavigate();
 
   // Defensive checks for user and subscription
@@ -17,60 +18,8 @@ const SavedRemediesPage = () => {
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [remedyToDelete, setRemedyToDelete] = useState(null);
+  const [saveRemedies, setSavedRemedies] = useState(user.saveRemedies);
 
-  // Mock saved remedies data
-  const [savedRemedies, setSavedRemedies] = useState([
-    {
-      id: 1,
-      title: "Turmeric Tea",
-      image: "/images/remedies/turmeric-tea.jpg",
-      rating: 4.5,
-      isFavorite: true,
-      status: "saved",
-    },
-    {
-      id: 2,
-      title: "Herbal Mix",
-      image: "/images/remedies/herbal-mix.jpg",
-      rating: 4.9,
-      isFavorite: false,
-      status: "toTry",
-    },
-    {
-      id: 3,
-      title: "Turmeric Tea",
-      image: "/images/remedies/turmeric-tea.jpg",
-      rating: 4.5,
-      isFavorite: true,
-      status: "saved",
-    },
-    {
-      id: 4,
-      title: "Herbal Mix",
-      image: "/images/remedies/herbal-mix.jpg",
-      rating: 4.9,
-      isFavorite: false,
-      status: "saved",
-    },
-    {
-      id: 5,
-      title: "Turmeric Tea",
-      image: "/images/remedies/turmeric-tea.jpg",
-      rating: 4.5,
-      isFavorite: true,
-      status: "saved",
-    },
-    {
-      id: 6,
-      title: "Herbal Mix",
-      image: "/images/remedies/herbal-mix.jpg",
-      rating: 4.9,
-      isFavorite: false,
-      status: "toTry",
-    },
-  ]);
-
-  // Filter states
   const [filters, setFilters] = useState({
     communityRemedies: false,
     alternativeRemedies: false,
@@ -80,12 +29,14 @@ const SavedRemediesPage = () => {
 
   // Filter remedies based on active filter
   const getFilteredRemedies = () => {
-    let filtered = [...savedRemedies];
+    let filtered = [...saveRemedies];
 
-    if (activeFilter === "toTry") {
-      filtered = filtered.filter((remedy) => remedy.status === "toTry");
+    console.log(filtered[0]);
+
+    if (activeFilter === "to-try") {
+      filtered = filtered.filter((remedy) => remedy.type === "to-try");
     } else if (activeFilter === "favorite") {
-      filtered = filtered.filter((r) => r.isFavorite);
+      filtered = filtered.filter((r) => r.type === "favorite");
     }
 
     // Apply type filters if any are selected
@@ -95,7 +46,16 @@ const SavedRemediesPage = () => {
       // In a real app, you would filter based on actual remedy types
     }
 
-    return filtered;
+    // Remove duplicates by remedy.remedy._id
+    const uniqueRemedies = [];
+    const seenIds = new Set();
+    for (const remedy of filtered) {
+      if (!seenIds.has(remedy.remedy._id)) {
+        uniqueRemedies.push(remedy);
+        seenIds.add(remedy.remedy._id);
+      }
+    }
+    return uniqueRemedies;
   };
 
   // Delete remedy handlers
@@ -104,14 +64,19 @@ const SavedRemediesPage = () => {
     setShowDeleteModal(true);
   };
 
-  const handleConfirmDelete = () => {
-    if (remedyToDelete) {
-      setSavedRemedies((prevRemedies) =>
-        prevRemedies.filter((r) => r.id !== remedyToDelete.id)
-      );
+  const handleConfirmDelete = async () => {
+    console.log(remedyToDelete);
+    const res = await deleteSaveRemedy(
+      authToken,
+      remedyToDelete.remedy._id,
+      remedyToDelete.type
+    );
+    if (res.success) {
+      refreshSave(res.data);
+      setSavedRemedies(res.data);
+      setShowDeleteModal(false);
+      setRemedyToDelete(null);
     }
-    setShowDeleteModal(false);
-    setRemedyToDelete(null);
   };
 
   const handleCancelDelete = () => {
@@ -140,7 +105,7 @@ const SavedRemediesPage = () => {
     <DashboardLayout
       pageTitle="My Saved Remedies"
       user={user}
-      isPremiumUser={isPremiumUser}
+      isPremiumUser={!isFree}
     >
       {/* Tab Filters */}
       <div className="flex flex-wrap justify-between items-center mb-6">
@@ -150,21 +115,22 @@ const SavedRemediesPage = () => {
             color="brand"
             onClick={() => setActiveFilter("all")}
           >
-            All Saved ({savedRemedies.length})
+            All Saved ({saveRemedies.length})
           </Button>
           <Button
-            variant={activeFilter === "toTry" ? "contained" : "outlined"}
+            variant={activeFilter === "to-try" ? "contained" : "outlined"}
             color="brand"
-            onClick={() => setActiveFilter("toTry")}
+            onClick={() => setActiveFilter("to-try")}
           >
-            To Try ({savedRemedies.filter((r) => r.status === "toTry").length})
+            To Try ({saveRemedies.filter((r) => r.type === "to-try").length})
           </Button>
           <Button
             variant={activeFilter === "favorite" ? "contained" : "outlined"}
             color="brand"
             onClick={() => setActiveFilter("favorite")}
           >
-            Favourite ({savedRemedies.filter((r) => r.isFavorite).length})
+            Favorite ({saveRemedies.filter((r) => r.type === "favorite").length}
+            )
           </Button>
         </div>
 
@@ -309,70 +275,78 @@ const SavedRemediesPage = () => {
       </div>
 
       {/* Remedies Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {getFilteredRemedies().map((remedy) => (
-          <div
-            key={remedy.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200"
-          >
-            <div className="relative">
-              <img
-                src={remedy.image}
-                alt={remedy.title}
-                className="w-full h-48 object-cover"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = `https://via.placeholder.com/300x200?text=${remedy.title.replace(
-                    /\s+/g,
-                    "+"
-                  )}`;
-                }}
-              />
-              <button
-                className="absolute top-2 right-2 p-2 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 text-gray-700"
-                onClick={() => handleDeleteClick(remedy)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+      {getFilteredRemedies().length ? (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {getFilteredRemedies().map((remedy) => (
+            <div
+              key={remedy.remedy._id}
+              className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200"
+            >
+              <div className="relative">
+                <img
+                  src={remedy.remedy.media.source}
+                  alt={remedy.remedy.name}
+                  className="w-full h-48 object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = `https://via.placeholder.com/300x200?text=${remedy.remedy.name.replace(
+                      /\s+/g,
+                      "+"
+                    )}`;
+                  }}
+                />
+                <button
+                  className="absolute top-2 right-2 p-2 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 text-gray-700"
+                  onClick={() => handleDeleteClick(remedy)}
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-              {remedy.id === 1 && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+                {/* {remedy.remedy._id === 1 && (
                 <div className="absolute top-0 left-0 bg-gray-200 px-3 py-1 text-sm text-gray-700">
                   Removed from Saved
                 </div>
-              )}
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold mb-1">{remedy.title}</h3>
-              <div className="flex items-center mb-3">
-                <span className="text-gray-700 mr-1">Rating :</span>
-                <span className="font-medium">{remedy.rating}/5</span>
+              )} */}
               </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold mb-1">
+                  {remedy.remedy.name}
+                </h3>
+                <div className="flex items-center mb-3">
+                  <span className="text-gray-700 mr-1">Rating :</span>
+                  <span className="font-medium">
+                    {remedy.remedy.averageRating}/5
+                  </span>
+                </div>
 
-              <Button
-                variant="contained"
-                color="brand"
-                className="w-full justify-center"
-                to={`/remedies/${remedy.id}`}
-              >
-                View Details
-              </Button>
+                <Button
+                  variant="contained"
+                  color="brand"
+                  className="w-full justify-center"
+                  to={`/remedies/${remedy.remedy._id}`}
+                >
+                  View Details
+                </Button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div>No saved remedies found</div>
+      )}
 
       {/* Free user limitation message - Only show for free users */}
-      {!isPremiumUser && (
+      {isFree && (
         <div className="mt-8 text-center p-6 border border-dashed border-gray-300 rounded-lg">
           <h3 className="text-lg font-semibold text-gray-800 mb-2">
             You've reached your free account limit

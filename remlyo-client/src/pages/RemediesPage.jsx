@@ -18,13 +18,16 @@ const RemediesPage = () => {
   const limit = 10;
 
   const fetchRemedies = async () => {
-    setLoading(true);
-    const res = await getAllRemedies({ currentPage, limit, search });
-    if (res && res.success) {
-      console.log(res);
-      setRemedies(res.remedies);
+    try {
+      setLoading(true);
+      const res = await getAllRemedies({ currentPage, limit, search });
+      if (res && res.success) {
+        setRemedies(res.remedies);
+        setLoading(false);
+        setTotalPages(res.totalPages);
+      }
+    } finally {
       setLoading(false);
-      setTotalPages(res.totalPages);
     }
   };
 
@@ -38,7 +41,7 @@ const RemediesPage = () => {
       community: `/remedies/community/${remedy._id}`,
       alternative: `/remedies/alternative/${remedy._id}`,
       pharmaceutical: `/remedies/pharmaceutical/${remedy._id}`,
-      "AI Remedies": `/remedies/ai/${remedy._id}`,
+      ai: `/remedies/ai/${remedy._id}`,
     };
 
     return typeRoutes[remedy.type] || `/remedies/${remedy._id}`;
@@ -67,7 +70,7 @@ const RemediesPage = () => {
         return "bg-blue-500";
       case "alternative":
         return "bg-purple-500";
-      case "AI Remedies":
+      case "ai":
         return "bg-yellow-500";
       case "pharmaceutical":
         return "bg-green-500";
@@ -121,72 +124,80 @@ const RemediesPage = () => {
           </div>
 
           {/* Remedies Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {remedies.map((remedy) => (
-              <div
-                key={remedy._id}
-                className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 flex flex-col h-full"
-              >
-                <div className="relative">
-                  <img
-                    src={remedy.media.source}
-                    alt={remedy.title}
-                    className="w-full h-48 object-cover"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src =
-                        "https://via.placeholder.com/400x200?text=Turmeric+Tea";
-                    }}
-                  />
-                  <div
-                    className={`absolute top-2 left-2 ${getBadgeColor(
-                      remedy.type
-                    )} text-white px-3 capitalize py-1 rounded-full text-xs font-medium`}
-                  >
-                    {remedy.type}
+          {remedies.length ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {remedies.map((remedy) => (
+                <div
+                  key={remedy._id}
+                  className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 flex flex-col h-full"
+                >
+                  <div className="relative">
+                    <img
+                      src={remedy.media.source}
+                      alt={remedy.title}
+                      className="w-full h-48 object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src =
+                          "https://via.placeholder.com/400x200?text=Turmeric+Tea";
+                      }}
+                    />
+                    <div
+                      className={`absolute top-2 left-2 ${getBadgeColor(
+                        remedy.type
+                      )} text-white px-3 capitalize py-1 rounded-full text-xs font-medium`}
+                    >
+                      {remedy.type == "ai" ? "AI Generated" : remedy.type}
+                    </div>
                   </div>
-                </div>
 
-                <div className="p-4 flex-grow flex flex-col">
-                  <h3 className="text-lg font-semibold">{remedy.title}</h3>
-                  <p className="text-gray-600 text-sm mb-2">
-                    {remedy.description}
-                  </p>
-
-                  {remedy.helps && (
-                    <p className="text-sm text-gray-700 mb-2">{remedy.helps}</p>
-                  )}
-
-                  {remedy.successRate && (
-                    <p className="text-sm text-gray-700 mb-2 font-medium">
-                      {remedy.successRate}
+                  <div className="p-4 flex-grow flex flex-col">
+                    <h3 className="text-lg font-semibold">{remedy.title}</h3>
+                    <p className="text-gray-600 text-sm mb-2">
+                      {remedy.description}
                     </p>
-                  )}
 
-                  <div className="flex items-center mb-4">
-                    <div className="flex mr-2">
-                      {renderStars(remedy.averageRating)}
+                    {remedy.helps && (
+                      <p className="text-sm text-gray-700 mb-2">
+                        {remedy.helps}
+                      </p>
+                    )}
+
+                    {remedy.successRate && (
+                      <p className="text-sm text-gray-700 mb-2 font-medium">
+                        {remedy.successRate}
+                      </p>
+                    )}
+
+                    <div className="flex items-center mb-4">
+                      <div className="flex mr-2">
+                        {renderStars(remedy.averageRating)}
+                      </div>
+                      <span className="text-gray-600 text-sm">
+                        ({remedy.reviewCount})
+                      </span>
                     </div>
-                    <span className="text-gray-600 text-sm">
-                      ({remedy.averageRating})
-                    </span>
-                  </div>
 
-                  <div className="mt-auto">
                     <div className="mt-auto">
-                      <Button
-                        variant="readMore"
-                        to={getRemedyTypeRoute(remedy)}
-                        fullWidth
-                      >
-                        View Remedy
-                      </Button>
+                      <div className="mt-auto">
+                        <Button
+                          variant="readMore"
+                          to={getRemedyTypeRoute(remedy)}
+                          fullWidth
+                        >
+                          View Remedy
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="w-full text-center text-gray-800 border py-10 rounded-lg border-gray-300">
+              No remedies found
+            </div>
+          )}
 
           {/* Pagination */}
           <Pagination

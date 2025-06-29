@@ -14,7 +14,9 @@ import jwt from "jsonwebtoken";
  */
 const createSession = async (user, token, req) => {
   try {
-    const { browser, os, deviceType } = getClientInfo(req.headers["user-agent"]);
+    const { browser, os, deviceType } = getClientInfo(
+      req.headers["user-agent"]
+    );
     return await Session.create({
       userId: user._id,
       ipAddress: getClientIP(req),
@@ -23,7 +25,7 @@ const createSession = async (user, token, req) => {
       sessionToken: token,
       metadata: { browser, os },
       isActive: true,
-      createdAt: new Date()
+      createdAt: new Date(),
     });
   } catch (error) {
     throw new Error(`Failed to create session: ${error.message}`);
@@ -43,7 +45,7 @@ const setAuthCookie = (res, token, rememberMe = false) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     maxAge,
-    path: "/"
+    path: "/",
   });
 };
 
@@ -64,7 +66,7 @@ const getRedirectPath = async (user) => {
       admin: "/admin/dashboard",
       user: "/dashboard",
       writer: "/writer/dashboard",
-      moderator: "/moderator/dashboard"
+      moderator: "/moderator/dashboard",
     };
 
     return redirectMap[accessLevel] || "/signin";
@@ -106,7 +108,7 @@ const generateToken = (user) => {
         userId: user._id,
         email: user.email,
         role: user.accessLevel,
-        iat: Math.floor(Date.now() / 1000)
+        iat: Math.floor(Date.now() / 1000),
       },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
@@ -143,7 +145,7 @@ const getClientInfo = (userAgent) => {
       os: ua.os.name || "Unknown",
       deviceType: ua.device.type || "Desktop",
       browserVersion: ua.browser.version || "Unknown",
-      osVersion: ua.os.version || "Unknown"
+      osVersion: ua.os.version || "Unknown",
     };
   } catch (error) {
     console.error("Error parsing user agent:", error);
@@ -152,17 +154,26 @@ const getClientInfo = (userAgent) => {
       os: "Unknown",
       deviceType: "Desktop",
       browserVersion: "Unknown",
-      osVersion: "Unknown"
+      osVersion: "Unknown",
     };
   }
 };
 
+// JSON parsing utilities
+const parseJsonResponse = (response) => {
+  try {
+    return JSON.parse(response);
+  } catch (error) {
+    throw new Error(ERROR_MESSAGES.INVALID_JSON_RESPONSE);
+  }
+};
 export {
+  parseJsonResponse,
   createSession,
   setAuthCookie,
   getRedirectPath,
   hashPassword,
   generateToken,
   getClientIP,
-  getClientInfo
+  getClientInfo,
 };

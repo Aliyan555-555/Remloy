@@ -31,6 +31,7 @@ const FileUpload = ({
   variant = "default",
   errorMessage,
   helperText,
+  labelClasses = "",
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState(errorMessage);
@@ -76,23 +77,36 @@ const FileUpload = ({
 
   // Handle file selection
   const handleFileSelect = async (selectedFiles) => {
-    setError(null);
-    setLoading(true);
+    try {
+      console.log(multiple);
+      setError(null);
+      setLoading(true);
 
-    const validFiles = Array.from(selectedFiles).filter(validateFile);
+      const validFiles = Array.from(selectedFiles).filter(validateFile);
 
-    if (validFiles.length === 0) {
+      if (validFiles.length === 0) {
+        setLoading(false);
+        return;
+      }
+
+      const newFiles = multiple ? [...files, ...validFiles] : [validFiles[0]];
+      const res = await uploadFiles(authToken, newFiles);
+      if (onFileSelect && res.success) {
+        setFiles((prev) => (multiple ? [...prev, ...res.data] : res.data));
+        onFileSelect(res.data);
+      } else {
+        setError(
+          !res.success && res.type
+            ? res.type == "ENOTFOUND"
+              ? "Network error please try later"
+              : "Something went wrong"
+            : res.message
+        );
+      }
+    } catch (error) {
+      setError(error);
+    } finally {
       setLoading(false);
-      return;
-    }
-
-    const newFiles = multiple ? [...files, ...validFiles] : [validFiles[0]];
-    const res = await uploadFiles(authToken, newFiles);
-    if (onFileSelect && res.success) {
-      onFileSelect(res.data);
-      setFiles(res.data);
-      setLoading(false);
-      console.log(res.data);
     }
   };
 
@@ -176,7 +190,11 @@ const FileUpload = ({
     <div className={className}>
       {/* Label */}
       {label && (
-        <label className="block text-gray-700 font-medium mb-2">{label}</label>
+        <label
+          className={`block text-gray-700 font-medium mb-2 ${labelClasses}`}
+        >
+          {label}
+        </label>
       )}
 
       {/* Dropzone */}

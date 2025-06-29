@@ -190,7 +190,7 @@ const AlternativeRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
                       {renderStars(remedy.averageRating)}
                     </div>
                     <span className="text-gray-600 text-sm">
-                      ({remedy.viewCount})
+                      ({remedy.reviewCount})
                     </span>
                   </div>
 

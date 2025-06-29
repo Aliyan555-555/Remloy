@@ -1,14 +1,27 @@
 // src/pages/AIRemedyDetail.jsx
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom"; 
+import {
+  useParams,
+  useNavigate,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
+import { getAIfeedback, getRemedyById } from "../api/remediesApi";
+import { useAuth } from "../contexts/AuthContext";
+import AIFeedback from "../components/common/AIFeedback";
+import ReviewPopup from "../components/common/ReviewPopup";
+import { formatDate } from "../utils";
 
 const AIRemedyDetail = () => {
   const { remedyId } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const [searchParams] = useSearchParams();
+  const ailmentId = searchParams.get("id");
+  const [feedbackError, setFeedbackError] = useState(false);
   const [remedy, setRemedy] = useState(null);
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState([]);
@@ -16,8 +29,58 @@ const AIRemedyDetail = () => {
   const [sortOption, setSortOption] = useState("newest");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [showAIInsightPopup, setShowAIInsightPopup] = useState(false);
+  const { authToken, refresh, addOrRemoveSavedRemedies, user } = useAuth();
+  const [accessDenied, setAccessDenied] = useState(false);
+  const [accessDeniedMessage, setAccessDeniedMessage] = useState("");
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [feedbackData, setFeedbackData] = useState(null);
+  const [feedbackLoading, setFeedbackLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const [isTry, setIsTry] = useState(false);
+  const [tryLoading, setTryLoading] = useState(false);
 
-  
+  const fetchRemedyDetails = async () => {
+    try {
+      setLoading(true);
+      // Simulating API call
+      const res = await getRemedyById(authToken, remedyId, ailmentId);
+      console.log(res);
+      if (res && res.success) {
+        setRemedy(res.remedy);
+      } else {
+        setAccessDenied(true);
+        setAccessDeniedMessage(res.message);
+      }
+    } finally {
+      setLoading(false);
+      await refresh();
+    }
+  };
+
+  useEffect(() => {
+    fetchRemedyDetails();
+  }, [remedyId]);
+
+  const fetchAiFeedback = async () => {
+    try {
+      setFeedbackLoading(true);
+      const res = await getAIfeedback(authToken, remedyId);
+      if (res.success) {
+        setFeedbackData(res.feedbackData);
+      } else {
+        setFeedbackError(true);
+      }
+    } catch (error) {
+      setFeedbackError(true);
+    } finally {
+      setFeedbackLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAiFeedback();
+  }, []);
 
   // Add getBackPath function
   const getBackPath = () => {
@@ -42,145 +105,6 @@ const AIRemedyDetail = () => {
   const backLabel = backPath.includes("/ailments/")
     ? "Back to Ailment"
     : "Back to Remedies";
-
-  // Fetch remedy details
-  useEffect(() => {
-    const fetchRemedyDetails = async () => {
-      setLoading(true);
-      // Simulating API call
-      setTimeout(() => {
-        // Mock data for demonstration
-        const mockRemedy = {
-          id: remedyId,
-          type: "AI-Generated Remedy",
-          name: "Custom Herbal Blend #MT-291",
-          description:
-            "This herbal blend is tailored to your specific health profile and past remedy successes. It combines a selection of herbs known for their synergistic effects in promoting well-being and addressing your unique health needs.",
-          generatedDate: "March 3, 2025",
-          updatedDate: "March 5, 2025",
-          rating: 5,
-          reviewCount: 128,
-          image: "/images/remedies/lifestyle-protocol.jpg",
-          preparationTime: "Takes 5-10 minutes to prepare",
-          ingredients: [
-            "2½ cups water",
-            "1 tbsp custom herbal blend (combination of herbs tailored to your health profile)",
-            "¼ tsp black pepper (optional, to enhance absorption)",
-            "1 tbsp honey (optional, for taste)",
-          ],
-          equipment: [
-            "Small saucepan",
-            "Strainer",
-            "Mugs",
-            "Pestle or something similar for crushing",
-          ],
-          aiConfidence: {
-            score: 95,
-            basis: "Based on your Health & Lifestyle Profile",
-          },
-          confidenceDetails:
-            "95% confidence in the effectiveness of this blend based on your profile and similar user data.",
-          effectiveness: {
-            successRate: 85,
-            usersCount:
-              "85% of users who tried this blend reported significant improvement in their symptoms.",
-            positiveOutcomes: 155,
-            userFeedback: 189,
-          },
-          whyRecommended:
-            "Based on your health profile, which includes your reported symptoms, lifestyle factors, and past remedy successes, this custom herbal blend was recommended to support your overall health and wellness. The AI has analyzed data from users with similar profiles to suggest a blend that has shown positive outcomes.",
-          instructions: [
-            {
-              step: "Preparation",
-              detail:
-                "Mix 1 teaspoon of the herbal blend with 8 ounces of hot water.",
-            },
-            {
-              step: "Steeping",
-              detail:
-                "Let it steep for 10-15 minutes to allow the herbs to fully infuse.",
-            },
-            {
-              step: "Consumption",
-              detail:
-                "Drink the tea while warm, preferably before meals or at bedtime.",
-            },
-            {
-              step: "Frequency",
-              detail: "Consume 1-2 cups daily for optimal results.",
-            },
-            {
-              step: "Storage",
-              detail:
-                "Store the blend in a cool, dry place away from direct sunlight.",
-            },
-          ],
-          sideEffects: {
-            common:
-              "Common Side Effects: Mild stomach discomfort, which usually subsides as your body adjusts to the blend.",
-            rare: "Rare Side Effects: Allergic reactions in individuals sensitive to specific herbs.",
-            precautions:
-              "Precautions: Consult with a healthcare provider before starting this remedy, especially if you are pregnant, breastfeeding, or taking other medications.",
-          },
-          relatedRemedies: [
-            {
-              id: "r1",
-              name: "Lifestyle Protocol #LP-182",
-              description: "AI-optimized daily routine for migraine prevention",
-              confidence: 95,
-              category: "Lifestyle Modification",
-              successRate: 89,
-              userFeedback: 245,
-              positiveOutcomes: 218,
-              image: "/images/remedies/lifestyle-protocol.jpg",
-              rating: 5,
-              reviewCount: 128,
-            },
-          ],
-        };
-
-        // Mock comments
-        const mockComments = [
-          {
-            id: "c1",
-            user: {
-              name: "Marie Claire",
-              avatar: "/images/avatars/user1.jpg",
-            },
-            text: "I recently made a turmeric tea recipe that I found very helpful, and I'd like to try it once!",
-            upvotes: 100,
-            date: "3h ago",
-          },
-          {
-            id: "c2",
-            user: {
-              name: "Romeo",
-              avatar: "/images/avatars/user2.jpg",
-            },
-            text: "Yes, I found it helpful, great remedy....",
-            upvotes: 30,
-            date: "3h ago",
-          },
-          {
-            id: "c3",
-            user: {
-              name: "Joy Claire",
-              avatar: "/images/avatars/user3.jpg",
-            },
-            text: "Great Remedy....",
-            upvotes: 10,
-            date: "4h ago",
-          },
-        ];
-
-        setRemedy(mockRemedy);
-        setComments(mockComments);
-        setLoading(false);
-      }, 500);
-    };
-
-    fetchRemedyDetails();
-  }, [remedyId]);
 
   // Function to render star ratings
   const renderStars = (rating) => {
@@ -264,6 +188,42 @@ const AIRemedyDetail = () => {
     );
   }
 
+  if (accessDenied) {
+    return (
+      <div className="max-w-screen flex items-center justify-center  h-screen">
+        <AccessDeniedComponent message={accessDeniedMessage} />
+      </div>
+    );
+  }
+
+  const handleAddAndRemoveInTry = async () => {
+    try {
+      if (tryLoading) return;
+      setTryLoading(true);
+      const res = await addOrRemoveSavedRemedies(remedyId, "to-try");
+      if (res) {
+        setIsTry(true);
+      } else {
+        setIsTry(false);
+      }
+    } finally {
+      setTryLoading(false);
+    }
+  };
+  const handleAddAndRemoveInFavorite = async () => {
+    try {
+      setFavoriteLoading(true);
+      const res = await addOrRemoveSavedRemedies(remedyId, "favorite");
+      if (res) {
+        setIsFavorite(true);
+      } else {
+        setIsFavorite(false);
+      }
+    } finally {
+      setFavoriteLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* AI Banner */}
@@ -309,7 +269,7 @@ const AIRemedyDetail = () => {
           {/* Remedy Type Badge - CENTERED */}
           <div className="text-center mb-4">
             <span className="bg-yellow-500 text-white px-4 py-1 rounded-full text-sm">
-              {remedy.type}
+              AI Generated
             </span>
           </div>
 
@@ -321,18 +281,24 @@ const AIRemedyDetail = () => {
           {/* Generated Date Information - CENTERED */}
           <div className="text-gray-600 text-sm mb-4 text-center">
             AI-Generated Personalized Remedy - Generated on{" "}
-            {remedy.generatedDate}
-            {remedy.updatedDate && `, last updated on ${remedy.updatedDate}`}
+            {formatDate(remedy.createAt)}
+            {remedy.updatedAt &&
+              `, last updated on ${formatDate(remedy.updatedAt)}`}
           </div>
 
           {/* Rating and Actions - RESPONSIVE (Similar to AlternativeRemedyDetail) */}
           <div className="flex flex-col items-center mb-6">
             <div className="flex items-center mb-3">
-              <div className="flex mr-2">{renderStars(remedy.rating)}</div>
+              <div className="flex mr-2">
+                {renderStars(remedy.averageRating)}
+              </div>
               <span className="text-gray-600 text-sm">
                 ({remedy.reviewCount})
               </span>
-              <button className="ml-2 text-brand-green underline text-sm">
+              <button
+                onClick={() => setIsReviewOpen(true)}
+                className="ml-2 text-brand-green underline text-sm"
+              >
                 Rate this remedy
               </button>
             </div>
@@ -361,28 +327,112 @@ const AIRemedyDetail = () => {
                 </svg>
                 Share
               </Button>
-
               <Button
-                variant="outlined"
+                variant={isFavorite ? "contained" : "outlined"}
                 color="brand"
                 size="small"
-                className="flex items-center"
+                onClick={handleAddAndRemoveInFavorite}
+                className={`flex items-center ${
+                  isFavorite ? "bg-brand-green text-white" : ""
+                } min-w-[140px] justify-center`}
+                disabled={favoriteLoading || tryLoading}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 mr-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-                Add to favorite
+                {favoriteLoading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-4 w-4 mr-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      />
+                    </svg>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                      />
+                    </svg>
+                    {isFavorite ? "Remove from favorite" : "Add to favorite"}
+                  </>
+                )}
+              </Button>
+
+              <Button
+                variant={isTry ? "contained" : "outlined"}
+                color="brand"
+                onClick={handleAddAndRemoveInTry}
+                size="small"
+                className={`${
+                  isTry ? "bg-brand-green text-white" : ""
+                } flex items-center min-w-[120px] justify-center`}
+                disabled={tryLoading || favoriteLoading}
+              >
+                {tryLoading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-4 w-4 mr-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      />
+                    </svg>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    {isTry ? "Remove from Try" : "Try"}
+                  </>
+                )}
               </Button>
 
               <Button
@@ -390,40 +440,48 @@ const AIRemedyDetail = () => {
                 color="brand"
                 size="small"
                 className="flex items-center"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 mr-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                Try
-              </Button>
-
-              <Button
-                variant="outlined"
-                color="brand"
-                size="small"
-                className="flex items-center"
+                disabled={feedbackLoading}
+                title={
+                  feedbackLoading ? "Ai insights loading..." : "Ai insights"
+                }
                 onClick={toggleAIInsightPopup}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 mr-1 text-blue-500"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" />
-                </svg>
-                What does Remi think?
+                {feedbackLoading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-4 w-4 mr-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      />
+                    </svg>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-1 text-blue-500"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" />
+                    </svg>
+                    What does Remi think?
+                  </>
+                )}
               </Button>
             </div>
 
@@ -515,86 +573,70 @@ const AIRemedyDetail = () => {
               {/* Remedy Image */}
               <div className="mb-6">
                 <img
-                  src={remedy.image}
+                  src={remedy.media.source}
                   alt={remedy.name}
                   className="w-full h-auto max-h-96 object-cover rounded-lg shadow-lg"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src =
-                      "https://via.placeholder.com/800x400?text=AI+Remedy";
-                  }}
+                  // onError={(e) => {
+                  //   e.target.onerror = null;
+                  //   // e.target.src =
+                  //   //   "https://via.placeholder.com/800x400?text=AI+Remedy";
+                  // }}
                 />
               </div>
 
-              {/* AI Confidence Score */}
-              <div className="bg-blue-50 rounded-lg p-5 border border-blue-100 mb-6">
-                <h2 className="text-xl font-bold text-gray-800 mb-3">
-                  AI Confidence Score
-                </h2>
-                <div className="flex items-center mb-3">
-                  <div className="bg-brand-green rounded-full text-white px-3 py-1 text-sm font-medium mr-3">
-                    {remedy.aiConfidence.score}% Confidence
+              {!feedbackLoading && (
+                <div className="bg-blue-50 rounded-lg p-5 border border-blue-100 mb-6">
+                  <h2 className="text-xl font-bold text-gray-800 mb-3">
+                    AI Confidence Score
+                  </h2>
+                  <div className="flex items-center mb-3">
+                    <div className="bg-brand-green rounded-full text-white px-3 py-1 text-sm font-medium mr-3">
+                      {feedbackData.aiSummary.confidenceScore}% Confidence
+                    </div>
+                    <p className="text-gray-600 text-sm italic">
+                      Based on your Health & Lifestyle Profile
+                    </p>
                   </div>
-                  <p className="text-gray-600 text-sm italic">
-                    {remedy.aiConfidence.basis}
+                  <p className="text-gray-700">
+                    {feedbackData.aiSummary.confidenceExplanation}
                   </p>
                 </div>
-                <p className="text-gray-700">{remedy.confidenceDetails}</p>
-              </div>
+              )}
 
               {/* Why This Was Recommended */}
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Why This Was Recommended?
-                </h2>
-                <p className="text-gray-700 mb-4">{remedy.whyRecommended}</p>
+              {!feedbackLoading && (
+                <div className="mb-8">
+                  <h2 className="text-xl font-bold text-gray-800 mb-4">
+                    Why This Was Recommended?
+                  </h2>
+                  <p className="text-gray-700 mb-4">
+                    {feedbackData.aiSummary.recommendationReason}
+                  </p>
 
-                {/* View Full AI Insight Button */}
-                <Button
-                  variant="contained"
-                  color="brand"
-                  className="flex items-center"
-                  onClick={navigateToAdvancedAIInsight}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-2"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+                  {/* View Full AI Insight Button */}
+                  <Button
+                    variant="contained"
+                    color="brand"
+                    className="flex items-center"
+                    onClick={navigateToAdvancedAIInsight}
                   >
-                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                    <path
-                      fillRule="evenodd"
-                      d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  View Full AI Insight <span className="ml-1">→</span>
-                </Button>
-              </div>
-
-              {/* Instructions */}
-              <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  Instructions
-                </h2>
-                <ul className="space-y-4">
-                  {remedy.instructions.map((instruction, index) => (
-                    <li key={index} className="flex">
-                      <span className="font-semibold mr-2">•</span>
-                      <div>
-                        <span className="font-semibold">
-                          {instruction.step} :{" "}
-                        </span>
-                        <span className="text-gray-700">
-                          {instruction.detail}
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 mr-2"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                      <path
+                        fillRule="evenodd"
+                        d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    View Full AI Insight <span className="ml-1">→</span>
+                  </Button>
+                </div>
+              )}
               {/* Effectiveness Data */}
               <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-800 mb-4">
@@ -603,19 +645,19 @@ const AIRemedyDetail = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center mb-4">
                   <div className="bg-white rounded-lg shadow-md p-5">
                     <p className="text-3xl font-bold text-brand-green">
-                      {remedy.effectiveness.successRate}%
+                      {remedy.ratings.successRate || 0}%
                     </p>
                     <p className="text-gray-600 text-sm mt-1">Success Rate</p>
                   </div>
                   <div className="bg-white rounded-lg shadow-md p-5">
                     <p className="text-3xl font-bold text-brand-green">
-                      {remedy.effectiveness.userFeedback}
+                      {remedy.ratings.totalReviews}
                     </p>
                     <p className="text-gray-600 text-sm mt-1">User Feedback</p>
                   </div>
                   <div className="bg-white rounded-lg shadow-md p-5">
                     <p className="text-3xl font-bold text-brand-green">
-                      {remedy.effectiveness.positiveOutcomes}
+                      {remedy.ratings.positiveOutcomes ||0}
                     </p>
                     <p className="text-gray-600 text-sm mt-1">
                       Positive Outcomes
@@ -624,8 +666,27 @@ const AIRemedyDetail = () => {
                 </div>
                 <p className="text-gray-700">
                   <span className="font-medium">Success Rate: </span>
-                  {remedy.effectiveness.usersCount}
+                  {0}
                 </p>
+              </div>
+
+              {/* remedy content */}
+              <div className="mb-8">
+                <div
+                  className="prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.content }}
+                />
+              </div>
+
+              {/* Instructions */}
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-800 mb-4">
+                  Instructions
+                </h2>
+                <div
+                  className="prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.instructions }}
+                />
               </div>
 
               {/* Potential Side Effects & Precautions */}
@@ -633,20 +694,10 @@ const AIRemedyDetail = () => {
                 <h2 className="text-xl font-bold text-gray-800 mb-4">
                   Potential Side Effects & Precautions
                 </h2>
-                <div className="space-y-3">
-                  <p className="text-gray-700">
-                    <span className="text-yellow-600 font-semibold mr-2">•</span>
-                    {remedy.sideEffects.common}
-                  </p>
-                  <p className="text-gray-700">
-                    <span className="text-red-600 font-semibold mr-2">•</span>
-                    {remedy.sideEffects.rare}
-                  </p>
-                  <p className="text-gray-700">
-                    <span className="text-blue-600 font-semibold mr-2">•</span>
-                    {remedy.sideEffects.precautions}
-                  </p>
-                </div>
+                <div
+                  className="prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.sideEffects }}
+                />
               </div>
             </div>
 
@@ -681,14 +732,10 @@ const AIRemedyDetail = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">
                   Ingredients
                 </h3>
-                <ul className="space-y-2">
-                  {remedy.ingredients.map((ingredient, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-brand-green mr-2">•</span>
-                      <span className="text-gray-700">{ingredient}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div
+                  className="prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.ingredients }}
+                />
               </div>
 
               {/* Equipment */}
@@ -696,14 +743,10 @@ const AIRemedyDetail = () => {
                 <h3 className="text-lg font-semibold text-gray-800 mb-3">
                   Equipment
                 </h3>
-                <ul className="space-y-2">
-                  {remedy.equipment.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-brand-green mr-2">•</span>
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div
+                  className="prose"
+                  dangerouslySetInnerHTML={{ __html: remedy.equipments }}
+                />
               </div>
             </div>
           </div>
@@ -713,85 +756,7 @@ const AIRemedyDetail = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-4">
               AI-Recommended Alternatives
             </h2>
-            <div className="grid grid-cols-1 gap-6">
-              {remedy.relatedRemedies.map((related) => (
-                <div
-                  key={related.id}
-                  className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100"
-                >
-                  <div className="flex flex-wrap md:flex-nowrap">
-                    <div className="w-full md:w-1/3">
-                      <img
-                        src={related.image}
-                        alt={related.name}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src =
-                            "https://via.placeholder.com/400x200?text=Related+Remedy";
-                        }}
-                      />
-                    </div>
-                    <div className="w-full md:w-2/3 p-4">
-                      <div className="mb-2">
-                        <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
-                          AI Confidence: {related.confidence}%
-                        </span>
-                        <span className="ml-2 bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                          {related.category}
-                        </span>
-                      </div>
-                      <h3 className="text-lg font-semibold mb-1">
-                        {related.name}
-                      </h3>
-                      <p className="text-gray-600 text-sm mb-3">
-                        {related.description}
-                      </p>
-
-                      {/* Effectiveness Data */}
-                      <div className="grid grid-cols-4 gap-2 mb-4">
-                        <div className="text-center">
-                          <p className="text-sm font-bold text-brand-green">
-                            {related.successRate}%
-                          </p>
-                          <p className="text-gray-600 text-xs">Success Rate</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="text-sm font-bold text-brand-green">
-                            {related.userFeedback}
-                          </p>
-                          <p className="text-gray-600 text-xs">User Feedback</p>
-                        </div>
-                        <div className="text-center">
-                          <p className="text-sm font-bold text-brand-green">
-                            {related.positiveOutcomes}
-                          </p>
-                          <p className="text-gray-600 text-xs">
-                            Positive Outcomes
-                          </p>
-                        </div>
-                        <div className="text-center">
-                          <div className="flex justify-center">
-                            {renderStars(related.rating)}
-                          </div>
-                          <p className="text-gray-600 text-xs">
-                            ({related.reviewCount})
-                          </p>
-                        </div>
-                      </div>
-
-                      <Button
-                        variant="readMore"
-                        to={`/remedies/${related.id}`}
-                        size="small"
-                      >
-                        View Details
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <div className="grid grid-cols-1 gap-6"></div>
 
             {/* Generate Custom Remedy Button */}
             <div className="mt-6 text-center">
@@ -971,105 +936,25 @@ const AIRemedyDetail = () => {
         </div>
       </main>
 
-      {/* AI Insight Popup */}
+      {/* AI Insight Popup  */}
       {showAIInsightPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full relative transform transition-all">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <div className="flex items-center">
-                <span className="text-blue-500 mr-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </span>
-                <h3 className="text-lg font-medium text-gray-900">
-                  Remi's AI Feedback
-                </h3>
-              </div>
-              <button
-                className="text-gray-400 hover:text-gray-500"
-                onClick={toggleAIInsightPopup}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="p-6">
-              <h4 className="font-medium text-gray-900 mb-2">Hi Ryan,</h4>
-              <p className="text-gray-600 mb-4">
-                Here's what I found about this remedy for Migraine Headache:
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    264 users rated this remedy.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    Average rating: 4.2 out of 5
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    Online sources suggest peppermint tea is often used for
-                    headache relief.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    Active ingredients (e.g., menthol) may help with muscle
-                    relaxation and pain reduction.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    AI Insight: Based on migraine-related profiles, this remedy
-                    may benefit users with light sensitivity or stress-induced
-                    migraines.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    Bonus Tip: Try adding a touch of ginger for
-                    anti-inflammatory support.
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <AIFeedback
+          toggleAIInsightPopup={toggleAIInsightPopup}
+          loading={feedbackLoading}
+          content={feedbackData.feedbackText}
+          error={feedbackError}
+        />
       )}
-
+      {isReviewOpen && (
+        <ReviewPopup
+          isOpen={isReviewOpen}
+          setAverageRating={(averageRating, reviewCount) =>
+            setRemedy((prev) => ({ ...prev, averageRating, reviewCount }))
+          }
+          onClose={() => setIsReviewOpen(false)}
+          remedyId={remedyId}
+        />
+      )}
       <Footer />
     </div>
   );

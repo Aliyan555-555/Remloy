@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import stripe from "./../config/stripe.config.js";
 import PaymentHistory from "./../models/payment_history.model.js";
 import PaymentMethod from "./../models/payment_method.model.js";
+import PDFDocument from "pdfkit";
+import getStream from "get-stream";
 
 // Create a new subscription
 const createSubscription = async (req, res) => {
@@ -268,7 +270,7 @@ const subscribePlan = async (req, res) => {
     const { id } = req.params;
     const paymentIntent = req.body; // For paid plans
     const userId = req.user.id;
-    const force = Boolean(req.query.force)
+    const force = Boolean(req.query.force);
 
     // Find the plan
     const plan = await PricingPlan.findById(id);
@@ -286,7 +288,7 @@ const subscribePlan = async (req, res) => {
     if (!force && existing) {
       return res.status(400).json({
         success: false,
-        confirmation:true,
+        confirmation: true,
         error: "User already has an active subscription to this plan",
       });
     }
@@ -358,14 +360,15 @@ const subscribePlan = async (req, res) => {
       activeSubscription: subscription._id,
     });
 
-   
     const newPaymentMethod = await PaymentMethod.create({
       userId,
       tokenizedCard: paymentMethod.id,
       provider: paymentMethod.card.brand,
       lastFourDigits: paymentMethod.card.last4,
-      expiryDate: new Date(`${paymentMethod.card.exp_year}-${paymentMethod.card.exp_month}-01`),
-      billingAddress: paymentMethod.billing_details.address?.line1 || 'N/A',
+      expiryDate: new Date(
+        `${paymentMethod.card.exp_year}-${paymentMethod.card.exp_month}-01`
+      ),
+      billingAddress: paymentMethod.billing_details.address?.line1 || "N/A",
       cardholderName: paymentMethod.billing_details.name,
       isDefault: false,
     });
@@ -376,8 +379,8 @@ const subscribePlan = async (req, res) => {
       amount: plan.price,
       currency: plan.currency,
       transactionId: paymentMethodId,
-      paymentMethod:newPaymentMethod._id,
-      status:"completed"
+      paymentMethod: newPaymentMethod._id,
+      status: "completed",
     });
     return res.status(201).json({
       success: true,
@@ -452,7 +455,146 @@ const checkInSuccess = async (req, res) => {
   }
 };
 
+const generateRecipe = async (req, res) => {
+  const { id } = req.params;
+
+  const subscription = await UserSubscription.findById(id).populate([
+    {
+      path: "userId",
+    },
+    {
+      path: "plan",
+    },
+  ]);
+
+  if (!subscription) {
+    return res.status(404).json({
+      message: "Subscription not found",
+      success: false,
+    });
+  }
+
+  const doc = new PDFDocument({ margin: 50 });
+  const chunks = [];
+
+  doc.on("data", (chunk) => chunks.push(chunk));
+  doc.on("end", () => {
+    const result = Buffer.concat(chunks);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=subscription_receipt.pdf"
+    );
+    res.send(result);
+  });
+
+  // Styling Constants
+  const sectionPadding = 12;
+  const sectionWidth = doc.page.width - 2 * doc.options.margin;
+  const boxRadius = 6;
+
+  // Helper to draw rounded rectangles (pdfkit doesn't support directly)
+  const drawRoundedRect = (x, y, width, height, radius, fillColor) => {
+    doc.save();
+    doc.roundedRect(x, y, width, height, radius).fill(fillColor);
+    doc.restore();
+  };
+
+  const sectionTitle = (title) => {
+    const y = doc.y;
+    drawRoundedRect(doc.x, y, sectionWidth, 26, boxRadius, "#2F6A50");
+    doc
+      .fillColor("#ffffff")
+      .font("Helvetica-Bold")
+      .fontSize(13)
+      .text(`  ${title}`, doc.x + 5, y + 7);
+    doc.moveDown(1);
+  };
+
+  const field = (label, value) => {
+    doc
+      .fillColor("black")
+      .font("Helvetica-Bold")
+      .fontSize(11)
+      .text(`${label}: `, { continued: true })
+      .font("Helvetica")
+      .text(value)
+      .moveDown(0.5);
+  };
+
+  const bulletList = (items) => {
+    items.forEach((item) => {
+      doc
+        .font("Helvetica")
+        .fontSize(11)
+        .fillColor("gray")
+        .text(`• ${item}`, { indent: 20 });
+    });
+    doc.moveDown(0.5);
+  };
+
+  // Format dates
+  const formatDate = (date) => {
+    if (!date) return "";
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    });
+  };
+
+  // PDF Background and Header
+  doc.rect(0, 0, doc.page.width, doc.page.height).fill("#F2F4F3");
+  doc
+    .fillColor("#2F6A50")
+    .font("Helvetica-Bold")
+    .fontSize(22)
+    .text("Subscription Receipt", { align: "center" });
+  doc.moveDown(1.5);
+
+  // Receipt Info Section
+  sectionTitle("Receipt Information");
+  field("Start date", formatDate(subscription.startDate));
+  field("End date", formatDate(subscription.endDate));
+  field("Status", subscription.status);
+  doc.moveDown(1);
+
+  // Subscriber Info
+  sectionTitle("Subscriber Information");
+  field("Plan Name", subscription.plan.name);
+  field("Plan Type", subscription.plan.type);
+  field("Billing Cycle", subscription.plan.billingCycle);
+  field("Currency", subscription.plan.currency);
+  doc.moveDown(1);
+
+  // Payment Summary
+  sectionTitle("Payment Summary");
+  field("Base Price", `$${subscription.plan.price}`);
+  field("Discount", `$${subscription.plan.discountPercentage}`);
+  field("Total Paid", `$${subscription.plan.price}`);
+  doc.moveDown(1);
+
+  // Features
+  sectionTitle("Plan Features");
+  bulletList(subscription.features);
+  doc.moveDown(1.5);
+
+  // Footer
+  doc
+    .font("Helvetica-Oblique")
+    .fillColor("black")
+    .fontSize(11)
+    .text("For questions or support, contact us:");
+  doc
+    .fillColor("blue")
+    .text("support@remlyo.com", { link: "mailto:support@remlyo.com" });
+  doc.text("www.remlyo.com", { link: "http://www.remlyo.com" });
+
+  doc.end();
+};
+
 export {
+  generateRecipe,
   subscribePlan,
   preSubscriptionStep,
   createSubscription,

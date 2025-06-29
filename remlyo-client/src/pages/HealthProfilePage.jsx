@@ -153,9 +153,23 @@ const HealthProfilePage = () => {
           setCurrentStep(2);
         }
       } else if (currentStep === 6) {
+        // Transform AI questions and answers into the required format
+        const formattedQuestions = [];
+        aiQuestions.forEach(section => {
+          if (section.questions) {
+            section.questions.forEach(q => {
+              formattedQuestions.push({
+                category: section.title,
+                question: q.question,
+                options: q.options ? q.options.map(opt => opt.label) : [],
+                answer: expandedHealthProfile[q.name] || ""
+              });
+            });
+          }
+        });
         const completeProfileData = {
           ...formData,
-          aiGeneratedFields: expandedHealthProfile,
+          aiQuestionUserAnswers: formattedQuestions,
         };
         const redirect =
           user.accessLevel !== "user" ? "/admin/dashboard" : "/dashboard";

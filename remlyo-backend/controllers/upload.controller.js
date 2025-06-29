@@ -20,7 +20,7 @@ const uploadToCloudinary = async (req, res) => {
       files: uploaded,
     });
   } catch (error) {
-    console.error("Upload error:", error);
+    
     res.status(500).json({
       success: false,
       message: "Failed to upload files",

@@ -10,7 +10,7 @@ export const REMEDY_CATEGORIES = [
   "Sleep Aid",
   "Skin Care",
 ];
-const REMEDY_TYPES = ["pharmaceutical", "alternative", "community"];
+const REMEDY_TYPES = ["pharmaceutical", "alternative", "community",'ai'];
 const RemedySchema = new mongoose.Schema(
   {
     name: {
@@ -113,11 +113,15 @@ const RemedySchema = new mongoose.Schema(
       min: 0,
       max: 5,
     },
-    ailments:[
+    reviewCount: {
+      type: Number,
+      default: 0,
+    },
+    ailments: [
       {
-       type:mongoose.Schema.Types.ObjectId,
-       ref:"Ailment"
-      }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Ailment",
+      },
     ],
     isActive: {
       type: Boolean,

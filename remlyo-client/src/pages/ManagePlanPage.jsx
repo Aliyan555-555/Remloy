@@ -11,6 +11,8 @@ import Modal from "../components/common/Modal";
 import FormInput from "../components/form/FormInput";
 import FormSelect from "../components/form/FormSelect";
 import StripeCardModal from "../components/stripe/StripeCardMode";
+import { generateReceipt } from "../api/subscriptionApi";
+import useUserPlan from "../hooks/useUserPlan";
 
 const ManagePlanPage = () => {
   const { user, authToken } = useAuth();
@@ -21,6 +23,7 @@ const ManagePlanPage = () => {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [paymentMethodLoading, setPaymentMethodLoading] = useState(true);
   const [showAddCardModal, setShowAddCardModal] = useState(false);
+  const { isPremium } = useUserPlan();
   const [newCard, setNewCard] = useState({
     number: "",
     expiryDate: "",
@@ -72,10 +75,19 @@ const ManagePlanPage = () => {
     setTimeout(() => {
       setAddingCard(false);
       setShowAddCardModal(false);
-      setNewCard({ number: "", expiryDate: "", provider: "visa", isDefault: false });
+      setNewCard({
+        number: "",
+        expiryDate: "",
+        provider: "visa",
+        isDefault: false,
+      });
       // Optionally, refresh payment methods
       fetchPaymentMethods();
     }, 1000);
+  };
+
+  const handleGenerateReceipt = async (id) => {
+    await generateReceipt(authToken, id);
   };
 
   useEffect(() => {
@@ -88,7 +100,7 @@ const ManagePlanPage = () => {
     <DashboardLayout
       pageTitle="Manage Plan & Billing"
       user={user}
-      isPremiumUser={true}
+      isPremiumUser={isPremium}
     >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Payment History Section - Takes 2/3 of space on large screens */}
@@ -128,6 +140,9 @@ const ManagePlanPage = () => {
                           <Button
                             variant="outlined"
                             color="default"
+                            onClick={() =>
+                              handleGenerateReceipt(payment.subscriptionId._id)
+                            }
                             size="small"
                             className="text-sm"
                           >
@@ -211,7 +226,9 @@ const ManagePlanPage = () => {
                     )}
                   </div>
                   <div className="flex-grow">
-                    <div className="text-gray-700">{method.number}</div>
+                    <div className="text-gray-700">
+                      **** **** **** {method.lastFourDigits}
+                    </div>
                     <div className="text-sm text-gray-500">
                       Expires {formatDate(method.expiryDate)}
                     </div>

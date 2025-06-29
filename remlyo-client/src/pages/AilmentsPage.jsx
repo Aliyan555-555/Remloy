@@ -80,22 +80,24 @@ const AilmentsPage = () => {
           </div>
 
           {/* Common Ailments */}
-          <div className="bg-gray-50 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">
-              Common Ailments
-            </h2>
-            <div className="flex flex-wrap gap-3">
-              {commonAilments.map((ailment) => (
-                <Link
-                  key={ailment._id}
-                  to={`/ailments/${ailment.slug}`}
-                  className="bg-white rounded-full px-4 py-2 text-gray-700 shadow-sm hover:shadow-md transition-shadow"
-                >
-                  {ailment.name}
-                </Link>
-              ))}
+          {commonAilments.length !== 0 && (
+            <div className="bg-gray-50 rounded-lg p-6 mb-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-4">
+                Common Ailments
+              </h2>
+              <div className="flex flex-wrap gap-3">
+                {commonAilments.map((ailment) => (
+                  <Link
+                    key={ailment._id}
+                    to={`/ailments/${ailment.slug}`}
+                    className="bg-white rounded-full px-4 py-2 text-gray-700 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    {ailment.name}
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Categories */}
           <div className="space-y-4">
@@ -169,7 +171,6 @@ const AilmentsPage = () => {
                 )}
               </div>
             ))}
-
           </div>
         </div>
       </main>

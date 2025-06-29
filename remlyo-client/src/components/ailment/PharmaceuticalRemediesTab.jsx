@@ -204,14 +204,14 @@ const PharmaceuticalRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
                       {renderStars(remedy.averageRating)}
                     </div>
                     <span className="text-gray-600 text-sm">
-                      ({remedy.viewCount})
+                      ({remedy.reviewCount})
                     </span>
                   </div>
 
                   <div className="flex justify-between items-center">
                     <Button
                       variant="readMore"
-                      to={`/remedies/pharmaceutical/${remedy.id}?id=${ailmentId}`}
+                      to={`/remedies/pharmaceutical/${remedy._id}?id=${ailmentId}`}
                       state={{ from: `/ailments/${ailmentId}` }}
                       size="small"
                     >

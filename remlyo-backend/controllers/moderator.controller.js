@@ -8,25 +8,8 @@ import Remedy from "../models/remedy.model.js";
 import Review from "../models/review.model.js";
 import AiFeedback from "../models/ai_feedback.model.js";
 import User from "../models/user.model.js";
+import { SORT_FIELDS, SORT_ORDERS, STATUS_TYPES } from "../constants/index.js";
 
-// Constants for sorting and filtering
-const SORT_FIELDS = {
-  CREATED_AT: "createdAt",
-  UPVOTE_COUNT: "upvoteCount",
-  REPORT_COUNT: "reportCount",
-  STATUS: "status",
-};
-
-const SORT_ORDERS = {
-  ASC: "asc",
-  DESC: "desc",
-};
-
-const STATUS_TYPES = {
-  APPROVED: "approved",
-  REJECTED: "rejected",
-  PENDING: "pending",
-};
 
 /**
  * Get comments with filtering, sorting, and pagination

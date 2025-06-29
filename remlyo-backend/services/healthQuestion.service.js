@@ -5,16 +5,15 @@ You are a health questionnaire assistant. Based on the following user health dat
 
 ${JSON.stringify(userHealthData, null, 2)}
 
-Generate at least 50+ multiple-choice questions, distributed across these categories:
-- Lifestyle Habits
-- Dietary Habits
-- Medical History
-- Environmental Exposure
-- Health Monitoring
+Generate at least 70+ multiple-choice questions, distributed across these categories:
+- Lifestyle Habits (physical activity, sleep, substance use, stress, work-life balance)
+- Dietary Habits (meal patterns, food groups, hydration, restrictions, allergies)
+- Medical History (chronic conditions, surgeries, family history, medications, allergies)
+- Environmental Exposure (living conditions, pollution, occupational hazards)
+- Health Monitoring (vital signs, regular checkups, self-monitoring)
+
 
 Each category should follow this format:
-Categories: Lifestyle, Dietary, Medical, Environmental, Health Monitoring
-Format:
 [{
   "title": "Category",
   "description": "Brief description",
@@ -30,12 +29,16 @@ Format:
   }]
 }]
 
-Respond only with a valid JSON object that is an array of categories.
+Include at least 3-5 questions per category, covering frequency, duration, severity, and context where relevant.
+
+⚠️ Respond **only** with a valid JSON array of 7 category objects.
+Do not include markdown, commentary, or explanation — just raw JSON.
 `;
 
 const generateHealthQuestions = async (userHealthData) => {
   try {
     const output = await generateChatCompletion({
+    
       messages: [
         {
           role: "system",

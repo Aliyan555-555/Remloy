@@ -56,4 +56,36 @@ const reCheckInSuccess = async (token, id) => {
   }
 };
 
-export { subscribeFreePlan, preprepareForSubscription, reCheckInSuccess };
+const generateReceipt = async (token, id) => {
+  try {
+    const { data } = await API.get(
+      `/api/v1/subscription/download/receipt/${id}`,
+      {
+        headers: getAuthHeaders(token),
+        responseType: "blob",
+      }
+    );
+    const blob = new Blob([data], { type: "application/pdf" });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    console.log(url);
+    link.href = url;
+    link.setAttribute("download", "subscription_receipt.pdf");
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export {
+  subscribeFreePlan,
+  generateReceipt,
+  preprepareForSubscription,
+  reCheckInSuccess,
+};

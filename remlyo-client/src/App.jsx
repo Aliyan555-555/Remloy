@@ -58,6 +58,7 @@ import AilmentManagementPage from "./pages/admin/AilmentManagementPage";
 import AddAilmentPage from "./pages/admin/AddAilmentPage";
 import EditAilmentPage from "./pages/admin/EditAilmentPage";
 import PaymentSuccessPage from "./pages/PaymentSuccessPage";
+import MyRemedies from "./pages/MyRemedies";
 function App() {
   return (
     <AuthProvider>
@@ -403,7 +404,7 @@ function App() {
             path="/premium-dashboard"
             element={
               // <ProtectedRoute requiredSubscription="premium">
-                <PremiumDashboardPage />
+              <PremiumDashboardPage />
               // </ProtectedRoute>
             }
           />
@@ -420,6 +421,23 @@ function App() {
             element={
               <ProtectedRoute requiredSubscription="free">
                 <ManagePlanPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/manage-plan"
+            element={
+              <ProtectedRoute requiredSubscription="free">
+                <ManagePlanPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/my-remedies"
+            element={
+              <ProtectedRoute requiredSubscription="free">
+                <MyRemedies />
               </ProtectedRoute>
             }
           />

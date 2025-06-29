@@ -3,84 +3,43 @@ import React, { useState, useEffect } from "react";
 import Pagination from "../common/Pagination";
 import Button from "../common/Button";
 
-const AIRemediesTab = ({ ailmentId, count, sortOption }) => {
+import GenerateRemedyPopup from "./GenerateRemedyPopup";
+import { getRemediesByAilmentAndType } from "../../api/remediesApi";
+
+const AIRemediesTab = ({ ailmentId, count, sortOption,activeTab }) => {
   const [remedies, setRemedies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [showGeneratePopup, setShowGeneratePopup] = useState(false);
 
   // Fetch AI remedies based on ailmentId, page, and sortOption
-  useEffect(() => {
-    const fetchRemedies = async () => {
+
+  const fetchRemedies = async () => {
+    try {
       setLoading(true);
-      // Simulating API call
-      setTimeout(() => {
-        // Mock data for demonstration
-        const mockRemedies = [
-          {
-            id: "ai1",
-            name: "Custom Herbal Blend #MT-291",
-            description:
-              "AI-generated blend combining traditional herbs with modern research",
-            confidence: 95,
-            category: "AI-recommended Formula",
-            successRate: 89,
-            userFeedback: 189,
-            positiveOutcomes: 155,
-            image: "/images/remedies/herbal-blend.jpg",
-            rating: 5,
-            reviewCount: 128,
-          },
-          {
-            id: "ai2",
-            name: "Lifestyle Protocol #LP-182",
-            description: "AI-optimized daily routine for migraine prevention",
-            confidence: 95,
-            category: "Lifestyle Modification",
-            successRate: 89,
-            userFeedback: 245,
-            positiveOutcomes: 218,
-            image: "/images/remedies/lifestyle-protocol.jpg",
-            rating: 5,
-            reviewCount: 128,
-          },
-          {
-            id: "ai3",
-            name: "Custom Herbal Blend #MT-291",
-            description:
-              "AI-generated blend combining traditional herbs with modern research",
-            confidence: 95,
-            category: "AI-recommended Formula",
-            successRate: 89,
-            userFeedback: 189,
-            positiveOutcomes: 155,
-            image: "/images/remedies/herbal-blend.jpg",
-            rating: 5,
-            reviewCount: 128,
-          },
-          {
-            id: "ai4",
-            name: "Lifestyle Protocol #LP-182",
-            description: "AI-optimized daily routine for migraine prevention",
-            confidence: 95,
-            category: "Lifestyle Modification",
-            successRate: 89,
-            userFeedback: 245,
-            positiveOutcomes: 218,
-            image: "/images/remedies/lifestyle-protocol.jpg",
-            rating: 5,
-            reviewCount: 128,
-          },
-        ];
+      const res = await getRemediesByAilmentAndType(
+        ailmentId,
+        activeTab,
+        currentPage,
+        sortOption
+      );
 
-        setRemedies(mockRemedies);
-        setTotalPages(12); // Mock total pages
-        setLoading(false);
-      }, 500);
-    };
+      if (res.success) {
+        setRemedies(res.remedies);
+        setTotalPages(res.pagination.pages);
+        setTotalRemediesCount(res.pagination.total);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchRemedies();
-  }, [ailmentId, currentPage, sortOption]);
+  }, [ailmentId]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -103,10 +62,8 @@ const AIRemediesTab = ({ ailmentId, count, sortOption }) => {
     ));
   };
 
-  // Handle image errors
-  const handleImageError = (e) => {
-    e.target.onerror = null;
-    e.target.src = "https://via.placeholder.com/400x200?text=AI+Remedy";
+  const handleOpenGeneratePopup = () => {
+    setShowGeneratePopup(true);
   };
 
   if (loading) {
@@ -154,7 +111,12 @@ const AIRemediesTab = ({ ailmentId, count, sortOption }) => {
 
       {/* Generate Custom Remedy Button */}
       <div className="flex justify-end mb-6">
-        <Button variant="contained" color="brand" className="flex items-center">
+        <Button
+          variant="contained"
+          color="brand"
+          className="flex items-center"
+          onClick={handleOpenGeneratePopup}
+        >
           <span className="mr-2">Generate Custom Remedy</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +163,7 @@ const AIRemediesTab = ({ ailmentId, count, sortOption }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {remedies.map((remedy) => (
             <div
-              key={remedy.id}
+              key={remedy._id}
               className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="p-6">
@@ -211,7 +173,7 @@ const AIRemediesTab = ({ ailmentId, count, sortOption }) => {
                     {remedy.category}
                   </div>
                   <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">
-                    AI Confidence: {remedy.confidence}%
+                    AI Confidence: {remedy.aiConfidenceScore}%
                   </div>
                 </div>
 
@@ -243,7 +205,7 @@ const AIRemediesTab = ({ ailmentId, count, sortOption }) => {
                 </div>
 
                 <div className="flex items-center mb-4">
-                  <div className="flex mr-2">{renderStars(remedy.rating)}</div>
+                  <div className="flex mr-2">{renderStars(remedy.averageRating)}</div>
                   <span className="text-gray-600 text-sm">
                     ({remedy.reviewCount})
                   </span>
@@ -252,7 +214,7 @@ const AIRemediesTab = ({ ailmentId, count, sortOption }) => {
                 <div className="flex justify-between items-center">
                   <Button
                     variant="readMore"
-                    to={`/remedies/ai/${remedy.id}?id=${ailmentId}`}
+                    to={`/remedies/ai/${remedy._id}?id=${ailmentId}`}
                     state={{ from: `/ailments/${ailmentId}` }}
                     size="small"
                   >
@@ -314,6 +276,12 @@ const AIRemediesTab = ({ ailmentId, count, sortOption }) => {
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
+      />
+
+      <GenerateRemedyPopup
+        isOpen={showGeneratePopup}
+        ailmentId={ailmentId}
+        onClose={() => setShowGeneratePopup(false)}
       />
     </div>
   );

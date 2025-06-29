@@ -30,10 +30,12 @@ const reviewValidation = Joi.object({
 
   helpfulVotes: Joi.number().min(0).optional(),
 
-  images: Joi.array().items(Joi.string().uri()).optional(),
+  images: Joi.array()
+    .items({
+      type: Joi.string(),
+      source: Joi.string(),
+    })
+    .optional(),
 });
 
-
-export {
-    reviewValidation
-}
+export { reviewValidation };

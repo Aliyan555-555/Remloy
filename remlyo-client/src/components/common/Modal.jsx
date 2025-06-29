@@ -23,6 +23,7 @@ const Modal = ({
   showCloseButton = true,
   footer,
   closeOnBackdropClick = true,
+  contentClasses=""
 }) => {
   // Close modal when Escape key is pressed
   useEffect(() => {
@@ -112,7 +113,7 @@ const Modal = ({
         )}
 
         {/* Modal Body */}
-        <div className="p-6">{children}</div>
+        <div className={`p-6 ${contentClasses}`}>{children}</div>
 
         {/* Modal Footer */}
         {footer && (

@@ -66,6 +66,20 @@ const AIInsightPage = () => {
     fetchAIInsight();
   }, [remedyId]);
 
+
+  const getRemedyTypeRoute = (remedy) => {
+    // Map remedy types to routes
+    const typeRoutes = {
+      community: `/remedies/community/${remedy}`,
+      alternative: `/remedies/alternative/${remedy}`,
+      pharmaceutical: `/remedies/pharmaceutical/${remedy}`,
+      ai: `/remedies/ai/${remedy}`,
+    };
+
+    return typeRoutes[remedy.type] || `/remedies/${remedy}`;
+  };
+
+
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -104,7 +118,7 @@ const AIInsightPage = () => {
               variant="outlined"
               color="brand"
               size="small"
-              to={`/remedies/${remedyId}`}
+              to={getRemedyTypeRoute(remedyId)}
               className="flex items-center"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

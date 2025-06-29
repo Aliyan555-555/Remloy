@@ -1,23 +1,31 @@
 // src/pages/AlternativeRemedyDetail.jsx
 import React, { useState, useEffect } from "react";
-import { useParams, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  useParams,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
 import { formatDate } from "../utils";
-import { getRemedyById } from "../api/remediesApi";
+import { getAIfeedback, getRemedyById } from "../api/remediesApi";
 import { useAuth } from "../contexts/AuthContext";
+import AIFeedback from "../components/common/AIFeedback";
+import { saveRemedy } from "../api/userApi";
+import ReviewPopup from "../components/common/ReviewPopup";
 
 const AlternativeRemedyDetail = () => {
   const { remedyId } = useParams();
-  // Get id from search params (e.g., ?id=xyz)
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [searchParams] = useSearchParams();
+  const [feedbackError, setFeedbackError] = useState(false);
+
   const ailmentId = searchParams.get("id");
-  const { authToken, refresh } = useAuth();
+  const { authToken, user, addOrRemoveSavedRemedies, refresh } = useAuth();
   const location = useLocation();
 
-
-  
   const getBackPath = () => {
     if (location.state?.from && location.state.from.includes("/ailments/")) {
       return location.state.from;
@@ -47,16 +55,42 @@ const AlternativeRemedyDetail = () => {
   const [sortOption, setSortOption] = useState("newest");
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [showAIInsightPopup, setShowAIInsightPopup] = useState(false);
-
+  const [content, setContent] = useState(null);
+  const [feedbackLoading, setFeedbackLoading] = useState(true);
   const [accessDenied, setAccessDenied] = useState(false);
   const [accessDeniedMessage, setAccessDeniedMessage] = useState("");
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+  const [isTry, setIsTry] = useState(false);
+  const [tryLoading, setTryLoading] = useState(false);
+
+  useEffect(() => {
+    if (user && user.saveRemedies && remedyId) {
+      setIsFavorite(
+        user.saveRemedies.some(
+          (item) =>
+            item.type === "favorite" &&
+            item.remedy &&
+            item.remedy._id === remedyId
+        )
+      );
+      setIsTry(
+        user.saveRemedies.some(
+          (item) =>
+            item.type === "to-try" &&
+            item.remedy &&
+            item.remedy._id === remedyId
+        )
+      );
+    }
+  }, []);
 
   // Fetch remedy details
   const fetchRemedyDetails = async () => {
     try {
       setLoading(true);
       // Simulating API call
-      const res = await getRemedyById(authToken, remedyId,ailmentId);
+      const res = await getRemedyById(authToken, remedyId, ailmentId);
       console.log(res);
       if (res && res.success) {
         setRemedy(res.remedy);
@@ -74,6 +108,25 @@ const AlternativeRemedyDetail = () => {
     fetchRemedyDetails();
   }, [remedyId]);
 
+  const fetchAiFeedback = async () => {
+    try {
+      setFeedbackLoading(true);
+      const res = await getAIfeedback(authToken, remedyId);
+      if (res.success) {
+        setContent(res.feedback);
+      } else {
+        setFeedbackError(true);
+      }
+    } catch (error) {
+      setFeedbackError(true);
+    } finally {
+      setFeedbackLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAiFeedback();
+  }, []);
   // Function to render star ratings
   const renderStars = (rating) => {
     return Array.from({ length: 5 }).map((_, i) => (
@@ -88,6 +141,34 @@ const AlternativeRemedyDetail = () => {
         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
       </svg>
     ));
+  };
+
+  const handleAddAndRemoveInTry = async () => {
+    try {
+      if (tryLoading) return;
+      setTryLoading(true);
+      const res = await addOrRemoveSavedRemedies(remedyId, "to-try");
+      if (res) {
+        setIsTry(true);
+      } else {
+        setIsTry(false);
+      }
+    } finally {
+      setTryLoading(false);
+    }
+  };
+  const handleAddAndRemoveInFavorite = async () => {
+    try {
+      setFavoriteLoading(true);
+      const res = await addOrRemoveSavedRemedies(remedyId, "favorite");
+      if (res) {
+        setIsFavorite(true);
+      } else {
+        setIsFavorite(false);
+      }
+    } finally {
+      setFavoriteLoading(false);
+    }
   };
 
   // Handle comment submission
@@ -233,9 +314,12 @@ const AlternativeRemedyDetail = () => {
                 {renderStars(remedy.averageRating)}
               </div>
               <span className="text-gray-600 text-sm">
-                ({remedy.averageRating})
+                ({remedy.reviewCount})
               </span>
-              <button className="ml-2 text-brand-green underline text-sm">
+              <button
+                onClick={() => setIsReviewOpen(true)}
+                className="ml-2 text-brand-green underline text-sm"
+              >
                 Rate this remedy
               </button>
             </div>
@@ -264,69 +348,160 @@ const AlternativeRemedyDetail = () => {
                 </svg>
                 Share
               </Button>
-
               <Button
-                variant="outlined"
+                variant={isFavorite ? "contained" : "outlined"}
                 color="brand"
                 size="small"
-                className="flex items-center"
+                onClick={handleAddAndRemoveInFavorite}
+                className={`flex items-center ${
+                  isFavorite ? "bg-brand-green text-white" : ""
+                } min-w-[140px] justify-center`}
+                disabled={favoriteLoading || tryLoading}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 mr-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-                Add to favorite
+                {favoriteLoading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-4 w-4 mr-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      />
+                    </svg>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                      />
+                    </svg>
+                    {isFavorite ? "Remove from favorite" : "Add to favorite"}
+                  </>
+                )}
               </Button>
 
               <Button
-                variant="outlined"
+                variant={isTry ? "contained" : "outlined"}
                 color="brand"
+                onClick={handleAddAndRemoveInTry}
                 size="small"
-                className="flex items-center"
+                className={`${
+                  isTry ? "bg-brand-green text-white" : ""
+                } flex items-center min-w-[120px] justify-center`}
+                disabled={tryLoading || favoriteLoading}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 mr-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                Try
+                {tryLoading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-4 w-4 mr-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      />
+                    </svg>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    {isTry ? "Remove from Try" : "Try"}
+                  </>
+                )}
               </Button>
-
               <Button
                 variant="outlined"
                 color="brand"
                 size="small"
                 className="flex items-center"
+                disabled={feedbackLoading}
+                title={
+                  feedbackLoading ? "Ai insights loading..." : "Ai insights"
+                }
                 onClick={toggleAIInsightPopup}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 mr-1 text-blue-500"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" />
-                </svg>
-                What does Remi think?
+                {feedbackLoading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-4 w-4 mr-2"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v8z"
+                      />
+                    </svg>
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-1 text-blue-500"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" />
+                    </svg>
+                    What does Remi think?
+                  </>
+                )}
               </Button>
             </div>
 
@@ -711,102 +886,24 @@ const AlternativeRemedyDetail = () => {
         </div>
       </main>
 
-      {/* AI Insight Popup */}
       {showAIInsightPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full relative transform transition-all">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <div className="flex items-center">
-                <span className="text-blue-500 mr-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </span>
-                <h3 className="text-lg font-medium text-gray-900">
-                  Remi's AI Feedback
-                </h3>
-              </div>
-              <button
-                className="text-gray-400 hover:text-gray-500"
-                onClick={toggleAIInsightPopup}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="p-6">
-              <h4 className="font-medium text-gray-900 mb-2">Hi Ryan,</h4>
-              <p className="text-gray-600 mb-4">
-                Here's what I found about this remedy for Migraine Headache:
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    264 users rated this remedy.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    Average rating: 4.2 out of 5
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    Clinical studies show acupuncture may help reduce migraine
-                    frequency.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    Works by targeting specific nerve pathways that reduce pain
-                    signals.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    AI Insight: People with your migraine pattern typically
-                    report 30% fewer episodes with regular treatments.
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2">○</span>
-                  <span className="text-gray-700">
-                    Bonus Tip: Consider combining with stress reduction
-                    techniques for enhanced benefits.
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <AIFeedback
+          toggleAIInsightPopup={toggleAIInsightPopup}
+          loading={feedbackLoading}
+          content={content}
+          error={feedbackError}
+        />
+      )}
+
+      {isReviewOpen && (
+        <ReviewPopup
+          isOpen={isReviewOpen}
+          setAverageRating={(averageRating, reviewCount) =>
+            setRemedy((prev) => ({ ...prev, averageRating, reviewCount }))
+          }
+          onClose={() => setIsReviewOpen(false)}
+          remedyId={remedyId}
+        />
       )}
 
       <Footer />

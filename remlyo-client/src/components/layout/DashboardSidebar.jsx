@@ -3,19 +3,15 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import Button from "../common/Button";
 
-const DashboardSidebar = ({ 
-  user, 
-  isSidebarOpen,
-  isPremiumUser = false 
-}) => {
+const DashboardSidebar = ({ user, isSidebarOpen, isPremiumUser = false }) => {
   const location = useLocation();
-  
+
   const isActive = (path) => {
     return location.pathname === path;
   };
 
   // Get correct dashboard path based on user subscription
-  const dashboardPath = isPremiumUser ? "/premium-dashboard" : "/dashboard";
+  const dashboardPath = "/dashboard";
 
   return (
     <div
@@ -34,7 +30,9 @@ const DashboardSidebar = ({
           />
         </div>
         <div>
-          <h3 className="font-semibold text-gray-800">{user?.name || "User"}</h3>
+          <h3 className="font-semibold text-gray-800">
+            {user?.name || "User"}
+          </h3>
           <p className="text-sm text-gray-500">{user?.username || ""}</p>
         </div>
       </div>

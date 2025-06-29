@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 import { useAuth } from "../contexts/AuthContext";
 import DashboardLayout from "../components/layout/DashboardLayout";
+import useUserPlan from "../hooks/useUserPlan";
 
 // Reusable Lock Icon
 const LockIcon = () => (
@@ -43,12 +44,9 @@ const recentActivity = [
 const UserDashboardPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { plan, isPremium } = useUserPlan();
 
-  // Defensive checks for user and subscription
-  const plan = user?.activeSubscription?.plan || {};
-  const isFree = plan.price === 0;
-
-  const handleUpgrade = () => navigate("/premium-dashboard");
+  const handleUpgrade = () => navigate("/pricing");
 
   // Helper for remedies per ailment
   const hasReachedRemedyLimit = useMemo(() => {
@@ -63,12 +61,16 @@ const UserDashboardPage = () => {
   }, [user, plan.remediesPerAilment]);
 
   return (
-    <DashboardLayout pageTitle="Dashboard" user={user} isPremiumUser={!isFree}>
+    <DashboardLayout
+      pageTitle="Dashboard"
+      user={user}
+      isPremiumUser={isPremium}
+    >
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {/* My Remedies Card */}
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 relative">
-          {isFree && <LockIcon />}
+          {!isPremium && <LockIcon />}
           <h2 className="text-base font-semibold text-gray-700 mb-2">
             My Remedies
           </h2>
@@ -97,13 +99,13 @@ const UserDashboardPage = () => {
 
         {/* Success Rate Card */}
         <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 relative">
-          {isFree && <LockIcon />}
+          {!isPremium && <LockIcon />}
           <h2 className="text-base font-semibold text-gray-700 mb-2">
             Success Rate
           </h2>
           <div className="flex items-center justify-between">
             <div className="text-left">
-              {isFree ? (
+              {!isPremium ? (
                 <p className="text-sm text-gray-600">
                   Try and rate more remedies to
                   <br />
@@ -140,7 +142,7 @@ const UserDashboardPage = () => {
           </h2>
           <div className="flex items-center justify-between">
             <div className="text-left">
-              {isFree ? (
+              {!isPremium ? (
                 plan.name ? (
                   <>
                     <p className="text-sm text-gray-600 mb-1">
@@ -178,7 +180,7 @@ const UserDashboardPage = () => {
                   </p>
                 </>
               )}
-              {isFree ? (
+              {!isPremium ? (
                 <Button
                   variant="contained"
                   color="brand"
@@ -310,43 +312,47 @@ const UserDashboardPage = () => {
             View All Saved Remedies
           </Button>
         </div>
-        { user.saveRemedies.length?<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {user.saveRemedies.map((remedy) => (
-            <div
-              key={remedy.remedy._id}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
-            >
-              <img
-                src={remedy.remedy.media.source}
-                alt={remedy.remedy.title}
-                className="w-full h-48 object-cover"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = remedy.remedy.media.source;
-                }}
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold">{remedy.remedy.title}</h3>
-                <div className="flex items-center mt-2 mb-3">
-                  <span className="text-gray-700 mr-1">Rating :</span>
-                  <span className="font-medium">
-                    {remedy.remedy.averageRating}/5
-                  </span>
+        {user.saveRemedies.length ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {user.saveRemedies.slice(0, 3).map((remedy) => (
+              <div
+                key={remedy.remedy._id}
+                className="bg-white rounded-lg shadow-md overflow-hidden"
+              >
+                <img
+                  src={remedy.remedy.media.source}
+                  alt={remedy.remedy.title}
+                  className="w-full h-48 object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = remedy.remedy.media.source;
+                  }}
+                />
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold">
+                    {remedy.remedy.title}
+                  </h3>
+                  <div className="flex items-center mt-2 mb-3">
+                    <span className="text-gray-700 mr-1">Rating :</span>
+                    <span className="font-medium">
+                      {remedy.remedy.averageRating}/5
+                    </span>
+                  </div>
+                  <Button
+                    variant="readMore"
+                    to={`/remedies/${remedy.remedy._id}`}
+                  >
+                    Read More
+                  </Button>
                 </div>
-                <Button
-                  variant="readMore"
-                  to={`/remedies/${remedy.remedy._id}`}
-                >
-                  Read More
-                </Button>
               </div>
-            </div>
-          ))}
-        </div>:(
-            <div className="text-center w-full text-gray-700 !py-5 ">
-              No remedies saved
-            </div>
-          )}
+            ))}
+          </div>
+        ) : (
+          <div className="text-center w-full text-gray-700 !py-5 ">
+            No remedies saved
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );

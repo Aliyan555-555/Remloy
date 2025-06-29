@@ -2,10 +2,18 @@
 
 import OpenAI from "openai";
 
+const token = process.env["GITHUB_TOKEN"];
+const endpoint = "https://models.github.ai/inference";
+const model = "openai/gpt-4.1";
+
 // Create a singleton instance (best practice for Node/serverless)
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  baseURL:endpoint,
+  // apiKey: process.env.OPENAI_API_KEY,
+  apiKey: token,
 });
+
+
 
 /**
  * Generate a chat completion using OpenAI's API.
@@ -19,7 +27,7 @@ const openai = new OpenAI({
 export const generateChatCompletion = async ({
   messages,
   temperature = 0.7,
-  model = "gpt-4-turbo",
+  // model = "gpt-4-turbo",
 }) => {
   if (!process.env.OPENAI_API_KEY) {
     throw new Error("OPENAI_API_KEY is missing in environment variables.");

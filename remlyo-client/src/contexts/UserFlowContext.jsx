@@ -2,17 +2,18 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 import { UserFlowStatus } from "../constants";
 import { checkHealthProfile, checkSubscription } from "../api/userApi";
+import LoadingSpinner from "./../components/common/LoadingSpinner";
 
 const UserFlowContext = createContext();
 
 export const UserFlowProvider = ({ children }) => {
   const { user, isAuthenticated, authToken, loading: authLoading } = useAuth();
   const [flowStatus, setFlowStatus] = useState(null);
-  const [loading, setLoading] = useState(authLoading);
+  const [loading, setLoading] = useState(true);
 
   const checkUserFlow = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       if (!isAuthenticated) {
         setFlowStatus(UserFlowStatus.LOGGED_OUT);
         return;
@@ -46,16 +47,23 @@ export const UserFlowProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (authLoading) return;
     if (isAuthenticated && authToken) {
       checkUserFlow();
     } else if (!isAuthenticated) {
       setFlowStatus(UserFlowStatus.LOGGED_OUT);
       setLoading(false);
     }
-  }, [isAuthenticated, authToken]);
+  }, [isAuthenticated, authToken, authLoading]);
 
+  if (!authLoading && loading) {
+    console.log("loading...........");
+    return <LoadingSpinner />;
+  }
   return (
-    <UserFlowContext.Provider value={{ flowStatus, loading, checkUserFlow, setFlowStatus }}>
+    <UserFlowContext.Provider
+      value={{ flowStatus, loading, checkUserFlow, setFlowStatus }}
+    >
       {children}
     </UserFlowContext.Provider>
   );

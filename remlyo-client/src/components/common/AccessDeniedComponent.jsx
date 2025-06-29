@@ -19,15 +19,16 @@ const AccessDeniedComponent = ({ message }) => {
           variant="contained"
           color="brand"
           size="medium"
-          className="mt-2 !text-nowrap"
+          className="!text-nowrap"
         >
           Upgrade your plan
         </Button>
         <Button
           to="/dashboard"
-          variant="contained"
+          variant="outlined"
           size="medium"
-          className="mt-2 !bg-white border-2 border-[#2F6A50] text-[#2F6A50] !text-nowrap"
+          color='brand'
+          className="!text-nowrap"
         >
           Go To Dashboard
         </Button>

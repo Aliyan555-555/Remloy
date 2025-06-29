@@ -278,7 +278,12 @@ const getAllUsers = async (req, res) => {
     });
   }
 };
-
+/**
+ * Verify authentication token
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Promise<Object>} Response object
+ */
 const validatedEmailToken = async (req, res) => {
   try {
     const { token } = req.params;
@@ -369,6 +374,7 @@ const validatedEmailToken = async (req, res) => {
 
 const MAX_RESET_REQUESTS = 5;
 const WINDOW_MS = 60 * 60 * 1000; // 1 hours
+
 
 const sendEmailVerification = async (req, res) => {
   try {

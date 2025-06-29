@@ -25,6 +25,12 @@ const ERROR_MESSAGES = {
   INVALID_TOKEN_FORMAT: "Invalid token format",
   MISSING_ID_TOKEN: "Missing ID token",
   NO_EMAIL_FOUND: "No email found in Firebase token.",
+  USER_PROFILE_NOT_FOUND: "User profile not found",
+  REMEDY_NOT_FOUND: "Remedy not found",
+  INVALID_JSON_RESPONSE: "AI response did not contain valid JSON",
+  INVALID_JSON_IN_CODE_BLOCK: "AI response contained code block but JSON was invalid",
+  INVALID_JSON_CONTENT: "AI response contained JSON-like content but was invalid",
+  MISSING_PARAMETERS: "remedyId and userId are required parameters"
 };
 
 // Success Messages
@@ -69,4 +75,65 @@ const AilmentCategories = [
   "Oral Health",
 ];
 
-export { AilmentCategories, SUCCESS_MESSAGES, ERROR_MESSAGES, AUTH_CONSTANTS };
+const SORT_FIELDS = {
+  CREATED_AT: "createdAt",
+  UPVOTE_COUNT: "upvoteCount",
+  REPORT_COUNT: "reportCount",
+  STATUS: "status",
+};
+
+const SORT_ORDERS = {
+  ASC: "asc",
+  DESC: "desc",
+};
+
+const REMEDY_TYPES={
+  AI:"ai",
+  COMMUNITY:"community",
+  ALTERNATIVE:"alternative",
+  PHARMACEUTICAL:"pharmaceutical"
+}
+
+const STATUS_TYPES = {
+  APPROVED: "approved",
+  REJECTED: "rejected",
+  PENDING: "pending",
+};
+
+
+/**
+ * MIME type mapping for common image extensions
+ */
+const MIME_TYPE_MAP = {
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+  gif: 'image/gif',
+  webp: 'image/webp',
+  bmp: 'image/bmp',
+  svg: 'image/svg+xml',
+};
+
+
+/**
+ * Pixabay API configuration constants
+ */
+const PIXABAY_CONFIG = {
+  BASE_URL: 'https://pixabay.com/api/',
+  IMAGE_TYPE: 'photo',
+  SAFE_SEARCH: true,
+  TIMEOUT_MS: 10000, // 10 seconds
+};
+
+export {
+  PIXABAY_CONFIG,
+  MIME_TYPE_MAP,
+  REMEDY_TYPES,
+  AilmentCategories,
+  SORT_FIELDS,
+  SORT_ORDERS,
+  STATUS_TYPES,
+  SUCCESS_MESSAGES,
+  ERROR_MESSAGES,
+  AUTH_CONSTANTS,
+};

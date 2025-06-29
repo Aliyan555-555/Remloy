@@ -10,8 +10,11 @@ const FlowGuard = ({ children }) => {
   const { isAuthenticated, user } = useAuth();
   const location = useLocation();
 
-  console.log("🚀 ~ FlowGuard ~ flowStatus:", flowStatus);
   const currentPath = location.pathname;
+  
+    if (loading) {
+      return <LoadingSpinner />;
+    }
   const role = user?.accessLevel;
 
   const roleDashboardRoutes = {
@@ -23,14 +26,10 @@ const FlowGuard = ({ children }) => {
 
   const userDashboardRoute = roleDashboardRoutes[role] || "/dashboard";
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
   // Redirect unauthenticated users
-  // if (!isAuthenticated && !flowStatus) {
-  //   return <Navigate to="/signin" replace />;
-  // }
+  if (!isAuthenticated && !flowStatus) {
+    return <Navigate to="/signin" replace />;
+  }
 
   // Redirect authenticated users accessing base /dashboard to their role-specific dashboard
   if (isAuthenticated && currentPath === "/dashboard" && role !== "user") {
@@ -77,7 +76,7 @@ const FlowGuard = ({ children }) => {
   };
 
   const fallbackRedirect = redirectMap[flowStatus] || "/signin";
-  console.log("Redirecting due to flow restriction:", fallbackRedirect);
+  console.log("Redirecting due to flow restriction:", fallbackRedirect,flowStatus);
 
   return <Navigate to={fallbackRedirect} state={{ from: location }} replace />;
 };

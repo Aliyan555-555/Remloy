@@ -1,27 +1,19 @@
+import Remedy from "../models/remedy.model.js";
 import Review from "../models/review.model.js";
-import { reviewValidation } from "../validations/review.validation.js";
 
 const createReview = async (req, res) => {
   try {
-    const { error } = reviewValidation.validate(req.body);
-    if (error) {
-      return res.status(400).json({
-        message: "Validation error",
-        details: error.details.map((d) => d.message),
-        success: false,
-      });
-    }
     const userId = req.user.id;
 
-    const reviewExist = await Review.find({
+    const reviewExist = await Review.findOne({
       userId,
       remedyId: req.body.remedyId,
     });
 
     if (reviewExist) {
       return res
-        .status(400)
-        .json({ message: "Review already exist", success: false });
+        .status(409)
+        .json({ message: "Review already exist", exist: true, success: false });
     }
     const newReview = await Review.create({
       userId,
@@ -29,9 +21,23 @@ const createReview = async (req, res) => {
       ...req.body,
     });
 
+    // Update remedy's averageRating
+    const allReviews = await Review.find({ remedyId: req.body.remedyId });
+    const total = allReviews.length;
+    const sum = allReviews.reduce(
+      (acc, review) => acc + (review.overallRating || 0),
+      0
+    );
+    const avg = total > 0 ? parseFloat((sum / total).toFixed(1)) : 0;
+    await Remedy.findByIdAndUpdate(req.body.remedyId, {
+      averageRating: avg,
+      reviewCount: total,
+    });
+
     res.status(201).json({
       message: "Review successfully created",
-      review: newReview,
+      averageRating: avg,
+      reviewCount: total,
       success: true,
     });
   } catch (error) {
