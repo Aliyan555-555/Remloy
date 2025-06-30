@@ -360,26 +360,12 @@ const subscribePlan = async (req, res) => {
       activeSubscription: subscription._id,
     });
 
-    const newPaymentMethod = await PaymentMethod.create({
-      userId,
-      tokenizedCard: paymentMethod.id,
-      provider: paymentMethod.card.brand,
-      lastFourDigits: paymentMethod.card.last4,
-      expiryDate: new Date(
-        `${paymentMethod.card.exp_year}-${paymentMethod.card.exp_month}-01`
-      ),
-      billingAddress: paymentMethod.billing_details.address?.line1 || "N/A",
-      cardholderName: paymentMethod.billing_details.name,
-      isDefault: false,
-    });
-
     await PaymentHistory.create({
       userId,
       subscriptionId: subscription._id,
       amount: plan.price,
       currency: plan.currency,
       transactionId: paymentMethodId,
-      paymentMethod: newPaymentMethod._id,
       status: "completed",
     });
     return res.status(201).json({

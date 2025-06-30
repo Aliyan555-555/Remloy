@@ -8,8 +8,12 @@ import {
   getPaymentHistory,
   getPaymentMethods,
   deleteSavedRemedy,
+  addPaymentMethod,
+  removePaymentMethod,
+  updatePaymentMethod,
 } from "../controllers/user.controller.js";
 import userHealthProfileValidation from "../validations/user.validations.js";
+import auth from "../middleware/auth.middleware.js";
 
 const userRouter = express.Router();
 
@@ -37,5 +41,11 @@ userRouter.patch("/remedy/delete/:id", deleteSavedRemedy);
 userRouter.get("/payment/history", getPaymentHistory);
 // get payment methods
 userRouter.get("/payment/methods", getPaymentMethods);
+// add payment method
+userRouter.post("/payment/methods", auth, addPaymentMethod);
+// remove payment method
+userRouter.delete("/payment/methods/:paymentMethodId", auth, removePaymentMethod);
+// update payment method
+userRouter.patch("/payment/methods/:paymentMethodId", auth, updatePaymentMethod);
 
 export default userRouter;

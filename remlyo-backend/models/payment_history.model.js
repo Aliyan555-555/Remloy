@@ -25,11 +25,6 @@ const PaymentHistorySchema = new mongoose.Schema(
       enum: ["pending", "completed", "failed"], // maybe update this in future
       default: "pending",
     },
-    paymentMethod: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "PaymentMethod",
-      required: true,
-    },
     processedAt: {
       type: Date,
       default: Date.now,

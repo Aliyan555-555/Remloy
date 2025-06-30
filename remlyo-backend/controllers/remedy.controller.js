@@ -169,15 +169,9 @@ const getRemedyById = async (req, res) => {
       };
     }
 
-    // Fetch all approved comments for this remedy, populate user info
-    const comments = await Comment.find({ remedyId: remedy._id, status: { $in: ['pending', 'approved'] }  })
-      .populate('userId', 'username email profileImage status')
-      .sort({ createdAt: -1 });
-
     res.status(200).json({
       message: "Successfully fetched remedy",
       remedy: { ...remedy._doc, ratings },
-      comments,
       success: true,
     });
   } catch (error) {
@@ -380,30 +374,134 @@ const flagRemedy = async (req, res) => {
 // 1. Create comment or reply
 const createComment = async (req, res) => {
   try {
+    // Validate input
+    const { error } = createCommentValidation.validate(req.body);
+    if (error) {
+      return res.status(400).json({
+        message: "Validation error",
+        success: false,
+        details: error.details.map((d) => d.message),
+      });
+    }
+
     const { content, remedyId, parentCommentId } = req.body;
     const userId = req.user.id;
+
+    // Check remedy existence
+    const remedy = await Remedy.findById(remedyId);
+    if (!remedy || !remedy.isActive) {
+      return res
+        .status(404)
+        .json({ message: "Remedy not found or inactive", success: false });
+    }
 
     let level = 0;
     if (parentCommentId) {
       const parent = await Comment.findById(parentCommentId);
       if (!parent)
-        return res.status(404).json({ message: "Parent comment not found" });
+        return res
+          .status(404)
+          .json({ message: "Parent comment not found", success: false });
       level = parent.level + 1;
     }
 
     const comment = await Comment.create({
       content,
       remedyId,
-      parentCommentId: parentCommentId,
+      parentCommentId: parentCommentId || null,
       userId,
       level,
+      upvoteCount: 0,
     });
 
-    res.status(201).json(comment);
+    await comment.populate("userId", "username email profileImage status");
+
+    res.status(201).json({
+      message: "Successfully created comment",
+      success: true,
+      comment,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to create comment", error: error.message });
+    res.status(500).json({
+      message: "Failed to create comment",
+      error: error.message,
+      success: false,
+    });
+  }
+};
+
+// 2. Get all comments for a remedy, as a tree, with pagination
+const getAllCommentsByRemedyId = async (req, res) => {
+  try {
+    const { remedyId } = req.params;
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 10, 1), 100);
+    const skip = (page - 1) * limit;
+
+    if (!mongoose.Types.ObjectId.isValid(remedyId)) {
+      return res
+        .status(400)
+        .json({ message: "Invalid remedy ID", success: false });
+    }
+
+    // Only fetch approved or pending comments
+    const filter = { remedyId, status: { $in: ["pending", "approved"] } };
+
+    // Fetch paginated root comments (no parent)
+    const [total, rootComments] = await Promise.all([
+      Comment.countDocuments({ ...filter, parentCommentId: null }),
+      Comment.find({ ...filter, parentCommentId: null })
+        .populate("userId", "username email profileImage status")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+    ]);
+
+    // Get all comments for this remedy (for tree building)
+    const allComments = await Comment.find(filter)
+      .populate("userId", "username email profileImage status")
+      .sort({ createdAt: 1 });
+
+    // Build a map of comments by their _id
+    const commentMap = {};
+    allComments.forEach((comment) => {
+      commentMap[comment._id.toString()] = comment.toObject();
+      commentMap[comment._id.toString()].replies = [];
+    });
+
+    // Attach each comment to its parent
+    allComments.forEach((comment) => {
+      const c = commentMap[comment._id.toString()];
+      if (c.parentCommentId) {
+        const parent = commentMap[c.parentCommentId.toString()];
+        if (parent) {
+          parent.replies.push(c);
+        }
+      }
+    });
+
+    // For each paginated root comment, get its full subtree
+    const commentsWithReplies = rootComments.map((root) => {
+      return commentMap[root._id.toString()];
+    });
+
+    res.status(200).json({
+      message: "Successfully fetched comments",
+      success: true,
+      comments: commentsWithReplies,
+      pagination: {
+        total,
+        page,
+        pages: Math.ceil(total / limit),
+        limit,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch comments",
+      error: error.message,
+      success: false,
+    });
   }
 };
 
@@ -438,9 +536,70 @@ const getRemediesByAilmentId = async (req, res) => {
       .skip((page - 1) * limit)
       .limit(Number(limit));
 
+    // Fix: Use Promise.all to resolve async map
+    const updatedRemedy = await Promise.all(
+      remedies.map(async (remedy) => {
+        let ratings = {};
+
+        // 👉 If it's an AI-generated remedy, calculate extra data
+        if (remedy.type === "ai") {
+          const stats = await Review.aggregate([
+            {
+              $match: {
+                remedyId: remedy._id,
+              },
+            },
+            {
+              $facet: {
+                total: [{ $count: "count" }],
+                positive: [
+                  { $match: { overallRating: { $gte: 4 } } },
+                  { $count: "count" },
+                ],
+                averages: [
+                  {
+                    $group: {
+                      _id: null,
+                      effectivenessAvg: { $avg: "$effectivenessRating" },
+                      easeOfUseAvg: { $avg: "$easeOfUseRating" },
+                      sideEffectsAvg: { $avg: "$sideEffectsRating" },
+                      overallAvg: { $avg: "$overallRating" },
+                    },
+                  },
+                ],
+              },
+            },
+          ]);
+
+          const total = stats[0].total[0]?.count || 0;
+          const positive = stats[0].positive[0]?.count || 0;
+          const avg = stats[0].averages[0] || {};
+
+          ratings = {
+            successRate: total > 0 ? Math.round((positive / total) * 100) : 0,
+            totalReviews: total,
+            positiveOutcomes: positive,
+            averageRatings: {
+              effectiveness: avg.effectivenessAvg || 0,
+              easeOfUse: avg.easeOfUseAvg || 0,
+              sideEffects: avg.sideEffectsAvg || 0,
+              overall: avg.overallAvg || 0,
+            },
+          };
+          // Return remedy with ratings
+          return {
+            ...remedy.toObject(),
+            ratings,
+          };
+        }
+        // For non-AI remedies, just return the remedy as is
+        return remedy.toObject();
+      })
+    );
+
     res.status(200).json({
       success: true,
-      remedies,
+      remedies:updatedRemedy,
       pagination: {
         total,
         page: Number(page),
@@ -488,7 +647,10 @@ const getAIfeedback = async (req, res) => {
     }).sort({ createdAt: -1 });
 
     // Check if existing feedback exists and profile version matches
-    if (existingFeedback && existingFeedback.profileVersion === userProfile.__v) {
+    if (
+      existingFeedback &&
+      existingFeedback.profileVersion === userProfile.__v
+    ) {
       return res.status(200).json({
         message: "AI feedback already exists",
         success: true,
@@ -588,6 +750,7 @@ const generateAIRemedy = async (req, res) => {
 
 export {
   flagRemedy,
+  getAllCommentsByRemedyId,
   createRemedy,
   getAIfeedback,
   getAllRemedies,

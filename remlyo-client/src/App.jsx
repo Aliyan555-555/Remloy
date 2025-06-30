@@ -59,6 +59,8 @@ import AddAilmentPage from "./pages/admin/AddAilmentPage";
 import EditAilmentPage from "./pages/admin/EditAilmentPage";
 import PaymentSuccessPage from "./pages/PaymentSuccessPage";
 import MyRemedies from "./pages/MyRemedies";
+import SuspendedUserPage from "./pages/SuspendedUserPage";
+
 function App() {
   return (
     <AuthProvider>
@@ -480,6 +482,7 @@ function App() {
               // </GuestRoute>
             }
           />
+          <Route path="/suspended" element={<SuspendedUserPage />} />
           {/* Fallback for 404 */}
           <Route
             path="*"

@@ -13,21 +13,31 @@ export const UserFlowProvider = ({ children }) => {
 
   const checkUserFlow = async () => {
     try {
-      setLoading(true);
+      // if (loading) return;
+
+      // setLoading(true);
       if (!isAuthenticated) {
         setFlowStatus(UserFlowStatus.LOGGED_OUT);
+        setLoading(false);
         return;
+      }
+      if (user && user.status && user.status.toLowerCase() == "suspended"){
+        setFlowStatus(UserFlowStatus.SUSPENDED);
+        setLoading(false);
+        return
       }
 
-      if (user && !user.emailVerified) {
-        setFlowStatus(UserFlowStatus.EMAIL_UNVERIFIED);
-        return;
-      }
+      // if (user && !user.emailVerified) {
+      //   setFlowStatus(UserFlowStatus.EMAIL_UNVERIFIED);
+      //   setLoading(false);
+      //   return;
+      // }
 
       // Check health profile
       const healthProfileRes = await checkHealthProfile(authToken);
       if (!healthProfileRes || !healthProfileRes.success) {
         setFlowStatus(UserFlowStatus.PROFILE_INCOMPLETE);
+        setLoading(false);
         return;
       }
 
@@ -35,6 +45,7 @@ export const UserFlowProvider = ({ children }) => {
       const subscriptionRes = await checkSubscription(authToken);
       if (!subscriptionRes?.data?.hasActiveSubscription) {
         setFlowStatus(UserFlowStatus.SUBSCRIPTION_REQUIRED);
+        setLoading(false);
         return;
       }
 
@@ -56,8 +67,7 @@ export const UserFlowProvider = ({ children }) => {
     }
   }, [isAuthenticated, authToken, authLoading]);
 
-  if (!authLoading && loading) {
-    console.log("loading...........");
+  if (loading) {
     return <LoadingSpinner />;
   }
   return (

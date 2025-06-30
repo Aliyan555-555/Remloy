@@ -79,7 +79,7 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   // Handle image errors
   const handleImageError = (e) => {
     e.target.onerror = null;
-    e.target.src = "https://via.placeholder.com/400x200?text=Remedy+Image";
+    e.target.src = "https://placehold.co/600x400?text=Remlyo";
   };
 
   if (loading) {

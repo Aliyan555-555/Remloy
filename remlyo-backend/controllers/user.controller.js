@@ -15,9 +15,9 @@ const userHealthProfile = async (req, res) => {
     const updatedProfile = existingProfile
       ? await UserProfile.findOneAndUpdate(
           { userId },
-          { 
+          {
             $set: { ...profileData, lastUpdated: new Date() },
-            $inc: { __v: 1 }
+            $inc: { __v: 1 },
           },
           { new: true, runValidators: true }
         )
@@ -119,7 +119,7 @@ const saveRemedy = async (req, res) => {
       await userData.save();
       return res.status(200).json({
         message: "Remedy removed successfully",
-        isAdded:false,
+        isAdded: false,
         success: true,
         data: {
           type,
@@ -141,7 +141,7 @@ const saveRemedy = async (req, res) => {
     return res.status(200).json({
       message: "Remedy saved successfully",
       success: true,
-      isAdded:true,
+      isAdded: true,
       data: populatedUser.saveRemedies.find(
         (s) => s.type == type && s.remedy._id == id
       ),
@@ -170,11 +170,7 @@ const getPaymentHistory = async (req, res) => {
           "plan startDate endDate status paymentStatus monthlyPrice billingCycle",
         populate: { path: "plan", select: "name price type" },
       })
-      .populate({
-        path: "paymentMethod",
-        model: PaymentMethod,
-        select: "provider lastFourDigits cardholderName expiryDate",
-      })
+
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(parseInt(limit));
@@ -265,6 +261,107 @@ const deleteSavedRemedy = async (req, res) => {
   }
 };
 
+const addPaymentMethod = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { paymentMethodId, cardholderName, billingAddress, isDefault } = req.body;
+    if (!paymentMethodId || !cardholderName || !billingAddress) {
+      return res.status(400).json({ success: false, message: "Missing required fields." });
+    }
+
+    // Retrieve payment method details from Stripe
+    const paymentMethod = await import("../config/stripe.config.js").then(m => m.default.paymentMethods.retrieve(paymentMethodId));
+    if (!paymentMethod || paymentMethod.object !== "payment_method") {
+      return res.status(400).json({ success: false, message: "Invalid payment method." });
+    }
+
+    // Prevent duplicate storage
+    const lastFour = paymentMethod.card.last4;
+    const provider = paymentMethod.card.brand;
+    const expiryDate = new Date(paymentMethod.card.exp_year, paymentMethod.card.exp_month - 1);
+    const existing = await PaymentMethod.findOne({ userId, lastFourDigits: lastFour, provider });
+    if (existing) {
+      return res.status(409).json({ success: false, message: "Payment method already exists." });
+    }
+
+    // If isDefault, unset other defaults
+    if (isDefault) {
+      await PaymentMethod.updateMany({ userId }, { $set: { isDefault: false } });
+    }
+
+    // Store billing address as a string for now
+    const billingAddressStr = typeof billingAddress === 'string' ? billingAddress : JSON.stringify(billingAddress);
+
+    const newMethod = await PaymentMethod.create({
+      userId,
+      tokenizedCard: paymentMethodId,
+      provider,
+      lastFourDigits: lastFour,
+      expiryDate,
+      isDefault: !!isDefault,
+      billingAddress: billingAddressStr,
+      cardholderName,
+    });
+
+    return res.status(201).json({ success: true, message: "Payment method added.", method: newMethod });
+  } catch (error) {
+    console.error("Error adding payment method:", error);
+    return res.status(500).json({ success: false, message: "Failed to add payment method.", error: error.message });
+  }
+};
+
+const removePaymentMethod = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { paymentMethodId } = req.params;
+    const method = await PaymentMethod.findOne({ _id: paymentMethodId, userId });
+    if (!method) {
+      return res.status(404).json({ success: false, message: "Payment method not found." });
+    }
+    const wasDefault = method.isDefault;
+    await method.deleteOne();
+    // If deleted method was default, set another as default
+    if (wasDefault) {
+      const another = await PaymentMethod.findOne({ userId });
+      if (another) {
+        another.isDefault = true;
+        await another.save();
+      }
+    }
+    return res.status(200).json({ success: true, message: "Payment method removed." });
+  } catch (error) {
+    console.error("Error removing payment method:", error);
+    return res.status(500).json({ success: false, message: "Failed to remove payment method.", error: error.message });
+  }
+};
+
+const updatePaymentMethod = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { paymentMethodId } = req.params;
+    const { cardholderName, billingAddress, isDefault } = req.body;
+    const method = await PaymentMethod.findOne({ _id: paymentMethodId, userId });
+    if (!method) {
+      return res.status(404).json({ success: false, message: "Payment method not found." });
+    }
+    if (cardholderName) method.cardholderName = cardholderName;
+    if (billingAddress) method.billingAddress = typeof billingAddress === 'string' ? billingAddress : JSON.stringify(billingAddress);
+    if (typeof isDefault === 'boolean') {
+      if (isDefault) {
+        await PaymentMethod.updateMany({ userId }, { $set: { isDefault: false } });
+        method.isDefault = true;
+      } else {
+        method.isDefault = false;
+      }
+    }
+    await method.save();
+    return res.status(200).json({ success: true, message: "Payment method updated.", method });
+  } catch (error) {
+    console.error("Error updating payment method:", error);
+    return res.status(500).json({ success: false, message: "Failed to update payment method.", error: error.message });
+  }
+};
+
 export {
   userHealthProfile,
   getUserHealthQuestionBaseOnHealthProfile,
@@ -273,4 +370,7 @@ export {
   getPaymentHistory,
   getPaymentMethods,
   deleteSavedRemedy,
+  addPaymentMethod,
+  removePaymentMethod,
+  updatePaymentMethod,
 };

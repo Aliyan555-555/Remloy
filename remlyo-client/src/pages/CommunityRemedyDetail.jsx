@@ -12,6 +12,7 @@ import Button from "../components/common/Button";
 import {
   createComment,
   getAIfeedback,
+  getAllCommentsByRemedyId,
   getRemedyById,
 } from "../api/remediesApi";
 import { formatDate } from "../utils";
@@ -20,6 +21,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { saveRemedy } from "../api/userApi";
 import AIFeedback from "../components/common/AIFeedback";
 import ReviewPopup from "../components/common/ReviewPopup";
+import CommentItem from "../components/common/CommentItem";
 
 const CommunityRemedyDetail = () => {
   const { remedyId } = useParams();
@@ -45,6 +47,8 @@ const CommunityRemedyDetail = () => {
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [isTry, setIsTry] = useState(false);
   const [tryLoading, setTryLoading] = useState(false);
+  const [replyingTo, setReplyingTo] = useState(null);
+
   const getBackPath = () => {
     if (location.state?.from && location.state.from.includes("/ailments/")) {
       return location.state.from;
@@ -99,7 +103,6 @@ const CommunityRemedyDetail = () => {
       console.log(res);
       if (res && res.success) {
         setRemedy(res.remedy);
-        setComments(res.comments);
       } else {
         setAccessDenied(true);
         setAccessDeniedMessage(res.message);
@@ -110,8 +113,20 @@ const CommunityRemedyDetail = () => {
     }
   };
 
+  const fetchComments = async () => {
+    const res = await getAllCommentsByRemedyId(authToken, remedyId);
+    if (res.success) {
+      // Sort comments by createdAt descending (newest first)
+      const sorted = [...res.comments].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setComments(sorted);
+    }
+  };
+
   useEffect(() => {
     fetchRemedyDetails();
+    fetchComments();
   }, [remedyId]);
 
   const fetchAiFeedback = async () => {
@@ -164,7 +179,54 @@ const CommunityRemedyDetail = () => {
       parentCommentId: null,
     };
     const res = await createComment(authToken, commentData);
-    console.log(res);
+    if (res.success) {
+      // Add new comment to the top
+      setComments((prev) => [res.comment, ...prev]);
+      setNewComment("");
+    }
+  };
+
+  // Recursively insert a reply into the correct place in the comments tree
+  const insertReply = (comments, parentCommentId, newReply) => {
+    return comments.map((comment) => {
+      if (comment._id === parentCommentId) {
+        return {
+          ...comment,
+          replies: comment.replies
+            ? [newReply, ...comment.replies]
+            : [newReply],
+        };
+      } else if (comment.replies && comment.replies.length > 0) {
+        return {
+          ...comment,
+          replies: insertReply(comment.replies, parentCommentId, newReply),
+        };
+      } else {
+        return comment;
+      }
+    });
+  };
+
+  // Handle reply submission
+  const handleReplySubmit = async (
+    e,
+    parentCommentId,
+    replyContent,
+    resetReplyContent
+  ) => {
+    e.preventDefault();
+    if (!replyContent.trim()) return;
+    const commentData = {
+      remedyId,
+      content: replyContent,
+      parentCommentId,
+    };
+    const res = await createComment(authToken, commentData);
+    if (res.success) {
+      setComments((prev) => insertReply(prev, parentCommentId, res.comment));
+      setReplyingTo(null);
+      resetReplyContent("");
+    }
   };
 
   // Handle sorting change
@@ -176,7 +238,9 @@ const CommunityRemedyDetail = () => {
     let sortedComments = [...comments];
 
     if (option === "newest") {
-      // Already sorted by newest in our mock data
+      sortedComments.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
     } else if (option === "most helpful") {
       sortedComments.sort((a, b) => b.upvotes - a.upvotes);
     } else if (option === "top rated") {
@@ -184,27 +248,6 @@ const CommunityRemedyDetail = () => {
     }
 
     setComments(sortedComments);
-  };
-
-  const renderContent = (content) => {
-    if (!content) return null;
-
-    // If content is an array, render as list
-    if (Array.isArray(content)) {
-      return (
-        <ul className="list-none space-y-2">
-          {content.map((item, index) => (
-            <li key={index} className="flex items-start">
-              <span className="text-brand-green mr-2">•</span>
-              <HtmlRenderer html={item} className="text-gray-700" />
-            </li>
-          ))}
-        </ul>
-      );
-    }
-
-    // If content is a string, render as HTML
-    return <HtmlRenderer html={content} className="text-gray-700" />;
   };
 
   if (loading) {
@@ -770,7 +813,7 @@ const CommunityRemedyDetail = () => {
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = "https://via.placeholder.com/40x40?text=You";
+                    e.target.src = "https://placehold.co/600x400?text=Remlyo";
                   }}
                 />
               </div>
@@ -794,7 +837,7 @@ const CommunityRemedyDetail = () => {
             </div>
 
             {/* Sort comments */}
-            <div className="flex justify-end mb-4">
+            {/* <div className="flex justify-end mb-4">
               <div className="relative">
                 <button
                   onClick={() => setIsSortDropdownOpen(!isSortDropdownOpen)}
@@ -858,48 +901,21 @@ const CommunityRemedyDetail = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
 
             {/* Comments List */}
             <div className="space-y-4">
-              {comments.length ? (
+              {comments.length > 0 ? (
                 comments.map((comment) => (
-                  <div
+                  <CommentItem
                     key={comment._id}
-                    className="bg-white rounded-lg shadow-sm p-4 border border-gray-100"
-                  >
-                    <div className="flex items-start">
-                      <div className="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
-                        <img
-                          src={comment.user.avatar}
-                          alt={comment.user.name}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src =
-                              "https://via.placeholder.com/40x40?text=User";
-                          }}
-                        />
-                      </div>
-                      <div className="flex-grow">
-                        <div className="flex justify-between">
-                          <h4 className="font-medium text-gray-800">
-                            {comment.user.name}
-                          </h4>
-                          <div className="text-gray-500 text-sm flex items-center">
-                            <span className="mr-2">
-                              {comment.upvotes} Upvote
-                            </span>
-                            <span>{comment.date}</span>
-                          </div>
-                        </div>
-                        <p className="text-gray-700 mt-1">{comment.text}</p>
-                        <button className="text-gray-500 text-sm mt-2 hover:text-brand-green">
-                          Reply
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                    comment={comment}
+                    onReplyClick={() => setReplyingTo(comment._id)}
+                    replyingTo={replyingTo}
+                    setReplyingTo={setReplyingTo}
+                    handleReplySubmit={handleReplySubmit}
+                    depth={0}
+                  />
                 ))
               ) : (
                 <div className="w-full py-7 border border-gray-400 text-center rounded-lg">
@@ -934,5 +950,8 @@ const CommunityRemedyDetail = () => {
     </div>
   );
 };
+
+
+
 
 export default CommunityRemedyDetail;

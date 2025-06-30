@@ -196,7 +196,9 @@ import fetchRemedyImage from './imagesFetcher.service';
  */
 const generateRemedy = async (userId, ailmentId, symptoms) => {
   // Fetch user profile
-  const userProfile = await UserProfile.findOne({ userId }).lean();
+  const userProfile = await UserProfile.findOne({ userId })
+    .select("-aiQuestionUserAnswers.options")
+    .lean();
   if (!userProfile) throw new Error("User profile not found");
 
   // Fetch ailment
@@ -210,7 +212,7 @@ const generateRemedy = async (userId, ailmentId, symptoms) => {
 
   // Generate prompt
   const prompt = generateRemedyPrompt(user, userProfile, ailment, symptoms);
-
+  console.log(prompt);
   // Call OpenAI
   const aiResponse = await generateChatCompletion({
     messages: [
@@ -298,7 +300,7 @@ const generateRemedy = async (userId, ailmentId, symptoms) => {
   }
 
   const mediaQuery = `${remedyData.name} remedy`;
-const media = await fetchRemedyImageWithType(mediaQuery);
+  const media = await fetchRemedyImageWithType(mediaQuery);
   // Compose the full remedy object (add backend fields)
   const remedy = {
     ...remedyData,

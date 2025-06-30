@@ -10,18 +10,24 @@ import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
 import { formatDate } from "../utils";
-import { getAIfeedback, getRemedyById } from "../api/remediesApi";
+import {
+  createComment,
+  getAIfeedback,
+  getAllCommentsByRemedyId,
+  getRemedyById,
+} from "../api/remediesApi";
 import { useAuth } from "../contexts/AuthContext";
 import AIFeedback from "../components/common/AIFeedback";
 import { saveRemedy } from "../api/userApi";
 import ReviewPopup from "../components/common/ReviewPopup";
+import CommentItem from "../components/common/CommentItem";
 
 const AlternativeRemedyDetail = () => {
   const { remedyId } = useParams();
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const [feedbackError, setFeedbackError] = useState(false);
-
+  const [replyingTo, setReplyingTo] = useState(null);
   const ailmentId = searchParams.get("id");
   const { authToken, user, addOrRemoveSavedRemedies, refresh } = useAuth();
   const location = useLocation();
@@ -104,8 +110,20 @@ const AlternativeRemedyDetail = () => {
     }
   };
 
+  const fetchComments = async () => {
+    const res = await getAllCommentsByRemedyId(authToken, remedyId);
+    if (res.success) {
+      // Sort comments by createdAt descending (newest first)
+      const sorted = [...res.comments].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setComments(sorted);
+    }
+  };
+
   useEffect(() => {
     fetchRemedyDetails();
+    fetchComments();
   }, [remedyId]);
 
   const fetchAiFeedback = async () => {
@@ -143,6 +161,65 @@ const AlternativeRemedyDetail = () => {
     ));
   };
 
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+    const commentData = {
+      remedyId,
+      content: newComment,
+      parentCommentId: null,
+    };
+    const res = await createComment(authToken, commentData);
+    if (res.success) {
+      // Add new comment to the top
+      setComments((prev) => [res.comment, ...prev]);
+      setNewComment("");
+    }
+  };
+
+  // Recursively insert a reply into the correct place in the comments tree
+  const insertReply = (comments, parentCommentId, newReply) => {
+    return comments.map((comment) => {
+      if (comment._id === parentCommentId) {
+        return {
+          ...comment,
+          replies: comment.replies
+            ? [newReply, ...comment.replies]
+            : [newReply],
+        };
+      } else if (comment.replies && comment.replies.length > 0) {
+        return {
+          ...comment,
+          replies: insertReply(comment.replies, parentCommentId, newReply),
+        };
+      } else {
+        return comment;
+      }
+    });
+  };
+
+  // Handle reply submission
+  const handleReplySubmit = async (
+    e,
+    parentCommentId,
+    replyContent,
+    resetReplyContent
+  ) => {
+    e.preventDefault();
+    if (!replyContent.trim()) return;
+    const commentData = {
+      remedyId,
+      content: replyContent,
+      parentCommentId,
+    };
+    const res = await createComment(authToken, commentData);
+    if (res.success) {
+      setComments((prev) => insertReply(prev, parentCommentId, res.comment));
+      setReplyingTo(null);
+      resetReplyContent("");
+    }
+  };
+
   const handleAddAndRemoveInTry = async () => {
     try {
       if (tryLoading) return;
@@ -169,26 +246,6 @@ const AlternativeRemedyDetail = () => {
     } finally {
       setFavoriteLoading(false);
     }
-  };
-
-  // Handle comment submission
-  const handleCommentSubmit = (e) => {
-    e.preventDefault();
-    if (!newComment.trim()) return;
-
-    const newCommentObj = {
-      id: `c${comments.length + 1}`,
-      user: {
-        name: "You",
-        avatar: "/images/avatars/default.jpg",
-      },
-      text: newComment,
-      upvotes: 0,
-      date: "Just now",
-    };
-
-    setComments([newCommentObj, ...comments]);
-    setNewComment("");
   };
 
   // Handle sorting change
@@ -593,13 +650,16 @@ const AlternativeRemedyDetail = () => {
               {/* Remedy Image */}
               <div className="mb-6">
                 <img
-                  src={remedy.media.source}
+                  src={
+                    remedy
+                      ? remedy.media.source
+                      : "https://placehold.co/600x400?text=Remlyo"
+                  }
                   alt={remedy.name}
                   className="w-full h-auto max-h-96 object-cover rounded-lg shadow-lg"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src =
-                      "https://via.placeholder.com/800x400?text=Alternative+Remedy";
+                    e.target.src = "https://placehold.co/600x400?text=Remlyo";
                   }}
                 />
               </div>
@@ -845,42 +905,23 @@ const AlternativeRemedyDetail = () => {
 
             {/* Comments List */}
             <div className="space-y-4">
-              {comments.map((comment) => (
-                <div
-                  key={comment.id}
-                  className="bg-white rounded-lg shadow-sm p-4 border border-gray-100"
-                >
-                  <div className="flex items-start">
-                    <div className="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
-                      <img
-                        src={comment.user.avatar}
-                        alt={comment.user.name}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src =
-                            "https://via.placeholder.com/40x40?text=User";
-                        }}
-                      />
-                    </div>
-                    <div className="flex-grow">
-                      <div className="flex justify-between">
-                        <h4 className="font-medium text-gray-800">
-                          {comment.user.name}
-                        </h4>
-                        <div className="text-gray-500 text-sm flex items-center">
-                          <span className="mr-2">{comment.upvotes} Upvote</span>
-                          <span>{comment.date}</span>
-                        </div>
-                      </div>
-                      <p className="text-gray-700 mt-1">{comment.text}</p>
-                      <button className="text-gray-500 text-sm mt-2 hover:text-brand-green">
-                        Reply
-                      </button>
-                    </div>
-                  </div>
+              {comments.length > 0 ? (
+                comments.map((comment) => (
+                  <CommentItem
+                    key={comment._id}
+                    comment={comment}
+                    onReplyClick={() => setReplyingTo(comment._id)}
+                    replyingTo={replyingTo}
+                    setReplyingTo={setReplyingTo}
+                    handleReplySubmit={handleReplySubmit}
+                    depth={0}
+                  />
+                ))
+              ) : (
+                <div className="w-full py-7 border border-gray-400 text-center rounded-lg">
+                  No Comments yet
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>

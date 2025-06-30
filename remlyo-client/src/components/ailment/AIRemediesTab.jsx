@@ -6,12 +6,13 @@ import Button from "../common/Button";
 import GenerateRemedyPopup from "./GenerateRemedyPopup";
 import { getRemediesByAilmentAndType } from "../../api/remediesApi";
 
-const AIRemediesTab = ({ ailmentId, count, sortOption,activeTab }) => {
+const AIRemediesTab = ({ ailmentId, count, sortOption, activeTab }) => {
   const [remedies, setRemedies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [showGeneratePopup, setShowGeneratePopup] = useState(false);
+  const [totalRemediesCount,setTotalRemediesCount] = useState(0);
 
   // Fetch AI remedies based on ailmentId, page, and sortOption
 
@@ -106,7 +107,7 @@ const AIRemediesTab = ({ ailmentId, count, sortOption,activeTab }) => {
       </div>
 
       <p className="text-gray-600 mb-6">
-        Showing {count} AI Remedies for Migraine Headache
+        Showing {totalRemediesCount} AI Remedies for Migraine Headache
       </p>
 
       {/* Generate Custom Remedy Button */}
@@ -186,26 +187,28 @@ const AIRemediesTab = ({ ailmentId, count, sortOption,activeTab }) => {
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   <div className="text-center">
                     <p className="text-2xl font-semibold text-brand-green">
-                      {remedy.successRate}%
+                      {remedy.ratings.successRate || 0}%
                     </p>
                     <p className="text-xs text-gray-500">Success Rate</p>
                   </div>
                   <div className="text-center">
                     <p className="text-2xl font-semibold text-brand-green">
-                      {remedy.userFeedback}
+                      {remedy.ratings.userFeedback || 0}
                     </p>
                     <p className="text-xs text-gray-500">User Feedback</p>
                   </div>
                   <div className="text-center">
                     <p className="text-2xl font-semibold text-brand-green">
-                      {remedy.positiveOutcomes}
+                      {remedy.ratings.positiveOutcomes || 0}
                     </p>
                     <p className="text-xs text-gray-500">Positive Outcomes</p>
                   </div>
                 </div>
 
                 <div className="flex items-center mb-4">
-                  <div className="flex mr-2">{renderStars(remedy.averageRating)}</div>
+                  <div className="flex mr-2">
+                    {renderStars(remedy.averageRating)}
+                  </div>
                   <span className="text-gray-600 text-sm">
                     ({remedy.reviewCount})
                   </span>

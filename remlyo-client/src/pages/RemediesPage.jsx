@@ -133,13 +133,13 @@ const RemediesPage = () => {
                 >
                   <div className="relative">
                     <img
-                      src={remedy.media.source}
+                      src={remedy.media?remedy.media.source:"https://placehold.co/600x400?text=Remlyo"}
                       alt={remedy.title}
                       className="w-full h-48 object-cover"
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src =
-                          "https://via.placeholder.com/400x200?text=Turmeric+Tea";
+                          "https://placehold.co/600x400?text=Remlyo";
                       }}
                     />
                     <div

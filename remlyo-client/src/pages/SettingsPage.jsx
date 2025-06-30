@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Button from "../components/common/Button";
 import { useAuth } from "../contexts/AuthContext";
 import DashboardLayout from "../components/layout/DashboardLayout";
+import useUserPlan from "../hooks/useUserPlan";
 
 const SettingsPage = () => {
   const { user } = useAuth();
@@ -14,8 +15,7 @@ const SettingsPage = () => {
   const [activeTooltip, setActiveTooltip] = useState(null);
   const [showExportModal, setShowExportModal] = useState(false);
 
-  // Check if user is premium
-  const isPremiumUser = user?.subscriptionType === "premium";
+  const { plan, isPremium } = useUserPlan();
 
   // Handler functions
   const handleExportDataClick = () => {
@@ -129,7 +129,7 @@ const SettingsPage = () => {
     <DashboardLayout 
       pageTitle="Settings" 
       user={user}
-      isPremiumUser={isPremiumUser}
+      isPremiumUser={isPremium}
     >
       {/* Settings Tabs */}
       <div className="mb-6 border-b border-gray-200">
@@ -231,7 +231,7 @@ const SettingsPage = () => {
                 <div>
                   <h4 className="font-medium text-gray-800">
                     AI Recommendations
-                    {isPremiumUser && (
+                    {isPremium && (
                       <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded-full">
                         Premium
                       </span>

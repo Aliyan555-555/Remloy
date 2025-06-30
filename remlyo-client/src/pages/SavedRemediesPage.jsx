@@ -5,14 +5,13 @@ import Button from "../components/common/Button";
 import { useAuth } from "../contexts/AuthContext";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import { deleteSaveRemedy } from "../api/userApi";
+import useUserPlan from "../hooks/useUserPlan";
 
 const SavedRemediesPage = () => {
   const { user, authToken, refreshSave } = useAuth();
   const navigate = useNavigate();
 
-  // Defensive checks for user and subscription
-  const plan = user?.activeSubscription?.plan || {};
-  const isFree = plan.price === 0;
+  const { plan, isPremium } = useUserPlan();
 
   const [activeFilter, setActiveFilter] = useState("all");
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
@@ -105,7 +104,7 @@ const SavedRemediesPage = () => {
     <DashboardLayout
       pageTitle="My Saved Remedies"
       user={user}
-      isPremiumUser={!isFree}
+      isPremiumUser={isPremium}
     >
       {/* Tab Filters */}
       <div className="flex flex-wrap justify-between items-center mb-6">
@@ -284,15 +283,16 @@ const SavedRemediesPage = () => {
             >
               <div className="relative">
                 <img
-                  src={remedy.remedy.media.source}
+                  src={
+                    remedy.remedy.media
+                      ? remedy.remedy.media.source
+                      : "https://placehold.co/600x400?text=Remlyo"
+                  }
                   alt={remedy.remedy.name}
                   className="w-full h-48 object-cover"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = `https://via.placeholder.com/300x200?text=${remedy.remedy.name.replace(
-                      /\s+/g,
-                      "+"
-                    )}`;
+                    e.target.src = `https://placehold.co/600x400?text=Remlyo`;
                   }}
                 />
                 <button
@@ -346,7 +346,7 @@ const SavedRemediesPage = () => {
       )}
 
       {/* Free user limitation message - Only show for free users */}
-      {isFree && (
+      {!isPremium && (
         <div className="mt-8 text-center p-6 border border-dashed border-gray-300 rounded-lg">
           <h3 className="text-lg font-semibold text-gray-800 mb-2">
             You've reached your free account limit

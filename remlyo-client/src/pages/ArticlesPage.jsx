@@ -76,13 +76,16 @@ const ArticlesPage = () => {
               >
                 <div className="relative">
                   <img
-                    src={article.media.source}
+                    src={
+                      article.media
+                        ? article.media.source
+                        : "https://placehold.co/600x400?text=Remlyo"
+                    }
                     alt={article.title}
                     className="w-full h-48 object-cover"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src =
-                        "https://via.placeholder.com/400x200?text=Turmeric+Tea";
+                      e.target.src = "https://placehold.co/600x400?text=Remlyo";
                     }}
                   />
                 </div>

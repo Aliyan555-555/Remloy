@@ -11,6 +11,7 @@ const UserFlowStatus = {
   PROFILE_INCOMPLETE: "PROFILE_INCOMPLETE",
   SUBSCRIPTION_REQUIRED: "SUBSCRIPTION_REQUIRED",
   COMPLETE: "COMPLETE",
+  SUSPENDED:"SUSPENDED"
 };
 
 const ALLOWED_FILE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -134,8 +135,11 @@ const COUNTRIES = [
   { name: "United States of America", code: "US", currency: "USD", symbol: "$" }
 ];
 
+const MAX_REPLY_DEPTH = 3;
+
 
 export {
+  MAX_REPLY_DEPTH,
   AilmentInitialState,
   AilmentSeverityOptions,
   COUNTRIES,

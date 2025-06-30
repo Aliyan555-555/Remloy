@@ -48,6 +48,17 @@ const UserDashboardPage = () => {
 
   const handleUpgrade = () => navigate("/pricing");
 
+  const getRemedyTypeRoute = (remedy) => {
+    // Map remedy types to routes
+    const typeRoutes = {
+      community: `/remedies/community/${remedy._id}`,
+      alternative: `/remedies/alternative/${remedy._id}`,
+      pharmaceutical: `/remedies/pharmaceutical/${remedy._id}`,
+      ai: `/remedies/ai/${remedy._id}`,
+    };
+
+    return typeRoutes[remedy.type] || `/remedies/${remedy._id}`;
+  };
   // Helper for remedies per ailment
   const hasReachedRemedyLimit = useMemo(() => {
     return (
@@ -213,7 +224,7 @@ const UserDashboardPage = () => {
       </div>
 
       {/* Recent Activity Section */}
-      <div className="mb-10">
+      {/* <div className="mb-10">
         <h2 className="text-xl font-bold text-gray-800 mb-4">
           Recent Activity
         </h2>
@@ -302,7 +313,7 @@ const UserDashboardPage = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Saved Remedies Section */}
       <div>
@@ -320,12 +331,16 @@ const UserDashboardPage = () => {
                 className="bg-white rounded-lg shadow-md overflow-hidden"
               >
                 <img
-                  src={remedy.remedy.media.source}
+                  src={
+                    remedy.remedy.media
+                      ? remedy.remedy.media.source
+                      : "https://placehold.co/600x400?text=Remlyo"
+                  }
                   alt={remedy.remedy.title}
                   className="w-full h-48 object-cover"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = remedy.remedy.media.source;
+                    e.target.src = "https://placehold.co/600x400?text=Remlyo";
                   }}
                 />
                 <div className="p-4">
@@ -340,7 +355,7 @@ const UserDashboardPage = () => {
                   </div>
                   <Button
                     variant="readMore"
-                    to={`/remedies/${remedy.remedy._id}`}
+                    to={getRemedyTypeRoute(remedy.remedy)}
                   >
                     Read More
                   </Button>

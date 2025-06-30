@@ -73,8 +73,8 @@ const PricingPage = () => {
                   </div>
 
                   <ul className="space-y-4 mb-8">
-                    {p.features.map((feature) => (
-                      <li key={feature} className="flex items-start">
+                    {p.features.map((feature, i) => (
+                      <li key={i} className="flex items-start">
                         <svg
                           className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
                           fill="none"
@@ -139,8 +139,8 @@ const PricingPage = () => {
                   </div>
 
                   <ul className="space-y-4 mb-8">
-                    {p.features.map((feature) => (
-                      <li className="flex items-start">
+                    {p.features.map((feature, i) => (
+                      <li key={i} className="flex items-start">
                         <svg
                           className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
                           fill="none"
@@ -207,8 +207,8 @@ const PricingPage = () => {
                   </div>
 
                   <ul className="space-y-4 mb-8">
-                    {p.features.map((feature) => (
-                      <li className="flex items-start">
+                    {p.features.map((feature, i) => (
+                      <li key={i} className="flex items-start">
                         <svg
                           className="h-5 w-5 text-brand-green mt-0.5 flex-shrink-0"
                           fill="none"

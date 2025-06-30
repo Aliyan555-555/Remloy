@@ -27,8 +27,8 @@ const getRemedyById = async (token, id, ailmentId) => {
       headers: getAuthHeaders(token),
       params: ailmentId
         ? {
-          id: ailmentId,
-        }
+            id: ailmentId,
+          }
         : undefined,
     });
     return data;
@@ -98,20 +98,31 @@ const generateAIRemedy = async (token, ailmentId, symptoms) => {
   }
 };
 
-
 const createComment = async (token, commentData) => {
   try {
-    const { data } = await API.post("/api/v1/remedy/comment", commentData, { headers: getAuthHeaders(token) })
+    const { data } = await API.post("/api/v1/remedy/comment", commentData, {
+      headers: getAuthHeaders(token),
+    });
     return data;
   } catch (error) {
     return error.response.data;
   }
-}
+};
 
+const getAllCommentsByRemedyId = async (token, remedyId) => {
+  try {
+    const { data } = await API.get(`/api/v1/remedy/${remedyId}/comments`, {
+      headers: getAuthHeaders(token),
+    });
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
 
 export {
+  getAllCommentsByRemedyId,
   createComment,
-
   getAllRemedies,
   getRemedyById,
   getAIfeedback,

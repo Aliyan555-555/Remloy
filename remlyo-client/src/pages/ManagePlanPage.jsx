@@ -3,11 +3,15 @@ import React, { useEffect, useState } from "react";
 import Button from "../components/common/Button";
 import { useAuth } from "../contexts/AuthContext";
 import DashboardLayout from "../components/layout/DashboardLayout";
-import { getPaymentHistory, getPaymentMethods } from "../api/userApi";
+import {
+  getPaymentHistory,
+  getPaymentMethods,
+  removePaymentMethod,
+} from "../api/userApi";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import Pagination from "./../components/common/Pagination";
 import { formatDate } from "../utils";
-import Modal from "../components/common/Modal";
+import Modal, { ConfirmModal } from "../components/common/Modal";
 import FormInput from "../components/form/FormInput";
 import FormSelect from "../components/form/FormSelect";
 import StripeCardModal from "../components/stripe/StripeCardMode";
@@ -23,16 +27,13 @@ const ManagePlanPage = () => {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [paymentMethodLoading, setPaymentMethodLoading] = useState(true);
   const [showAddCardModal, setShowAddCardModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { isPremium } = useUserPlan();
-  const [newCard, setNewCard] = useState({
-    number: "",
-    expiryDate: "",
-    provider: "visa",
-    isDefault: false,
-  });
-  const [addingCard, setAddingCard] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+  const [removeLoading, setRemoveLoading] = useState(false);
 
   const fetchHistory = async () => {
+    setPaymentHistoryLoading(true);
     try {
       const res = await getPaymentHistory(
         authToken,
@@ -43,51 +44,56 @@ const ManagePlanPage = () => {
         setPaymentHistory(res.history);
         setPaymentHistoryTotalPages(res.pagination.pages);
       }
+    } catch (err) {
+      setPaymentHistory([]);
+      setPaymentHistoryTotalPages(0);
     } finally {
       setPaymentHistoryLoading(false);
     }
   };
 
   const fetchPaymentMethods = async () => {
+    setPaymentMethodLoading(true);
     try {
       const res = await getPaymentMethods(authToken);
       if (res.success) {
         setPaymentMethods(res.methods);
       }
+    } catch (err) {
+      setPaymentMethods([]);
     } finally {
       setPaymentMethodLoading(false);
     }
   };
 
-  const handleAddCardChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setNewCard((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
-  const handleAddCardSubmit = async (e) => {
-    e.preventDefault();
-    setAddingCard(true);
-    // TODO: Call API to add card here
-    // For now, just close modal and reset
-    setTimeout(() => {
-      setAddingCard(false);
-      setShowAddCardModal(false);
-      setNewCard({
-        number: "",
-        expiryDate: "",
-        provider: "visa",
-        isDefault: false,
-      });
-      // Optionally, refresh payment methods
-      fetchPaymentMethods();
-    }, 1000);
-  };
-
   const handleGenerateReceipt = async (id) => {
-    await generateReceipt(authToken, id);
+    try {
+      await generateReceipt(authToken, id);
+    } catch (err) {
+      alert("Failed to generate receipt.");
+    }
+  };
+
+  const handleSelect = (id) => {
+    setSelectedPaymentMethod(id);
+    setIsOpen(true);
+  };
+
+  const handleRemovePaymentMethod = async () => {
+    setRemoveLoading(true);
+    try {
+      const res = await removePaymentMethod(authToken, selectedPaymentMethod);
+      if (res.success) {
+        setPaymentMethods((prev) =>
+          prev.filter((m) => m._id !== selectedPaymentMethod)
+        );
+      }
+    } catch (err) {
+      alert("Error removing payment method.");
+    } finally {
+      setRemoveLoading(false);
+      setIsOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -164,11 +170,6 @@ const ManagePlanPage = () => {
                 No history found
               </div>
             )}
-            {/* <div className="mt-4">
-              <Button variant="text" color="brand" className="text-sm">
-                Load More
-              </Button>
-            </div> */}
           </div>
 
           {/* Payment Method Section */}
@@ -204,62 +205,72 @@ const ManagePlanPage = () => {
             </div>
 
             <div className="space-y-4">
-              {paymentMethods.map((method) => (
-                <div
-                  key={method._id}
-                  className="border border-gray-200 rounded-lg p-4 flex items-center"
-                >
-                  <div className="flex-shrink-0 mr-4 w-16 h-12 flex items-center justify-center">
-                    {method.provider === "paypal" && (
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/196/196566.png"
-                        alt="PayPal"
-                        className="h-8"
-                      />
-                    )}
-                    {method.provider === "visa" && (
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/196/196578.png"
-                        alt="Visa"
-                        className="h-8"
-                      />
-                    )}
-                  </div>
-                  <div className="flex-grow">
-                    <div className="text-gray-700">
-                      **** **** **** {method.lastFourDigits}
+              {paymentMethodLoading ? (
+                <LoadingSpinner />
+              ) : paymentMethods.length ? (
+                paymentMethods.map((method) => (
+                  <div
+                    key={method._id}
+                    className="border border-gray-200 rounded-lg p-4 flex items-center"
+                  >
+                    <div className="flex-shrink-0 mr-4 w-16 h-12 flex items-center justify-center">
+                      {method.provider === "paypal" && (
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/196/196566.png"
+                          alt="PayPal"
+                          className="h-8"
+                        />
+                      )}
+                      {method.provider === "visa" && (
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/512/196/196578.png"
+                          alt="Visa"
+                          className="h-8"
+                        />
+                      )}
                     </div>
-                    <div className="text-sm text-gray-500">
-                      Expires {formatDate(method.expiryDate)}
-                    </div>
-                    {method.isDefault && (
-                      <div className="mt-1">
-                        <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
-                          Primary Payment Method
-                        </span>
+                    <div className="flex-grow">
+                      <div className="text-gray-700">
+                        **** **** **** {method.lastFourDigits}
                       </div>
-                    )}
+                      <div className="text-sm text-gray-500">
+                        Expires {formatDate(method.expiryDate)}
+                      </div>
+                      {method.isDefault && (
+                        <div className="mt-1">
+                          <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
+                            Primary Payment Method
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-shrink-0 space-x-2">
+                      <Button
+                        variant="outlined"
+                        color="default"
+                        size="small"
+                        className="text-sm"
+                        onClick={() => handleSelect(method._id)}
+                        disabled={method.isDefault || removeLoading}
+                      >
+                        Remove
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        color="default"
+                        size="small"
+                        className="text-sm"
+                      >
+                        Update
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex-shrink-0 space-x-2">
-                    <Button
-                      variant="outlined"
-                      color="default"
-                      size="small"
-                      className="text-sm"
-                    >
-                      Remove
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="default"
-                      size="small"
-                      className="text-sm"
-                    >
-                      Update
-                    </Button>
-                  </div>
+                ))
+              ) : (
+                <div className="text-center my-10 text-gray-800 py-10 border border-gray-300 rounded-lg">
+                  No payment methods found
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -269,14 +280,17 @@ const ManagePlanPage = () => {
           <div className="bg-brand-green text-white rounded-lg p-6">
             <h2 className="text-xl font-bold mb-2">Current Plan</h2>
             <div className="text-3xl font-bold mb-4">
-              {user.activeSubscription.plan.name}
+              {user?.activeSubscription?.plan?.name || "-"}
             </div>
             <p className="mb-1">
-              Next charge: ${user.activeSubscription.plan.price}/
-              {user.activeSubscription.plan.type}
+              Next charge: ${user?.activeSubscription?.plan?.price ?? "-"}/
+              {user?.activeSubscription?.plan?.type ?? "-"}
             </p>
             <p className="mb-6">
-              on {formatDate(user.activeSubscription.createdAt)}
+              on{" "}
+              {user?.activeSubscription?.createdAt
+                ? formatDate(user.activeSubscription.createdAt)
+                : "-"}
             </p>
 
             <Button
@@ -308,6 +322,15 @@ const ManagePlanPage = () => {
         isOpen={showAddCardModal}
         onClose={() => setShowAddCardModal(false)}
         onCardAdded={fetchPaymentMethods}
+      />
+      <ConfirmModal
+        isOpen={isOpen}
+        message={"Are you sure you want to delete this card?"}
+        onClose={() => setIsOpen(false)}
+        onConfirm={handleRemovePaymentMethod}
+        cancelText="cancel"
+        confirmColor="brand"
+        confirmText={removeLoading ? "deleting..." : "delete"}
       />
     </DashboardLayout>
   );

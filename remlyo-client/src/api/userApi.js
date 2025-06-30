@@ -111,6 +111,21 @@ const deleteSaveRemedy = async (token, id, type) => {
   }
 };
 
+const addPaymentMethod = async (token, data) => {
+  const res = await API.post("/api/v1/user/payment/methods", data, { headers: getAuthHeaders(token) });
+  return res.data;
+};
+
+const removePaymentMethod = async (token, paymentMethodId) => {
+  const res = await API.delete(`/api/v1/user/payment/methods/${paymentMethodId}`, { headers: getAuthHeaders(token) });
+  return res.data;
+};
+
+const updatePaymentMethod = async (token, paymentMethodId, data) => {
+  const res = await API.patch(`/api/v1/user/payment/methods/${paymentMethodId}`, data, { headers: getAuthHeaders(token) });
+  return res.data;
+};
+
 export {
   getPaymentHistory,
   deleteSaveRemedy,
@@ -120,4 +135,7 @@ export {
   getPaymentMethods,
   checkHealthProfile,
   checkSubscription,
+  addPaymentMethod,
+  removePaymentMethod,
+  updatePaymentMethod,
 };

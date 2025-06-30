@@ -4,15 +4,16 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import Button from "../common/Button";
 import { generateAIRemedy } from "../../api/remediesApi";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const GenerateRemedyPopup = ({ isOpen, onClose,ailmentId}) => {
+const GenerateRemedyPopup = ({ isOpen, onClose, ailmentId }) => {
   const [step, setStep] = useState(1);
   const [generateError, setGenerateError] = useState("");
   const [generating, setGenerating] = useState(false);
   const [generatedRemedy, setGeneratedRemedy] = useState(null);
   const [symptoms, setSymptoms] = useState("");
   const { authToken } = useAuth();
-
+  const navigate = useNavigate();
   const handleBackStep = () => {
     setStep((prev) => prev - 1);
     setGenerateError("");
@@ -27,7 +28,7 @@ const GenerateRemedyPopup = ({ isOpen, onClose,ailmentId}) => {
       setStep(2);
       setGenerating(true);
       try {
-        const res = await generateAIRemedy(authToken,ailmentId, symptoms);
+        const res = await generateAIRemedy(authToken, ailmentId, symptoms);
         if (res && res.success !== false && res.remedy) {
           setGeneratedRemedy(res.remedy);
           setGenerating(false);
@@ -82,8 +83,8 @@ const GenerateRemedyPopup = ({ isOpen, onClose,ailmentId}) => {
           </div>
         </form>
       )}
-      {step === 2 && (
-        generating ? (
+      {step === 2 &&
+        (generating ? (
           <div className="flex gap-4 flex-col items-center justify-center py-8">
             <LoadingSpinner heightClass="h-[100px]" />
             <p className="mt-4 text-gray-600">
@@ -111,54 +112,46 @@ const GenerateRemedyPopup = ({ isOpen, onClose,ailmentId}) => {
             </svg>
             <h4 className="text-lg font-semibold mb-2">Server Error</h4>
             <p className="text-gray-600 mb-4">{generateError}</p>
+            {generatedRemedy && (
+              <Button
+                variant="contained"
+                color="brand"
+                onClick={() => navigate(`/remedies/${generatedRemedy.type}/${generatedRemedy._id}`)}
+                className="mb-2"
+              >
+                View Remedy
+              </Button>
+            )}
             <Button variant="outlined" color="brand" onClick={handleBackStep}>
               Back
             </Button>
           </div>
         ) : generatedRemedy ? (
-          <div className="py-4">
-            <h3 className="text-xl font-semibold mb-2 text-brand-green">Your AI Remedy</h3>
-            <div className="mb-4">
-              <strong>Name:</strong> {generatedRemedy.name}<br />
-              <strong>Description:</strong> <span dangerouslySetInnerHTML={{ __html: generatedRemedy.description }} /><br />
-              <strong>Category:</strong> {generatedRemedy.category}<br />
-              <strong>Type:</strong> {generatedRemedy.type}<br />
-              <strong>Ingredients:</strong> {generatedRemedy.ingredients}<br />
-              <strong>Instructions:</strong> <span dangerouslySetInnerHTML={{ __html: generatedRemedy.instructions }} /><br />
-              <strong>Side Effects:</strong> <span dangerouslySetInnerHTML={{ __html: generatedRemedy.sideEffects }} /><br />
-              <strong>How to Take It:</strong> <span dangerouslySetInnerHTML={{ __html: generatedRemedy.howToTakeIt }} /><br />
-              <strong>Dosage & Usage:</strong> <span dangerouslySetInnerHTML={{ __html: generatedRemedy.dosageAndUsage }} /><br />
-              <strong>Preparation Time:</strong> {generatedRemedy.preparationTime}<br />
-              <strong>Equipments:</strong> <span dangerouslySetInnerHTML={{ __html: generatedRemedy.equipments }} /><br />
-              <strong>Storage Instructions:</strong> <span dangerouslySetInnerHTML={{ __html: generatedRemedy.storageInstructions }} /><br />
-              <strong>AI Confidence Score:</strong> {generatedRemedy.aiConfidenceScore}<br />
-              {generatedRemedy.media?.source && (
-                <div className="my-2">
-                  <img src={generatedRemedy.media.source} alt="Remedy" className="max-h-40 rounded" />
-                </div>
-              )}
-              {generatedRemedy.scientificReferences && generatedRemedy.scientificReferences.length > 0 && (
-                <div className="mt-2">
-                  <strong>Scientific References:</strong>
-                  <ul className="list-disc ml-6">
-                    {generatedRemedy.scientificReferences.map((ref, idx) => (
-                      <li key={idx} dangerouslySetInnerHTML={{ __html: ref }} />
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {generatedRemedy.geographicRestrictions && generatedRemedy.geographicRestrictions.length > 0 && (
-                <div className="mt-2">
-                  <strong>Geographic Restrictions:</strong>
-                  <ul className="list-disc ml-6">
-                    {generatedRemedy.geographicRestrictions.map((r, idx) => (
-                      <li key={idx}>{r}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-            <div className="flex justify-end gap-2">
+          <div className="py-4 flex flex-col items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-12 w-12 text-green-500 mb-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            <h4 className="text-lg font-semibold text-green-600 mb-2">Remedy generated successfully!</h4>
+            <Button
+              variant="contained"
+              color="brand"
+              onClick={() => navigate(`/remedies/${generatedRemedy.type}/${generatedRemedy._id}`)}
+              className="mb-2"
+            >
+              View Remedy
+            </Button>
+            <div className="flex justify-end gap-2 mt-4">
               <Button variant="outlined" color="brand" onClick={handleReset}>
                 Generate Another
               </Button>
@@ -167,8 +160,7 @@ const GenerateRemedyPopup = ({ isOpen, onClose,ailmentId}) => {
               </Button>
             </div>
           </div>
-        ) : null
-      )}
+        ) : null)}
     </Modal>
   );
 };

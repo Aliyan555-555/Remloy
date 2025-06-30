@@ -31,6 +31,10 @@ const FlowGuard = ({ children }) => {
     return <Navigate to="/signin" replace />;
   }
 
+  if (user && user.status == "suspended"){
+    return <Navigate to={'/suspended'} replace />
+  }
+
   // Redirect authenticated users accessing base /dashboard to their role-specific dashboard
   if (isAuthenticated && currentPath === "/dashboard" && role !== "user") {
     return <Navigate to={userDashboardRoute} replace />;
@@ -54,6 +58,7 @@ const FlowGuard = ({ children }) => {
         "/logout",
       ],
       [UserFlowStatus.COMPLETE]: ["*"], // Full access
+      [UserFlowStatus.SUSPENDED]:["/suspended","/logout"]
     }),
     []
   );

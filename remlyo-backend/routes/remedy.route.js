@@ -10,6 +10,7 @@ import {
   getRemediesByAilmentId,
   getAIfeedback,
   generateAIRemedy,
+  getAllCommentsByRemedyId,
 } from "../controllers/remedy.controller.js";
 import auth from "../middleware/auth.middleware.js";
 import adminMiddleware from "./../middleware/admin.middleware.js";
@@ -39,6 +40,8 @@ RemedyRouter.put("/:id", auth, updateRemedy);
 RemedyRouter.delete("/:id", auth, adminMiddleware, deleteRemedy);
 // add comment or reply to remedy
 RemedyRouter.post("/comment", auth, createComment);
+// get all comments for a remedy
+RemedyRouter.get("/:remedyId/comments", auth, getAllCommentsByRemedyId);
 // get ai feedback
 RemedyRouter.get("/ai/feedback/:id", auth, getAIfeedback);
 // generate AI remedy base on user health profile
