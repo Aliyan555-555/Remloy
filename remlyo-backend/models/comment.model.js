@@ -19,9 +19,10 @@ const commentSchema = new mongoose.Schema({
   },
   parentCommentId: {
     type: Schema.Types.ObjectId,
-    required: true,
+    required: false,
     ref: 'Comment',
-},
+    default: null
+  },
   level: {
     type: Number,
     default: 0,

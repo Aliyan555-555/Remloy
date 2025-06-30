@@ -9,7 +9,11 @@ import {
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Button from "../components/common/Button";
-import { getAIfeedback, getRemedyById } from "../api/remediesApi";
+import {
+  createComment,
+  getAIfeedback,
+  getRemedyById,
+} from "../api/remediesApi";
 import { formatDate } from "../utils";
 import HtmlRenderer from "../components/common/HtmlRenderer";
 import { useAuth } from "../contexts/AuthContext";
@@ -95,6 +99,7 @@ const CommunityRemedyDetail = () => {
       console.log(res);
       if (res && res.success) {
         setRemedy(res.remedy);
+        setComments(res.comments);
       } else {
         setAccessDenied(true);
         setAccessDeniedMessage(res.message);
@@ -150,23 +155,16 @@ const CommunityRemedyDetail = () => {
   };
 
   // Handle comment submission
-  const handleCommentSubmit = (e) => {
+  const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
-
-    const newCommentObj = {
-      id: `c${comments.length + 1}`,
-      user: {
-        name: "You",
-        avatar: "/images/avatars/default.jpg",
-      },
-      text: newComment,
-      upvotes: 0,
-      date: "Just now",
+    const commentData = {
+      remedyId,
+      content: newComment,
+      parentCommentId: null,
     };
-
-    setComments([newCommentObj, ...comments]);
-    setNewComment("");
+    const res = await createComment(authToken, commentData);
+    console.log(res);
   };
 
   // Handle sorting change
@@ -864,42 +862,50 @@ const CommunityRemedyDetail = () => {
 
             {/* Comments List */}
             <div className="space-y-4">
-              {comments.map((comment) => (
-                <div
-                  key={comment.id}
-                  className="bg-white rounded-lg shadow-sm p-4 border border-gray-100"
-                >
-                  <div className="flex items-start">
-                    <div className="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
-                      <img
-                        src={comment.user.avatar}
-                        alt={comment.user.name}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src =
-                            "https://via.placeholder.com/40x40?text=User";
-                        }}
-                      />
-                    </div>
-                    <div className="flex-grow">
-                      <div className="flex justify-between">
-                        <h4 className="font-medium text-gray-800">
-                          {comment.user.name}
-                        </h4>
-                        <div className="text-gray-500 text-sm flex items-center">
-                          <span className="mr-2">{comment.upvotes} Upvote</span>
-                          <span>{comment.date}</span>
-                        </div>
+              {comments.length ? (
+                comments.map((comment) => (
+                  <div
+                    key={comment._id}
+                    className="bg-white rounded-lg shadow-sm p-4 border border-gray-100"
+                  >
+                    <div className="flex items-start">
+                      <div className="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
+                        <img
+                          src={comment.user.avatar}
+                          alt={comment.user.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                              "https://via.placeholder.com/40x40?text=User";
+                          }}
+                        />
                       </div>
-                      <p className="text-gray-700 mt-1">{comment.text}</p>
-                      <button className="text-gray-500 text-sm mt-2 hover:text-brand-green">
-                        Reply
-                      </button>
+                      <div className="flex-grow">
+                        <div className="flex justify-between">
+                          <h4 className="font-medium text-gray-800">
+                            {comment.user.name}
+                          </h4>
+                          <div className="text-gray-500 text-sm flex items-center">
+                            <span className="mr-2">
+                              {comment.upvotes} Upvote
+                            </span>
+                            <span>{comment.date}</span>
+                          </div>
+                        </div>
+                        <p className="text-gray-700 mt-1">{comment.text}</p>
+                        <button className="text-gray-500 text-sm mt-2 hover:text-brand-green">
+                          Reply
+                        </button>
+                      </div>
                     </div>
                   </div>
+                ))
+              ) : (
+                <div className="w-full py-7 border border-gray-400 text-center rounded-lg">
+                  No Comments yet
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>

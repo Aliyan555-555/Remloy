@@ -128,7 +128,6 @@ const getRemedyById = async (req, res) => {
         {
           $match: {
             remedyId: remedy._id,
-            // moderationStatus: "approved",
           },
         },
         {
@@ -170,9 +169,15 @@ const getRemedyById = async (req, res) => {
       };
     }
 
+    // Fetch all approved comments for this remedy, populate user info
+    const comments = await Comment.find({ remedyId: remedy._id, status: { $in: ['pending', 'approved'] }  })
+      .populate('userId', 'username email profileImage status')
+      .sort({ createdAt: -1 });
+
     res.status(200).json({
       message: "Successfully fetched remedy",
       remedy: { ...remedy._doc, ratings },
+      comments,
       success: true,
     });
   } catch (error) {
@@ -375,13 +380,7 @@ const flagRemedy = async (req, res) => {
 // 1. Create comment or reply
 const createComment = async (req, res) => {
   try {
-    const { error, value } = createCommentValidation.validate(req.body);
-    if (error)
-      return res
-        .status(400)
-        .json({ message: error.details[0].message, success: false });
-
-    const { content, remedyId, parentCommentId } = value;
+    const { content, remedyId, parentCommentId } = req.body;
     const userId = req.user.id;
 
     let level = 0;
@@ -395,7 +394,7 @@ const createComment = async (req, res) => {
     const comment = await Comment.create({
       content,
       remedyId,
-      parentCommentId: parentCommentId || null,
+      parentCommentId: parentCommentId,
       userId,
       level,
     });
