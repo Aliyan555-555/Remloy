@@ -1,18 +1,18 @@
 [{
   "_id": {
-    "$oid": "68586e143ac0c6e314d48d0b"
+    "$oid": "6859be0e4e2123c0d820981f"
   },
   "userId": {
-    "$oid": "683815b10214394db446fdb3"
+    "$oid": "6859a6c8c08ae4bc7e4ebf09"
   },
   "plan": {
     "$oid": "68506dc46078207a837d5150"
   },
   "startDate": {
-    "$date": "2025-06-22T20:56:52.197Z"
+    "$date": "2025-06-23T20:50:22.092Z"
   },
   "endDate": {
-    "$date": "2026-06-22T20:56:52.197Z"
+    "$date": "2026-06-23T20:50:22.092Z"
   },
   "autoRenew": false,
   "paymentStatus": "completed",
@@ -24,14 +24,653 @@
   "monthlyPrice": 0,
   "billingCycle": "monthly",
   "nextBillingDate": {
-    "$date": "2026-06-22T20:56:52.197Z"
+    "$date": "2026-06-23T20:50:22.092Z"
   },
   "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [
+    {
+      "ailmentId": {
+        "$oid": "6855bf42cc59247e7ce3e40d"
+      },
+      "remedies": [
+        {
+          "$oid": "6857d9aec3d14524f9aac632"
+        },
+        {
+          "$oid": "6857f790f25befb8b6681f71"
+        },
+        {
+          "$oid": "685811539eb1168b0eeb526a"
+        }
+      ],
+      "_id": {
+        "$oid": "6859be164e2123c0d8209834"
+      }
+    },
+    {
+      "ailmentId": {
+        "$oid": "6856bac0cf7b86b3d0cf7741"
+      },
+      "remedies": [
+        {
+          "$oid": "6857d9aec3d14524f9aac632"
+        },
+        {
+          "$oid": "685811539eb1168b0eeb526a"
+        },
+        {
+          "$oid": "68598ed7679f68f7425ea30e"
+        }
+      ],
+      "_id": {
+        "$oid": "6859be164e2123c0d8209835"
+      }
+    }
+  ],
   "createdAt": {
-    "$date": "2025-06-22T20:56:52.218Z"
+    "$date": "2025-06-23T20:50:22.106Z"
   },
   "updatedAt": {
-    "$date": "2025-06-22T20:56:52.218Z"
+    "$date": "2025-06-24T21:44:03.643Z"
+  },
+  "__v": 4
+},
+{
+  "_id": {
+    "$oid": "685c2231cd5b8b37b980d60f"
+  },
+  "userId": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5150"
+  },
+  "startDate": {
+    "$date": "2025-06-25T16:22:09.159Z"
+  },
+  "endDate": {
+    "$date": "2026-06-25T16:22:09.159Z"
+  },
+  "autoRenew": false,
+  "paymentStatus": "completed",
+  "features": [
+    "Access 3 Remedies per Ailment",
+    "Rate & Review Remedies",
+    "Save Favorite Remedies"
+  ],
+  "monthlyPrice": 0,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-25T16:22:09.159Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-25T16:22:09.163Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-25T16:22:09.163Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685c660250642133aede0da4"
+  },
+  "userId": {
+    "$oid": "683815b10214394db446fdb3"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5151"
+  },
+  "startDate": {
+    "$date": "2025-06-25T21:11:30.052Z"
+  },
+  "endDate": {
+    "$date": "2026-06-25T21:11:30.052Z"
+  },
+  "autoRenew": true,
+  "paymentStatus": "completed",
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights"
+  ],
+  "monthlyPrice": 9.99,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-25T21:11:30.052Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-25T21:11:30.677Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-25T21:11:30.677Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685c6b9d50642133aede0e16"
+  },
+  "userId": {
+    "$oid": "6859a6c8c08ae4bc7e4ebf09"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5151"
+  },
+  "startDate": {
+    "$date": "2025-06-25T21:35:24.919Z"
+  },
+  "endDate": {
+    "$date": "2026-06-25T21:35:24.919Z"
+  },
+  "autoRenew": true,
+  "paymentStatus": "completed",
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights"
+  ],
+  "monthlyPrice": 9.99,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-25T21:35:24.919Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-25T21:35:25.255Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-25T21:35:25.255Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685c7eb91f60b6ef0b22360d"
+  },
+  "userId": {
+    "$oid": "6859a6c8c08ae4bc7e4ebf09"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5152"
+  },
+  "startDate": {
+    "$date": "2025-06-25T22:56:57.616Z"
+  },
+  "endDate": {
+    "$date": "2026-06-25T22:56:57.616Z"
+  },
+  "autoRenew": true,
+  "paymentStatus": "completed",
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights",
+    "Save 20% when you pay yearly"
+  ],
+  "monthlyPrice": 99,
+  "billingCycle": "yearly",
+  "nextBillingDate": {
+    "$date": "2026-06-25T22:56:57.616Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-25T22:56:57.963Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-25T22:56:57.963Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685c7f34803b310028124a59"
+  },
+  "userId": {
+    "$oid": "6859a6c8c08ae4bc7e4ebf09"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5153"
+  },
+  "startDate": {
+    "$date": "2025-06-25T22:59:00.597Z"
+  },
+  "endDate": {
+    "$date": "2026-06-25T22:59:00.597Z"
+  },
+  "autoRenew": false,
+  "paymentStatus": "completed",
+  "features": [
+    "Access 3 Remedies per Ailment",
+    "Rate & Review Remedies",
+    "Save Favorite Remedies"
+  ],
+  "monthlyPrice": 0,
+  "billingCycle": "yearly",
+  "nextBillingDate": {
+    "$date": "2026-06-25T22:59:00.597Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-25T22:59:00.638Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-25T22:59:00.638Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685c81376376c77bc9688a6e"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5151"
+  },
+  "startDate": {
+    "$date": "2025-06-25T23:07:34.765Z"
+  },
+  "endDate": {
+    "$date": "2026-06-25T23:07:34.765Z"
+  },
+  "autoRenew": true,
+  "paymentStatus": "completed",
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights"
+  ],
+  "monthlyPrice": 9.99,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-25T23:07:34.765Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [
+    {
+      "ailmentId": {
+        "$oid": "6856bac0cf7b86b3d0cf7741"
+      },
+      "remedies": [
+        {
+          "$oid": "68598ed7679f68f7425ea30e"
+        },
+        {
+          "$oid": "6857d9aec3d14524f9aac632"
+        },
+        {
+          "$oid": "685811539eb1168b0eeb526a"
+        },
+        {
+          "$oid": "68598d7c679f68f7425ea2e4"
+        },
+        {
+          "$oid": "68598c91679f68f7425ea2c9"
+        },
+        {
+          "$oid": "68605880b8be459f2008ca76"
+        },
+        {
+          "$oid": "686059ed834b5821a2aee923"
+        },
+        {
+          "$oid": "686079adb6f61dbb0df4c593"
+        }
+      ],
+      "_id": {
+        "$oid": "685e90398ac7aabaa9eacb62"
+      }
+    },
+    {
+      "ailmentId": {
+        "$oid": "6855bf42cc59247e7ce3e40d"
+      },
+      "remedies": [
+        {
+          "$oid": "6857d9aec3d14524f9aac632"
+        },
+        {
+          "$oid": "6857f790f25befb8b6681f71"
+        },
+        {
+          "$oid": "685811539eb1168b0eeb526a"
+        },
+        {
+          "$oid": "686024ef773dde0113e1fe39"
+        },
+        {
+          "$oid": "68604b6004b11c65ac1cc01d"
+        }
+      ],
+      "_id": {
+        "$oid": "685e95a28ac7aabaa9eace35"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-25T23:07:35.098Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-28T23:25:14.988Z"
+  },
+  "__v": 11
+},
+{
+  "_id": {
+    "$oid": "685d79c79d5b065b89f8b486"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5150"
+  },
+  "startDate": {
+    "$date": "2025-06-26T16:48:07.226Z"
+  },
+  "endDate": {
+    "$date": "2026-06-26T16:48:07.226Z"
+  },
+  "autoRenew": false,
+  "paymentStatus": "completed",
+  "features": [
+    "Access 3 Remedies per Ailment",
+    "Rate & Review Remedies",
+    "Save Favorite Remedies"
+  ],
+  "monthlyPrice": 0,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-26T16:48:07.226Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-26T16:48:07.247Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T16:48:07.247Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d85b5d56efd0135a5a95c"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5151"
+  },
+  "startDate": {
+    "$date": "2025-06-26T17:39:01.542Z"
+  },
+  "endDate": {
+    "$date": "2026-06-26T17:39:01.542Z"
+  },
+  "autoRenew": true,
+  "paymentStatus": "completed",
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights"
+  ],
+  "monthlyPrice": 9.99,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-26T17:39:01.542Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-26T17:39:01.899Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T17:39:01.899Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d8962d56efd0135a5a985"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5151"
+  },
+  "startDate": {
+    "$date": "2025-06-26T17:54:42.519Z"
+  },
+  "endDate": {
+    "$date": "2026-06-26T17:54:42.519Z"
+  },
+  "autoRenew": true,
+  "paymentStatus": "completed",
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights"
+  ],
+  "monthlyPrice": 9.99,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-26T17:54:42.519Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-26T17:54:42.858Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T17:54:42.858Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d97b2634b6cca77dd6230"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5151"
+  },
+  "startDate": {
+    "$date": "2025-06-26T18:55:46.126Z"
+  },
+  "endDate": {
+    "$date": "2026-06-26T18:55:46.126Z"
+  },
+  "autoRenew": true,
+  "paymentStatus": "completed",
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights"
+  ],
+  "monthlyPrice": 9.99,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-26T18:55:46.126Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-26T18:55:46.489Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T18:55:46.489Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d9873634b6cca77dd6268"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5151"
+  },
+  "startDate": {
+    "$date": "2025-06-26T18:58:58.960Z"
+  },
+  "endDate": {
+    "$date": "2026-06-26T18:58:58.960Z"
+  },
+  "autoRenew": true,
+  "paymentStatus": "completed",
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights"
+  ],
+  "monthlyPrice": 9.99,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-26T18:58:58.960Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-26T18:58:59.425Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T18:58:59.425Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e5472ffb14ea2faae59d4"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5151"
+  },
+  "startDate": {
+    "$date": "2025-06-27T08:21:05.477Z"
+  },
+  "endDate": {
+    "$date": "2026-06-27T08:21:05.477Z"
+  },
+  "autoRenew": true,
+  "paymentStatus": "completed",
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights"
+  ],
+  "monthlyPrice": 9.99,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-27T08:21:05.477Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-27T08:21:06.131Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-27T08:21:06.131Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e55c7ffb14ea2faae5a1f"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "plan": {
+    "$oid": "68506dc46078207a837d5151"
+  },
+  "startDate": {
+    "$date": "2025-06-27T08:26:47.657Z"
+  },
+  "endDate": {
+    "$date": "2026-06-27T08:26:47.657Z"
+  },
+  "autoRenew": true,
+  "paymentStatus": "completed",
+  "features": [
+    "Unlimited Remedy Access",
+    "AI-Generated Remedy Recommendations",
+    "Success Rate & AI Confidence Scores",
+    "Priority Support",
+    "Save Favorite Remedies",
+    "Personalized AI Insights"
+  ],
+  "monthlyPrice": 9.99,
+  "billingCycle": "monthly",
+  "nextBillingDate": {
+    "$date": "2026-06-27T08:26:47.657Z"
+  },
+  "duration": 365,
+  "status": "active",
+  "accessRemediesWithAilments": [],
+  "createdAt": {
+    "$date": "2025-06-27T08:26:47.992Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-27T08:26:47.992Z"
   },
   "__v": 0
 }]

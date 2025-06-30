@@ -1,210 +1,910 @@
 [{
   "_id": {
-    "$oid": "6835841003d7a3a01f83ea2d"
+    "$oid": "686139a5b6f61dbb0df4cff0"
   },
   "userId": {
-    "$oid": "6835826003d7a3a01f83ea22"
+    "$oid": "685c80756376c77bc9688a54"
   },
   "age": 18,
-  "sex": "male",
-  "weight": 34,
-  "height": 344,
-  "bloodType": "A+",
-  "allergies": [],
-  "chronicConditions": [
-    "mental_health",
-    "autoimmune"
-  ],
-  "medications": [],
-  "familyHistory": [],
-  "dataShareConsent": false,
-  "preferredLanguage": "en",
-  "located": "karachi",
-  "ethnicity": "asian",
-  "birthplace": "karachi",
-  "diet": "vegetarian",
-  "lastUpdated": {
-    "$date": "2025-05-27T12:34:00.740Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "683816f22626711e969b7ddf"
-  },
-  "userId": {
-    "$oid": "683815b10214394db446fdb3"
-  },
-  "age": 15,
   "sex": "male",
   "weight": 32,
-  "height": 123,
-  "bloodType": "AB+",
-  "allergies": [],
-  "chronicConditions": [
-    "hypertension",
-    "asthma",
-    "arthritis",
-    "mental_health"
-  ],
-  "medications": [],
-  "familyHistory": [],
-  "dataShareConsent": false,
-  "preferredLanguage": "en",
-  "located": "Karachi",
-  "ethnicity": "black",
-  "birthplace": "pakistan",
-  "diet": "vegan",
-  "lastUpdated": {
-    "$date": "2025-06-10T16:01:26.104Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6838a242669146ac480bd288"
-  },
-  "userId": {
-    "$oid": "6838a09f669146ac480bd27e"
-  },
-  "age": 20,
-  "sex": "male",
-  "weight": 35,
-  "height": 123,
+  "height": 332,
   "bloodType": "A+",
-  "allergies": [],
   "chronicConditions": [
-    "mental_health"
-  ],
-  "medications": [],
-  "familyHistory": [],
-  "dataShareConsent": false,
-  "preferredLanguage": "en",
-  "located": "in room with 2 step sisters every sisiter 22 or 25 year old with same bad i enjoy nigth soft soft boobs soft anul and full big boobs and rounded and  boobs tast is good i spend each siter 8 hours or 6 hours",
-  "ethnicity": "white",
-  "birthplace": "karachi",
-  "diet": "vegetarian",
-  "lastUpdated": {
-    "$date": "2025-05-29T19:10:07.402Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6838cd0b1d984b618341af23"
-  },
-  "userId": {
-    "$oid": "6838cb831d984b618341af13"
-  },
-  "age": 18,
-  "sex": "male",
-  "weight": 23,
-  "height": 233,
-  "bloodType": "A+",
-  "allergies": [],
-  "chronicConditions": [
-    "mental_health"
-  ],
-  "medications": [],
-  "familyHistory": [],
-  "dataShareConsent": false,
-  "preferredLanguage": "en",
-  "located": "karachi",
-  "ethnicity": "white",
-  "birthplace": "pakistan",
-  "diet": "pescatarian",
-  "lastUpdated": {
-    "$date": "2025-05-29T21:09:31.533Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6838cf041d984b618341af39"
-  },
-  "userId": {
-    "$oid": "6838cdff1d984b618341af2b"
-  },
-  "age": 18,
-  "sex": "male",
-  "weight": 34,
-  "height": 123,
-  "bloodType": "A+",
-  "allergies": [],
-  "chronicConditions": [
-    "asthma",
-    "arthritis",
-    "mental_health"
-  ],
-  "medications": [],
-  "familyHistory": [],
-  "dataShareConsent": false,
-  "preferredLanguage": "en",
-  "located": "karachi",
-  "ethnicity": "asian",
-  "birthplace": "karachi",
-  "diet": "vegetarian",
-  "lastUpdated": {
-    "$date": "2025-05-29T21:17:56.130Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6838e385d534bc63c01e001a"
-  },
-  "userId": {
-    "$oid": "6838e297d534bc63c01e000c"
-  },
-  "age": 25,
-  "sex": "female",
-  "weight": 23,
-  "height": 123,
-  "bloodType": "O+",
-  "allergies": [],
-  "chronicConditions": [
-    "hypertension"
-  ],
-  "medications": [],
-  "familyHistory": [],
-  "dataShareConsent": false,
-  "preferredLanguage": "en",
-  "located": "karachi",
-  "ethnicity": "hispanic",
-  "birthplace": "karachi",
-  "diet": "keto",
-  "lastUpdated": {
-    "$date": "2025-05-29T22:45:25.477Z"
-  },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "6849b8900ab11e1e5ad1dd14"
-  },
-  "userId": {
-    "$oid": "6849b7170ab11e1e5ad1dd06"
-  },
-  "age": 10,
-  "sex": "male",
-  "weight": 23,
-  "height": 231,
-  "bloodType": "A-",
-  "allergies": [],
-  "chronicConditions": [
+    "mental_health",
     "autoimmune",
     "other"
   ],
-  "medications": [],
-  "familyHistory": [],
   "dataShareConsent": false,
   "preferredLanguage": "en",
-  "located": "Karachi",
+  "located": "liaqtabad,karachi",
   "ethnicity": "asian",
-  "birthplace": "pakistan",
-  "diet": "other",
+  "birthplace": "Pakistan",
+  "diet": "vegetarian",
+  "aiQuestionUserAnswers": [
+    {
+      "category": "Lifestyle Habits",
+      "question": "How often do you engage in physical activity or exercise per week?",
+      "options": [
+        "Never",
+        "1-2 times",
+        "3-5 times",
+        "Daily"
+      ],
+      "answer": "1-2_times"
+    },
+    {
+      "category": "Lifestyle Habits",
+      "question": "How long do your typical exercise sessions last?",
+      "options": [
+        "Less than 15 minutes",
+        "15-30 minutes",
+        "30-60 minutes",
+        "Over 60 minutes"
+      ],
+      "answer": "15_30"
+    },
+    {
+      "category": "Lifestyle Habits",
+      "question": "How many hours do you sleep on average per night?",
+      "options": [
+        "Less than 5 hours",
+        "5-7 hours",
+        "7-9 hours",
+        "Over 9 hours"
+      ],
+      "answer": "less_5"
+    },
+    {
+      "category": "Lifestyle Habits",
+      "question": "How would you rate your sleep quality?",
+      "options": [
+        "Poor",
+        "Fair",
+        "Good",
+        "Excellent"
+      ],
+      "answer": "good"
+    },
+    {
+      "category": "Lifestyle Habits",
+      "question": "Do you use any tobacco, alcohol, or recreational drugs?",
+      "options": [
+        "None",
+        "Tobacco",
+        "Alcohol",
+        "Other substances"
+      ],
+      "answer": "none"
+    },
+    {
+      "category": "Lifestyle Habits",
+      "question": "How would you describe your current stress level?",
+      "options": [
+        "Low",
+        "Moderate",
+        "High",
+        "Very high"
+      ],
+      "answer": "moderate"
+    },
+    {
+      "category": "Lifestyle Habits",
+      "question": "How often do you practice stress management techniques (e.g., meditation, yoga)?",
+      "options": [
+        "Never",
+        "Occasionally",
+        "Weekly",
+        "Daily"
+      ],
+      "answer": "weekly"
+    },
+    {
+      "category": "Lifestyle Habits",
+      "question": "How would you rate your work-life or study-life balance?",
+      "options": [
+        "Poor",
+        "Fair",
+        "Good",
+        "Excellent"
+      ],
+      "answer": "fair"
+    },
+    {
+      "category": "Lifestyle Habits",
+      "question": "How many hours per day do you spend looking at screens (phone, computer, TV)?",
+      "options": [
+        "Less than 2 hours",
+        "2-4 hours",
+        "4-8 hours",
+        "Over 8 hours"
+      ],
+      "answer": "2_4"
+    },
+    {
+      "category": "Lifestyle Habits",
+      "question": "How often do you interact socially with friends or family (in person or virtually)?",
+      "options": [
+        "Rarely",
+        "Sometimes",
+        "Often",
+        "Daily"
+      ],
+      "answer": "sometimes"
+    },
+    {
+      "category": "Dietary Habits",
+      "question": "How many meals do you eat per day?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "More than 3"
+      ],
+      "answer": "more_3"
+    },
+    {
+      "category": "Dietary Habits",
+      "question": "How often do you snack between meals?",
+      "options": [
+        "Never",
+        "Occasionally",
+        "Daily",
+        "Multiple times a day"
+      ],
+      "answer": "never"
+    },
+    {
+      "category": "Dietary Habits",
+      "question": "How many servings of fruits and vegetables do you eat daily?",
+      "options": [
+        "None",
+        "1-2 servings",
+        "3-5 servings",
+        "More than 5 servings"
+      ],
+      "answer": "3_5"
+    },
+    {
+      "category": "Dietary Habits",
+      "question": "What is your primary source of protein?",
+      "options": [
+        "Legumes/beans",
+        "Dairy",
+        "Eggs",
+        "Other"
+      ],
+      "answer": "dairy"
+    },
+    {
+      "category": "Dietary Habits",
+      "question": "How much water do you drink daily?",
+      "options": [
+        "Less than 1 liter",
+        "1-2 liters",
+        "2-3 liters",
+        "Over 3 liters"
+      ],
+      "answer": "1_2l"
+    },
+    {
+      "category": "Dietary Habits",
+      "question": "How often do you consume caffeinated beverages (tea, coffee, energy drinks)?",
+      "options": [
+        "Never",
+        "Occasionally",
+        "Daily",
+        "Multiple times a day"
+      ],
+      "answer": "occasionally"
+    },
+    {
+      "category": "Dietary Habits",
+      "question": "Do you have any known food allergies?",
+      "options": [
+        "None",
+        "Nuts",
+        "Dairy",
+        "Other"
+      ],
+      "answer": "nuts"
+    },
+    {
+      "category": "Dietary Habits",
+      "question": "Do you follow any specific dietary restrictions besides vegetarianism?",
+      "options": [
+        "None",
+        "Vegan",
+        "Gluten-free",
+        "Other"
+      ],
+      "answer": "none"
+    },
+    {
+      "category": "Dietary Habits",
+      "question": "How often do you consume processed or packaged foods?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Often"
+      ],
+      "answer": "often"
+    },
+    {
+      "category": "Dietary Habits",
+      "question": "Do you eat your meals at regular times each day?",
+      "options": [
+        "Always",
+        "Usually",
+        "Sometimes",
+        "Rarely"
+      ],
+      "answer": "sometimes"
+    },
+    {
+      "category": "Medical History",
+      "question": "Do you have any chronic health conditions?",
+      "options": [
+        "None",
+        "Mental health disorder",
+        "Autoimmune disorder",
+        "Other"
+      ],
+      "answer": "none"
+    },
+    {
+      "category": "Medical History",
+      "question": "At what age were you diagnosed with your chronic condition(s)?",
+      "options": [
+        "Childhood (0-12 years)",
+        "Teen (13-19 years)",
+        "Adult (20+ years)",
+        "Not diagnosed"
+      ],
+      "answer": "childhood"
+    },
+    {
+      "category": "Medical History",
+      "question": "Have you ever been hospitalized for any reason?",
+      "options": [
+        "Never",
+        "Once",
+        "Multiple times",
+        "Prefer not to say"
+      ],
+      "answer": "never"
+    },
+    {
+      "category": "Medical History",
+      "question": "Have you ever had any surgeries?",
+      "options": [
+        "None",
+        "Minor surgery",
+        "Major surgery",
+        "Prefer not to say"
+      ],
+      "answer": "none"
+    },
+    {
+      "category": "Medical History",
+      "question": "Does your family have a history of any chronic diseases (e.g., diabetes, heart disease)?",
+      "options": [
+        "None",
+        "Diabetes",
+        "Heart disease",
+        "Other"
+      ],
+      "answer": "heart_disease"
+    },
+    {
+      "category": "Medical History",
+      "question": "Are you currently taking any prescription medications?",
+      "options": [
+        "None",
+        "Mental health medications",
+        "Autoimmune medications",
+        "Other"
+      ],
+      "answer": "autoimmune"
+    },
+    {
+      "category": "Medical History",
+      "question": "How often do you take your prescribed medications as directed?",
+      "options": [
+        "Always",
+        "Usually",
+        "Sometimes",
+        "Rarely"
+      ],
+      "answer": "usually"
+    },
+    {
+      "category": "Medical History",
+      "question": "Do you have any known drug allergies?",
+      "options": [
+        "None",
+        "Antibiotics",
+        "Painkillers",
+        "Other"
+      ],
+      "answer": "none"
+    },
+    {
+      "category": "Medical History",
+      "question": "Are your immunizations up to date?",
+      "options": [
+        "Yes",
+        "No",
+        "Not sure",
+        "Prefer not to say"
+      ],
+      "answer": "no"
+    },
+    {
+      "category": "Medical History",
+      "question": "Have you experienced any significant illness in the past year?",
+      "options": [
+        "None",
+        "Mild illness",
+        "Moderate illness",
+        "Severe illness"
+      ],
+      "answer": "moderate"
+    },
+    {
+      "category": "Environmental Exposure",
+      "question": "What is your current living arrangement?",
+      "options": [
+        "Living alone",
+        "With family",
+        "Shared accommodation",
+        "Other"
+      ],
+      "answer": "shared"
+    },
+    {
+      "category": "Environmental Exposure",
+      "question": "What type of home do you live in?",
+      "options": [
+        "Apartment",
+        "House",
+        "Hostel/Dormitory",
+        "Other"
+      ],
+      "answer": "house"
+    },
+    {
+      "category": "Environmental Exposure",
+      "question": "How would you rate the air quality inside your home?",
+      "options": [
+        "Poor",
+        "Fair",
+        "Good",
+        "Excellent"
+      ],
+      "answer": "fair"
+    },
+    {
+      "category": "Environmental Exposure",
+      "question": "How would you rate the air quality in your neighborhood?",
+      "options": [
+        "Poor",
+        "Fair",
+        "Good",
+        "Excellent"
+      ],
+      "answer": "fair"
+    },
+    {
+      "category": "Environmental Exposure",
+      "question": "What is your primary source of drinking water?",
+      "options": [
+        "Tap water",
+        "Filtered water",
+        "Bottled water",
+        "Other"
+      ],
+      "answer": "bottled"
+    },
+    {
+      "category": "Environmental Exposure",
+      "question": "How often are you exposed to loud noise at home or work/school?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Often"
+      ],
+      "answer": "never"
+    },
+    {
+      "category": "Environmental Exposure",
+      "question": "Are you exposed to any occupational or school-related hazards (chemicals, dust, etc.)?",
+      "options": [
+        "None",
+        "Occasionally",
+        "Frequently",
+        "Not sure"
+      ],
+      "answer": "frequently"
+    },
+    {
+      "category": "Environmental Exposure",
+      "question": "Have you noticed mold or dampness in your living space?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Often"
+      ],
+      "answer": "sometimes"
+    },
+    {
+      "category": "Environmental Exposure",
+      "question": "Do you experience pest problems (insects, rodents) in your home?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Often"
+      ],
+      "answer": "rarely"
+    },
+    {
+      "category": "Environmental Exposure",
+      "question": "How often do you spend time in parks or green spaces?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Often"
+      ],
+      "answer": "sometimes"
+    },
+    {
+      "category": "Health Monitoring",
+      "question": "How often do you have a routine health checkup with a doctor?",
+      "options": [
+        "Never",
+        "Every few years",
+        "Annually",
+        "More than once a year"
+      ],
+      "answer": "every_few_years"
+    },
+    {
+      "category": "Health Monitoring",
+      "question": "Do you regularly monitor your blood pressure, blood sugar, or other vital signs at home?",
+      "options": [
+        "Never",
+        "Occasionally",
+        "Monthly",
+        "Weekly or more"
+      ],
+      "answer": "never"
+    },
+    {
+      "category": "Health Monitoring",
+      "question": "How often do you check your weight?",
+      "options": [
+        "Never",
+        "Occasionally",
+        "Monthly",
+        "Weekly or more"
+      ],
+      "answer": "weekly"
+    },
+    {
+      "category": "Health Monitoring",
+      "question": "When was your last vision or hearing checkup?",
+      "options": [
+        "Within the past year",
+        "1-3 years ago",
+        "Over 3 years ago",
+        "Never"
+      ],
+      "answer": "1_3_years"
+    },
+    {
+      "category": "Health Monitoring",
+      "question": "How often do you visit the dentist for a checkup?",
+      "options": [
+        "Never",
+        "Every few years",
+        "Annually",
+        "More than once a year"
+      ],
+      "answer": "every_few_years"
+    },
+    {
+      "category": "Health Monitoring",
+      "question": "Do you use any tools or apps to monitor your mental health?",
+      "options": [
+        "Never",
+        "Occasionally",
+        "Regularly",
+        "Prefer not to say"
+      ],
+      "answer": "occasionally"
+    },
+    {
+      "category": "Health Monitoring",
+      "question": "Do you perform self-examinations (skin, testicular, breast, etc.)?",
+      "options": [
+        "Never",
+        "Occasionally",
+        "Monthly",
+        "More often"
+      ],
+      "answer": "monthly"
+    },
+    {
+      "category": "Health Monitoring",
+      "question": "Do you keep a record of your vaccinations?",
+      "options": [
+        "Yes",
+        "No",
+        "Not sure",
+        "Prefer not to say"
+      ],
+      "answer": "not_sure"
+    },
+    {
+      "category": "Health Monitoring",
+      "question": "Do you use any mobile apps or devices to track your health (fitness, sleep, diet)?",
+      "options": [
+        "Never",
+        "Occasionally",
+        "Regularly",
+        "Use multiple apps/devices"
+      ],
+      "answer": "occasionally"
+    },
+    {
+      "category": "Health Monitoring",
+      "question": "Do you have an emergency contact listed in your phone or with your healthcare provider?",
+      "options": [
+        "Yes",
+        "No",
+        "Not sure",
+        "Prefer not to say"
+      ],
+      "answer": "no"
+    },
+    {
+      "category": "Mental and Emotional Wellbeing",
+      "question": "How often do you feel low, anxious, or stressed?",
+      "options": [
+        "Rarely",
+        "Sometimes",
+        "Often",
+        "Almost always"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Mental and Emotional Wellbeing",
+      "question": "Which coping strategies do you use when feeling stressed or anxious?",
+      "options": [
+        "Exercise",
+        "Talk to someone",
+        "Relaxation techniques",
+        "None"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Mental and Emotional Wellbeing",
+      "question": "Do you have a support network (friends, family, counselor) you can rely on?",
+      "options": [
+        "Always",
+        "Usually",
+        "Sometimes",
+        "Never"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Mental and Emotional Wellbeing",
+      "question": "Have you ever sought professional help for mental health concerns?",
+      "options": [
+        "Never",
+        "Once",
+        "Occasionally",
+        "Regularly"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Mental and Emotional Wellbeing",
+      "question": "How satisfied are you with your life overall?",
+      "options": [
+        "Very unsatisfied",
+        "Unsatisfied",
+        "Satisfied",
+        "Very satisfied"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Mental and Emotional Wellbeing",
+      "question": "How would you rate your level of motivation for daily activities?",
+      "options": [
+        "Very low",
+        "Low",
+        "Moderate",
+        "High"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Mental and Emotional Wellbeing",
+      "question": "Does your mood or stress affect your sleep?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Often"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Mental and Emotional Wellbeing",
+      "question": "How would you describe your energy levels throughout the day?",
+      "options": [
+        "Very low",
+        "Low",
+        "Moderate",
+        "High"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Mental and Emotional Wellbeing",
+      "question": "How often do you engage in activities you enjoy?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Often"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Mental and Emotional Wellbeing",
+      "question": "How would you rate your self-esteem?",
+      "options": [
+        "Very low",
+        "Low",
+        "Moderate",
+        "High"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Preventive Health Practices",
+      "question": "How often do you wash your hands before eating or after using the restroom?",
+      "options": [
+        "Never",
+        "Sometimes",
+        "Usually",
+        "Always"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Preventive Health Practices",
+      "question": "Do you wear a mask in crowded or high-risk areas?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Always"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Preventive Health Practices",
+      "question": "How often do you use sun protection (sunscreen, hat, etc.) when outdoors?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Always"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Preventive Health Practices",
+      "question": "Have you undergone any preventive health screenings (e.g., blood tests, TB, hepatitis)?",
+      "options": [
+        "Never",
+        "Once",
+        "Occasionally",
+        "Regularly"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Preventive Health Practices",
+      "question": "How often do you follow safe food handling and preparation practices?",
+      "options": [
+        "Never",
+        "Sometimes",
+        "Usually",
+        "Always"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Preventive Health Practices",
+      "question": "Do you take steps to prevent insect bites (e.g., mosquito nets, repellents)?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Always"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Preventive Health Practices",
+      "question": "How often do you brush your teeth?",
+      "options": [
+        "Less than once a day",
+        "Once a day",
+        "Twice a day",
+        "More than twice a day"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Preventive Health Practices",
+      "question": "Do you use a seat belt or helmet when traveling in vehicles?",
+      "options": [
+        "Never",
+        "Rarely",
+        "Sometimes",
+        "Always"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Preventive Health Practices",
+      "question": "Do you have basic first aid knowledge or training?",
+      "options": [
+        "None",
+        "Minimal",
+        "Basic",
+        "Advanced"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Preventive Health Practices",
+      "question": "If you have pets, are their vaccinations up to date?",
+      "options": [
+        "No pets",
+        "Yes",
+        "No",
+        "Not sure"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Reproductive and Sexual Health",
+      "question": "Are you currently sexually active?",
+      "options": [
+        "Yes",
+        "No",
+        "Prefer not to say",
+        "Not applicable"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Reproductive and Sexual Health",
+      "question": "Do you practice safe sex (e.g., use of condoms)?",
+      "options": [
+        "Always",
+        "Sometimes",
+        "Never",
+        "Not applicable"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Reproductive and Sexual Health",
+      "question": "Have you ever been screened for sexually transmitted infections (STIs)?",
+      "options": [
+        "Never",
+        "Once",
+        "Occasionally",
+        "Regularly"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Reproductive and Sexual Health",
+      "question": "Have you received sexual health education?",
+      "options": [
+        "Yes",
+        "No",
+        "Not sure",
+        "Prefer not to say"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Reproductive and Sexual Health",
+      "question": "Do you use any form of contraception?",
+      "options": [
+        "Yes",
+        "No",
+        "Not applicable",
+        "Prefer not to say"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Reproductive and Sexual Health",
+      "question": "Do you have any concerns about your sexual or reproductive health?",
+      "options": [
+        "None",
+        "Occasionally",
+        "Frequently",
+        "Prefer not to say"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Reproductive and Sexual Health",
+      "question": "How do you identify your sexual orientation?",
+      "options": [
+        "Heterosexual",
+        "Homosexual",
+        "Bisexual",
+        "Prefer not to say"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Reproductive and Sexual Health",
+      "question": "At what age did you begin puberty?",
+      "options": [
+        "Before age 10",
+        "10-12",
+        "13-15",
+        "After 15"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Reproductive and Sexual Health",
+      "question": "How often do you have a sexual health checkup?",
+      "options": [
+        "Never",
+        "Occasionally",
+        "Annually",
+        "More than once a year"
+      ],
+      "answer": ""
+    },
+    {
+      "category": "Reproductive and Sexual Health",
+      "question": "Are you comfortable discussing sexual health with a healthcare provider?",
+      "options": [
+        "Very comfortable",
+        "Somewhat comfortable",
+        "Uncomfortable",
+        "Prefer not to say"
+      ],
+      "answer": ""
+    }
+  ],
   "lastUpdated": {
-    "$date": "2025-06-11T17:14:10.975Z"
+    "$date": "2025-06-29T14:36:06.776Z"
   },
-  "__v": 0
+  "__v": 1
 }]

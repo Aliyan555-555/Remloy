@@ -1,0 +1,271 @@
+[{
+  "_id": {
+    "$oid": "6861b9de0d5374d8bba4990a"
+  },
+  "remedyId": {
+    "$oid": "686079adb6f61dbb0df4c593"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "feedbackText": "<p><strong>Hi Aliyan,</strong></p><p>With your history of chronic conditions and a vegetarian lifestyle, this gentle migraine relief tea could offer a natural way to ease migraine symptoms and support your wellbeing.</p><h3>Why This Remedy Fits Your Lifestyle</h3><ul><li>The herbal blend of chamomile, lavender, and peppermint is vegetarian-friendly and unlikely to interfere with your current medications, but always check with your healthcare provider first.</li><li>Natural calming properties may help manage both migraine pain and moderate stress, which you identified as part of your health profile.</li><li>Preparation time is just 15 minutes, making it easy to incorporate into your daily routine, even with a busy schedule.</li><li>This remedy avoids common allergens except for the herbal ingredients—since you have a nut allergy, ensure there is no cross-contamination with your herbs.</li></ul><h3>How to Maximize Migraine Relief</h3><ul><li>Drink the tea at the first sign of a migraine, ideally in a quiet, dimly lit setting to enhance its calming effects.</li><li>Limit intake to no more than three cups per day to prevent mild gastrointestinal upset.</li><li>Store dried herbs in a cool, dry place to maintain their potency, and consume prepared tea within 24 hours for best results.</li><li>If you notice any allergic reactions or worsening symptoms, discontinue use immediately and seek medical advice.</li></ul><h3>What Other Users Are Saying</h3><ul><li>Users report the remedy is easy to prepare and very effective—one user rated it 5/5 for both effectiveness and ease of use.</li><li>Side effects are rare and usually mild, but everyone’s response can differ; monitor how you feel after each use.</li><li>Consistency in use during migraine episodes seems to improve outcomes, according to user feedback and clinical evidence.</li></ul><h3>Bonus Tip & Conclusion</h3><p>Pro tip: Pair the tea with a brief period of relaxation or meditation to further enhance its soothing benefits. This migraine relief tea has the potential to support your comfort and reduce migraine severity, especially when used thoughtfully and consistently. Remember to monitor your response, and make it a habit to prepare the tea at the earliest sign of symptoms for best results.</p>",
+  "improvedCondition": false,
+  "aiSummary": {
+    "confidenceScore": 85,
+    "confidenceExplanation": "Based on your age and chronic conditions, this remedy shows strong potential for addressing your specific health concerns.",
+    "recommendationReason": "This remedy is recommended because it aligns with your health profile and has shown positive outcomes for users with similar conditions."
+  },
+  "advanceAiInsights": {
+    "healthMatchScore": 90,
+    "matchedFactors": {
+      "ageRange": "30-40",
+      "diet": "Vegetarian",
+      "stressLevel": "Moderate",
+      "sleepPattern": "Regular",
+      "previousRemedySuccess": "High"
+    },
+    "aiConfidenceRating": {
+      "score": 88,
+      "basedOnUsers": 120
+    },
+    "selectedReasons": [
+      "Matches chronic condition",
+      "Positive user outcomes"
+    ],
+    "similarUserOutcomes": [
+      {
+        "improvement": "Reduced pain",
+        "percentage": 75,
+        "_id": {
+          "$oid": "6861b9de0d5374d8bba4990b"
+        }
+      }
+    ],
+    "aiLearningLog": {
+      "lastUpdated": {
+        "$date": "2024-06-01T12:00:00.000Z"
+      },
+      "newRatings": 5,
+      "insights": [
+        "Improved sleep",
+        "Reduced stress"
+      ]
+    },
+    "remedyAdjustmentNotice": {
+      "message": "Adjust dosage if you experience side effects.",
+      "active": true
+    }
+  },
+  "disclaimerShown": true,
+  "createdAt": {
+    "$date": "2025-06-29T22:10:38.236Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-29T22:10:38.236Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6861bd4627a95d05fea71468"
+  },
+  "remedyId": {
+    "$oid": "686079adb6f61dbb0df4c593"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "feedbackText": "<p><strong>Hi Aliyan,</strong></p><p>Given your young age, vegetarian diet, and ongoing chronic conditions, the Gentle Soothing Migraine Relief Tea offers a natural, calming option for managing migraine symptoms and daily stress.</p><h3>Why This Herbal Remedy Fits Your Lifestyle</h3><ul><li>All ingredients are plant-based and align with your vegetarian diet, supporting your dietary needs.</li><li>The tea's calming herbs may help reduce migraine intensity while promoting relaxation—especially valuable with your moderate stress levels and limited sleep.</li><li>You can easily prepare this remedy at home, giving you control over ingredients and portion sizes, which is crucial with your nut allergy and autoimmune medication use.</li><li>Consuming the tea in a quiet, dimly lit space can additionally support your mental health and reduce migraine triggers.</li></ul><h3>Practical Steps for Maximum Benefit</h3><ul><li>Drink one cup of this tea at the first sign of a migraine, but do not exceed three cups in a day.</li><li>Store dried herbs in a cool, dry place, and consume freshly brewed tea or refrigerate leftovers for no more than 24 hours.</li><li>Monitor for any signs of allergic reaction, especially due to your known allergies—if any occur, stop use immediately and seek help.</li><li>Keep a short diary of migraine episodes and tea use to share with your healthcare provider at checkups.</li></ul><h3>What Other Users Are Saying</h3><ul><li>Feedback from other users rates this remedy highly for both effectiveness and ease of use.</li><li>Reported side effects are rare and mild, such as occasional stomach upset; adjusting dosage may help if this happens.</li><li>Users noticed improvements in headache severity and nausea within 30–60 minutes of tea consumption.</li></ul><h3>Bonus Tip & Conclusion</h3><p>Pro tip: For best results, combine this tea with regular stress management activities like meditation or gentle exercise. This remedy has shown promise for people with chronic conditions seeking drug-free symptom relief. Remember, consistency and early intervention at the first sign of migraine are key to maximizing benefits—always consult your healthcare provider if symptoms persist or worsen.</p>",
+  "improvedCondition": false,
+  "aiSummary": {
+    "confidenceScore": 85,
+    "confidenceExplanation": "Based on your age and chronic conditions, this remedy shows strong potential for addressing your specific health concerns.",
+    "recommendationReason": "This remedy is recommended because it aligns with your health profile and has shown positive outcomes for users with similar conditions."
+  },
+  "advanceAiInsights": {
+    "healthMatchScore": 90,
+    "matchedFactors": {
+      "ageRange": "30-40",
+      "diet": "Vegetarian",
+      "stressLevel": "Moderate",
+      "sleepPattern": "Regular",
+      "previousRemedySuccess": "High"
+    },
+    "aiConfidenceRating": {
+      "score": 88,
+      "basedOnUsers": 120
+    },
+    "selectedReasons": [
+      "Matches chronic condition",
+      "Positive user outcomes"
+    ],
+    "similarUserOutcomes": [
+      {
+        "improvement": "Reduced pain",
+        "percentage": 75,
+        "_id": {
+          "$oid": "6861bd4627a95d05fea71469"
+        }
+      }
+    ],
+    "aiLearningLog": {
+      "lastUpdated": {
+        "$date": "2024-06-01T12:00:00.000Z"
+      },
+      "newRatings": 5,
+      "insights": [
+        "Improved sleep",
+        "Reduced stress"
+      ]
+    },
+    "remedyAdjustmentNotice": {
+      "message": "Adjust dosage if you experience side effects.",
+      "active": true
+    }
+  },
+  "disclaimerShown": true,
+  "profileVersion": 0,
+  "createdAt": {
+    "$date": "2025-06-29T22:25:10.044Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-29T22:25:10.044Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6861bd7d27a95d05fea71587"
+  },
+  "remedyId": {
+    "$oid": "686079adb6f61dbb0df4c593"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "feedbackText": "<p><strong>Hi Aliyan,</strong></p><p>Given your young age, vegetarian diet, and experience with chronic conditions including autoimmune and mental health challenges, this gentle herbal migraine relief tea offers a natural way to ease headache symptoms and promote relaxation.</p><h3>Why This Remedy Fits Your Needs</h3><ul><li>The tea uses chamomile, lavender, and peppermint—herbs known for calming effects, gentle enough for sensitive systems.</li><li>It's caffeine-free and aligns with your vegetarian lifestyle, supporting your dietary preferences and avoiding common migraine triggers.</li><li>Preparation is simple and quick, making it easy to integrate even on days when you're not feeling your best.</li><li>Drinking this tea in a quiet, dimly lit space can enhance both physical comfort and stress reduction.</li></ul><h3>How to Make the Most of Migraine Relief Tea</h3><ul><li>Sip the tea at the first sign of migraine symptoms for best results—don't wait until the pain intensifies.</li><li>Limit usage to no more than three cups per day to avoid any potential side effects.</li><li>Store dried herbs properly in a cool, dry place to maintain potency; use fresh batches for each episode when possible.</li><li>Pair tea time with other self-care practices, like gentle breathing or stretching, for extra relief.</li></ul><h3>User Experiences & Cautions</h3><ul><li>Reviews highlight easy preparation and high effectiveness, with only rare mild side effects reported.</li><li>If you have allergies—especially to nuts or any of the herbs—double-check ingredients and consult your healthcare provider before starting.</li><li>Monitor for any unusual reactions and seek medical help promptly if you notice allergy symptoms or if migraines worsen suddenly.</li></ul><h3>Daily Wellness Integration</h3><ul><li>Consider setting a reminder to prepare the tea at times you are most likely to need relief, especially when stress or environmental triggers are present.</li><li>Keep your water intake steady (1-2L/day) and avoid processed foods to further reduce migraine risk.</li><li>Use the tea as part of your wider stress management routine, complementing weekly meditation or relaxation techniques.</li></ul><h3>Bonus Tip & Conclusion</h3><p>Pro tip: Track your migraine episodes and tea usage in a simple journal or app to identify patterns and measure improvements. This herbal tea has the potential to provide gentle, effective relief without harsh chemicals, especially when used consistently at the onset of symptoms. Remember, staying regular with your remedy and checking in with your healthcare provider can maximize your results and keep you safe.</p>",
+  "improvedCondition": false,
+  "aiSummary": {
+    "confidenceScore": 85,
+    "confidenceExplanation": "Based on your age and chronic conditions, this remedy shows strong potential for addressing your specific health concerns.",
+    "recommendationReason": "This remedy is recommended because it aligns with your health profile and has shown positive outcomes for users with similar conditions."
+  },
+  "advanceAiInsights": {
+    "healthMatchScore": 90,
+    "matchedFactors": {
+      "ageRange": "30-40",
+      "diet": "Vegetarian",
+      "stressLevel": "Moderate",
+      "sleepPattern": "Regular",
+      "previousRemedySuccess": "High"
+    },
+    "aiConfidenceRating": {
+      "score": 88,
+      "basedOnUsers": 120
+    },
+    "selectedReasons": [
+      "Matches chronic condition",
+      "Positive user outcomes"
+    ],
+    "similarUserOutcomes": [
+      {
+        "improvement": "Reduced pain",
+        "percentage": 75,
+        "_id": {
+          "$oid": "6861bd7d27a95d05fea71588"
+        }
+      }
+    ],
+    "aiLearningLog": {
+      "lastUpdated": {
+        "$date": "2024-06-01T12:00:00.000Z"
+      },
+      "newRatings": 5,
+      "insights": [
+        "Improved sleep",
+        "Reduced stress"
+      ]
+    },
+    "remedyAdjustmentNotice": {
+      "message": "Adjust dosage if you experience side effects.",
+      "active": true
+    }
+  },
+  "disclaimerShown": true,
+  "profileVersion": 0,
+  "createdAt": {
+    "$date": "2025-06-29T22:26:05.362Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-29T22:26:05.362Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6861be51d6ff0caa5936c64b"
+  },
+  "remedyId": {
+    "$oid": "686079adb6f61dbb0df4c593"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "feedbackText": "<p><strong>Hi Aliyan,</strong></p><p>Given your young age, vegetarian lifestyle, and chronic health conditions, the Gentle Soothing Migraine Relief Tea offers a natural, calming way to address migraine discomfort and related symptoms.</p><h3>Why This Remedy Fits Your Needs</h3><ul><li>Chamomile, lavender, and peppermint specifically target migraine symptoms like pain and nausea, which could help balance your moderate stress levels.</li><li>This tea’s gentle formula is designed to minimize side effects—important since you manage autoimmune issues and may be on medication.</li><li>Preparation is simple and quick, making it easy to incorporate even with a busy schedule or low energy days.</li><li>The herbal ingredients are vegetarian-friendly and avoid common allergens except for your known nut allergy—always double-check for cross-contamination.</li></ul><h3>Making the Most of Migraine Relief Tea</h3><ul><li>Drink the tea at the very first sign of migraine symptoms to maximize its calming effects.</li><li>Sip the tea in a quiet, darkened room to enhance relaxation and reduce sensory triggers.</li><li>Limit intake to no more than three cups per day and watch for any mild side effects, like stomach upset.</li><li>Store dried herbs properly and prepare fresh tea when needed to preserve potency and taste.</li></ul><h3>Insights from Users Like You</h3><ul><li>Other users found this remedy highly effective and very easy to use, with minimal side effects.</li><li>Positive feedback suggests most people experience relief within 30–60 minutes after drinking the tea.</li><li>If you notice any allergic reaction or worsening symptoms, seek medical help immediately.</li></ul><h3>Bonus Tip & Conclusion</h3><p>Pro tip: Pair your migraine tea with a brief mindfulness or breathing exercise for added stress relief. This remedy offers a safe, natural complement to your current routine—just remember that consistency and early use are key for best results. Keep monitoring your symptoms, and consult your healthcare provider if your migraines are frequent or severe.</p>",
+  "improvedCondition": false,
+  "aiSummary": {
+    "confidenceScore": 85,
+    "confidenceExplanation": "Based on your age and chronic conditions, this remedy shows strong potential for addressing your specific health concerns.",
+    "recommendationReason": "This remedy is recommended because it aligns with your health profile and has shown positive outcomes for users with similar conditions."
+  },
+  "advanceAiInsights": {
+    "healthMatchScore": 90,
+    "matchedFactors": {
+      "ageRange": "30-40",
+      "diet": "Vegetarian",
+      "stressLevel": "Moderate",
+      "sleepPattern": "Regular",
+      "previousRemedySuccess": "High"
+    },
+    "aiConfidenceRating": {
+      "score": 88,
+      "basedOnUsers": 120
+    },
+    "selectedReasons": [
+      "Matches chronic condition",
+      "Positive user outcomes"
+    ],
+    "similarUserOutcomes": [
+      {
+        "improvement": "Reduced pain",
+        "percentage": 75,
+        "_id": {
+          "$oid": "6861be51d6ff0caa5936c64c"
+        }
+      }
+    ],
+    "aiLearningLog": {
+      "lastUpdated": {
+        "$date": "2024-06-01T12:00:00.000Z"
+      },
+      "newRatings": 5,
+      "insights": [
+        "Improved sleep",
+        "Reduced stress"
+      ]
+    },
+    "remedyAdjustmentNotice": {
+      "message": "Adjust dosage if you experience side effects.",
+      "active": true
+    }
+  },
+  "disclaimerShown": true,
+  "profileVersion": 1,
+  "createdAt": {
+    "$date": "2025-06-29T22:29:37.296Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-29T22:29:37.296Z"
+  },
+  "__v": 0
+}]

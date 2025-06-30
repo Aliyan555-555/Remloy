@@ -1,0 +1,164 @@
+[{
+  "_id": {
+    "$oid": "685fe9e236df9240333865df"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "remedyId": {
+    "$oid": "6857d9aec3d14524f9aac632"
+  },
+  "effectivenessRating": 3,
+  "easeOfUseRating": 4,
+  "sideEffectsRating": 5,
+  "overallRating": 5,
+  "verifiedPurchase": true,
+  "isAnonymous": false,
+  "comment": "hello",
+  "moderationStatus": "pending",
+  "helpfulVotes": 0,
+  "images": [],
+  "createdAt": {
+    "$date": "2025-06-28T13:10:58.253Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-28T13:10:58.253Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685feb3d36df92403338668a"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "remedyId": {
+    "$oid": "68598c91679f68f7425ea2c9"
+  },
+  "effectivenessRating": 2,
+  "easeOfUseRating": 5,
+  "sideEffectsRating": 5,
+  "overallRating": 4,
+  "verifiedPurchase": true,
+  "isAnonymous": false,
+  "comment": "dfff",
+  "moderationStatus": "pending",
+  "helpfulVotes": 0,
+  "images": [
+    {
+      "type": "image/png",
+      "source": "https://res.cloudinary.com/dtupoan8j/image/upload/v1751116502/uploads/1751116500352-3_.png",
+      "_id": {
+        "$oid": "685feb3d36df92403338668b"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-28T13:16:45.492Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-28T13:16:45.492Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685fffc1c8612688f51cf7a8"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "remedyId": {
+    "$oid": "685811539eb1168b0eeb526a"
+  },
+  "effectivenessRating": 5,
+  "easeOfUseRating": 5,
+  "sideEffectsRating": 4,
+  "overallRating": 5,
+  "verifiedPurchase": true,
+  "isAnonymous": false,
+  "comment": "this ",
+  "moderationStatus": "pending",
+  "helpfulVotes": 0,
+  "images": [],
+  "createdAt": {
+    "$date": "2025-06-28T14:44:17.793Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-28T14:44:17.793Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686133e1b6f61dbb0df4cf0c"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "remedyId": {
+    "$oid": "68598d7c679f68f7425ea2e4"
+  },
+  "effectivenessRating": 5,
+  "easeOfUseRating": 4,
+  "sideEffectsRating": 3,
+  "overallRating": 4,
+  "verifiedPurchase": true,
+  "isAnonymous": false,
+  "comment": "dfsdf",
+  "moderationStatus": "pending",
+  "helpfulVotes": 0,
+  "images": [
+    {
+      "type": "image/png",
+      "source": "https://res.cloudinary.com/dtupoan8j/image/upload/v1751200735/uploads/1751200732814-1_Movepixels3d-Bringing-Your-Visions-to-Life.png",
+      "_id": {
+        "$oid": "686133e1b6f61dbb0df4cf0d"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-29T12:38:57.995Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-29T12:38:57.995Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686158fb6d4199f8845af112"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "remedyId": {
+    "$oid": "686079adb6f61dbb0df4c593"
+  },
+  "effectivenessRating": 5,
+  "easeOfUseRating": 5,
+  "sideEffectsRating": 4,
+  "overallRating": 5,
+  "verifiedPurchase": true,
+  "isAnonymous": false,
+  "comment": "besy",
+  "moderationStatus": "pending",
+  "helpfulVotes": 0,
+  "images": [
+    {
+      "type": "image/png",
+      "source": "https://res.cloudinary.com/dtupoan8j/image/upload/v1751210233/uploads/1751210229436-1_Movepixels3d-Bringing-Your-Visions-to-Life.png",
+      "_id": {
+        "$oid": "686158fb6d4199f8845af113"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-06-29T15:17:15.485Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-29T15:17:15.485Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,168 @@
+[{
+  "_id": {
+    "$oid": "685d85b5d56efd0135a5a961"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "subscriptionId": {
+    "$oid": "685d85b5d56efd0135a5a95c"
+  },
+  "amount": 9.99,
+  "currency": "USD",
+  "status": "pending",
+  "paymentMethod": {
+    "$oid": "685d85b5d56efd0135a5a95f"
+  },
+  "transactionId": "pm_1ReJlJQ2l1oorLYrcTH7mjIH",
+  "processedAt": {
+    "$date": "2025-06-26T17:39:01.922Z"
+  },
+  "createdAt": {
+    "$date": "2025-06-26T17:39:01.923Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T17:39:01.923Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d8962d56efd0135a5a98a"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "subscriptionId": {
+    "$oid": "685d8962d56efd0135a5a985"
+  },
+  "amount": 9.99,
+  "currency": "USD",
+  "status": "pending",
+  "paymentMethod": {
+    "$oid": "685d8962d56efd0135a5a988"
+  },
+  "transactionId": "pm_1ReK0UQ2l1oorLYrreSp61Vs",
+  "processedAt": {
+    "$date": "2025-06-26T17:54:42.871Z"
+  },
+  "createdAt": {
+    "$date": "2025-06-26T17:54:42.872Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T17:54:42.872Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d97b2634b6cca77dd6235"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "subscriptionId": {
+    "$oid": "685d97b2634b6cca77dd6230"
+  },
+  "amount": 9.99,
+  "currency": "USD",
+  "status": "pending",
+  "paymentMethod": {
+    "$oid": "685d97b2634b6cca77dd6233"
+  },
+  "transactionId": "pm_1ReKxaQ2l1oorLYr4HSkYGzJ",
+  "processedAt": {
+    "$date": "2025-06-26T18:55:46.529Z"
+  },
+  "createdAt": {
+    "$date": "2025-06-26T18:55:46.531Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T18:55:46.531Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685d9873634b6cca77dd626d"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "subscriptionId": {
+    "$oid": "685d9873634b6cca77dd6268"
+  },
+  "amount": 9.99,
+  "currency": "USD",
+  "status": "pending",
+  "paymentMethod": {
+    "$oid": "685d9873634b6cca77dd626b"
+  },
+  "transactionId": "pm_1ReL0bQ2l1oorLYr7ufYzzD3",
+  "processedAt": {
+    "$date": "2025-06-26T18:58:59.434Z"
+  },
+  "createdAt": {
+    "$date": "2025-06-26T18:58:59.435Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T18:58:59.435Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e5472ffb14ea2faae59d9"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "subscriptionId": {
+    "$oid": "685e5472ffb14ea2faae59d4"
+  },
+  "amount": 9.99,
+  "currency": "USD",
+  "status": "completed",
+  "paymentMethod": {
+    "$oid": "685e5472ffb14ea2faae59d7"
+  },
+  "transactionId": "pm_1ReXWsQ2l1oorLYrLaJFQgWP",
+  "processedAt": {
+    "$date": "2025-06-27T08:21:06.198Z"
+  },
+  "createdAt": {
+    "$date": "2025-06-27T08:21:06.199Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-27T08:21:06.199Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "685e55c8ffb14ea2faae5a24"
+  },
+  "userId": {
+    "$oid": "685c80756376c77bc9688a54"
+  },
+  "subscriptionId": {
+    "$oid": "685e55c7ffb14ea2faae5a1f"
+  },
+  "amount": 9.99,
+  "currency": "USD",
+  "status": "completed",
+  "paymentMethod": {
+    "$oid": "685e55c7ffb14ea2faae5a22"
+  },
+  "transactionId": "pm_1ReXcOQ2l1oorLYrOjSNf4Nd",
+  "processedAt": {
+    "$date": "2025-06-27T08:26:48.002Z"
+  },
+  "createdAt": {
+    "$date": "2025-06-27T08:26:48.002Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-27T08:26:48.002Z"
+  },
+  "__v": 0
+}]
