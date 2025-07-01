@@ -12,33 +12,16 @@
   "twoFactorStatus": "disabled",
   "profileImage": "/user/default.png",
   "status": "suspended",
-  "emailVerificationRequestCount": 1,
-  "emailVerificationTimestamp": {
-    "$date": "2025-05-29T08:07:13.979Z"
-  },
-  "resetRequestCount": 0,
-  "resetRequestTimestamp": null,
   "createdAt": {
     "$date": "2025-05-29T08:07:13.932Z"
   },
   "updatedAt": {
-    "$date": "2025-06-22T18:57:50.497Z"
+    "$date": "2025-06-30T21:31:23.115Z"
   },
-  "__v": 0,
-  "emailVerificationExpires": {
-    "$date": "2025-05-29T08:37:13.980Z"
-  },
-  "emailVerificationToken": "b8566dd46df9e036c3916243a7f4dcbb90fb9bd36fbe9eb6d109e72b74540317",
+  "__v": 15,
   "lastLogin": {
-    "$date": "2025-06-22T18:57:50.488Z"
-  },
-  "suspendedAt": {
-    "$date": "2025-06-05T19:35:45.890Z"
-  },
-  "suspendedBy": {
-    "$oid": "6838cb831d984b618341af13"
-  },
-  "suspendedMessage": "poor info"
+    "$date": "2025-06-30T21:31:23.113Z"
+  }
 },
 {
   "_id": {
@@ -226,4 +209,29 @@
     "$oid": "683815b10214394db446fdb3"
   },
   "suspendedMessage": "fake user"
+},
+{
+  "_id": {
+    "$oid": "6862ed739dc0e36046625e25"
+  },
+  "username": "Aliyan",
+  "email": "aliyansiddiqui555@gmail.com",
+  "password": "$2b$10$vjRq5lhvH.JihtClYBJDoOiPjfnn5oqiQCQrzrFmRJTnRJPODXg/q",
+  "accessLevel": "user",
+  "geographicRegion": "global",
+  "isActive": false,
+  "emailVerified": true,
+  "twoFactorStatus": "disabled",
+  "profileImage": "/user/default.png",
+  "status": "active",
+  "createdAt": {
+    "$date": "2025-06-30T20:02:59.389Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-30T21:49:40.819Z"
+  },
+  "__v": 13,
+  "lastLogin": {
+    "$date": "2025-06-30T21:34:01.011Z"
+  }
 }]
