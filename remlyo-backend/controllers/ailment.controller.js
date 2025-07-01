@@ -323,7 +323,6 @@ const getAilmentsByCategory = async (req, res) => {
 
     const ailments = await Ailment.find({
       category,
-      isActive: true,
     })
       .sort({ name: 1 })
       .skip((page - 1) * limit)
@@ -431,7 +430,7 @@ const generateSlug = async (req, res) => {
 const getAilmentsWithCategoriesSorted = async (req, res) => {
   try {
     // Get all ailments
-    const allAilments = await Ailment.find({ isActive: true }).select(
+    const allAilments = await Ailment.find({}).select(
       "name slug category description _id"
     );
 
@@ -486,7 +485,7 @@ const getAilmentBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
     // Find the ailment by slug
-    const ailment = await Ailment.findOne({ slug, isActive: true })
+    const ailment = await Ailment.findOne({ slug })
       .populate("recommendedRemedies")
       .populate("relatedAilments")
       .select(
@@ -538,8 +537,6 @@ const getAilmentsWithOnlyName = async (req, res) => {
     });
   }
 };
-
-
 
 export {
   getAilmentsWithOnlyName,
