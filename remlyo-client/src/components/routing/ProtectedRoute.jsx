@@ -24,13 +24,13 @@ const ProtectedRoute = ({ children, requiredSubscription = 'free' }) => {
     return <Navigate to="/dashboard" />;
   }
 
-  // if (!loading && user?.status === 'suspended') {
-  //   // Allow access only to home and suspended user page
-  //   const allowedPaths = ['/', '/suspended'];
-  //   if (!allowedPaths.includes(window.location.pathname)) {
-  //     return <Navigate to="/suspended" />;
-  //   }
-  // }
+  if (!loading && user?.status === 'suspended') {
+    // Allow access only to home and suspended user page
+    const allowedPaths = ['/', '/suspended'];
+    if (!allowedPaths.includes(window.location.pathname)) {
+      return <Navigate to="/suspended" />;
+    }
+  }
 
   return children;
 };
