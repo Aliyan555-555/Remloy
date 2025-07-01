@@ -21,11 +21,11 @@ export const UserFlowProvider = ({ children }) => {
         setLoading(false);
         return;
       }
-      if (user && user.status && user.status.toLowerCase() == "suspended"){
-        setFlowStatus(UserFlowStatus.SUSPENDED);
-        setLoading(false);
-        return
-      }
+      // if (user && user.status && user.status.toLowerCase() === "suspended"){
+      //   setFlowStatus(UserFlowStatus.SUSPENDED);
+      //   setLoading(false);
+      //   return
+      // }
 
       // if (user && !user.emailVerified) {
       //   setFlowStatus(UserFlowStatus.EMAIL_UNVERIFIED);
