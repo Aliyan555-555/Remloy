@@ -127,10 +127,15 @@ const updatePaymentMethod = async (token, paymentMethodId, data) => {
 };
 
 
-const getMyRemedies = async (token) => {
+const getMyRemedies = async (token, page, limit, search) => {
   try {
     const res = await API.get("/api/v1/user/remedy/my", {
-      headers: getAuthHeaders(token)
+      headers: getAuthHeaders(token),
+      params: {
+        page,
+        limit,
+        search: search || "",
+      },
     })
     return res.data;
   } catch (error) {

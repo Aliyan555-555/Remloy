@@ -231,25 +231,25 @@ const CommunityRemedyDetail = () => {
   };
 
   // Handle sorting change
-  const handleSortChange = (option) => {
-    setSortOption(option);
-    setIsSortDropdownOpen(false);
+  // const handleSortChange = (option) => {
+  //   setSortOption(option);
+  //   setIsSortDropdownOpen(false);
 
-    // Sort comments based on selected option
-    let sortedComments = [...comments];
+  //   // Sort comments based on selected option
+  //   let sortedComments = [...comments];
 
-    if (option === "newest") {
-      sortedComments.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-    } else if (option === "most helpful") {
-      sortedComments.sort((a, b) => b.upvotes - a.upvotes);
-    } else if (option === "top rated") {
-      sortedComments.sort((a, b) => b.upvotes - a.upvotes);
-    }
+  //   if (option === "newest") {
+  //     sortedComments.sort(
+  //       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  //     );
+  //   } else if (option === "most helpful") {
+  //     sortedComments.sort((a, b) => b.upvotes - a.upvotes);
+  //   } else if (option === "top rated") {
+  //     sortedComments.sort((a, b) => b.upvotes - a.upvotes);
+  //   }
 
-    setComments(sortedComments);
-  };
+  //   setComments(sortedComments);
+  // };
 
   if (loading) {
     return (

@@ -120,7 +120,19 @@ const getAllCommentsByRemedyId = async (token, remedyId) => {
   }
 };
 
+const getAIRemedyInsights = async (token, remedyId) => {
+  try {
+    const { data } = await API.get(`/api/v1/remedy/ai/insights/${remedyId}`, {
+      headers: getAuthHeaders(token),
+    });
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
 export {
+  getAIRemedyInsights,
   getAllCommentsByRemedyId,
   createComment,
   getAllRemedies,

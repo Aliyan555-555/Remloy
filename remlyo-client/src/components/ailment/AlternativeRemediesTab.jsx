@@ -13,7 +13,7 @@ const AlternativeRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRemediesCount, setTotalRemediesCount] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
-  const { authToken, isAuthenticated, user, refreshSave } = useAuth();
+  const { authToken, isAuthenticated, user, addOrRemoveSavedRemedies } = useAuth();
   const navigate = useNavigate();
   //
   // Fetch community remedies based on ailmentId, page and sortOption
@@ -43,12 +43,8 @@ const AlternativeRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
       navigate("/signin");
       return;
     }
-    const res = await saveRemedy(authToken, id, "save");
-    if (res.success) {
-      refreshSave(res.data);
-    }
+    await addOrRemoveSavedRemedies(id, "save");
   };
-
   useEffect(() => {
     fetchRemedies();
   }, [ailmentId, currentPage, sortOption]);

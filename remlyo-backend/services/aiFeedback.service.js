@@ -170,7 +170,7 @@ ${userData.comments}
 ${instructions}
 
 **REQUIRED JSON RESPONSE FORMAT:**
-You must respond with ONLY a valid JSON object in this exact format:
+You must respond with ONLY a valid JSON object in this exact format this only demo provide real result:
 
 {
   "feedbackText": "<p><strong>Hi [User Name],</strong></p><p>[One-sentence summary]</p><h3>[Section Heading 1]</h3><ul><li>[Bullet point 1]</li><li>[Bullet point 2]</li><li>[Bullet point 3]</li></ul><h3>[Section Heading 2]</h3><ul><li>[Bullet point 1]</li><li>[Bullet point 2]</li><li>[Bullet point 3]</li></ul><h3>Bonus Tip & Conclusion</h3><p>[Key takeaway, conclusion, and reminder]</p>",
@@ -180,6 +180,8 @@ You must respond with ONLY a valid JSON object in this exact format:
     "recommendationReason": "This remedy is recommended because it aligns with your health profile and has shown positive outcomes for users with similar conditions."
   },
   "advanceAiInsights": {
+    "title": "Advanced AI Insight: Personalized Migraine Analysis",
+    "description": "Unlock deeper insights into your migraine remedy with AI-driven analysis tailored to your unique profile.",
     "healthMatchScore": 90,
     "matchedFactors": {
       "ageRange": "30-40",

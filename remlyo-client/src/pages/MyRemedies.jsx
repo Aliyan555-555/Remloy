@@ -5,6 +5,7 @@ import useUserPlan from "../hooks/useUserPlan";
 import { getMyRemedies } from "../api/userApi";
 import SearchBar from './../components/common/SearchBar';
 import Button from "../components/common/Button";
+import Pagination from './../components/common/Pagination';
 
 const MyRemedies = () => {
   const { user, authToken } = useAuth();
@@ -25,7 +26,7 @@ const MyRemedies = () => {
 
   useEffect(() => {
     fetchRemedies();
-  }, []);
+  }, [search, currentPage]);
 
   const getRemedyTypeRoute = (remedy) => {
     // Map remedy types to routes
@@ -51,7 +52,7 @@ const MyRemedies = () => {
             My Remedies ({totalRemedies})
           </h2>
         </div>
-        <div className="!py-4">
+        <div className="!py-4 w-1/2">
           <SearchBar  onSearch={(s) => setSearch(s)} placeholder={"Search your remedies..."}/>
         </div>
         {remedies.length ? (
@@ -63,8 +64,8 @@ const MyRemedies = () => {
               >
                 <img
                   src={
-                    remedy.media
-                      ? remedy.remedy.media.source
+                    remedy?.media
+                      ? remedy.media.source
                       : "https://placehold.co/600x400?text=Remlyo"
                   }
                   alt={remedy.title}
@@ -94,6 +95,12 @@ const MyRemedies = () => {
             No remedies yet
           </div>
         )}
+
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </div>
     </DashboardLayout>
   );

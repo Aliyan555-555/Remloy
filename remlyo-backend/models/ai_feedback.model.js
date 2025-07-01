@@ -36,6 +36,8 @@ const AiFeedbackSchema = new mongoose.Schema(
 
     // ✅ Advanced Insight Section
     advanceAiInsights: {
+      title: { type: String }, // e.g. "Your Remedy Insights"
+      description: { type: String }, // e.g. "Based on 7,412 users with similar profiles"
       healthMatchScore: { type: Number, min: 0, max: 100 }, // e.g. 93
       matchedFactors: {
         ageRange: { type: String }, // e.g. "35–40 years"

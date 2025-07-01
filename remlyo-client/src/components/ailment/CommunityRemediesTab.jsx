@@ -16,7 +16,7 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
-  const { authToken, user, isAuthenticated, refreshSave } = useAuth();
+  const { authToken, user, isAuthenticated, addOrRemoveSavedRemedies } = useAuth();
   //
   // Fetch community remedies based on ailmentId, page and sortOption
   const fetchRemedies = async () => {
@@ -54,10 +54,7 @@ const CommunityRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
       navigate("/signin");
       return;
     }
-    const res = await saveRemedy(authToken, id, "save");
-    if (res.success) {
-      refreshSave(res.data);
-    }
+    await addOrRemoveSavedRemedies(id, "save");
   };
 
   // Function to render star ratings

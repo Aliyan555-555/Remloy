@@ -524,7 +524,7 @@ const getAilmentBySlug = async (req, res) => {
 const getAilmentsWithOnlyName = async (req, res) => {
   try {
     // Only return active ailments, and include _id for selection
-    const ailments = await Ailment.find({ isActive: true }).select("_id name");
+    const ailments = await Ailment.find().select("_id name");
     return res.status(200).json({
       success: true,
       message: "Successfully fetched ailments",

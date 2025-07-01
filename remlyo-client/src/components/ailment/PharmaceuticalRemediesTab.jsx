@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import Pagination from "../common/Pagination";
 import Button from "../common/Button";
 import { getRemediesByAilmentAndType } from "../../api/remediesApi";
-import { saveRemedy } from "../../api/userApi";
 import { useAuth } from "../../contexts/AuthContext";
 
 const PharmaceuticalRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
@@ -12,8 +11,8 @@ const PharmaceuticalRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRemediesCount, setTotalRemediesCount] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
-  const { authToken, user, refreshSave, isAuthenticated } = useAuth();
-  
+  const { user, addOrRemoveSavedRemedies, isAuthenticated } = useAuth();
+
   // Fetch community remedies based on ailmentId, page and sortOption
   const fetchRemedies = async () => {
     try {
@@ -42,12 +41,8 @@ const PharmaceuticalRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
       navigate("/signin");
       return;
     }
-    const res = await saveRemedy(authToken, id, "save");
-    if (res.success) {
-      refreshSave(res.data);
-    }
+    await addOrRemoveSavedRemedies(id, "save");
   };
-
   useEffect(() => {
     fetchRemedies();
   }, [ailmentId, currentPage, sortOption]);
@@ -91,7 +86,7 @@ const PharmaceuticalRemediesTab = ({ ailmentId, sortOption, activeTab }) => {
       {/* Remedies Grid */}
       {remedies.length ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-           {remedies.map((remedy) => {
+          {remedies.map((remedy) => {
             const isSave = user
               ? user.saveRemedies.find((s) => s.remedy._id == remedy._id)
               : false;

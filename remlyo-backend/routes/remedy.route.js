@@ -11,6 +11,7 @@ import {
   getAIfeedback,
   generateAIRemedy,
   getAllCommentsByRemedyId,
+  getAIRemedyInsights,
 } from "../controllers/remedy.controller.js";
 import auth from "../middleware/auth.middleware.js";
 import adminMiddleware from "./../middleware/admin.middleware.js";
@@ -46,5 +47,7 @@ RemedyRouter.get("/:remedyId/comments", auth, getAllCommentsByRemedyId);
 RemedyRouter.get("/ai/feedback/:id", auth, getAIfeedback);
 // generate AI remedy base on user health profile
 RemedyRouter.post("/ai/ailment/:id/remedy", auth, generateAIRemedy);
+// get ai remedy insights
+RemedyRouter.get("/ai/insights/:id", auth, getAIRemedyInsights);
 
 export default RemedyRouter;

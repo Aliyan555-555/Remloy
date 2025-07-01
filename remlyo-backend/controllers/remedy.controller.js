@@ -12,7 +12,6 @@ import {
 import Review from "../models/review.model.js";
 import generateRemedy from "../services/generateRemedy.service.js";
 import AiFeedback from "../models/ai_feedback.model.js";
-import User from "../models/user.model.js";
 import UserProfile from "../models/user_profile.model.js";
 
 const createRemedy = async (req, res) => {
@@ -599,7 +598,7 @@ const getRemediesByAilmentId = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      remedies:updatedRemedy,
+      remedies: updatedRemedy,
       pagination: {
         total,
         page: Number(page),
@@ -748,8 +747,64 @@ const generateAIRemedy = async (req, res) => {
   }
 };
 
+const getAIRemedyInsights = async (req, res) => {
+  try {
+    const remedyId = req.params.id;
+    const userId = req.user.id;
+
+    if (!mongoose.Types.ObjectId.isValid(remedyId)) {
+      return res.status(400).json({
+        message: "Invalid remedy ID",
+        success: false,
+      });
+    }
+
+    // Ensure the remedy exists and is AI-generated
+    const remedy = await Remedy.findById(remedyId);
+    if (!remedy) {
+      return res.status(404).json({
+        message: "AI Remedy not found or inactive",
+        success: false,
+      });
+    }
+
+    const userProfile = await UserProfile.findOne({ userId });
+    if (!userProfile) {
+      return res.status(404).json({
+        message: "User profile not found",
+        success: false,
+      });
+    }
+    const insights = await AiFeedback.findOne({
+      remedyId,
+      userId,
+      profileVersion: userProfile.__v,
+    });
+    if (!insights) {
+      return res.status(404).json({
+        message: "AI Remedy Insights not found",
+        success: false,
+      });
+    }
+
+    res.status(200).json({
+      message: "AI Remedy Insights aggregated successfully",
+      success: true,
+      insights,
+    });
+  } catch (error) {
+    console.error("Error aggregating AI remedy insights:", error);
+    res.status(500).json({
+      message: "Something went wrong",
+      error: error.message,
+      success: false,
+    });
+  }
+};
+
 export {
   flagRemedy,
+  getAIRemedyInsights,
   getAllCommentsByRemedyId,
   createRemedy,
   getAIfeedback,

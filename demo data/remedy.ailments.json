@@ -74,4 +74,3958 @@
     "$date": "2025-06-21T13:59:28.660Z"
   },
   "__v": 0
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b21"
+  },
+  "name": "Hormonal Imbalance",
+  "slug": "hormonal-imbalance",
+  "description": "An imbalance in hormones affecting various functions in women.",
+  "category": "Women's Health",
+  "symptoms": [
+    "Irregular periods"
+  ],
+  "causesAndRisks": [
+    "Stress",
+    "Poor diet"
+  ],
+  "preventionTips": [
+    "Exercise regularly",
+    "Balanced diet"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b22"
+  },
+  "name": "Low Testosterone",
+  "slug": "low-testosterone",
+  "description": "A condition where the body produces less testosterone than normal.",
+  "category": "Men's Health",
+  "symptoms": [
+    "Low sex drive"
+  ],
+  "causesAndRisks": [
+    "Aging",
+    "Obesity"
+  ],
+  "preventionTips": [
+    "Healthy weight",
+    "Exercise"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b23"
+  },
+  "name": "Erectile Dysfunction",
+  "slug": "erectile-dysfunction",
+  "description": "Difficulty in achieving or maintaining an erection.",
+  "category": "Men's Health",
+  "symptoms": [
+    "Difficulty getting an erection"
+  ],
+  "causesAndRisks": [
+    "Heart disease",
+    "Stress"
+  ],
+  "preventionTips": [
+    "Exercise",
+    "Avoid smoking"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b24"
+  },
+  "name": "Prostate Health",
+  "slug": "prostate-health",
+  "description": "Issues related to the prostate gland in men.",
+  "category": "Men's Health",
+  "symptoms": [
+    "Frequent urination"
+  ],
+  "causesAndRisks": [
+    "Aging",
+    "Genetics"
+  ],
+  "preventionTips": [
+    "Routine screening",
+    "Healthy diet"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b25"
+  },
+  "name": "Hair Loss (Male)",
+  "slug": "hair-loss-male",
+  "description": "Hair thinning or balding typically seen in men.",
+  "category": "Men's Health",
+  "symptoms": [
+    "Hair thinning"
+  ],
+  "causesAndRisks": [
+    "Genetics",
+    "Hormonal changes"
+  ],
+  "preventionTips": [
+    "Gentle hair care",
+    "Balanced nutrition"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b26"
+  },
+  "name": "Low Libido",
+  "slug": "low-libido",
+  "description": "Reduced sexual desire in men.",
+  "category": "Men's Health",
+  "symptoms": [
+    "Lack of interest in sex"
+  ],
+  "causesAndRisks": [
+    "Stress",
+    "Low testosterone"
+  ],
+  "preventionTips": [
+    "Open communication",
+    "Stress reduction"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b27"
+  },
+  "name": "Premature Ejaculation",
+  "slug": "premature-ejaculation",
+  "description": "Ejaculation that occurs sooner than desired during sex.",
+  "category": "Men's Health",
+  "symptoms": [
+    "Early ejaculation"
+  ],
+  "causesAndRisks": [
+    "Anxiety",
+    "Stress"
+  ],
+  "preventionTips": [
+    "Therapy",
+    "Relaxation techniques"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b28"
+  },
+  "name": "Infertility",
+  "slug": "infertility",
+  "description": "Inability to conceive after 12 months of regular unprotected intercourse.",
+  "category": "Men's Health",
+  "symptoms": [
+    "Inability to conceive"
+  ],
+  "causesAndRisks": [
+    "Low sperm count",
+    "Hormonal imbalance"
+  ],
+  "preventionTips": [
+    "Avoid smoking",
+    "Healthy lifestyle"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b29"
+  },
+  "name": "Muscle Weakness",
+  "slug": "muscle-weakness",
+  "description": "Reduced strength in one or more muscles.",
+  "category": "Men's Health",
+  "symptoms": [
+    "Loss of strength"
+  ],
+  "causesAndRisks": [
+    "Lack of exercise",
+    "Neurological issues"
+  ],
+  "preventionTips": [
+    "Regular exercise",
+    "Proper nutrition"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b2a"
+  },
+  "name": "Fatigue (Men)",
+  "slug": "fatigue-men",
+  "description": "Persistent tiredness in men despite rest.",
+  "category": "Men's Health",
+  "symptoms": [
+    "Constant tiredness"
+  ],
+  "causesAndRisks": [
+    "Poor sleep",
+    "Stress"
+  ],
+  "preventionTips": [
+    "Better sleep",
+    "Healthy diet"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b2b"
+  },
+  "name": "Gynecomastia",
+  "slug": "gynecomastia",
+  "description": "Enlargement of breast tissue in males.",
+  "category": "Men's Health",
+  "symptoms": [
+    "Breast swelling"
+  ],
+  "causesAndRisks": [
+    "Hormonal imbalance",
+    "Medication side effects"
+  ],
+  "preventionTips": [
+    "Avoid alcohol",
+    "Maintain healthy weight"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b2c"
+  },
+  "name": "Frequent Colds",
+  "slug": "frequent-colds",
+  "description": "Recurring viral infections of the upper respiratory tract.",
+  "category": "Immune System",
+  "symptoms": [
+    "Runny nose",
+    "Sneezing"
+  ],
+  "causesAndRisks": [
+    "Weak immunity",
+    "Exposure to virus"
+  ],
+  "preventionTips": [
+    "Wash hands",
+    "Boost immunity"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": true,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b2d"
+  },
+  "name": "Chronic Fatigue",
+  "slug": "chronic-fatigue",
+  "description": "Long-term fatigue not improved by rest.",
+  "category": "Immune System",
+  "symptoms": [
+    "Severe tiredness"
+  ],
+  "causesAndRisks": [
+    "Infections",
+    "Immune dysfunction"
+  ],
+  "preventionTips": [
+    "Regular sleep",
+    "Stress management"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b2e"
+  },
+  "name": "Low Immunity",
+  "slug": "low-immunity",
+  "description": "A weakened immune system that makes one susceptible to infections.",
+  "category": "Immune System",
+  "symptoms": [
+    "Frequent infections"
+  ],
+  "causesAndRisks": [
+    "Poor diet",
+    "Chronic illness"
+  ],
+  "preventionTips": [
+    "Eat well",
+    "Exercise"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b2f"
+  },
+  "name": "Autoimmune Conditions",
+  "slug": "autoimmune-conditions",
+  "description": "Diseases where the immune system attacks the body’s own cells.",
+  "category": "Immune System",
+  "symptoms": [
+    "Inflammation",
+    "Fatigue"
+  ],
+  "causesAndRisks": [
+    "Genetics",
+    "Environmental triggers"
+  ],
+  "preventionTips": [
+    "Avoid triggers",
+    "Early diagnosis"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b30"
+  },
+  "name": "Allergies",
+  "slug": "allergies",
+  "description": "Overreaction of the immune system to harmless substances.",
+  "category": "Immune System",
+  "symptoms": [
+    "Sneezing",
+    "Itchy eyes"
+  ],
+  "causesAndRisks": [
+    "Pollen",
+    "Dust"
+  ],
+  "preventionTips": [
+    "Avoid allergens",
+    "Use air purifiers"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b31"
+  },
+  "name": "Swollen Lymph Nodes",
+  "slug": "swollen-lymph-nodes",
+  "description": "Swelling of lymph nodes usually due to infection.",
+  "category": "Immune System",
+  "symptoms": [
+    "Tender lumps under skin"
+  ],
+  "causesAndRisks": [
+    "Infections",
+    "Cancer"
+  ],
+  "preventionTips": [
+    "Treat infections early"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412b32baef7ec73798b32"
+  },
+  "name": "Cold Sores",
+  "slug": "cold-sores",
+  "description": "Blisters around lips caused by herpes simplex virus.",
+  "category": "Immune System",
+  "symptoms": [
+    "Tingling",
+    "Blisters"
+  ],
+  "causesAndRisks": [
+    "HSV-1 virus"
+  ],
+  "preventionTips": [
+    "Avoid direct contact",
+    "Use sunscreen on lips"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": true,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b34"
+  },
+  "name": "Fevers",
+  "slug": "fevers",
+  "description": "Elevated body temperature as a response to infection or illness.",
+  "category": "Immune System",
+  "symptoms": [
+    "High temperature",
+    "Chills",
+    "Sweating"
+  ],
+  "causesAndRisks": [
+    "Infections",
+    "Heat exhaustion"
+  ],
+  "preventionTips": [
+    "Stay hydrated",
+    "Avoid infection exposure"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": true,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b35"
+  },
+  "name": "Post-Viral Fatigue",
+  "slug": "post-viral-fatigue",
+  "description": "Fatigue and weakness that lingers after recovery from a viral infection.",
+  "category": "Immune System",
+  "symptoms": [
+    "Fatigue",
+    "Muscle aches",
+    "Difficulty concentrating"
+  ],
+  "causesAndRisks": [
+    "Viral infections"
+  ],
+  "preventionTips": [
+    "Rest after illness",
+    "Proper nutrition"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b36"
+  },
+  "name": "Immune Support",
+  "slug": "immune-support",
+  "description": "General support for maintaining a healthy immune system.",
+  "category": "Immune System",
+  "symptoms": [
+    "Frequent infections",
+    "Slow wound healing"
+  ],
+  "causesAndRisks": [
+    "Poor lifestyle",
+    "Lack of nutrients"
+  ],
+  "preventionTips": [
+    "Balanced diet",
+    "Regular exercise",
+    "Vitamins"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b37"
+  },
+  "name": "Arthritis",
+  "slug": "arthritis",
+  "description": "Inflammation of joints causing pain and stiffness.",
+  "category": "Muscle & Joint",
+  "symptoms": [
+    "Joint pain",
+    "Stiffness",
+    "Swelling"
+  ],
+  "causesAndRisks": [
+    "Autoimmune disease",
+    "Age",
+    "Injury"
+  ],
+  "preventionTips": [
+    "Regular exercise",
+    "Healthy weight"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b38"
+  },
+  "name": "Back Pain",
+  "slug": "back-pain",
+  "description": "Discomfort or pain in the back area due to various causes.",
+  "category": "Muscle & Joint",
+  "symptoms": [
+    "Lower back pain",
+    "Stiffness",
+    "Limited mobility"
+  ],
+  "causesAndRisks": [
+    "Poor posture",
+    "Lifting injuries"
+  ],
+  "preventionTips": [
+    "Stretching",
+    "Ergonomic seating"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b39"
+  },
+  "name": "Joint Pain",
+  "slug": "joint-pain",
+  "description": "Discomfort or inflammation in one or more joints.",
+  "category": "Muscle & Joint",
+  "symptoms": [
+    "Pain",
+    "Swelling",
+    "Reduced range of motion"
+  ],
+  "causesAndRisks": [
+    "Injury",
+    "Arthritis",
+    "Overuse"
+  ],
+  "preventionTips": [
+    "Low-impact exercise",
+    "Maintain healthy weight"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b3a"
+  },
+  "name": "Muscle Soreness",
+  "slug": "muscle-soreness",
+  "description": "Pain or tenderness in muscles, typically after exercise or strain.",
+  "category": "Muscle & Joint",
+  "symptoms": [
+    "Muscle pain",
+    "Stiffness"
+  ],
+  "causesAndRisks": [
+    "Exercise",
+    "Overuse"
+  ],
+  "preventionTips": [
+    "Warm-up",
+    "Cool down",
+    "Hydration"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b3b"
+  },
+  "name": "Tendonitis",
+  "slug": "tendonitis",
+  "description": "Inflammation of a tendon causing pain and limited movement.",
+  "category": "Muscle & Joint",
+  "symptoms": [
+    "Pain near joints",
+    "Swelling",
+    "Stiffness"
+  ],
+  "causesAndRisks": [
+    "Repetitive movement",
+    "Injury"
+  ],
+  "preventionTips": [
+    "Proper technique",
+    "Stretch regularly"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b3c"
+  },
+  "name": "Neck Pain",
+  "slug": "neck-pain",
+  "description": "Discomfort in the neck area due to strain or injury.",
+  "category": "Muscle & Joint",
+  "symptoms": [
+    "Stiff neck",
+    "Muscle tightness",
+    "Limited movement"
+  ],
+  "causesAndRisks": [
+    "Poor posture",
+    "Whiplash",
+    "Herniated disc"
+  ],
+  "preventionTips": [
+    "Ergonomic pillow",
+    "Correct posture"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b3d"
+  },
+  "name": "Fibromyalgia",
+  "slug": "fibromyalgia",
+  "description": "A chronic condition causing widespread pain and fatigue.",
+  "category": "Muscle & Joint",
+  "symptoms": [
+    "Muscle pain",
+    "Fatigue",
+    "Sleep issues"
+  ],
+  "causesAndRisks": [
+    "Genetics",
+    "Infections",
+    "Trauma"
+  ],
+  "preventionTips": [
+    "Stress management",
+    "Good sleep routine"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b3e"
+  },
+  "name": "Cramps",
+  "slug": "cramps",
+  "description": "Sudden, involuntary muscle contractions causing pain.",
+  "category": "Muscle & Joint",
+  "symptoms": [
+    "Sharp muscle pain",
+    "Muscle tightness"
+  ],
+  "causesAndRisks": [
+    "Dehydration",
+    "Electrolyte imbalance"
+  ],
+  "preventionTips": [
+    "Stay hydrated",
+    "Stretching"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412c52baef7ec73798b3f"
+  },
+  "name": "Stiffness",
+  "slug": "stiffness",
+  "description": "Reduced flexibility or discomfort when moving joints or muscles.",
+  "category": "Muscle & Joint",
+  "symptoms": [
+    "Difficulty moving",
+    "Tightness"
+  ],
+  "causesAndRisks": [
+    "Inactivity",
+    "Inflammation",
+    "Cold weather"
+  ],
+  "preventionTips": [
+    "Stretch regularly",
+    "Keep warm"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b41"
+  },
+  "name": "Sciatica",
+  "slug": "sciatica",
+  "description": "Pain that radiates along the sciatic nerve from lower back down the leg.",
+  "category": "Muscle & Joint",
+  "symptoms": [
+    "Leg pain",
+    "Lower back pain",
+    "Numbness"
+  ],
+  "causesAndRisks": [
+    "Herniated disc",
+    "Spinal stenosis"
+  ],
+  "preventionTips": [
+    "Stretching",
+    "Avoid heavy lifting"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b42"
+  },
+  "name": "Insomnia",
+  "slug": "insomnia",
+  "description": "Difficulty falling or staying asleep.",
+  "category": "Sleep & Energy",
+  "symptoms": [
+    "Trouble sleeping",
+    "Daytime tiredness"
+  ],
+  "causesAndRisks": [
+    "Stress",
+    "Anxiety",
+    "Poor sleep hygiene"
+  ],
+  "preventionTips": [
+    "Consistent sleep schedule",
+    "Avoid caffeine late"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b43"
+  },
+  "name": "Sleep Apnea",
+  "slug": "sleep-apnea",
+  "description": "Interrupted breathing during sleep, often with snoring.",
+  "category": "Sleep & Energy",
+  "symptoms": [
+    "Snoring",
+    "Gasping at night",
+    "Fatigue"
+  ],
+  "causesAndRisks": [
+    "Obesity",
+    "Nasal congestion"
+  ],
+  "preventionTips": [
+    "Lose weight",
+    "Sleep on side"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b44"
+  },
+  "name": "Daytime Fatigue",
+  "slug": "daytime-fatigue",
+  "description": "Feeling excessively tired during the day despite adequate sleep.",
+  "category": "Sleep & Energy",
+  "symptoms": [
+    "Lack of energy",
+    "Sleepiness"
+  ],
+  "causesAndRisks": [
+    "Poor sleep",
+    "Sleep disorders"
+  ],
+  "preventionTips": [
+    "Improve sleep hygiene",
+    "Avoid alcohol at night"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b45"
+  },
+  "name": "Low Energy",
+  "slug": "low-energy",
+  "description": "Persistent lack of vitality and motivation.",
+  "category": "Sleep & Energy",
+  "symptoms": [
+    "Lethargy",
+    "Decreased stamina"
+  ],
+  "causesAndRisks": [
+    "Poor diet",
+    "Lack of sleep"
+  ],
+  "preventionTips": [
+    "Regular meals",
+    "Sleep well"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b46"
+  },
+  "name": "Restless Legs",
+  "slug": "restless-legs",
+  "description": "Uncomfortable urge to move legs, especially at night.",
+  "category": "Sleep & Energy",
+  "symptoms": [
+    "Leg discomfort",
+    "Insomnia"
+  ],
+  "causesAndRisks": [
+    "Iron deficiency",
+    "Genetics"
+  ],
+  "preventionTips": [
+    "Stretch before bed",
+    "Limit caffeine"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b47"
+  },
+  "name": "Night Sweats",
+  "slug": "night-sweats",
+  "description": "Excessive sweating during sleep, unrelated to temperature.",
+  "category": "Sleep & Energy",
+  "symptoms": [
+    "Waking soaked",
+    "Chills"
+  ],
+  "causesAndRisks": [
+    "Hormonal changes",
+    "Infections"
+  ],
+  "preventionTips": [
+    "Cool sleeping environment",
+    "Avoid spicy food"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b48"
+  },
+  "name": "Jet Lag",
+  "slug": "jet-lag",
+  "description": "Temporary sleep disturbance from crossing time zones.",
+  "category": "Sleep & Energy",
+  "symptoms": [
+    "Fatigue",
+    "Disorientation",
+    "Insomnia"
+  ],
+  "causesAndRisks": [
+    "Time zone change",
+    "Long flights"
+  ],
+  "preventionTips": [
+    "Gradually adjust schedule",
+    "Stay hydrated"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b49"
+  },
+  "name": "Oversleeping",
+  "slug": "oversleeping",
+  "description": "Sleeping excessively and feeling groggy afterwards.",
+  "category": "Sleep & Energy",
+  "symptoms": [
+    "Excessive sleep",
+    "Fatigue"
+  ],
+  "causesAndRisks": [
+    "Depression",
+    "Sleep disorders"
+  ],
+  "preventionTips": [
+    "Regular wake time",
+    "Stay active"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b4a"
+  },
+  "name": "Grogginess",
+  "slug": "grogginess",
+  "description": "Mental fuzziness or drowsiness after waking up.",
+  "category": "Sleep & Energy",
+  "symptoms": [
+    "Mental fog",
+    "Drowsiness"
+  ],
+  "causesAndRisks": [
+    "Sleep inertia",
+    "Poor sleep quality"
+  ],
+  "preventionTips": [
+    "Natural light in the morning",
+    "Consistent sleep"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b4b"
+  },
+  "name": "Poor Sleep Quality",
+  "slug": "poor-sleep-quality",
+  "description": "Sleep that is unrefreshing or easily disrupted.",
+  "category": "Sleep & Energy",
+  "symptoms": [
+    "Frequent awakenings",
+    "Tired after sleep"
+  ],
+  "causesAndRisks": [
+    "Stress",
+    "Light exposure"
+  ],
+  "preventionTips": [
+    "Dark room",
+    "Limit screens before bed"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b4c"
+  },
+  "name": "Hair Loss",
+  "slug": "hair-loss",
+  "description": "Loss of hair from the scalp or body.",
+  "category": "Hair & Scalp",
+  "symptoms": [
+    "Thinning hair",
+    "Bald patches"
+  ],
+  "causesAndRisks": [
+    "Genetics",
+    "Stress",
+    "Hormonal imbalance"
+  ],
+  "preventionTips": [
+    "Gentle hair care",
+    "Balanced diet"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b4d"
+  },
+  "name": "Dandruff",
+  "slug": "dandruff",
+  "description": "Flaking of skin on the scalp.",
+  "category": "Hair & Scalp",
+  "symptoms": [
+    "White flakes",
+    "Itchy scalp"
+  ],
+  "causesAndRisks": [
+    "Dry skin",
+    "Fungal infection"
+  ],
+  "preventionTips": [
+    "Use anti-dandruff shampoo",
+    "Avoid harsh products"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b4e"
+  },
+  "name": "Dry Scalp",
+  "slug": "dry-scalp",
+  "description": "Lack of moisture in the scalp causing flaking and itchiness.",
+  "category": "Hair & Scalp",
+  "symptoms": [
+    "Flaky scalp",
+    "Itching"
+  ],
+  "causesAndRisks": [
+    "Weather",
+    "Over-washing"
+  ],
+  "preventionTips": [
+    "Moisturizing shampoo",
+    "Limit hot water use"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b4f"
+  },
+  "name": "Oily Scalp",
+  "slug": "oily-scalp",
+  "description": "Excess oil production on the scalp.",
+  "category": "Hair & Scalp",
+  "symptoms": [
+    "Greasy hair",
+    "Scalp buildup"
+  ],
+  "causesAndRisks": [
+    "Hormones",
+    "Overactive glands"
+  ],
+  "preventionTips": [
+    "Frequent washing",
+    "Avoid oily products"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b50"
+  },
+  "name": "Itchy Scalp",
+  "slug": "itchy-scalp",
+  "description": "Persistent itching of the scalp.",
+  "category": "Hair & Scalp",
+  "symptoms": [
+    "Scalp irritation",
+    "Desire to scratch"
+  ],
+  "causesAndRisks": [
+    "Dandruff",
+    "Allergies"
+  ],
+  "preventionTips": [
+    "Use soothing shampoo",
+    "Avoid allergens"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b51"
+  },
+  "name": "Thinning Hair",
+  "slug": "thinning-hair",
+  "description": "Gradual loss of hair volume or density.",
+  "category": "Hair & Scalp",
+  "symptoms": [
+    "Scalp visibility",
+    "Weaker hair strands"
+  ],
+  "causesAndRisks": [
+    "Hormonal imbalance",
+    "Stress",
+    "Genetics"
+  ],
+  "preventionTips": [
+    "Hair nourishing products",
+    "Reduce heat styling"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412d52baef7ec73798b52"
+  },
+  "name": "Brittle Hair",
+  "slug": "brittle-hair",
+  "description": "Hair that is dry, fragile, and prone to breakage.",
+  "category": "Hair & Scalp",
+  "symptoms": [
+    "Dry strands",
+    "Breakage"
+  ],
+  "causesAndRisks": [
+    "Heat damage",
+    "Nutritional deficiency"
+  ],
+  "preventionTips": [
+    "Use conditioner",
+    "Avoid excessive heat styling"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b54"
+  },
+  "name": "Premature Graying",
+  "slug": "premature-graying",
+  "description": "Early appearance of gray or white hair before the typical aging process.",
+  "category": "Hair & Scalp",
+  "symptoms": [
+    "Gray hair",
+    "Hair discoloration"
+  ],
+  "causesAndRisks": [
+    "Genetics",
+    "Vitamin B12 deficiency",
+    "Stress"
+  ],
+  "preventionTips": [
+    "Balanced diet",
+    "Reduce stress",
+    "Use natural oils"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b55"
+  },
+  "name": "Scalp Psoriasis",
+  "slug": "scalp-psoriasis",
+  "description": "Chronic skin condition causing red, scaly patches on the scalp.",
+  "category": "Hair & Scalp",
+  "symptoms": [
+    "Flaky scalp",
+    "Itching",
+    "Red patches"
+  ],
+  "causesAndRisks": [
+    "Autoimmune response",
+    "Genetics",
+    "Stress"
+  ],
+  "preventionTips": [
+    "Manage stress",
+    "Use medicated shampoo"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b56"
+  },
+  "name": "Alopecia",
+  "slug": "alopecia",
+  "description": "Sudden or gradual hair loss on the scalp or other parts of the body.",
+  "category": "Hair & Scalp",
+  "symptoms": [
+    "Hair loss",
+    "Patchy bald spots"
+  ],
+  "causesAndRisks": [
+    "Autoimmune disorder",
+    "Genetics"
+  ],
+  "preventionTips": [
+    "Avoid stress",
+    "Gentle hair care"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b57"
+  },
+  "name": "Pollen Allergy",
+  "slug": "pollen-allergy",
+  "description": "Allergic reaction to pollen from trees, grass, or weeds.",
+  "category": "Allergies & Sensitivities",
+  "symptoms": [
+    "Sneezing",
+    "Runny nose",
+    "Itchy eyes"
+  ],
+  "causesAndRisks": [
+    "Seasonal pollen exposure"
+  ],
+  "preventionTips": [
+    "Stay indoors during high pollen times",
+    "Use air filters"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b58"
+  },
+  "name": "Food Sensitivity",
+  "slug": "food-sensitivity",
+  "description": "Difficulty digesting certain foods, leading to discomfort.",
+  "category": "Allergies & Sensitivities",
+  "symptoms": [
+    "Bloating",
+    "Stomach pain",
+    "Fatigue"
+  ],
+  "causesAndRisks": [
+    "Specific food intolerances"
+  ],
+  "preventionTips": [
+    "Avoid trigger foods",
+    "Maintain a food diary"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b59"
+  },
+  "name": "Pet Allergy",
+  "slug": "pet-allergy",
+  "description": "Allergic reaction to proteins in pet dander, saliva, or urine.",
+  "category": "Allergies & Sensitivities",
+  "symptoms": [
+    "Sneezing",
+    "Watery eyes",
+    "Itchy skin"
+  ],
+  "causesAndRisks": [
+    "Pet dander",
+    "Close contact with animals"
+  ],
+  "preventionTips": [
+    "Keep pets out of bedroom",
+    "Use air purifiers"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b5a"
+  },
+  "name": "Mold Allergy",
+  "slug": "mold-allergy",
+  "description": "Allergic reaction to mold spores in indoor or outdoor environments.",
+  "category": "Allergies & Sensitivities",
+  "symptoms": [
+    "Sneezing",
+    "Coughing",
+    "Itchy eyes"
+  ],
+  "causesAndRisks": [
+    "Exposure to damp or moldy areas"
+  ],
+  "preventionTips": [
+    "Use dehumidifiers",
+    "Fix leaks promptly"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b5b"
+  },
+  "name": "Dust Allergy",
+  "slug": "dust-allergy",
+  "description": "Allergic reaction to dust mites found in house dust.",
+  "category": "Allergies & Sensitivities",
+  "symptoms": [
+    "Runny nose",
+    "Sneezing",
+    "Watery eyes"
+  ],
+  "causesAndRisks": [
+    "Dust mite exposure"
+  ],
+  "preventionTips": [
+    "Frequent cleaning",
+    "Use dust-proof covers"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b5c"
+  },
+  "name": "Lactose Intolerance",
+  "slug": "lactose-intolerance",
+  "description": "Inability to digest lactose, a sugar found in dairy products.",
+  "category": "Allergies & Sensitivities",
+  "symptoms": [
+    "Bloating",
+    "Gas",
+    "Diarrhea"
+  ],
+  "causesAndRisks": [
+    "Lactase deficiency"
+  ],
+  "preventionTips": [
+    "Avoid dairy",
+    "Use lactose-free alternatives"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b5d"
+  },
+  "name": "Gluten Sensitivity",
+  "slug": "gluten-sensitivity",
+  "description": "Adverse reaction to gluten without having celiac disease.",
+  "category": "Allergies & Sensitivities",
+  "symptoms": [
+    "Bloating",
+    "Brain fog",
+    "Fatigue"
+  ],
+  "causesAndRisks": [
+    "Gluten-containing foods"
+  ],
+  "preventionTips": [
+    "Follow a gluten-free diet"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b5e"
+  },
+  "name": "Seasonal Allergies",
+  "slug": "seasonal-allergies",
+  "description": "Allergic reactions that occur during specific seasons due to pollen.",
+  "category": "Allergies & Sensitivities",
+  "symptoms": [
+    "Sneezing",
+    "Itchy eyes",
+    "Runny nose"
+  ],
+  "causesAndRisks": [
+    "Pollen from trees, grass, and weeds"
+  ],
+  "preventionTips": [
+    "Stay indoors during peak pollen times",
+    "Use antihistamines"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b5f"
+  },
+  "name": "Hives",
+  "slug": "hives",
+  "description": "Itchy, raised welts on the skin due to an allergic reaction.",
+  "category": "Allergies & Sensitivities",
+  "symptoms": [
+    "Red bumps",
+    "Itching",
+    "Swelling"
+  ],
+  "causesAndRisks": [
+    "Food",
+    "Medications",
+    "Insect bites"
+  ],
+  "preventionTips": [
+    "Avoid known triggers",
+    "Use antihistamines"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412e92baef7ec73798b60"
+  },
+  "name": "Chemical Sensitivities",
+  "slug": "chemical-sensitivities",
+  "description": "Adverse reactions to low-level chemical exposures.",
+  "category": "Allergies & Sensitivities",
+  "symptoms": [
+    "Headache",
+    "Fatigue",
+    "Irritation"
+  ],
+  "causesAndRisks": [
+    "Perfumes",
+    "Cleaners",
+    "Pollutants"
+  ],
+  "preventionTips": [
+    "Avoid harsh chemicals",
+    "Use natural products"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b62"
+  },
+  "name": "UTI",
+  "slug": "uti",
+  "description": "Urinary Tract Infection (UTI) is a bacterial infection that affects the urinary system.",
+  "category": "Urinary & Kidney",
+  "symptoms": [
+    "Burning during urination",
+    "Frequent urge to urinate",
+    "Cloudy urine"
+  ],
+  "causesAndRisks": [
+    "Bacteria",
+    "Poor hygiene",
+    "Sexual activity"
+  ],
+  "preventionTips": [
+    "Stay hydrated",
+    "Urinate after intercourse",
+    "Wipe front to back"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b63"
+  },
+  "name": "Kidney Stones",
+  "slug": "kidney-stones",
+  "description": "Hard deposits made of minerals and salts that form inside the kidneys.",
+  "category": "Urinary & Kidney",
+  "symptoms": [
+    "Severe back pain",
+    "Bloody urine",
+    "Nausea"
+  ],
+  "causesAndRisks": [
+    "Dehydration",
+    "Diet",
+    "Family history"
+  ],
+  "preventionTips": [
+    "Drink plenty of water",
+    "Limit salt intake"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b64"
+  },
+  "name": "Frequent Urination",
+  "slug": "frequent-urination",
+  "description": "Needing to urinate more often than usual.",
+  "category": "Urinary & Kidney",
+  "symptoms": [
+    "Urgency",
+    "Small amounts of urine"
+  ],
+  "causesAndRisks": [
+    "Diabetes",
+    "UTI",
+    "Diuretics"
+  ],
+  "preventionTips": [
+    "Avoid caffeine",
+    "Monitor fluid intake"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b65"
+  },
+  "name": "Bladder Infections",
+  "slug": "bladder-infections",
+  "description": "Infection in the bladder, typically caused by bacteria.",
+  "category": "Urinary & Kidney",
+  "symptoms": [
+    "Painful urination",
+    "Frequent urination",
+    "Pelvic discomfort"
+  ],
+  "causesAndRisks": [
+    "Bacterial infection",
+    "Urine retention"
+  ],
+  "preventionTips": [
+    "Stay hydrated",
+    "Practice hygiene"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b66"
+  },
+  "name": "Incontinence",
+  "slug": "incontinence",
+  "description": "Loss of bladder control resulting in accidental leakage of urine.",
+  "category": "Urinary & Kidney",
+  "symptoms": [
+    "Urine leakage",
+    "Urgent need to urinate"
+  ],
+  "causesAndRisks": [
+    "Aging",
+    "Pregnancy",
+    "Neurological issues"
+  ],
+  "preventionTips": [
+    "Pelvic floor exercises",
+    "Bladder training"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b67"
+  },
+  "name": "Painful Urination",
+  "slug": "painful-urination",
+  "description": "Discomfort or burning sensation while urinating.",
+  "category": "Urinary & Kidney",
+  "symptoms": [
+    "Burning",
+    "Discomfort",
+    "Frequent urge"
+  ],
+  "causesAndRisks": [
+    "UTI",
+    "STIs",
+    "Irritation from products"
+  ],
+  "preventionTips": [
+    "Avoid harsh soaps",
+    "Drink water regularly"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b68"
+  },
+  "name": "Nocturia",
+  "slug": "nocturia",
+  "description": "Excessive urination at night.",
+  "category": "Urinary & Kidney",
+  "symptoms": [
+    "Frequent night urination",
+    "Sleep interruption"
+  ],
+  "causesAndRisks": [
+    "Age",
+    "Diabetes",
+    "Prostate issues"
+  ],
+  "preventionTips": [
+    "Limit evening fluid intake",
+    "Elevate legs during rest"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b69"
+  },
+  "name": "Interstitial Cystitis",
+  "slug": "interstitial-cystitis",
+  "description": "Chronic condition causing bladder pressure and pain.",
+  "category": "Urinary & Kidney",
+  "symptoms": [
+    "Bladder pressure",
+    "Pelvic pain",
+    "Urgency"
+  ],
+  "causesAndRisks": [
+    "Unknown (may be autoimmune)",
+    "Bladder lining damage"
+  ],
+  "preventionTips": [
+    "Avoid triggers like caffeine",
+    "Track symptoms"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b6a"
+  },
+  "name": "Urinary Retention",
+  "slug": "urinary-retention",
+  "description": "Inability to fully empty the bladder.",
+  "category": "Urinary & Kidney",
+  "symptoms": [
+    "Incomplete voiding",
+    "Straining to urinate"
+  ],
+  "causesAndRisks": [
+    "Blockage",
+    "Neurological issues"
+  ],
+  "preventionTips": [
+    "Treat underlying causes",
+    "Avoid alcohol"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b6b"
+  },
+  "name": "Protein in Urine",
+  "slug": "protein-in-urine",
+  "description": "Presence of excess protein in the urine, often indicating kidney issues.",
+  "category": "Urinary & Kidney",
+  "symptoms": [
+    "Foamy urine",
+    "Swelling",
+    "Fatigue (if advanced)"
+  ],
+  "causesAndRisks": [
+    "Kidney disease",
+    "High blood pressure",
+    "Diabetes"
+  ],
+  "preventionTips": [
+    "Manage blood pressure",
+    "Control blood sugar"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b6c"
+  },
+  "name": "Thyroid Imbalance",
+  "slug": "thyroid-imbalance",
+  "description": "General disruption of thyroid hormone levels in the body.",
+  "category": "Endocrine & Hormones",
+  "symptoms": [
+    "Fatigue",
+    "Weight changes",
+    "Mood swings"
+  ],
+  "causesAndRisks": [
+    "Autoimmune disease",
+    "Nutrient deficiency"
+  ],
+  "preventionTips": [
+    "Monitor thyroid levels",
+    "Maintain iodine intake"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b6d"
+  },
+  "name": "Hypothyroidism",
+  "slug": "hypothyroidism",
+  "description": "Condition where the thyroid gland doesn't produce enough hormones.",
+  "category": "Endocrine & Hormones",
+  "symptoms": [
+    "Fatigue",
+    "Weight gain",
+    "Cold sensitivity"
+  ],
+  "causesAndRisks": [
+    "Hashimoto's disease",
+    "Iodine deficiency"
+  ],
+  "preventionTips": [
+    "Regular screening",
+    "Ensure adequate iodine"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686412fc2baef7ec73798b6e"
+  },
+  "name": "Hyperthyroidism",
+  "slug": "hyperthyroidism",
+  "description": "Condition where the thyroid gland produces too much hormone.",
+  "category": "Endocrine & Hormones",
+  "symptoms": [
+    "Weight loss",
+    "Rapid heartbeat",
+    "Nervousness"
+  ],
+  "causesAndRisks": [
+    "Graves' disease",
+    "Nodular thyroid"
+  ],
+  "preventionTips": [
+    "Regular checkups",
+    "Avoid excess iodine"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b70"
+  },
+  "name": "Adrenal Fatigue",
+  "slug": "adrenal-fatigue",
+  "description": "A condition believed to occur when the adrenal glands function below necessary levels.",
+  "category": "Endocrine & Hormones",
+  "symptoms": [
+    "Fatigue",
+    "Body aches",
+    "Sleep disturbances"
+  ],
+  "causesAndRisks": [
+    "Chronic stress",
+    "Poor sleep",
+    "Overwork"
+  ],
+  "preventionTips": [
+    "Manage stress",
+    "Prioritize sleep",
+    "Balanced diet"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b71"
+  },
+  "name": "Hormonal Acne",
+  "slug": "hormonal-acne",
+  "description": "Acne caused by hormone fluctuations, often seen in adults.",
+  "category": "Endocrine & Hormones",
+  "symptoms": [
+    "Deep pimples",
+    "Oily skin",
+    "Breakouts"
+  ],
+  "causesAndRisks": [
+    "Hormone imbalance",
+    "Menstrual cycle",
+    "PCOS"
+  ],
+  "preventionTips": [
+    "Limit sugar",
+    "Use hormone-safe products"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b72"
+  },
+  "name": "Blood Sugar Imbalance",
+  "slug": "blood-sugar-imbalance",
+  "description": "Fluctuations in blood glucose levels outside the normal range.",
+  "category": "Endocrine & Hormones",
+  "symptoms": [
+    "Fatigue",
+    "Cravings",
+    "Irritability"
+  ],
+  "causesAndRisks": [
+    "Poor diet",
+    "Insulin resistance",
+    "Stress"
+  ],
+  "preventionTips": [
+    "Eat balanced meals",
+    "Avoid refined sugar"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b73"
+  },
+  "name": "Diabetes Type 2",
+  "slug": "diabetes-type-2",
+  "description": "A chronic condition that affects how the body processes blood sugar.",
+  "category": "Endocrine & Hormones",
+  "symptoms": [
+    "Frequent urination",
+    "Increased thirst",
+    "Fatigue"
+  ],
+  "causesAndRisks": [
+    "Obesity",
+    "Genetics",
+    "Poor lifestyle"
+  ],
+  "preventionTips": [
+    "Healthy diet",
+    "Regular exercise",
+    "Weight management"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b74"
+  },
+  "name": "Cortisol Imbalance",
+  "slug": "cortisol-imbalance",
+  "description": "Disruption in the levels of the stress hormone cortisol.",
+  "category": "Endocrine & Hormones",
+  "symptoms": [
+    "Sleep issues",
+    "Anxiety",
+    "Fatigue"
+  ],
+  "causesAndRisks": [
+    "Chronic stress",
+    "Poor sleep hygiene"
+  ],
+  "preventionTips": [
+    "Reduce stress",
+    "Prioritize rest",
+    "Adaptogen support"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b75"
+  },
+  "name": "Estrogen Dominance",
+  "slug": "estrogen-dominance",
+  "description": "A condition where estrogen levels outweigh progesterone levels in the body.",
+  "category": "Endocrine & Hormones",
+  "symptoms": [
+    "Weight gain",
+    "Mood swings",
+    "PMS"
+  ],
+  "causesAndRisks": [
+    "Toxin exposure",
+    "Poor liver function",
+    "Hormone therapy"
+  ],
+  "preventionTips": [
+    "Avoid xenoestrogens",
+    "Support liver health"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b76"
+  },
+  "name": "Testosterone Imbalance",
+  "slug": "testosterone-imbalance",
+  "description": "Abnormal levels of testosterone leading to various symptoms in men and women.",
+  "category": "Endocrine & Hormones",
+  "symptoms": [
+    "Low libido",
+    "Fatigue",
+    "Muscle loss"
+  ],
+  "causesAndRisks": [
+    "Aging",
+    "Stress",
+    "Lifestyle factors"
+  ],
+  "preventionTips": [
+    "Regular exercise",
+    "Healthy fats",
+    "Stress management"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b77"
+  },
+  "name": "Toothache",
+  "slug": "toothache",
+  "description": "Pain in or around a tooth, often due to decay or infection.",
+  "category": "Oral & Dental",
+  "symptoms": [
+    "Throbbing pain",
+    "Sensitivity",
+    "Swelling"
+  ],
+  "causesAndRisks": [
+    "Cavities",
+    "Gum disease",
+    "Infection"
+  ],
+  "preventionTips": [
+    "Regular brushing",
+    "Dental checkups"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b78"
+  },
+  "name": "Gum Disease",
+  "slug": "gum-disease",
+  "description": "Infection of the gums that can lead to tooth loss if untreated.",
+  "category": "Oral & Dental",
+  "symptoms": [
+    "Swollen gums",
+    "Bleeding",
+    "Bad breath"
+  ],
+  "causesAndRisks": [
+    "Poor oral hygiene",
+    "Smoking"
+  ],
+  "preventionTips": [
+    "Flossing",
+    "Professional cleaning"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b79"
+  },
+  "name": "Bad Breath",
+  "slug": "bad-breath",
+  "description": "Persistent unpleasant odor from the mouth.",
+  "category": "Oral & Dental",
+  "symptoms": [
+    "Foul odor",
+    "Dry mouth"
+  ],
+  "causesAndRisks": [
+    "Poor hygiene",
+    "Gum disease",
+    "Dry mouth"
+  ],
+  "preventionTips": [
+    "Brush tongue",
+    "Hydrate well"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b7a"
+  },
+  "name": "Cavities",
+  "slug": "cavities",
+  "description": "Permanently damaged areas in teeth that develop into holes.",
+  "category": "Oral & Dental",
+  "symptoms": [
+    "Tooth pain",
+    "Visible holes",
+    "Sensitivity"
+  ],
+  "causesAndRisks": [
+    "Sugary foods",
+    "Poor oral hygiene"
+  ],
+  "preventionTips": [
+    "Brush twice daily",
+    "Limit sugar intake"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b7b"
+  },
+  "name": "Tooth Sensitivity",
+  "slug": "tooth-sensitivity",
+  "description": "Pain or discomfort in teeth from hot, cold, or sweet stimuli.",
+  "category": "Oral & Dental",
+  "symptoms": [
+    "Pain on contact",
+    "Sensitivity"
+  ],
+  "causesAndRisks": [
+    "Enamel wear",
+    "Gum recession"
+  ],
+  "preventionTips": [
+    "Use sensitive toothpaste",
+    "Avoid acidic foods"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b7c"
+  },
+  "name": "Mouth Ulcers",
+  "slug": "mouth-ulcers",
+  "description": "Small, painful lesions in the mouth.",
+  "category": "Oral & Dental",
+  "symptoms": [
+    "Painful sores",
+    "Redness"
+  ],
+  "causesAndRisks": [
+    "Stress",
+    "Injury",
+    "Vitamin deficiency"
+  ],
+  "preventionTips": [
+    "Avoid spicy foods",
+    "Maintain oral hygiene"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b7d"
+  },
+  "name": "Dry Mouth",
+  "slug": "dry-mouth",
+  "description": "Lack of adequate saliva in the mouth.",
+  "category": "Oral & Dental",
+  "symptoms": [
+    "Sticky feeling",
+    "Thirst",
+    "Bad breath"
+  ],
+  "causesAndRisks": [
+    "Dehydration",
+    "Medications"
+  ],
+  "preventionTips": [
+    "Hydrate",
+    "Chew sugar-free gum"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b7e"
+  },
+  "name": "Bleeding Gums",
+  "slug": "bleeding-gums",
+  "description": "Bleeding of the gums during brushing or flossing.",
+  "category": "Oral & Dental",
+  "symptoms": [
+    "Redness",
+    "Blood on toothbrush"
+  ],
+  "causesAndRisks": [
+    "Gingivitis",
+    "Poor hygiene"
+  ],
+  "preventionTips": [
+    "Brush and floss regularly",
+    "Visit dentist"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864130e2baef7ec73798b7f"
+  },
+  "name": "Receding Gums",
+  "slug": "receding-gums",
+  "description": "The gums pull away from the tooth surface, exposing roots.",
+  "category": "Oral & Dental",
+  "symptoms": [
+    "Tooth sensitivity",
+    "Visible roots"
+  ],
+  "causesAndRisks": [
+    "Aggressive brushing",
+    "Gum disease"
+  ],
+  "preventionTips": [
+    "Use soft-bristle brush",
+    "Proper brushing technique"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b81"
+  },
+  "name": "Plaque Buildup",
+  "slug": "plaque-buildup",
+  "description": "Accumulation of bacteria and food debris on the teeth leading to tartar and cavities.",
+  "category": "Oral & Dental",
+  "symptoms": [
+    "Yellow film on teeth",
+    "Bad breath",
+    "Gum irritation"
+  ],
+  "causesAndRisks": [
+    "Poor brushing",
+    "Sugary diet"
+  ],
+  "preventionTips": [
+    "Brush twice daily",
+    "Floss regularly"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b82"
+  },
+  "name": "Liver Support",
+  "slug": "liver-support",
+  "description": "General support for healthy liver function and detoxification.",
+  "category": "Liver & Detox",
+  "symptoms": [
+    "Fatigue",
+    "Poor digestion",
+    "Bloating"
+  ],
+  "causesAndRisks": [
+    "Poor diet",
+    "Alcohol use",
+    "Toxin exposure"
+  ],
+  "preventionTips": [
+    "Limit alcohol",
+    "Eat liver-friendly foods"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b83"
+  },
+  "name": "Fatty Liver",
+  "slug": "fatty-liver",
+  "description": "Condition where excess fat builds up in the liver, impairing function.",
+  "category": "Liver & Detox",
+  "symptoms": [
+    "Fatigue",
+    "Right upper abdomen discomfort"
+  ],
+  "causesAndRisks": [
+    "Obesity",
+    "Diabetes",
+    "High fat diet"
+  ],
+  "preventionTips": [
+    "Lose weight",
+    "Exercise",
+    "Reduce sugar"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b84"
+  },
+  "name": "Bile Flow Issues",
+  "slug": "bile-flow-issues",
+  "description": "Disruption in the flow of bile can affect digestion and liver function.",
+  "category": "Liver & Detox",
+  "symptoms": [
+    "Indigestion",
+    "Nausea",
+    "Bloating after meals"
+  ],
+  "causesAndRisks": [
+    "Gallbladder dysfunction",
+    "Liver disease"
+  ],
+  "preventionTips": [
+    "Eat low-fat meals",
+    "Stay hydrated"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b85"
+  },
+  "name": "Liver Inflammation",
+  "slug": "liver-inflammation",
+  "description": "Swelling and irritation of liver tissue often due to infections or toxins.",
+  "category": "Liver & Detox",
+  "symptoms": [
+    "Abdominal pain",
+    "Fatigue",
+    "Jaundice"
+  ],
+  "causesAndRisks": [
+    "Hepatitis",
+    "Alcohol",
+    "Medications"
+  ],
+  "preventionTips": [
+    "Avoid alcohol",
+    "Vaccinate for hepatitis"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b86"
+  },
+  "name": "Gallstones",
+  "slug": "gallstones",
+  "description": "Solid particles that form in the gallbladder and may block bile flow.",
+  "category": "Liver & Detox",
+  "symptoms": [
+    "Upper right abdominal pain",
+    "Nausea",
+    "Indigestion"
+  ],
+  "causesAndRisks": [
+    "High cholesterol",
+    "Obesity",
+    "Rapid weight loss"
+  ],
+  "preventionTips": [
+    "Eat healthy fats",
+    "Exercise regularly"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b87"
+  },
+  "name": "Jaundice",
+  "slug": "jaundice",
+  "description": "Yellowing of the skin and eyes due to excess bilirubin in the blood.",
+  "category": "Liver & Detox",
+  "symptoms": [
+    "Yellow skin",
+    "Dark urine",
+    "Fatigue"
+  ],
+  "causesAndRisks": [
+    "Liver disease",
+    "Blocked bile ducts"
+  ],
+  "preventionTips": [
+    "Treat underlying liver conditions",
+    "Avoid alcohol"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b88"
+  },
+  "name": "Dry Eyes",
+  "slug": "dry-eyes",
+  "description": "Insufficient tear production or poor tear quality causing irritation.",
+  "category": "Eye & Vision",
+  "symptoms": [
+    "Itching",
+    "Burning",
+    "Redness"
+  ],
+  "causesAndRisks": [
+    "Screen use",
+    "Aging",
+    "Dry climate"
+  ],
+  "preventionTips": [
+    "Use humidifier",
+    "Take eye breaks"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b89"
+  },
+  "name": "Eye Strain",
+  "slug": "eye-strain",
+  "description": "Fatigue and discomfort from prolonged visual tasks.",
+  "category": "Eye & Vision",
+  "symptoms": [
+    "Tired eyes",
+    "Blurred vision",
+    "Headache"
+  ],
+  "causesAndRisks": [
+    "Screen time",
+    "Poor lighting"
+  ],
+  "preventionTips": [
+    "20-20-20 rule",
+    "Adjust screen settings"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b8a"
+  },
+  "name": "Blurred Vision",
+  "slug": "blurred-vision",
+  "description": "Loss of sharpness in eyesight leading to unclear images.",
+  "category": "Eye & Vision",
+  "symptoms": [
+    "Unclear vision",
+    "Eye strain",
+    "Dizziness"
+  ],
+  "causesAndRisks": [
+    "Refractive errors",
+    "Eye fatigue",
+    "Diabetes"
+  ],
+  "preventionTips": [
+    "Regular eye exams",
+    "Proper lighting"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b8b"
+  },
+  "name": "Glaucoma",
+  "slug": "glaucoma",
+  "description": "A group of eye conditions that damage the optic nerve, often from high pressure.",
+  "category": "Eye & Vision",
+  "symptoms": [
+    "Vision loss",
+    "Eye pressure",
+    "Halos around lights"
+  ],
+  "causesAndRisks": [
+    "Increased eye pressure",
+    "Genetics"
+  ],
+  "preventionTips": [
+    "Eye pressure checkups",
+    "Manage diabetes"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b8c"
+  },
+  "name": "Macular Degeneration",
+  "slug": "macular-degeneration",
+  "description": "A disease that causes loss of central vision due to retina damage.",
+  "category": "Eye & Vision",
+  "symptoms": [
+    "Blurred vision",
+    "Dark spots",
+    "Distorted lines"
+  ],
+  "causesAndRisks": [
+    "Aging",
+    "Smoking",
+    "Genetics"
+  ],
+  "preventionTips": [
+    "Eye-healthy diet",
+    "No smoking"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b8d"
+  },
+  "name": "Night Blindness",
+  "slug": "night-blindness",
+  "description": "Reduced vision in low light or darkness.",
+  "category": "Eye & Vision",
+  "symptoms": [
+    "Difficulty seeing at night",
+    "Blurry night vision"
+  ],
+  "causesAndRisks": [
+    "Vitamin A deficiency",
+    "Retinal disorders"
+  ],
+  "preventionTips": [
+    "Eat foods rich in vitamin A",
+    "Avoid night driving"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b8e"
+  },
+  "name": "Red Eyes",
+  "slug": "red-eyes",
+  "description": "Red or bloodshot appearance in one or both eyes.",
+  "category": "Eye & Vision",
+  "symptoms": [
+    "Redness",
+    "Itching",
+    "Watery eyes"
+  ],
+  "causesAndRisks": [
+    "Allergies",
+    "Fatigue",
+    "Infection"
+  ],
+  "preventionTips": [
+    "Avoid irritants",
+    "Use eye drops"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b8f"
+  },
+  "name": "Watery Eyes",
+  "slug": "watery-eyes",
+  "description": "Excessive tearing not caused by emotion.",
+  "category": "Eye & Vision",
+  "symptoms": [
+    "Tearing",
+    "Blurred vision",
+    "Eye irritation"
+  ],
+  "causesAndRisks": [
+    "Irritants",
+    "Blocked tear ducts",
+    "Dry eyes"
+  ],
+  "preventionTips": [
+    "Avoid allergens",
+    "Protect eyes from wind"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864131d2baef7ec73798b90"
+  },
+  "name": "Twitching Eyelid",
+  "slug": "twitching-eyelid",
+  "description": "Involuntary, repetitive spasm of eyelid muscles.",
+  "category": "Eye & Vision",
+  "symptoms": [
+    "Eyelid movement",
+    "Mild discomfort"
+  ],
+  "causesAndRisks": [
+    "Stress",
+    "Fatigue",
+    "Caffeine"
+  ],
+  "preventionTips": [
+    "Get enough sleep",
+    "Reduce caffeine"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b92"
+  },
+  "name": "Floaters",
+  "slug": "floaters",
+  "description": "Tiny spots or threads that appear to float across your vision.",
+  "category": "Eye & Vision",
+  "symptoms": [
+    "Moving spots",
+    "Gray or black specks",
+    "Thread-like strands"
+  ],
+  "causesAndRisks": [
+    "Aging",
+    "Eye injury",
+    "Retinal detachment"
+  ],
+  "preventionTips": [
+    "Protect eyes from trauma",
+    "Regular eye exams"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b93"
+  },
+  "name": "Ear Infections",
+  "slug": "ear-infections",
+  "description": "Inflammation of the inner, middle, or outer ear due to infection.",
+  "category": "Ear, Nose & Throat",
+  "symptoms": [
+    "Ear pain",
+    "Hearing loss",
+    "Fever"
+  ],
+  "causesAndRisks": [
+    "Bacteria",
+    "Viruses",
+    "Blocked Eustachian tubes"
+  ],
+  "preventionTips": [
+    "Avoid smoking",
+    "Keep ears dry"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b94"
+  },
+  "name": "Tinnitus",
+  "slug": "tinnitus",
+  "description": "Perception of ringing or noise in the ears without external sound.",
+  "category": "Ear, Nose & Throat",
+  "symptoms": [
+    "Ringing",
+    "Buzzing",
+    "Hissing in ears"
+  ],
+  "causesAndRisks": [
+    "Loud noise exposure",
+    "Age-related hearing loss"
+  ],
+  "preventionTips": [
+    "Avoid loud noises",
+    "Use ear protection"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b95"
+  },
+  "name": "Sore Throat",
+  "slug": "sore-throat",
+  "description": "Pain or irritation in the throat, often caused by infection or irritation.",
+  "category": "Ear, Nose & Throat",
+  "symptoms": [
+    "Pain while swallowing",
+    "Dry throat",
+    "Redness"
+  ],
+  "causesAndRisks": [
+    "Viral infections",
+    "Bacterial infections",
+    "Allergies"
+  ],
+  "preventionTips": [
+    "Avoid smoking",
+    "Stay hydrated"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": true,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b96"
+  },
+  "name": "Nasal Congestion",
+  "slug": "nasal-congestion",
+  "description": "Blockage of nasal passages due to inflammation or mucus buildup.",
+  "category": "Ear, Nose & Throat",
+  "symptoms": [
+    "Stuffy nose",
+    "Difficulty breathing",
+    "Sinus pressure"
+  ],
+  "causesAndRisks": [
+    "Colds",
+    "Allergies",
+    "Sinus infection"
+  ],
+  "preventionTips": [
+    "Avoid allergens",
+    "Use humidifier"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b97"
+  },
+  "name": "Post-Nasal Drip",
+  "slug": "post-nasal-drip",
+  "description": "Mucus dripping down the back of the throat from the nasal passages.",
+  "category": "Ear, Nose & Throat",
+  "symptoms": [
+    "Throat clearing",
+    "Coughing",
+    "Mucus sensation"
+  ],
+  "causesAndRisks": [
+    "Allergies",
+    "Cold",
+    "Sinusitis"
+  ],
+  "preventionTips": [
+    "Avoid irritants",
+    "Use saline nasal spray"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b98"
+  },
+  "name": "Hoarseness",
+  "slug": "hoarseness",
+  "description": "Abnormal change in the voice, usually from vocal strain or irritation.",
+  "category": "Ear, Nose & Throat",
+  "symptoms": [
+    "Raspy voice",
+    "Voice loss",
+    "Throat irritation"
+  ],
+  "causesAndRisks": [
+    "Overuse",
+    "Laryngitis",
+    "Reflux"
+  ],
+  "preventionTips": [
+    "Rest voice",
+    "Hydrate well"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b99"
+  },
+  "name": "Tonsillitis",
+  "slug": "tonsillitis",
+  "description": "Inflammation of the tonsils, often due to infection.",
+  "category": "Ear, Nose & Throat",
+  "symptoms": [
+    "Sore throat",
+    "Swollen tonsils",
+    "Fever"
+  ],
+  "causesAndRisks": [
+    "Viral or bacterial infection"
+  ],
+  "preventionTips": [
+    "Avoid close contact with sick people",
+    "Wash hands regularly"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": true,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b9a"
+  },
+  "name": "Snoring",
+  "slug": "snoring",
+  "description": "Loud breathing sound during sleep caused by airway obstruction.",
+  "category": "Ear, Nose & Throat",
+  "symptoms": [
+    "Noisy breathing",
+    "Interrupted sleep"
+  ],
+  "causesAndRisks": [
+    "Obesity",
+    "Nasal congestion",
+    "Sleep apnea"
+  ],
+  "preventionTips": [
+    "Sleep on side",
+    "Maintain healthy weight"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b9b"
+  },
+  "name": "Dry Throat",
+  "slug": "dry-throat",
+  "description": "Lack of moisture in the throat causing irritation or discomfort.",
+  "category": "Ear, Nose & Throat",
+  "symptoms": [
+    "Scratchy feeling",
+    "Hoarseness",
+    "Cough"
+  ],
+  "causesAndRisks": [
+    "Dehydration",
+    "Dry air",
+    "Mouth breathing"
+  ],
+  "preventionTips": [
+    "Drink water",
+    "Use a humidifier"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b9c"
+  },
+  "name": "Loss of Smell",
+  "slug": "loss-of-smell",
+  "description": "Reduced or complete loss of the sense of smell.",
+  "category": "Ear, Nose & Throat",
+  "symptoms": [
+    "Can't detect odors",
+    "Taste reduction"
+  ],
+  "causesAndRisks": [
+    "COVID-19",
+    "Head injury",
+    "Sinus infection"
+  ],
+  "preventionTips": [
+    "Avoid smoking",
+    "Treat sinus conditions promptly"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b9d"
+  },
+  "name": "Migraines",
+  "slug": "migraines",
+  "description": "Intense, throbbing headaches often with nausea and sensitivity to light.",
+  "category": "Neurological",
+  "symptoms": [
+    "Head pain",
+    "Nausea",
+    "Visual aura"
+  ],
+  "causesAndRisks": [
+    "Stress",
+    "Hormonal changes",
+    "Diet triggers"
+  ],
+  "preventionTips": [
+    "Avoid known triggers",
+    "Stay hydrated",
+    "Rest in dark room"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b9e"
+  },
+  "name": "Headaches",
+  "slug": "headaches",
+  "description": "Pain or discomfort in the head or upper neck.",
+  "category": "Neurological",
+  "symptoms": [
+    "Dull or sharp head pain",
+    "Tension"
+  ],
+  "causesAndRisks": [
+    "Stress",
+    "Dehydration",
+    "Eye strain"
+  ],
+  "preventionTips": [
+    "Hydrate",
+    "Reduce screen time",
+    "Get adequate sleep"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798b9f"
+  },
+  "name": "Nerve Pain",
+  "slug": "nerve-pain",
+  "description": "Burning, tingling, or shooting pain from nerve damage or compression.",
+  "category": "Neurological",
+  "symptoms": [
+    "Burning",
+    "Tingling",
+    "Numbness"
+  ],
+  "causesAndRisks": [
+    "Injury",
+    "Diabetes",
+    "Shingles"
+  ],
+  "preventionTips": [
+    "Manage blood sugar",
+    "Avoid nerve compression"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798ba0"
+  },
+  "name": "Neuropathy",
+  "slug": "neuropathy",
+  "description": "Damage to peripheral nerves causing weakness, numbness, and pain.",
+  "category": "Neurological",
+  "symptoms": [
+    "Numbness",
+    "Tingling",
+    "Weakness"
+  ],
+  "causesAndRisks": [
+    "Diabetes",
+    "Infection",
+    "Autoimmune diseases"
+  ],
+  "preventionTips": [
+    "Control blood sugar",
+    "Avoid toxins"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864132a2baef7ec73798ba1"
+  },
+  "name": "Tremors",
+  "slug": "tremors",
+  "description": "Involuntary, rhythmic shaking of body parts, especially hands.",
+  "category": "Neurological",
+  "symptoms": [
+    "Shaking hands",
+    "Uncontrolled movements"
+  ],
+  "causesAndRisks": [
+    "Parkinson’s disease",
+    "Essential tremor",
+    "Anxiety"
+  ],
+  "preventionTips": [
+    "Avoid caffeine",
+    "Manage stress"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798ba3"
+  },
+  "name": "Vertigo",
+  "slug": "vertigo",
+  "description": "A sensation of spinning or dizziness, often due to inner ear issues.",
+  "category": "Neurological",
+  "symptoms": [
+    "Dizziness",
+    "Spinning feeling",
+    "Balance issues"
+  ],
+  "causesAndRisks": [
+    "Inner ear disorder",
+    "Migraines",
+    "Head injury"
+  ],
+  "preventionTips": [
+    "Avoid quick head movements",
+    "Stay hydrated"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798ba4"
+  },
+  "name": "Memory Loss",
+  "slug": "memory-loss",
+  "description": "Impaired ability to remember information, events, or skills.",
+  "category": "Neurological",
+  "symptoms": [
+    "Forgetfulness",
+    "Confusion",
+    "Cognitive decline"
+  ],
+  "causesAndRisks": [
+    "Aging",
+    "Alzheimer's disease",
+    "Brain injury"
+  ],
+  "preventionTips": [
+    "Mental exercises",
+    "Healthy diet",
+    "Adequate sleep"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798ba5"
+  },
+  "name": "Concentration Issues",
+  "slug": "concentration-issues",
+  "description": "Difficulty focusing or staying attentive during tasks.",
+  "category": "Neurological",
+  "symptoms": [
+    "Distractibility",
+    "Lack of focus",
+    "Mental fatigue"
+  ],
+  "causesAndRisks": [
+    "ADHD",
+    "Stress",
+    "Lack of sleep"
+  ],
+  "preventionTips": [
+    "Structured routine",
+    "Brain training",
+    "Minimize distractions"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798ba6"
+  },
+  "name": "Seizures",
+  "slug": "seizures",
+  "description": "Sudden, uncontrolled electrical disturbance in the brain.",
+  "category": "Neurological",
+  "symptoms": [
+    "Convulsions",
+    "Loss of awareness",
+    "Muscle stiffness"
+  ],
+  "causesAndRisks": [
+    "Epilepsy",
+    "Brain injury",
+    "Fever"
+  ],
+  "preventionTips": [
+    "Avoid triggers",
+    "Take prescribed medication"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798ba7"
+  },
+  "name": "Parkinson’s Support",
+  "slug": "parkinsons-support",
+  "description": "Support for managing Parkinson's disease symptoms and progression.",
+  "category": "Neurological",
+  "symptoms": [
+    "Tremors",
+    "Stiffness",
+    "Slow movements"
+  ],
+  "causesAndRisks": [
+    "Genetics",
+    "Environmental toxins"
+  ],
+  "preventionTips": [
+    "Exercise regularly",
+    "Eat a brain-healthy diet"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798ba8"
+  },
+  "name": "Weight Loss",
+  "slug": "weight-loss",
+  "description": "The process of reducing body fat through lifestyle changes.",
+  "category": "General Wellness",
+  "symptoms": [
+    "Fat loss",
+    "Increased energy",
+    "Improved BMI"
+  ],
+  "causesAndRisks": [
+    "Overeating",
+    "Sedentary lifestyle"
+  ],
+  "preventionTips": [
+    "Balanced diet",
+    "Exercise regularly"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798ba9"
+  },
+  "name": "Immune Boost",
+  "slug": "immune-boost",
+  "description": "Improving immune system strength and response.",
+  "category": "General Wellness",
+  "symptoms": [
+    "Less frequent illness",
+    "Faster recovery"
+  ],
+  "causesAndRisks": [
+    "Stress",
+    "Poor diet",
+    "Lack of sleep"
+  ],
+  "preventionTips": [
+    "Get enough sleep",
+    "Eat nutrient-rich foods"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798baa"
+  },
+  "name": "Anti-Aging",
+  "slug": "anti-aging",
+  "description": "Delaying or reversing visible signs of aging.",
+  "category": "General Wellness",
+  "symptoms": [
+    "Wrinkles",
+    "Reduced skin elasticity",
+    "Age spots"
+  ],
+  "causesAndRisks": [
+    "UV exposure",
+    "Oxidative stress",
+    "Poor lifestyle"
+  ],
+  "preventionTips": [
+    "Use sunscreen",
+    "Eat antioxidants",
+    "Stay hydrated"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798bab"
+  },
+  "name": "Hydration",
+  "slug": "hydration",
+  "description": "Maintaining adequate body water levels.",
+  "category": "General Wellness",
+  "symptoms": [
+    "Dry mouth",
+    "Low energy",
+    "Dizziness"
+  ],
+  "causesAndRisks": [
+    "Not drinking enough water",
+    "Hot weather"
+  ],
+  "preventionTips": [
+    "Drink water regularly",
+    "Avoid excessive caffeine"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798bac"
+  },
+  "name": "Nutrient Deficiency",
+  "slug": "nutrient-deficiency",
+  "description": "Lack of essential nutrients in the diet leading to health issues.",
+  "category": "General Wellness",
+  "symptoms": [
+    "Fatigue",
+    "Weakness",
+    "Cracked skin"
+  ],
+  "causesAndRisks": [
+    "Poor diet",
+    "Malabsorption",
+    "Medical conditions"
+  ],
+  "preventionTips": [
+    "Eat a balanced diet",
+    "Take supplements if needed"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798bad"
+  },
+  "name": "Metabolism Boost",
+  "slug": "metabolism-boost",
+  "description": "Increasing the rate at which the body burns calories and fat.",
+  "category": "General Wellness",
+  "symptoms": [
+    "Increased energy",
+    "Weight loss"
+  ],
+  "causesAndRisks": [
+    "Age",
+    "Thyroid issues",
+    "Inactivity"
+  ],
+  "preventionTips": [
+    "Exercise",
+    "Eat protein-rich meals"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798bae"
+  },
+  "name": "Chronic Inflammation",
+  "slug": "chronic-inflammation",
+  "description": "Long-term inflammation in the body contributing to disease.",
+  "category": "General Wellness",
+  "symptoms": [
+    "Swelling",
+    "Joint pain",
+    "Fatigue"
+  ],
+  "causesAndRisks": [
+    "Poor diet",
+    "Stress",
+    "Autoimmune issues"
+  ],
+  "preventionTips": [
+    "Eat anti-inflammatory foods",
+    "Reduce stress"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798baf"
+  },
+  "name": "Stress Relief",
+  "slug": "stress-relief",
+  "description": "Techniques and practices to reduce physical and mental stress.",
+  "category": "General Wellness",
+  "symptoms": [
+    "Tension",
+    "Irritability",
+    "Sleep issues"
+  ],
+  "causesAndRisks": [
+    "Workload",
+    "Personal issues",
+    "Health problems"
+  ],
+  "preventionTips": [
+    "Meditation",
+    "Deep breathing",
+    "Regular breaks"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798bb0"
+  },
+  "name": "Longevity",
+  "slug": "longevity",
+  "description": "Improving lifespan and overall health through lifestyle choices.",
+  "category": "General Wellness",
+  "symptoms": [
+    "Healthy aging",
+    "Reduced disease risk"
+  ],
+  "causesAndRisks": [
+    "Chronic disease",
+    "Poor habits"
+  ],
+  "preventionTips": [
+    "Exercise",
+    "Eat whole foods",
+    "Maintain social ties"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "mild",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": false
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798bb1"
+  },
+  "name": "Epilepsy",
+  "slug": "epilepsy",
+  "description": "A neurological disorder marked by recurrent, unprovoked seizures.",
+  "category": "Neurological Health",
+  "symptoms": [
+    "Seizures",
+    "Confusion",
+    "Loss of consciousness"
+  ],
+  "causesAndRisks": [
+    "Genetics",
+    "Brain injury",
+    "Developmental disorders"
+  ],
+  "preventionTips": [
+    "Avoid triggers",
+    "Follow medication schedule"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "6864133b2baef7ec73798bb2"
+  },
+  "name": "Rosacea",
+  "slug": "rosacea",
+  "description": "A chronic skin condition that causes redness and visible blood vessels.",
+  "category": "Skin Health",
+  "symptoms": [
+    "Facial redness",
+    "Bumps",
+    "Visible blood vessels"
+  ],
+  "causesAndRisks": [
+    "Hot drinks",
+    "Sun exposure",
+    "Stress"
+  ],
+  "preventionTips": [
+    "Avoid triggers",
+    "Use sunscreen",
+    "Gentle skincare"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686413482baef7ec73798bb4"
+  },
+  "name": "Bronchitis",
+  "slug": "bronchitis",
+  "description": "Inflammation of the bronchial tubes in the lungs, often causing coughing and mucus.",
+  "category": "Respiratory Health",
+  "symptoms": [
+    "Cough",
+    "Chest discomfort",
+    "Shortness of breath",
+    "Fatigue"
+  ],
+  "causesAndRisks": [
+    "Viral infection",
+    "Smoking",
+    "Air pollution"
+  ],
+  "preventionTips": [
+    "Avoid smoking",
+    "Use air filters",
+    "Practice hand hygiene"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": true,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686413482baef7ec73798bb5"
+  },
+  "name": "Lupus",
+  "slug": "lupus",
+  "description": "A chronic autoimmune disease where the immune system attacks healthy tissues.",
+  "category": "Immune Health",
+  "symptoms": [
+    "Fatigue",
+    "Joint pain",
+    "Skin rashes",
+    "Fever"
+  ],
+  "causesAndRisks": [
+    "Genetic predisposition",
+    "Environmental triggers",
+    "Hormonal factors"
+  ],
+  "preventionTips": [
+    "Limit sun exposure",
+    "Manage stress",
+    "Follow treatment plan"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "severe",
+  "isCommon": false,
+  "isContagious": false,
+  "requiresMedicalAttention": true
+},
+{
+  "_id": {
+    "$oid": "686413482baef7ec73798bb6"
+  },
+  "name": "Polycystic Ovary Syndrome (PCOS)",
+  "slug": "polycystic-ovary-syndrome-pcos",
+  "description": "A hormonal disorder causing enlarged ovaries with small cysts and irregular menstrual cycles.",
+  "category": "Reproductive Health",
+  "symptoms": [
+    "Irregular periods",
+    "Acne",
+    "Hair growth",
+    "Weight gain"
+  ],
+  "causesAndRisks": [
+    "Hormonal imbalance",
+    "Genetics",
+    "Insulin resistance"
+  ],
+  "preventionTips": [
+    "Maintain a healthy weight",
+    "Exercise regularly",
+    "Balanced diet"
+  ],
+  "recommendedRemedies": [],
+  "relatedAilments": [],
+  "severity": "moderate",
+  "isCommon": true,
+  "isContagious": false,
+  "requiresMedicalAttention": true
 }]

@@ -133,7 +133,6 @@ const remedyAccessMiddleware = async (req, res, next) => {
           return res.status(403).json({
             message: "Access denied: You have reached your plan's limit for this ailment.",
             success: false,
-            result,
             redirect: "/pricing",
           });
         }
