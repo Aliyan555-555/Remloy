@@ -1,3 +1,4 @@
+import User from '../models/user.model.js';
 import UserSubscription from '../models/user_subscription.js';
 import mongoose from 'mongoose';
 
@@ -9,12 +10,13 @@ const subscriptionMiddleware = async (req, res, next) => {
     }
 
     const now = new Date();
-    const subscription = await UserSubscription.findOne({
-      userId,
-      paymentStatus: 'completed',
-      endDate: { $gte: now },
-      canceledAt: { $exists: false },
-    });
+    const user = await User.findById(userId);
+
+    if (!user.activeSubscription) {
+      return res.status(403).json({ message: 'Access denied. No active subscription.' });
+    }
+
+    const subscription = await UserSubscription.findById(user.activeSubscription);
 
     if (!subscription) {
       return res.status(403).json({ message: 'Access denied. No active subscription.' });

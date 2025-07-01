@@ -7,21 +7,24 @@ import Button from "../components/common/Button";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup } from "firebase/auth";
-import { AppleAuthProvider, auth, FacebookProvider, GoogleProvider } from "../config/firebase";
-
-
+import {
+  AppleAuthProvider,
+  auth,
+  FacebookProvider,
+  GoogleProvider,
+} from "../config/firebase";
+import { useUserFlow } from "../contexts/UserFlowContext";
 
 const SignInPage = () => {
   const navigate = useNavigate();
-  const { login,socialAuth } = useAuth();
+  const { login, socialAuth } = useAuth();
+  const { checkUserFlow } = useUserFlow();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     rememberMe: false,
   });
-
-  
 
   const [error, setError] = useState("");
 
@@ -33,11 +36,11 @@ const SignInPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      login(formData,setError);
+      await login(formData, setError);
     } catch (err) {
       setError(err.message);
     }
@@ -45,10 +48,10 @@ const SignInPage = () => {
 
   const handleSocialSignIn = async (provider) => {
     try {
-      const res = await signInWithPopup(auth,provider);
-       await socialAuth(res);
+      const res = await signInWithPopup(auth, provider);
+      await socialAuth(res);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 

@@ -4,6 +4,7 @@ import User from "./../models/user.model.js";
 import PaymentHistory from "../models/payment_history.model.js";
 import PaymentMethod from "../models/payment_method.model.js";
 import UserSubscription from "../models/user_subscription.js";
+import Remedy from "../models/remedy.model.js";
 
 const userHealthProfile = async (req, res) => {
   try {
@@ -14,13 +15,13 @@ const userHealthProfile = async (req, res) => {
 
     const updatedProfile = existingProfile
       ? await UserProfile.findOneAndUpdate(
-          { userId },
-          {
-            $set: { ...profileData, lastUpdated: new Date() },
-            $inc: { __v: 1 },
-          },
-          { new: true, runValidators: true }
-        )
+        { userId },
+        {
+          $set: { ...profileData, lastUpdated: new Date() },
+          $inc: { __v: 1 },
+        },
+        { new: true, runValidators: true }
+      )
       : await UserProfile.create({ userId, ...profileData });
 
     return res.status(200).json({
@@ -362,6 +363,51 @@ const updatePaymentMethod = async (req, res) => {
   }
 };
 
+const getUserRemedies = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    let { page = 1, limit = 10, type, category, search, sort = "-createdAt" } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    // Build filter
+    const filter = { createdBy: userId };
+    if (type) filter.type = type;
+    if (category) filter.category = category;
+    if (search) {
+      filter.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } }
+      ];
+    }
+
+    const total = await Remedy.countDocuments(filter);
+    const remedies = await Remedy.find(filter)
+      .sort(sort)
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    return res.status(200).json({
+      success: true,
+      message: "Remedies fetched successfully",
+      remedies,
+      pagination: {
+        total,
+        page,
+        pages: Math.ceil(total / limit),
+        limit
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching user remedies:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch remedies",
+      error: error.message,
+    });
+  }
+};
+
 export {
   userHealthProfile,
   getUserHealthQuestionBaseOnHealthProfile,
@@ -373,4 +419,5 @@ export {
   addPaymentMethod,
   removePaymentMethod,
   updatePaymentMethod,
+  getUserRemedies,
 };

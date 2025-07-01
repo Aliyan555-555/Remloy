@@ -11,7 +11,7 @@ const PaymentSuccessPage = () => {
   const [subscriptionData, setSubscriptionData] = useState(null);
   const navigate = useNavigate();
   const { planId } = useParams();
-  const { authToken } = useAuth();
+  const { authToken, refresh } = useAuth();
   const { checkUserFlow } = useUserFlow();
 
   const checking = async () => {
@@ -23,6 +23,7 @@ const PaymentSuccessPage = () => {
         }
 
         setSubscriptionData(res.data.subscription);
+        await refresh();
         await checkUserFlow();
       }
     } finally {
@@ -62,25 +63,25 @@ const PaymentSuccessPage = () => {
           </p>
         </div>
         <div className="flex mt-5 flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-              <Button
-                variant="outlined"
-                color="brand"
-                fullWidth
-                className="text-nowrap"
-                onClick={() => navigate("/")}
-              >
-                Go to Dashboard
-              </Button>
-              <Button
-                variant="contained"
-                color="brand"
-                fullWidth
-                className="!text-nowrap"
-                onClick={() => navigate("/remedies")}
-              >
-                View Remedies
-              </Button>
-            </div>
+          <Button
+            variant="outlined"
+            color="brand"
+            fullWidth
+            className="text-nowrap"
+            onClick={() => navigate("/dashboard")}
+          >
+            Go to Dashboard
+          </Button>
+          <Button
+            variant="contained"
+            color="brand"
+            fullWidth
+            className="!text-nowrap"
+            onClick={() => navigate("/remedies")}
+          >
+            View Remedies
+          </Button>
+        </div>
       </div>
     </div>
   );

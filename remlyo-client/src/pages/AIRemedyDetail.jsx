@@ -15,6 +15,7 @@ import AIFeedback from "../components/common/AIFeedback";
 import ReviewPopup from "../components/common/ReviewPopup";
 import { formatDate } from "../utils";
 import CommentItem from "../components/common/CommentItem";
+import AccessDeniedComponent from './../components/common/AccessDeniedComponent';
 
 const AIRemedyDetail = () => {
   const { remedyId } = useParams();

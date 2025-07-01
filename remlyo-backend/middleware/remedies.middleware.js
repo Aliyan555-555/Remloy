@@ -21,7 +21,11 @@ const addRemedyToAilmentAccess = (subscriptionData, ailmentId, remedyId, maxReme
   );
   if (ailmentAccess) {
     if (!ailmentAccess.remedies.map(r => r.toString()).includes(remedyId)) {
-      if (maxRemedies === undefined || ailmentAccess.remedies.length < maxRemedies) {
+      if (maxRemedies == 0) {
+        ailmentAccess.remedies.push(remedyId);
+        return { added: true };
+      }
+      if (ailmentAccess.remedies.length < maxRemedies) {
         ailmentAccess.remedies.push(remedyId);
         return { added: true };
       } else {
@@ -129,6 +133,7 @@ const remedyAccessMiddleware = async (req, res, next) => {
           return res.status(403).json({
             message: "Access denied: You have reached your plan's limit for this ailment.",
             success: false,
+            result,
             redirect: "/pricing",
           });
         }

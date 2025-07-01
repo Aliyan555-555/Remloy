@@ -14,15 +14,18 @@ const subscribeFreePlan = async (token, id, paymentIntent, navigate, force) => {
       }
     );
     if (data.success) {
+      console.log(data)
       navigate(`/checkout/${data.data.plan}/success`, { replace: true });
+      return
     }
-    return data;
+
   } catch (error) {
-    return error.response.data;
+    console.log(error)
+    return error.response.data
   }
 };
 
-const preprepareForSubscription = async (token, id, navigate) => {
+const preprepareForSubscription = async (token, id, navigate, checkUserFlow) => {
   try {
     const { data } = await API.get(`/api/v1/subscription/pre/${id}`, {
       headers: getAuthHeaders(token),
@@ -30,7 +33,8 @@ const preprepareForSubscription = async (token, id, navigate) => {
 
     if (data.success) {
       if (data.isFreePlan) {
-        await subscribeFreePlan(token, id, navigate);
+        await subscribeFreePlan(token, id, {}, navigate);
+        await checkUserFlow();
         return;
       }
 

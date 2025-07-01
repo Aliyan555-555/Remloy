@@ -7,8 +7,7 @@ import LoadingSpinner from "./../components/common/LoadingSpinner";
 const UserFlowContext = createContext();
 
 export const UserFlowProvider = ({ children }) => {
-  const { user, isAuthenticated, authToken, loading: authLoading } = useAuth();
-  const [flowStatus, setFlowStatus] = useState(null);
+  const { user, isAuthenticated, authToken, loading: authLoading,flowStatus,setFlowStatus} = useAuth();
   const [loading, setLoading] = useState(true);
 
   const checkUserFlow = async () => {
@@ -17,15 +16,16 @@ export const UserFlowProvider = ({ children }) => {
 
       // setLoading(true);
       if (!isAuthenticated) {
+    
         setFlowStatus(UserFlowStatus.LOGGED_OUT);
         setLoading(false);
         return;
       }
-      // if (user && user.status && user.status.toLowerCase() === "suspended"){
-      //   setFlowStatus(UserFlowStatus.SUSPENDED);
-      //   setLoading(false);
-      //   return
-      // }
+      if (user && user.status && user.status.toLowerCase() === "suspended"){
+        setFlowStatus(UserFlowStatus.SUSPENDED);
+        setLoading(false);
+        return
+      }
 
       // if (user && !user.emailVerified) {
       //   setFlowStatus(UserFlowStatus.EMAIL_UNVERIFIED);
@@ -65,7 +65,7 @@ export const UserFlowProvider = ({ children }) => {
       setFlowStatus(UserFlowStatus.LOGGED_OUT);
       setLoading(false);
     }
-  }, [isAuthenticated, authToken, authLoading]);
+  }, [isAuthenticated, authToken, authLoading,flowStatus]);
 
   if (loading) {
     return <LoadingSpinner />;

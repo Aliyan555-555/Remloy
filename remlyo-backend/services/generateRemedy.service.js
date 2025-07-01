@@ -170,7 +170,7 @@ IMPORTANT: You must respond with ONLY a valid JSON object. Do not include any ad
 
 Respond ONLY with a valid JSON object with these fields:
 important note: No use html tags in name,category,description,preparationTime
-import fetchRemedyImage from './imagesFetcher.service';
+
 
 {
   "name": "",

@@ -22,6 +22,7 @@ import { saveRemedy } from "../api/userApi";
 import AIFeedback from "../components/common/AIFeedback";
 import ReviewPopup from "../components/common/ReviewPopup";
 import CommentItem from "../components/common/CommentItem";
+import AccessDeniedComponent from "../components/common/AccessDeniedComponent";
 
 const CommunityRemedyDetail = () => {
   const { remedyId } = useParams();

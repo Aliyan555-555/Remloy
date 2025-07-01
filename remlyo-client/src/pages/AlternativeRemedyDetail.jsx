@@ -21,6 +21,7 @@ import AIFeedback from "../components/common/AIFeedback";
 import { saveRemedy } from "../api/userApi";
 import ReviewPopup from "../components/common/ReviewPopup";
 import CommentItem from "../components/common/CommentItem";
+import AccessDeniedComponent from "../components/common/AccessDeniedComponent";
 
 const AlternativeRemedyDetail = () => {
   const { remedyId } = useParams();

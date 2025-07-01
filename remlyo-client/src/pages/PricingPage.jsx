@@ -8,6 +8,7 @@ import { getAllPlans } from "../api/pricingApi";
 import { useAuth } from "../contexts/AuthContext";
 import { preprepareForSubscription } from "../api/subscriptionApi";
 import LoadingSpinner from "./../components/common/LoadingSpinner";
+import { useUserFlow } from "../contexts/UserFlowContext";
 
 const PricingPage = () => {
   const [billingPeriod, setBillingPeriod] = useState("monthly");
@@ -15,6 +16,7 @@ const PricingPage = () => {
   const [isFreePlanUsed, setIsFreePlanUsed] = useState(false);
   const [plans, setPlans] = useState([]);
   const { authToken } = useAuth();
+  const {checkUserFlow} = useUserFlow();
   const [loading, setLoading] = useState(true);
   const fetchPlans = async () => {
     try {
@@ -33,7 +35,7 @@ const PricingPage = () => {
   const handleSubscribe = async (id) => {
     try {
       setLoading(id);
-      await preprepareForSubscription(authToken, id, navigate);
+      await preprepareForSubscription(authToken, id,navigate,checkUserFlow);
     } finally {
       setLoading(false);
     }

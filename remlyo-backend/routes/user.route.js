@@ -11,6 +11,7 @@ import {
   addPaymentMethod,
   removePaymentMethod,
   updatePaymentMethod,
+  getUserRemedies,
 } from "../controllers/user.controller.js";
 import userHealthProfileValidation from "../validations/user.validations.js";
 import auth from "../middleware/auth.middleware.js";
@@ -35,6 +36,8 @@ userRouter.get(
 );
 // save remedies route
 userRouter.post("/remedy/save/:id", saveRemedy);
+// get my remedies
+userRouter.get("/remedy/my",getUserRemedies)
 // delete save remedies Route
 userRouter.patch("/remedy/delete/:id", deleteSavedRemedy);
 //get payment history

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import { auth } from "../config/firebase";
 import { signOut } from "firebase/auth";
-import { LS_KEYS } from "../constants";
+import { LS_KEYS, UserFlowStatus } from "../constants";
 import { refreshUser } from "../api/authApi";
 import { saveRemedy } from "../api/userApi";
 import { getAuthHeaders } from "../utils";
@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [flowStatus, setFlowStatus] = useState(null);
 
   const checkAuth = async () => {
     // setLoading(true);
@@ -43,8 +44,6 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
- 
 
   const signup = async (userData) => {
     setLoading(true);
@@ -79,7 +78,10 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         localStorage.setItem(LS_KEYS.USER, JSON.stringify(data.user));
         localStorage.setItem(LS_KEYS.AUTH_TOKEN, data.token);
-        if (data.redirect) navigate(data.redirect);
+        setFlowStatus(UserFlowStatus.LOGGED_IN);
+        if (data.redirect) {
+          return navigate(data.redirect, { replace: true });
+        }
       } else {
         setError(data.message || "Login failed");
       }
@@ -129,6 +131,7 @@ export const AuthProvider = ({ children }) => {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
+      setFlowStatus(UserFlowStatus.LOGGED_OUT);
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {
@@ -226,6 +229,8 @@ export const AuthProvider = ({ children }) => {
         authToken,
         socialAuth,
         loading,
+        flowStatus,
+        setFlowStatus,
       }}
     >
       {children}

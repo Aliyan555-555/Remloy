@@ -61,6 +61,7 @@ const UserDashboardPage = () => {
   };
   // Helper for remedies per ailment
   const hasReachedRemedyLimit = useMemo(() => {
+    if (plan.remediesPerAilment === 0) return false; // Unlimited
     return (
       Array.isArray(user?.activeSubscription?.accessRemediesWithAilments) &&
       user.activeSubscription.accessRemediesWithAilments.some(

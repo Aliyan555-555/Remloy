@@ -126,11 +126,24 @@ const updatePaymentMethod = async (token, paymentMethodId, data) => {
   return res.data;
 };
 
+
+const getMyRemedies = async (token) => {
+  try {
+    const res = await API.get("/api/v1/user/remedy/my", {
+      headers: getAuthHeaders(token)
+    })
+    return res.data;
+  } catch (error) {
+    return error.response.data;
+  }
+}
+
 export {
   getPaymentHistory,
   deleteSaveRemedy,
   generateHealthProfileQuestions,
   healthProfile,
+  getMyRemedies,
   saveRemedy,
   getPaymentMethods,
   checkHealthProfile,
